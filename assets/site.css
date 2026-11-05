@@ -768,7 +768,7 @@ html:not(.js) .reveal { opacity: 1; transform: none; }
   .site-head .wrap { height: 60px; }
   .brand span { display: none; }
   .nav { gap: 16px; font-size: 0.82rem; }
-  .nav a:not(.nav-cta) { display: none; }
+  .nav a:not(.nav-cta):not(:first-of-type) { display: none; }
   .nav a.nav-cta { padding: 9px 14px; }
   .grid, .grid.three { grid-template-columns: 1fr; }
   .card.feature .shot { aspect-ratio: 16 / 10; }
