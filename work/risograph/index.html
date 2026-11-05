@@ -1,0 +1,3031 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mimeo Press — Risograph Zine &amp; Small-Run Printing</title>
+    <meta
+      name="description"
+      content="Mimeo Press is a two-ink risograph studio for zines, posters and small-run publishing. Misregistration left in, edition counts on the cover, paper you can smell."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,900&family=Work+Sans:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============================================================
+   MIMO PRESS — token layer
+   ============================================================ */
+      :root {
+        --paper: #f7f3e8;
+        --paper-alt: #efe8d6;
+        --ink: #1e2430;
+        --muted: #8b8474;
+        --border: #c7bfab;
+        --pink: #ff48b0;
+        --blue: #3d5588;
+        --yellow: #ffe800;
+        --pink-tint: rgba(255, 72, 176, 0.5);
+        --mis: 2px;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-body: 'Work Sans', Arial, sans-serif;
+        --font-mono: 'Roboto Mono', 'Courier New', monospace;
+        --radius-panel: 2px;
+        --pad-x: 20px;
+      }
+      @media (min-width: 768px) {
+        :root {
+          --pad-x: 48px;
+        }
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 16px/1.65 var(--font-body);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* paper grain over everything */
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+        opacity: 0.07;
+        mix-blend-mode: multiply;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+      }
+      :focus-visible {
+        outline: 2px solid var(--pink);
+        outline-offset: 2px;
+      }
+      ::selection {
+        background: var(--pink);
+        color: var(--paper);
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 var(--pad-x);
+      }
+
+      /* ============================================================
+   Utilities — halftone, grain fields, misregistration, mono marks
+   ============================================================ */
+      .dots {
+        background-size: 6px 6px;
+      }
+      .dots-pink {
+        background-image: radial-gradient(
+          circle,
+          var(--pink) 1.4px,
+          transparent 1.6px
+        );
+      }
+      .dots-blue {
+        background-image: radial-gradient(
+          circle,
+          var(--blue) 1.4px,
+          transparent 1.6px
+        );
+      }
+      .dots-yellow {
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 1.5px,
+          transparent 1.7px
+        );
+      }
+      .dots-ink {
+        background-image: radial-gradient(
+          circle,
+          var(--ink) 1.2px,
+          transparent 1.4px
+        );
+      }
+      .dots-sm {
+        background-size: 4px 4px;
+      }
+
+      .roller {
+        position: relative;
+        isolation: isolate;
+      }
+      .roller::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          90deg,
+          rgba(30, 36, 48, 0.055) 0 2px,
+          transparent 2px 96px
+        );
+      }
+
+      /* hard 2px misregistration ghost on display type */
+      .misreg {
+        position: relative;
+        display: inline-block;
+        color: var(--blue);
+      }
+      .misreg::before {
+        content: attr(data-ink);
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        color: var(--pink);
+        transform: translate(2px, 2px);
+        mix-blend-mode: multiply;
+        animation: settle 0.55s ease-out;
+      }
+      @keyframes settle {
+        from {
+          transform: translate(-3px, 3px);
+        }
+        to {
+          transform: translate(2px, 2px);
+        }
+      }
+      .misreg-right {
+        color: var(--pink);
+      }
+      .misreg-right::before {
+        color: var(--blue);
+      }
+
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .overline-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 22px;
+      }
+      .overline-bar {
+        width: 34px;
+        height: 11px;
+        background: var(--blue);
+      }
+      .overline-label {
+        font-family: var(--body);
+        color: var(--ink);
+        opacity: 0.85;
+      }
+
+      .stamp {
+        display: inline-block;
+        padding: 7px 14px;
+        border: 2px solid var(--ink);
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--ink);
+        transform: rotate(-6deg);
+        background: transparent;
+        filter: contrast(1.12);
+      }
+      .stamp-pink {
+        border-color: var(--pink);
+        color: var(--pink);
+      }
+      .stamp-blue {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+
+      /* registration crosshair */
+      .crosshair {
+        width: 26px;
+        height: 26px;
+        flex: none;
+        opacity: 0.9;
+      }
+      .crosshair circle {
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 1.4;
+      }
+      .crosshair path {
+        stroke: var(--ink);
+        stroke-width: 1.4;
+      }
+
+      /* ============================================================
+   Buttons — ink blocks with register-slide ghosts
+   ============================================================ */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 48px;
+        padding: 0 26px;
+        position: relative;
+        z-index: 0;
+        font: 600 13px/1 var(--font-body);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        border-radius: var(--radius-panel);
+        transition: transform 0.16s steps(4, end);
+      }
+      .btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        transform: translate(0, 0);
+        opacity: 0;
+        transition:
+          transform 0.16s steps(4, end),
+          opacity 0.16s;
+        background: var(--blue);
+      }
+      .btn:hover::after,
+      .btn:focus-visible::after {
+        transform: translate(3px, 3px);
+        opacity: 1;
+      }
+      .btn:active {
+        transform: translate(2px, 2px);
+      }
+      .btn-primary {
+        background: var(--pink);
+        color: var(--paper);
+      }
+      .btn-secondary {
+        background: var(--blue);
+        color: var(--paper);
+      }
+      .btn-secondary::after {
+        background: var(--pink);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 2px solid transparent;
+        padding: 0 20px;
+      }
+      .btn-ghost::after {
+        content: none;
+      }
+      .btn-ghost .wipe {
+        position: relative;
+      }
+      .btn-ghost .wipe::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        height: 4px;
+        background: var(--pink);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.2s steps(4, end);
+      }
+      .btn-ghost:hover .wipe::after,
+      .btn-ghost:focus-visible .wipe::after {
+        transform: scaleX(1);
+      }
+      .btn-paper {
+        background: var(--paper);
+        color: var(--ink);
+      }
+      .btn-paper::after {
+        background: var(--paper);
+        opacity: 0.001;
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .btn-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      @media (min-width: 640px) {
+        .btn-row {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      /* ============================================================
+   Masthead
+   ============================================================ */
+      .masthead {
+        border-bottom: 2px solid var(--ink);
+        background: var(--paper);
+      }
+      .masthead-in {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 0;
+        flex-wrap: wrap;
+      }
+      .wordmark {
+        font: 900 26px/1 var(--font-display);
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+      .wordmark .reg {
+        color: var(--blue);
+        text-shadow: 2px 2px 0 var(--pink);
+      }
+      .edition-line {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .edition-line {
+          display: block;
+          color: var(--muted);
+        }
+      }
+      nav.mainnav {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        nav.mainnav {
+          display: flex;
+          align-items: center;
+          gap: 26px;
+        }
+        nav.mainnav a {
+          font: 600 12px/1 var(--font-body);
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          padding: 10px 2px;
+          position: relative;
+        }
+        nav.mainnav a::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 2px;
+          height: 3px;
+          background: var(--pink);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.2s steps(4, end);
+        }
+        nav.mainnav a:hover::after {
+          transform: scaleX(1);
+        }
+      }
+      .masthead-cta {
+        display: inline-flex;
+      }
+      @media (min-width: 1024px) {
+        .masthead-cta {
+          display: none !important;
+        }
+      }
+      .menu-btn .bars {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .menu-btn .bars span {
+        width: 16px;
+        height: 2px;
+        background: var(--ink);
+      }
+      .menu-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 16px;
+        border: 2px solid var(--ink);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+      }
+      @media (min-width: 1024px) {
+        .menu-btn,
+        .mobile-nav {
+          display: none !important;
+        }
+      }
+      .mobile-nav {
+        display: none;
+        width: 100%;
+        border-top: 1px solid var(--border);
+        padding: 10px 0 18px;
+      }
+      .mobile-nav.open {
+        display: block;
+      }
+      .mobile-nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        border-bottom: 1px dashed var(--border);
+        font: 600 13px var(--font-body);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .mobile-nav a:last-child {
+        border-bottom: 0;
+      }
+
+      /* ============================================================
+   Hero — poster sheet
+   ============================================================ */
+      .hero {
+        padding: 64px 0 72px;
+      }
+      @media (min-width: 768px) {
+        .hero {
+          padding: 88px 0 96px;
+        }
+      }
+      .hero-grid {
+        display: grid;
+        gap: 44px;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: 1.15fr 0.85fr;
+          align-items: center;
+          gap: 56px;
+        }
+      }
+      .hero h1 {
+        font: 900 clamp(44px, 7.6vw, 84px)/1.02 var(--font-display);
+        letter-spacing: -0.02em;
+        margin: 18px 0 22px;
+        max-width: 14ch;
+      }
+      .hero .lead {
+        max-width: 52ch;
+        font-size: 17px;
+        color: var(--ink);
+        opacity: 0.88;
+        margin-bottom: 30px;
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 22px;
+        color: var(--muted);
+        margin-top: 26px;
+      }
+
+      /* the printed cover plate (hand-built, zero photos) */
+      .plate {
+        position: relative;
+        padding: 14px;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+      }
+      .plate-inner {
+        position: relative;
+        overflow: hidden;
+        background: var(--blue);
+        isolation: isolate;
+        aspect-ratio: 4/3;
+      }
+      .plate-inner .over-circle {
+        position: absolute;
+        width: 62%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--pink);
+        mix-blend-mode: multiply;
+        top: -16%;
+        right: -14%;
+      }
+      .plate-inner .over-circle2 {
+        position: absolute;
+        width: 40%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--yellow);
+        mix-blend-mode: multiply;
+        bottom: -10%;
+        left: 6%;
+      }
+      .plate-inner .bars {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 14px;
+        display: flex;
+        gap: 8px;
+        padding: 0 16px;
+      }
+      .plate-inner .bars i {
+        height: 10px;
+        background: var(--paper);
+        flex: 1;
+      }
+      .plate-inner .bars i:nth-child(2) {
+        flex: 0.6;
+        background: var(--yellow);
+      }
+      .plate-inner .bars i:nth-child(3) {
+        flex: 1.4;
+      }
+      .plate-inner .cover-type {
+        position: absolute;
+        top: 22px;
+        left: 18px;
+        color: var(--paper);
+      }
+      .plate-inner .cover-type b {
+        position: relative;
+        display: block;
+        font: 900 clamp(28px, 4.2vw, 44px)/1 var(--font-display);
+        color: var(--pink);
+      }
+      .plate-inner .cover-type b::before {
+        content: attr(data-ink);
+        position: absolute;
+        inset: 0;
+        color: var(--yellow);
+        transform: translate(2px, 2px);
+        z-index: -1;
+      }
+      .plate-inner .sun {
+        position: absolute;
+        width: 120px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        right: 8%;
+        bottom: 26%;
+        z-index: 1;
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 4px,
+          transparent 4.6px
+        );
+        background-size: 12px 12px;
+      }
+      .plate-cap {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 12px;
+        color: var(--muted);
+        flex-wrap: wrap;
+      }
+      /* yellow halftone circle overprinting the plate edge */
+      .edge-dot {
+        position: absolute;
+        width: 110px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        z-index: 2;
+        left: -26px;
+        bottom: -30px;
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 3px,
+          transparent 3.5px
+        );
+        background-size: 9px 9px;
+      }
+
+      /* ============================================================
+   Stats bar
+   ============================================================ */
+      .stats {
+        background: var(--paper-alt);
+        border-top: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (min-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .stat {
+        padding: 34px 18px 30px;
+        border-right: 1px solid var(--border);
+      }
+      .stat:last-child {
+        border-right: 0;
+      }
+      .stat:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--border);
+      }
+      @media (min-width: 1024px) {
+        .stat:nth-child(-n + 2) {
+          border-bottom: 0;
+        }
+      }
+      @media (min-width: 1024px) {
+        .stat {
+          padding: 44px 28px 40px;
+        }
+      }
+      .stat .num {
+        font: 900 clamp(40px, 4.6vw, 58px)/1 var(--font-display);
+      }
+      .stat .num-pink {
+        color: var(--pink);
+      }
+      .stat .num-blue {
+        color: var(--blue);
+      }
+      .stat .num-ink {
+        color: var(--ink);
+      }
+      .stat .num-third {
+        color: var(--ink);
+      }
+      .stat .under {
+        height: 8px;
+        margin: 14px 0 10px;
+      }
+      .under-pink {
+        background-image: radial-gradient(
+          circle,
+          var(--pink) 1.5px,
+          transparent 1.7px
+        );
+        background-size: 6px 6px;
+      }
+      .under-blue {
+        background-image: radial-gradient(
+          circle,
+          var(--blue) 1.5px,
+          transparent 1.7px
+        );
+        background-size: 6px 6px;
+      }
+      .under-yellow {
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 2px,
+          transparent 2.2px
+        );
+        background-size: 6px 6px;
+      }
+      .under-ink {
+        background-image: radial-gradient(
+          circle,
+          var(--ink) 1.3px,
+          transparent 1.5px
+        );
+        background-size: 6px 6px;
+      }
+      .stat .lbl {
+        color: var(--muted);
+      }
+
+      /* shared section head */
+      .section {
+        padding: 80px 0;
+      }
+      @media (min-width: 1024px) {
+        .section {
+          padding: 104px 0;
+        }
+      }
+      .section h2 {
+        font: 900 clamp(30px, 4.4vw, 48px)/1.1 var(--font-display);
+        letter-spacing: -0.015em;
+      }
+      .section-head {
+        max-width: 760px;
+        margin-bottom: 44px;
+      }
+      .section-head p {
+        margin-top: 14px;
+        color: var(--muted);
+        max-width: 58ch;
+      }
+      .center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .center .overline-row {
+        justify-content: center;
+      }
+
+      /* ============================================================
+   Manifesto
+   ============================================================ */
+      .manifesto {
+        background: var(--paper-alt);
+        border-top: 2px solid var(--ink);
+        padding: 0 0 80px;
+      }
+      @media (min-width: 1024px) {
+        .manifesto {
+          padding: 0 0 104px;
+        }
+      }
+      .manifesto-band {
+        background: var(--blue);
+        height: 84px;
+        position: relative;
+        overflow: hidden;
+      }
+      .manifesto-band .d1 {
+        position: absolute;
+        width: 150px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--pink);
+        mix-blend-mode: multiply;
+        top: -40px;
+        left: 12%;
+      }
+      .manifesto-band .d2 {
+        position: absolute;
+        width: 96px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--yellow);
+        mix-blend-mode: multiply;
+        top: -18px;
+        right: 22%;
+      }
+      .manifesto-band .band-mark {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -38%);
+        color: var(--paper);
+        font: 900 26px var(--font-display);
+        white-space: nowrap;
+      }
+      .manifesto-panel {
+        max-width: 900px;
+        margin: -1px auto 0;
+        padding: 56px 24px 0;
+      }
+      @media (min-width: 768px) {
+        .manifesto-panel {
+          padding: 64px 32px 0;
+        }
+      }
+      .manifesto h2 {
+        font: 500 clamp(30px, 5vw, 52px)/1.18 var(--font-display);
+        letter-spacing: -0.01em;
+        margin-bottom: 30px;
+      }
+      .overprint {
+        position: relative;
+        display: inline-block;
+        font-style: italic;
+        font-weight: 900;
+        color: var(--pink);
+        mix-blend-mode: multiply;
+        text-shadow: 2px 2px 0 rgba(30, 36, 48, 0.22);
+      }
+      .manifesto-body {
+        columns: 2;
+        column-gap: 44px;
+        max-width: 72ch;
+        margin: 0 auto;
+      }
+      .manifesto-body p {
+        margin-bottom: 16px;
+        opacity: 0.9;
+        column-break-inside: avoid;
+      }
+      @media (max-width: 767px) {
+        .manifesto-body {
+          columns: 1;
+        }
+      }
+      .manifesto-marg {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 34px;
+        color: var(--muted);
+      }
+
+      /* ============================================================
+   Features — Spread 01 (catalog of run types)
+   ============================================================ */
+      .sheet-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 640px) {
+        .sheet-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .sheet-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .sheet {
+        background: var(--paper-alt);
+        border: 1px solid var(--border);
+        position: relative;
+        isolation: isolate;
+        padding: 0 0 22px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .sheet .tint {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 120px;
+        background-size: 6px 6px;
+        z-index: -1;
+        transition: transform 0.2s ease-out;
+      }
+      .sheet:hover .tint {
+        transform: translate(2px, 2px);
+      }
+      .tint-pink {
+        background-image: radial-gradient(
+          circle,
+          var(--pink) 1.5px,
+          transparent 1.7px
+        );
+        background-color: rgba(255, 72, 176, 0.1);
+      }
+      .tint-blue {
+        background-image: radial-gradient(
+          circle,
+          var(--blue) 1.5px,
+          transparent 1.7px
+        );
+        background-color: rgba(61, 85, 136, 0.1);
+      }
+      .tint-yellow {
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 2px,
+          transparent 2.2px
+        );
+        background-color: rgba(255, 232, 0, 0.16);
+      }
+      .tint-mix {
+        background-image:
+          radial-gradient(circle, var(--pink) 1.5px, transparent 1.7px),
+          radial-gradient(circle, var(--blue) 1.5px, transparent 1.7px);
+        background-size:
+          6px 6px,
+          6px 6px;
+        background-position:
+          0 0,
+          3px 3px;
+        background-color: rgba(61, 85, 136, 0.08);
+      }
+      .sheet .icon-block {
+        width: 58px;
+        height: 58px;
+        margin: 26px 22px 18px;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .sheet h3 {
+        font: 900 22px/1.15 var(--font-display);
+        margin: 0 22px 10px;
+      }
+      .sheet .code {
+        margin: 0 22px 12px;
+        color: var(--muted);
+      }
+      .sheet p {
+        margin: 0 22px 16px;
+        font-size: 14.5px;
+        opacity: 0.86;
+      }
+      .sheet .chip {
+        margin: auto 22px 0;
+        padding-top: 14px;
+        border-top: 2px solid var(--ink);
+        align-self: stretch;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+      .chip .price {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        background: var(--yellow);
+        padding: 4px 8px;
+        color: var(--ink);
+      }
+      .chip .go {
+        font: 700 11px var(--font-mono);
+        letter-spacing: 0.16em;
+        color: var(--blue);
+      }
+
+      /* hand-printed icons */
+      .icon-shape {
+        width: 30px;
+        height: 30px;
+      }
+      .icon-shape .a {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 2.4;
+      }
+      .icon-shape .b {
+        fill: var(--pink);
+      }
+      .icon-shape .c {
+        fill: none;
+        stroke: var(--ink);
+        stroke-width: 2;
+      }
+
+      /* ============================================================
+   Benefits — Spread 02 (zine checklist)
+   ============================================================ */
+      .benefit-grid {
+        display: grid;
+        gap: 0;
+        position: relative;
+      }
+      @media (min-width: 1024px) {
+        .benefit-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 64px;
+        }
+      }
+      .benefit-list {
+        list-style: none;
+      }
+      .benefit-list li {
+        display: grid;
+        grid-template-columns: 26px 1fr;
+        gap: 16px;
+        padding: 17px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .benefit-list .tick {
+        width: 16px;
+        height: 16px;
+        background: var(--pink);
+        margin-top: 5px;
+        position: relative;
+      }
+      .benefit-list .tick::after {
+        content: '';
+        position: absolute;
+        inset: 2px;
+        background: var(--pink);
+        transform: translate(-2px, -2px);
+        background: var(--blue);
+        opacity: 0.55;
+        mix-blend-mode: multiply;
+      }
+      .benefit-list h4 {
+        font: 700 17px/1.35 var(--font-body);
+        margin-bottom: 3px;
+      }
+      .benefit-list p {
+        font-size: 14.5px;
+        color: var(--muted);
+      }
+      .margin-notes {
+        background: var(--paper);
+        border: 1px solid var(--border);
+        padding: 30px 26px;
+        position: relative;
+      }
+      .margin-notes::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        left: -10px;
+        width: 14px;
+        background-image: radial-gradient(
+          circle,
+          var(--pink) 1.6px,
+          transparent 1.8px
+        );
+        background-size: 6px 6px;
+      }
+      .margin-notes h4 {
+        font: 900 20px var(--font-display);
+        margin-bottom: 14px;
+      }
+      .margin-notes p {
+        font-size: 14.5px;
+        opacity: 0.85;
+        margin-bottom: 12px;
+      }
+      .margin-notes .mono {
+        color: var(--muted);
+      }
+      .callout {
+        margin-top: 44px;
+        background: var(--yellow);
+        padding: 26px 30px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px 34px;
+        position: relative;
+        overflow: visible;
+      }
+      .callout::before {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border: 2px solid var(--pink);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+      .callout b {
+        font: 900 clamp(28px, 3.6vw, 40px)/1 var(--font-display);
+        color: var(--ink);
+      }
+      .callout span {
+        font: 600 14px var(--font-body);
+        color: var(--ink);
+        max-width: 46ch;
+        opacity: 0.9;
+      }
+
+      /* ============================================================
+   Process — Spread 03 (print run)
+   ============================================================ */
+      .run-steps {
+        display: grid;
+        gap: 34px;
+        grid-template-columns: 1fr;
+        position: relative;
+      }
+      @media (min-width: 1024px) {
+        .run-steps {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 28px;
+        }
+      }
+      .run-card {
+        position: relative;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        padding: 26px 24px 28px;
+      }
+      .run-card .run-step {
+        margin-bottom: 14px;
+        color: var(--muted);
+      }
+      .run-card h3 {
+        font: 900 26px/1.1 var(--font-display);
+        margin-bottom: 10px;
+      }
+      .run-card h3 .mis-mini {
+        position: relative;
+        display: inline-block;
+        color: var(--blue);
+      }
+      .run-card h3 .mis-mini::before {
+        content: attr(data-ink);
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        color: var(--pink);
+        transform: translate(2px, 1px);
+      }
+      .run-card p {
+        font-size: 14.5px;
+        opacity: 0.85;
+        margin-bottom: 14px;
+      }
+      .run-card .fields {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 16px;
+        color: var(--muted);
+      }
+      .crosshair-node {
+        position: absolute;
+        top: -13px;
+        left: 24px;
+      }
+      @media (min-width: 1024px) {
+        .run-steps::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 4%;
+          right: 4%;
+          border-top: 2px dashed var(--blue);
+          z-index: -1;
+        }
+        .run-card {
+          margin-top: 0;
+        }
+      }
+
+      /* ============================================================
+   Pricing — Spread 04 (edition sheets)
+   ============================================================ */
+      .pricing-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+      @media (min-width: 1024px) {
+        .pricing-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .edition {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+        position: relative;
+        isolation: isolate;
+      }
+      .edition-head {
+        height: 96px;
+        position: relative;
+        overflow: hidden;
+      }
+      .head-pink-blue {
+        background-color: var(--blue);
+        background-image: radial-gradient(
+          circle,
+          var(--pink) 2px,
+          transparent 2.3px
+        );
+        background-size: 8px 8px;
+      }
+      .head-yellow-ink {
+        background-color: var(--yellow);
+        background-image: radial-gradient(
+          circle,
+          var(--ink) 1.8px,
+          transparent 2.1px
+        );
+        background-size: 8px 8px;
+      }
+      .head-pink-yellow {
+        background-color: var(--pink);
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 2px,
+          transparent 2.3px
+        );
+        background-size: 8px 8px;
+      }
+      .edition-head .h-mark {
+        position: absolute;
+        left: 20px;
+        bottom: 14px;
+        color: var(--paper);
+        font: 900 22px var(--font-display);
+        letter-spacing: 0.04em;
+      }
+      .head-yellow-ink .h-mark {
+        color: var(--ink);
+      }
+      .edition-body {
+        padding: 26px 22px 24px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .tier {
+        font: 900 clamp(24px, 3vw, 30px)/1.1 var(--font-display);
+        margin-bottom: 6px;
+      }
+      .edition .desc {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+      .price-chip {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 8px;
+        background: var(--paper-alt);
+        border: 2px solid var(--ink);
+        padding: 12px 16px;
+        margin-bottom: 18px;
+        align-self: flex-start;
+      }
+      .price-chip .amount {
+        font-family: var(--font-mono);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+      .price-chip .per {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.14em;
+      }
+      .ticks {
+        list-style: none;
+        margin-bottom: 22px;
+      }
+      .ticks li {
+        display: grid;
+        grid-template-columns: 14px 1fr;
+        gap: 12px;
+        padding: 8px 0;
+        font-size: 14.5px;
+        opacity: 0.88;
+      }
+      .ticks .sq {
+        width: 12px;
+        height: 12px;
+        background: var(--pink);
+        margin-top: 5px;
+      }
+      .edition:nth-child(2) .ticks .sq {
+        background: var(--blue);
+      }
+      .edition:nth-child(3) .ticks .sq {
+        background: var(--ink);
+      }
+      .edition .btn {
+        margin-top: auto;
+      }
+      .edition .stamp-slot {
+        position: absolute;
+        top: -18px;
+        right: 14px;
+        z-index: 3;
+      }
+      .edition.featured {
+        border-color: var(--pink);
+        box-shadow: none;
+      }
+      .edition.featured::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border: 2px solid var(--pink);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+      .sellout {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        color: var(--muted);
+        vertical-align: top;
+      }
+
+      /* ============================================================
+   Testimonials — Spread 05 (pink screen tints)
+   ============================================================ */
+      .quote-grid {
+        display: grid;
+        gap: 22px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 640px) {
+        .quote-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .quote-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .quote {
+        background: var(--pink-tint);
+        padding: 34px 26px 28px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba(255, 72, 176, 0.35);
+        mix-blend-mode: normal;
+      }
+      .quote .qmark {
+        font: 900 54px/0.6 var(--font-display);
+        color: var(--blue);
+      }
+      .quote blockquote {
+        font: italic 500 19px/1.45 var(--font-display);
+        margin: 22px 0 18px;
+        color: var(--ink);
+      }
+      .quote .attr {
+        color: var(--ink);
+        opacity: 0.75;
+        margin-top: auto;
+      }
+      .quote .edition-tag {
+        margin-top: 6px;
+        color: var(--muted);
+      }
+
+      /* ============================================================
+   FAQ — Spread 06 (letterpress rows)
+   ============================================================ */
+      .faq-list {
+        max-width: 680px;
+        margin-inline: auto;
+        border-top: 2px solid var(--ink);
+      }
+      .faq-item {
+        border-bottom: 2px solid var(--ink);
+      }
+      .faq-q {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 72px;
+        padding: 18px 4px;
+        text-align: left;
+      }
+      .faq-q .qtext {
+        font: 600 17px/1.3 var(--font-body);
+      }
+      .plus {
+        width: 30px;
+        height: 30px;
+        flex: none;
+        position: relative;
+        transition: transform 0.3s ease;
+      }
+      .plus::before,
+      .plus::after {
+        content: '';
+        position: absolute;
+        background: var(--pink);
+        inset: 0;
+        margin: auto;
+      }
+      .plus::before {
+        width: 16px;
+        height: 4px;
+      }
+      .plus::after {
+        width: 4px;
+        height: 16px;
+      }
+      .faq-item.open .plus {
+        transform: rotate(45deg);
+      }
+      .faq-a {
+        display: none;
+        padding: 0 4px 24px;
+        background: var(--paper-alt);
+        margin: 0 -14px;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-top: 16px;
+      }
+      .faq-item.open .faq-a {
+        display: block;
+      }
+      .faq-a p {
+        font-size: 15px;
+        opacity: 0.85;
+        max-width: 66ch;
+      }
+      .faq-a .mono {
+        color: var(--muted);
+        margin-top: 10px;
+      }
+
+      /* ============================================================
+   Journal — Spread 07 (printed cover cards)
+   ============================================================ */
+      .journal-grid {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 640px) {
+        .journal-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .journal-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .print-card {
+        background: var(--paper-alt);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+      }
+      .print-card .cover {
+        position: relative;
+        aspect-ratio: 16/10;
+        overflow: hidden;
+        isolation: isolate;
+      }
+      .print-card .cover svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .print-card .meta {
+        padding: 16px 20px 0;
+        color: var(--muted);
+        display: flex;
+        gap: 14px;
+      }
+      .print-card h3 {
+        font: 900 21px/1.2 var(--font-display);
+        padding: 8px 20px 0;
+      }
+      .print-card p {
+        padding: 8px 20px 0;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+      .print-card .link-row {
+        padding: 14px 20px 22px;
+        margin-top: auto;
+      }
+      .print-card .link-row b {
+        position: relative;
+        display: inline-block;
+        font: 700 12px var(--font-mono);
+        letter-spacing: 0.16em;
+        color: var(--blue);
+        padding-bottom: 5px;
+      }
+      .print-card .link-row b::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3px;
+        background: var(--pink);
+      }
+      .print-card:hover .cover .slide {
+        transition: transform 0.25s ease-out;
+        transform: translate(3px, 2px);
+      }
+      .print-card:hover .cover .multiply {
+        mix-blend-mode: multiply;
+      }
+
+      /* ============================================================
+   Final CTA — flood band
+   ============================================================ */
+      .flood {
+        background: var(--pink);
+        border-top: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        padding: 88px 0 92px;
+      }
+      @media (min-width: 1024px) {
+        .flood {
+          padding: 112px 0 116px;
+        }
+      }
+      .flood::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          var(--blue) 1.6px,
+          transparent 1.8px
+        );
+        background-size: 7px 7px;
+        opacity: 0.14;
+        pointer-events: none;
+      }
+      .flood::after {
+        content: '';
+        position: absolute;
+        top: -36px;
+        left: -36px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background-image: radial-gradient(
+          circle,
+          var(--yellow) 3px,
+          transparent 3.5px
+        );
+        background-size: 10px 10px;
+        opacity: 0.5;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+      .flood-in {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      .flood h2 {
+        font: 900 clamp(38px, 6vw, 68px)/1.05 var(--font-display);
+        color: var(--blue);
+        mix-blend-mode: multiply;
+        text-shadow: 2px 2px 0 var(--yellow);
+        letter-spacing: -0.02em;
+      }
+      .flood p {
+        margin: 20px auto 32px;
+        max-width: 56ch;
+        color: var(--ink);
+        opacity: 0.92;
+        font-size: 17px;
+      }
+      .flood .btn-row {
+        justify-content: center;
+      }
+      .flood .stamp-blue {
+        margin-top: 34px;
+        border-color: var(--ink);
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      /* ============================================================
+   Footer — slim colophon band at 768px+
+   ============================================================ */
+      .footer {
+        background: var(--paper-alt);
+        border-top: 2px solid var(--ink);
+        padding: 22px 0 26px;
+        position: relative;
+      }
+      .corner-marks {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .corner-marks .mk {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+      }
+      .mk-tl {
+        top: 8px;
+        left: 8px;
+      }
+      .mk-tr {
+        top: 8px;
+        right: 8px;
+        transform: scaleX(-1);
+      }
+      .footer-row {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+      }
+      @media (min-width: 768px) {
+        /* slim two-row colophon band: brand | links | socials,
+           copyright on its own row underneath */
+        .footer-row {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          column-gap: 24px;
+          row-gap: 10px;
+          min-height: 0;
+        }
+        .footer-row .foot-links {
+          justify-self: center;
+        }
+        .footer-row .foot-right {
+          justify-self: end;
+        }
+        .footer-row > .copyright {
+          grid-column: 1 / -1;
+          justify-self: start;
+        }
+      }
+      .foot-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .foot-brand .w {
+        font: 900 20px var(--font-display);
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 22px;
+      }
+      .foot-links a {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 8px 0;
+        color: var(--blue);
+      }
+      .foot-links a:hover {
+        color: var(--pink);
+      }
+      .foot-right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .foot-social {
+        display: flex;
+        gap: 8px;
+      }
+      .foot-social a {
+        width: 36px;
+        height: 36px;
+        border: 2px solid var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .foot-social a:hover {
+        background: var(--pink);
+        border-color: var(--pink);
+      }
+      .foot-social a:hover svg * {
+        stroke: var(--paper);
+        fill: var(--paper);
+      }
+      .copyright {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      /* richer stacked footer content below 768 only */
+      .foot-extra {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding-bottom: 8px;
+      }
+      @media (min-width: 768px) {
+        .foot-extra {
+          display: none;
+        }
+      }
+      .foot-extra .colophon-line {
+        color: var(--muted);
+      }
+      .field {
+        margin-bottom: 18px;
+      }
+      .field label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .field input {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        border-bottom: 2px solid var(--ink);
+        padding: 12px 2px;
+        font: 400 15px var(--font-body);
+        color: var(--ink);
+        min-height: 48px;
+      }
+      .field input::placeholder {
+        color: var(--muted);
+      }
+      .field input:focus-visible {
+        outline: none;
+        border-bottom-color: var(--pink);
+      }
+      /* desktop colophon strip */
+      .foot-colophon {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .foot-colophon {
+          display: block;
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: 1px solid var(--border);
+          text-align: center;
+          color: var(--muted);
+          overflow: hidden;
+          white-space: nowrap;
+          font-size: 10px;
+        }
+      }
+
+      /* ============================================================
+   Motion & reveal
+   ============================================================ */
+      .reveal {
+        opacity: 0;
+        transform: translate(-3px, 6px);
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translate(0, 0);
+        transition:
+          opacity 0.5s ease-out,
+          transform 0.55s ease-out;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .misreg::before {
+          animation: none;
+          transform: translate(2px, 2px);
+        }
+        .btn,
+        .btn::after,
+        .btn-ghost .wipe::after {
+          transition: none;
+        }
+        .plus {
+          transition: none;
+        }
+        .sheet .tint {
+          transition: none;
+        }
+      }
+
+      /* ============================================================
+   Scoped corrections — narrow centred FAQ column
+   ============================================================ */
+      #faq .faq-list {
+        max-width: 680px;
+        margin-inline: auto;
+      }
+      #faq .section-head {
+        max-width: 680px;
+        margin-inline: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ 3.1 HEADER / MASTHEAD ============ -->
+    <header class="masthead">
+      <div class="wrap">
+        <div class="masthead-in">
+          <a href="#top" class="wordmark" id="top"
+            >Mimeo <span class="reg">Press</span></a
+          >
+          <span class="edition-line mono"
+            >VOL.03 — ED.500 — 2 INKS PER RUN</span
+          >
+          <nav class="mainnav" aria-label="Main">
+            <a href="#catalog">Services</a>
+            <a href="#process">Process</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#journal">Journal</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+          <a href="#pricing" class="btn btn-primary masthead-cta"
+            >Start a run</a
+          >
+          <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+          >
+            <span class="bars" aria-hidden="true"
+              ><span></span><span></span><span></span
+            ></span>
+            MENU
+          </button>
+        </div>
+        <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+          <a href="#catalog">Services</a>
+          <a href="#process">Process</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">FAQ</a>
+          <a href="#pricing"><b>Start a run →</b></a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ============ 3.2 HERO ============ -->
+      <section class="hero" id="open">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono" style="color: var(--blue)"
+                >RISOGRAPH STUDIO — CHATTAGRAM, EST. 2023</span
+              >
+            </div>
+            <h1
+              class="misreg"
+              data-ink="Zines with the misregistration left in."
+            >
+              Zines with the misregistration left in.
+            </h1>
+            <p class="lead">
+              Mimeo Press is a two-drum risograph studio for people who publish
+              on purpose. We pull your zine, poster run or catalogue on 50gsm
+              newsprint with two spot inks — and the 2px slip between layers
+              stays right where the drum put it.
+            </p>
+            <div class="btn-row">
+              <a href="#pricing" class="btn btn-primary">Start a run</a>
+              <a href="#catalog" class="btn btn-ghost"
+                ><span class="wipe">See sample sheets</span></a
+              >
+            </div>
+            <div class="hero-meta mono">
+              <span>ED. 500 MAX</span><span>48 HOUR TURN</span
+              ><span>PINK — BLUE — YELLOW</span>
+            </div>
+          </div>
+          <div style="position: relative">
+            <figure class="plate">
+              <div
+                class="plate-inner"
+                role="img"
+                aria-label="Hand-built riso zine cover: blue field, a pink ink circle overprinting the top corner, a yellow circle at the bottom, and a halftone sun of yellow dots"
+              >
+                <span class="over-circle" aria-hidden="true"></span>
+                <span class="over-circle2" aria-hidden="true"></span>
+                <span class="sun" aria-hidden="true"></span>
+                <div class="cover-type">
+                  <span class="mono" style="color: var(--yellow)"
+                    >SUNDRY PRESS · ISSUE 03</span
+                  >
+                  <b data-ink="TINY">TINY</b>
+                </div>
+                <div class="bars" aria-hidden="true"><i></i><i></i><i></i></div>
+              </div>
+              <figcaption class="plate-cap mono">
+                <span>CLIENT: SUNDRY PRESS</span><span>2 INKS · ED. 250</span>
+              </figcaption>
+              <span class="edge-dot" aria-hidden="true"></span>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.3 STATS BAR ============ -->
+      <section class="stats" aria-label="Studio by the numbers">
+        <div class="wrap">
+          <div class="stats-grid">
+            <div class="stat reveal">
+              <div class="num num-pink">1,240</div>
+              <div class="under under-pink" aria-hidden="true"></div>
+              <div class="lbl mono">SHEETS PULLED LAST MONTH</div>
+            </div>
+            <div class="stat reveal">
+              <div class="num num-blue">2</div>
+              <div class="under under-blue" aria-hidden="true"></div>
+              <div class="lbl mono">SPOT INKS PER RUN — EVER</div>
+            </div>
+            <div class="stat reveal">
+              <div class="num num-pink">48</div>
+              <div class="under under-pink" aria-hidden="true"></div>
+              <div class="lbl mono">HOUR TURNAROUND, SECONDS</div>
+            </div>
+            <div class="stat reveal">
+              <div class="num num-blue">73</div>
+              <div class="under under-blue" aria-hidden="true"></div>
+              <div class="lbl mono">SMALL PRESS EDITIONS SINCE 2023</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.4 MANIFESTO ============ -->
+      <section class="manifesto" id="about">
+        <div class="manifesto-band roller">
+          <span class="d1" aria-hidden="true"></span>
+          <span class="d2" aria-hidden="true"></span>
+          <span class="band-mark">PRINTED HONESTLY — OR NOT AT ALL</span>
+        </div>
+        <div class="wrap">
+          <div class="manifesto-panel">
+            <div class="overline-row" style="justify-content: center">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">THE MELD — HOUSE SHEET, ED. EVERYONE</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>
+              Every run is a small mutiny against
+              <span class="overprint">perfect</span> printing.
+            </h2>
+            <div class="manifesto-body">
+              <p>
+                A risograph is not a printer; it is a drum with opinions. Ink
+                bleeds, registration drifts, the third copy of a run never
+                matches the four hundredth. We stopped fighting that in our
+                second month and started printing with it. The slip between the
+                pink drum and the blue drum is 2px — we measure it, we keep it,
+                and it is signed into every job sheet.
+              </p>
+              <p>
+                That is the whole philosophy. Two inks, one paper, no gradients
+                and no glossy stock — the constraints are the aesthetic. When an
+                art-director client asks us to "add a third color, make it
+                smooth", we quote them double and a warning label. When they ask
+                for misregistration kept, we harden the plates. Mimeo exists
+                because someone, somewhere, still wants a page that smells like
+                its own drum.
+              </p>
+            </div>
+            <div class="manifesto-marg">
+              <span class="mono">EST. 2023</span>
+              <svg class="crosshair" viewBox="0 0 26 26" aria-hidden="true">
+                <circle cx="13" cy="13" r="8" />
+                <path d="M13 0v26M0 13h26" />
+              </svg>
+              <span class="mono">INK LIMIT: 2</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.5 FEATURES — SPREAD 01 ============ -->
+      <section class="section" id="catalog">
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 01 — THE CATALOG</span>
+            </div>
+            <h2>Four things we pull off the drum.</h2>
+            <p>
+              Every job board below is priced for a scouting run, not a factory
+              order. Halftone, misregistration and edition-stamping included on
+              all four — no upcharge for honesty.
+            </p>
+          </div>
+          <div class="sheet-grid">
+            <article class="sheet reveal">
+              <span class="tint tint-pink" aria-hidden="true"></span>
+              <div class="icon-block">
+                <svg
+                  class="icon-shape"
+                  viewBox="0 0 30 30"
+                  aria-label="Two overlapping printed circles"
+                >
+                  <circle class="b" cx="18" cy="18" r="9" />
+                  <circle class="a" cx="11" cy="11" r="9" />
+                </svg>
+              </div>
+              <h3>Zine runs</h3>
+              <span class="code mono">CODE: Z-12 · PINK+BLUE</span>
+              <p>
+                16 to 64 saddle-stitched pages, two inks, halftone covers. We
+                help you set the imposition and burn the master clean — then it
+                is all drum.
+              </p>
+              <div class="chip">
+                <span class="price">$420</span
+                ><span class="go">250 COPIES →</span>
+              </div>
+            </article>
+            <article class="sheet reveal">
+              <span class="tint tint-yellow" aria-hidden="true"></span>
+              <div class="icon-block">
+                <svg
+                  class="icon-shape"
+                  viewBox="0 0 30 30"
+                  aria-label="Bar shapes off register"
+                >
+                  <rect class="a" x="4" y="9" width="22" height="4" />
+                  <rect class="b" x="7" y="16" width="18" height="4" />
+                  <rect class="c" x="10" y="23" width="14" height="4" />
+                </svg>
+              </div>
+              <h3>Poster sheets</h3>
+              <span class="code mono">CODE: P-04 · YELLOW+PINK</span>
+              <p>
+                Solo shows, club nights, union meetings. Flood-ink backgrounds
+                with roller streaks left in, headers set 2px off register. A3
+                ship folded flat in packs of 50.
+              </p>
+              <div class="chip">
+                <span class="price">$180</span
+                ><span class="go">100 COPIES →</span>
+              </div>
+            </article>
+            <article class="sheet reveal">
+              <span class="tint tint-blue" aria-hidden="true"></span>
+              <div class="icon-block">
+                <svg
+                  class="icon-shape"
+                  viewBox="0 0 30 30"
+                  aria-label="Grid of printed registration squares"
+                >
+                  <rect class="a" x="4" y="4" width="9" height="9" />
+                  <rect class="b" x="17" y="4" width="9" height="9" />
+                  <rect class="b" x="4" y="17" width="9" height="9" />
+                  <rect class="a" x="17" y="17" width="9" height="9" />
+                </svg>
+              </div>
+              <h3>Catalogue runs</h3>
+              <span class="code mono">CODE: C-07 · BLUE+YELLOW</span>
+              <p>
+                Product and inventory lists for shops that sell with paper.
+                Numbered tables, mono captions, colophon on the back page. Up to
+                96 pages, soft index tabs.
+              </p>
+              <div class="chip">
+                <span class="price">$760</span
+                ><span class="go">300 COPIES →</span>
+              </div>
+            </article>
+            <article class="sheet reveal">
+              <span class="tint tint-mix" aria-hidden="true"></span>
+              <div class="icon-block">
+                <svg
+                  class="icon-shape"
+                  viewBox="0 0 30 30"
+                  aria-label="Registration crosshair"
+                >
+                  <circle class="a" cx="15" cy="15" r="10" />
+                  <path class="a" d="M15 1v28M1 15h28" />
+                  <circle class="b" cx="15" cy="15" r="3" />
+                </svg>
+              </div>
+              <h3>Sampler packet</h3>
+              <span class="code mono">CODE: S-01 · ALL THREE INKS</span>
+              <p>
+                A 12-page demo pack: one sheet per ink, one overprint cross,
+                four paper stocks from 50 to 120gsm. Costs the stamp it ships
+                with. Sent within one drum day.
+              </p>
+              <div class="chip">
+                <span class="price">FREE</span
+                ><span class="go">ED. 1 PER SHOP →</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.6 BENEFITS — SPREAD 02 ============ -->
+      <section class="section" id="why" style="padding-top: 0">
+        <div class="wrap">
+          <div class="section-head">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 02 — WHY MIMO</span>
+            </div>
+            <h2>The margins do the arguing.</h2>
+            <p>
+              What a two-ink studio gives an indie publisher that a four-color
+              print shop quietly cannot.
+            </p>
+          </div>
+          <div class="benefit-grid">
+            <ul class="benefit-list">
+              <li class="reveal">
+                <span class="tick" aria-hidden="true"></span>
+                <div>
+                  <h4>Ink discipline, written into the estimate</h4>
+                  <p>
+                    No run ever silently grows a third color. Every quote states
+                    its inks, its paper and its edition cap before the master
+                    burns.
+                  </p>
+                </div>
+              </li>
+              <li class="reveal">
+                <span class="tick" aria-hidden="true"></span>
+                <div>
+                  <h4>Misregistration on purpose</h4>
+                  <p>
+                    We bias the drum to a 2px pink slip on display type. You get
+                    the handmade read at every bend, not a lottery.
+                  </p>
+                </div>
+              </li>
+              <li class="reveal">
+                <span class="tick" aria-hidden="true"></span>
+                <div>
+                  <h4>Paper next to the press</h4>
+                  <p>
+                    Fifty gsm newsprint down to 120gsm yoso stock, all on the
+                    shelf. Order Friday on newsprint, it leaves Monday — dry
+                    black, 48 hours.
+                  </p>
+                </div>
+              </li>
+              <li class="reveal">
+                <span class="tick" aria-hidden="true"></span>
+                <div>
+                  <h4>Edition stamps, cut by hand</h4>
+                  <p>
+                    Each cover carries a rubber-stamped edition mark — rotation,
+                    pressure and all. Buyers of small editions notice.
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <aside class="margin-notes reveal">
+              <h4>Notes from the drum room</h4>
+              <p>
+                We run one master at a time, by hand, on a repurposed MZ-770.
+                That is the whole discipline: order queue honesty. If your slot
+                is four days out, the job sheet says four days out.
+              </p>
+              <p style="margin-bottom: 0">
+                Overprint proof sheets ship with every order — the exact
+                pink-cross-blue bless with register marks in the corners, so
+                your binder never has to guess.
+              </p>
+              <span class="mono" style="display: block; margin-top: 14px"
+                >FILE: DRUM-ROOM.TXT — SIGNED SB</span
+              >
+            </aside>
+          </div>
+          <div class="callout reveal">
+            <b>97%</b>
+            <span
+              >of first-run proofs sign off without a reprint — clients review
+              sheet 1 of the set while the drum is still warm.</span
+            >
+            <b style="color: var(--pink)">yes</b>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.7 PROCESS — SPREAD 03 ============ -->
+      <section
+        class="section"
+        id="process"
+        style="
+          background: var(--paper-alt);
+          border-top: 2px solid var(--ink);
+          border-bottom: 2px solid var(--ink);
+        "
+      >
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 03 — THE RUN</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>Three steps, one drum, zero surveys.</h2>
+            <p>
+              A launch call runs Monday to Thursday by default. Files in on day
+              1, masters on day 2, pull and pack on day 3, dry and ship by the
+              48th hour.
+            </p>
+          </div>
+          <div class="run-steps">
+            <article class="run-card reveal">
+              <span class="crosshair-node" aria-hidden="true"
+                ><svg class="crosshair" viewBox="0 0 26 26">
+                  <circle cx="13" cy="13" r="8" />
+                  <path d="M13 0v26M0 13h26" /></svg
+              ></span>
+              <div class="run-step mono">STEP 01 — MASTER</div>
+              <h3>
+                <span class="mis-mini" data-ink="Burn">Burn</span> the master.
+              </h3>
+              <p>
+                You send CMYK files; we reduce to the two inks your estimate
+                signed. Knot gray fills, trap pink over blue by 0.5pt, then the
+                thermal head burns the plastic master.
+              </p>
+              <div class="fields mono">
+                <span>FILE: PDF</span><span>INKS SET: 2</span><span>DAY 1</span>
+              </div>
+            </article>
+            <article class="run-card reveal">
+              <span class="crosshair-node" aria-hidden="true"
+                ><svg class="crosshair" viewBox="0 0 26 26">
+                  <circle cx="13" cy="13" r="8" />
+                  <path d="M13 0v26M0 13h26" /></svg
+              ></span>
+              <div class="run-step mono">STEP 02 — PRINT</div>
+              <h3>
+                <span class="mis-mini" data-ink="Pull">Pull</span> the run.
+              </h3>
+              <p>
+                The drum turns, ink crosses multiply, and the halftone does the
+                tonal work. Our register caption keeps display type pinned 2px
+                out — every page of the edition carries it.
+              </p>
+              <div class="fields mono">
+                <span>DRUM: MZ-770</span><span>PASS: 2</span><span>DAY 2</span>
+              </div>
+            </article>
+            <article class="run-card reveal">
+              <span class="crosshair-node" aria-hidden="true"
+                ><svg class="crosshair" viewBox="0 0 26 26">
+                  <circle cx="13" cy="13" r="8" />
+                  <path d="M13 0v26M0 13h26" /></svg
+              ></span>
+              <div class="run-step mono">STEP 03 — DRY</div>
+              <h3>
+                <span class="mis-mini" data-ink="Rest">Rest</span> and ship.
+              </h3>
+              <p>
+                Riso ink stays wet for minutes that feel like hours. Sheets rack
+                for a night, get their edition stamp, saddle-stitch or fold,
+                then flat-pack for courier with the proof sheet.
+              </p>
+              <div class="fields mono">
+                <span>RACK: 12H</span><span>STAMP: −6°</span><span>DAY 3</span>
+              </div>
+            </article>
+          </div>
+          <p
+            style="text-align: center; margin-top: 34px"
+            class="mono"
+            id="pull-start"
+          >
+            FILE A RUN — SEASON SLOTS POST MONDAY 9AM — ED. 500 CAP
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.8 PRICING — SPREAD 04 ============ -->
+      <section class="section" id="pricing">
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 04 — EDITION SHEETS</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>Signed in inks, priced in sheets.</h2>
+            <p>
+              All three edition sheets include setup, masters, paper, overprint
+              proof and the edition stamp. Bigger pulls apply the volume at
+              exactly the number below — no asterisks.
+            </p>
+          </div>
+          <div class="pricing-grid">
+            <article class="edition reveal">
+              <div class="edition-head head-pink-blue">
+                <span class="h-mark">THE FLYER</span>
+              </div>
+              <div class="edition-body">
+                <span class="tier">One sheet, one slam</span>
+                <p class="desc">
+                  A single-side poster or leaflet — the drum's friendliest size.
+                  Perfect for shows, calls and market leaders.
+                </p>
+                <div class="price-chip">
+                  <span class="amount">$180</span
+                  ><span class="per">/ 100 COPIES</span>
+                </div>
+                <ul class="ticks">
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>A3 or smaller,
+                    one side
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>2 spot inks of
+                    your pick
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Halftone field +
+                    plain back
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Ships flat,
+                    poly-wrapped
+                  </li>
+                </ul>
+                <a href="#faq" class="btn btn-secondary">File this sheet</a>
+              </div>
+            </article>
+            <article class="edition featured reveal">
+              <span class="stamp-slot"
+                ><span
+                  class="stamp stamp-ink"
+                  style="color: var(--ink); border-color: var(--pink)"
+                  >BEST VALUE</span
+                ></span
+              >
+              <div class="edition-head head-yellow-ink">
+                <span class="h-mark">THE ZINE</span>
+              </div>
+              <div class="edition-body">
+                <span class="tier">The working run</span>
+                <p class="desc">
+                  16-page saddle-stitched zine, two inks, our own binding rig.
+                  The bread-and-butter of the studio — most editions land here.
+                </p>
+                <div class="price-chip">
+                  <span class="amount">$420</span
+                  ><span class="per">/ 250 COPIES</span>
+                </div>
+                <ul class="ticks">
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>16 pages,
+                    saddle-stitched
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Cover + 3
+                    interior halftones
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Edition stamp:
+                    −6°, hand-pressed
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Overprint proof
+                    sheet included
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Imposition check
+                    before burn
+                  </li>
+                </ul>
+                <a href="#faq" class="btn btn-primary">File this sheet</a>
+              </div>
+            </article>
+            <article class="edition reveal">
+              <div class="edition-head head-pink-yellow">
+                <span class="h-mark">THE RUN</span>
+              </div>
+              <div class="edition-body">
+                <span class="tier">Full press day</span>
+                <p class="desc">
+                  Up to 64 pages plus a whole day of drum time. For catalogues,
+                  launch programs and book fairs beside the river.
+                </p>
+                <div class="price-chip">
+                  <span class="amount">$940</span
+                  ><span class="per">/ 500 COPIES</span>
+                </div>
+                <ul class="ticks">
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Up to 64 pages,
+                    two inks
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Reserved full
+                    drum day
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Table index +
+                    colophon page
+                  </li>
+                  <li>
+                    <span class="sq" aria-hidden="true"></span>Binding: stitch
+                    or fold, your need
+                  </li>
+                </ul>
+                <a href="#faq" class="btn btn-secondary">File this sheet</a>
+              </div>
+            </article>
+          </div>
+          <p
+            class="mono"
+            style="margin-top: 28px; text-align: center; color: var(--muted)"
+          >
+            REPRINTS: SAME SHEET, NEW BURN, 40% OFF — STOCK: NEWSPRINT 50GSM
+            DEFAULT
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.9 TESTIMONIALS — SPREAD 05 ============ -->
+      <section class="section" id="quotes" style="padding-top: 0">
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 05 — THE REVIEWS SHEET</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>Pulled from the margins.</h2>
+          </div>
+          <div class="quote-grid">
+            <article class="quote reveal">
+              <span class="qmark" aria-hidden="true">"</span>
+              <blockquote>
+                "The pink sits 2px proud of the blue on every cover and it reads
+                as design, not defect. We asked Mimeo to keep the crooked row
+                in. They hard-assed the drum for us."
+              </blockquote>
+              <span class="attr mono">— K. AMADOR, EDITOR, SUNDRY PRESS</span>
+              <span class="edition-tag mono">ED. 12 OF 250 · VOL. 03</span>
+            </article>
+            <article class="quote reveal">
+              <span class="qmark" aria-hidden="true">"</span>
+              <blockquote>
+                "Our zine smelled like a fresh print run before we even opened
+                the box. People at the market took one page by the smell and
+                stayed for the ink."
+              </blockquote>
+              <span class="attr mono">— R. OKONKWO, STUDIO GRAMMARIANS</span>
+              <span class="edition-tag mono">ED. 47 OF 250 · VOL. 02</span>
+            </article>
+            <article class="quote reveal">
+              <span class="qmark" aria-hidden="true">"</span>
+              <blockquote>
+                "48 hours, quoted as 48 hours, delivered in 51 with an apology
+                stamp. Twice the proof sheet told me exactly where the register
+                slipped and honestly I signed on for it."
+              </blockquote>
+              <span class="attr mono">— D. LINDQVIST, POP THESIS RECORDS</span>
+              <span class="edition-tag mono">ED. 68 OF 500 · VOL. 01</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.10 FAQ — SPREAD 06 ============ -->
+      <section
+        class="section"
+        id="faq"
+        style="
+          background: var(--paper-alt);
+          border-top: 2px solid var(--ink);
+          border-bottom: 2px solid var(--ink);
+        "
+      >
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 06 — LETTERPRESS Q&nbsp;+&nbsp;A</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>Questions, pressed.</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false">
+                <span class="qtext"
+                  >What files should I send for a riso run?</span
+                >
+                <span class="plus" aria-hidden="true"></span>
+              </button>
+              <div class="faq-a">
+                <p>
+                  Flatten everything to a single PDF at book size, 600dpi, no
+                  bleeds surprises. Send inks as defined spot colors two per
+                  file if you want the cross halftone; otherwise send CMYK and
+                  we will separate for you. Gray fills knot well back to the ink
+                  station.
+                </p>
+                <p class="mono">SPEC SHEET: FILES.PDF — VER. 3</p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false">
+                <span class="qtext">Can I add a third ink mid-job?</span>
+                <span class="plus" aria-hidden="true"></span>
+              </button>
+              <div class="faq-a">
+                <p>
+                  No on a running job, yes on a fresh sheet. The two-ink limit
+                  is not a fuss budget rule — it is what keeps the registration
+                  honest and the price this close to the paper. A third ink
+                  means a third setup, which means a second drum swap. New
+                  sheet, new estimate, 40-minute walk of regret.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false">
+                <span class="qtext"
+                  >How misregistered will my edition actually be?</span
+                >
+                <span class="plus" aria-hidden="true"></span>
+              </button>
+              <div class="faq-a">
+                <p>
+                  Wherever you tell us to be. Keywords in the estimate:
+                  <b>kept</b> (display type biased 2px, the house look),
+                  <b>tight</b> (standard drum slips under 1px) or
+                  <b>cross</b> (shapes allowed to multiply are intentional). We
+                  print the sheet calendar so page 12 matches page 1 — no drift
+                  lottery.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false">
+                <span class="qtext">What papers do you stock?</span>
+                <span class="plus" aria-hidden="true"></span>
+              </button>
+              <div class="faq-a">
+                <p>
+                  50gsm newsprint (the smell you came for), 90gsm eggshell,
+                  120gsm yoso stock, and a limited 180gsm grey board for covers.
+                  Paper is a price line on the estimate, not an upsell — swap
+                  freely until the master burns.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-q" aria-expanded="false">
+                <span class="qtext">Do you ship outside the drum room?</span>
+                <span class="plus" aria-hidden="true"></span>
+              </button>
+              <div class="faq-a">
+                <p>
+                  Anywhere a courier reaches. Flat-pack, board-backed, ink
+                  racking completed before boxing so nothing smears in transit.
+                  The overprint proof ships inside, and the edition stamps are
+                  already pressed.
+                </p>
+                <p class="mono">RESTOW: SHIP-FEES.TXT</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.11 JOURNAL — SPREAD 07 ============ -->
+      <section class="section" id="journal">
+        <div class="wrap">
+          <div class="section-head center">
+            <div class="overline-row">
+              <span class="overline-bar" aria-hidden="true"></span>
+              <span class="mono">SPREAD 07 — THE PRINT JOURNAL</span>
+              <span class="overline-bar" aria-hidden="true"></span>
+            </div>
+            <h2>From the cutting room floor.</h2>
+          </div>
+          <div class="journal-grid">
+            <a class="print-card reveal" href="#journal">
+              <div
+                class="cover"
+                role="img"
+                aria-label="Printed cover: yellow halftone circles overprinting a blue field with an off-register pink arc"
+              >
+                <svg
+                  viewBox="0 0 160 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <rect width="160" height="100" fill="#3D5588" />
+                  <g class="multiply">
+                    <circle cx="122" cy="26" r="30" fill="#FF48B0" />
+                    <circle cx="102" cy="58" r="22" fill="#FFE800" />
+                  </g>
+                  <g class="slide">
+                    <path
+                      d="M20 74 Q52 38 58 70 T96 72"
+                      fill="none"
+                      stroke="#FF48B0"
+                      stroke-width="5"
+                    />
+                  </g>
+                  <g fill="#F7F3E8">
+                    <circle cx="22" cy="16" r="2.4" />
+                    <circle cx="34" cy="16" r="2.4" />
+                    <circle cx="46" cy="16" r="2.4" />
+                    <circle cx="58" cy="16" r="2.4" />
+                  </g>
+                </svg>
+              </div>
+              <div class="meta mono">
+                <span>SPREAD 01</span><span>SEP 12, 2026</span
+                ><span>4 MIN</span>
+              </div>
+              <h3>Why we bias the pink drum to slip</h3>
+              <p>
+                A register diary from job 71: what the drum did to a client's
+                wordmark, and why we drew the 2px line and left it there.
+              </p>
+              <span class="link-row"><b>INK: KEEP READING</b></span>
+            </a>
+            <a class="print-card reveal" href="#journal">
+              <div
+                class="cover"
+                role="img"
+                aria-label="Printed cover: orange overprint cross of pink and yellow bars with black registration text blocks"
+              >
+                <svg
+                  viewBox="0 0 160 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <rect width="160" height="100" fill="#FFE800" />
+                  <g class="multiply">
+                    <rect
+                      x="14"
+                      y="20"
+                      width="120"
+                      height="14"
+                      fill="#FF48B0"
+                    />
+                    <rect
+                      x="58"
+                      y="8"
+                      width="14"
+                      height="80"
+                      fill="#3D5588"
+                      opacity=".8"
+                    />
+                  </g>
+                  <g class="slide">
+                    <rect x="10" y="64" width="46" height="10" fill="#1E2430" />
+                    <rect
+                      x="10"
+                      y="79"
+                      width="72"
+                      height="6"
+                      fill="#1E2430"
+                      opacity=".6"
+                    />
+                  </g>
+                  <circle
+                    cx="130"
+                    cy="80"
+                    r="9"
+                    fill="none"
+                    stroke="#1E2430"
+                    stroke-width="2"
+                  />
+                </svg>
+              </div>
+              <div class="meta mono">
+                <span>SPREAD 02</span><span>AUG 28, 2026</span
+                ><span>6 MIN</span>
+              </div>
+              <h3>Anatomy of a perfect overprint cross</h3>
+              <p>
+                Pink over yellow makes orange. Blue over either makes the page a
+                villain. One proof sheet, four crosses, one argument.
+              </p>
+              <span class="link-row"><b>INK: KEEP READING</b></span>
+            </a>
+            <a class="print-card reveal" href="#journal">
+              <div
+                class="cover"
+                role="img"
+                aria-label="Printed cover: blue halftone dot sun rising over sorted ink cans and stacked paper sheets"
+              >
+                <svg
+                  viewBox="0 0 160 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <rect width="160" height="100" fill="#F7F3E8" />
+                  <g fill="#3D5588">
+                    <circle
+                      cx="44"
+                      cy="34"
+                      r="18"
+                      fill="none"
+                      stroke="#3D5588"
+                      stroke-width="1.6"
+                    />
+                    <circle cx="44" cy="34" r="9" />
+                  </g>
+                  <g class="slide">
+                    <polygon points="120,30 138,64 102,64" fill="#FF48B0" />
+                    <polygon
+                      points="112,36 136,74 88,74"
+                      fill="#3D5588"
+                      opacity=".55"
+                    />
+                  </g>
+                  <g fill="#1E2430">
+                    <rect x="16" y="66" width="30" height="6" />
+                    <rect x="16" y="76" width="30" height="6" />
+                    <rect x="16" y="86" width="30" height="6" />
+                  </g>
+                </svg>
+              </div>
+              <div class="meta mono">
+                <span>SPREAD 03</span><span>AUG 09, 2026</span
+                ><span>3 MIN</span>
+              </div>
+              <h3>Stock report: the newsprint shelf</h3>
+              <p>
+                What we pulled, what ran out, and the story of a pale gray board
+                that took two full editions before we trusted it.
+              </p>
+              <span class="link-row"><b>INK: KEEP READING</b></span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.12 FINAL CTA — FLOOD BAND ============ -->
+      <section class="flood" id="cta">
+        <div class="wrap flood-in">
+          <h2 class="misreg" data-ink="Your edition. Our drum. Monday 9AM.">
+            Your edition. Our drum. Monday 9AM.
+          </h2>
+          <p>
+            The season calendar opens Monday morning with 6 plate slots. File
+            the run, get the proof on Tuesday's grader, and smell the difference
+            by the 48th hour.
+          </p>
+          <div class="btn-row">
+            <a href="#pricing" class="btn btn-paper">Pull one now →</a>
+            <a href="#faq" class="btn btn-ghost" style="color: var(--paper)"
+              ><span class="wipe">Read the spec sheet</span></a
+            >
+          </div>
+          <span class="stamp">PULL ONE → ED. OF 500</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 3.13 FOOTER — COLOPHON ============ -->
+    <footer class="footer">
+      <div class="corner-marks" aria-hidden="true">
+        <svg class="mk mk-tl" viewBox="0 0 22 22">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            fill="none"
+            stroke="#1E2430"
+            stroke-width="1.2"
+          />
+          <path d="M11 0v22M0 11h22" stroke="#1E2430" stroke-width="1.2" />
+        </svg>
+        <svg class="mk mk-tr" viewBox="0 0 22 22">
+          <circle
+            cx="11"
+            cy="11"
+            r="7"
+            fill="none"
+            stroke="#1E2430"
+            stroke-width="1.2"
+          />
+          <path d="M11 0v22M0 11h22" stroke="#1E2430" stroke-width="1.2" />
+        </svg>
+      </div>
+      <div class="wrap">
+        <!-- richer exposed only below 768 -->
+        <div class="foot-extra">
+          <p class="colophon-line mono">
+            PRINTED ON RISO MZ-770 — 2 INKS PER RUN — 50GSM NEWSPRINT
+          </p>
+          <form
+            class="field"
+            action="#"
+            onsubmit="return false"
+            aria-label="Koline signup"
+          >
+            <label for="kline">FIELD: KOLINE — THE PRESS LIST</label>
+            <div class="btn-row" style="gap: 10px; flex-direction: row">
+              <input
+                style="flex: 1"
+                id="kline"
+                type="email"
+                placeholder="you@smallpress.world"
+                autocomplete="email"
+              />
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="min-height: 48px"
+              >
+                Subscribe
+              </button>
+            </div>
+          </form>
+          <p style="font-size: 14px; opacity: 0.8; max-width: 44ch">
+            One letter a month: drum notes, ink changes, and when the season
+            calendar opens. Sent on the 9th, printed the 7th.
+          </p>
+        </div>
+        <div class="footer-row">
+          <a href="#top" class="foot-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                fill="#FF48B0"
+                style="mix-blend-mode: multiply"
+              />
+              <rect
+                x="9"
+                y="9"
+                width="6"
+                height="6"
+                fill="#3D5588"
+                style="mix-blend-mode: multiply"
+              />
+            </svg>
+            <span class="w">Mimeo Press</span>
+          </a>
+          <nav class="foot-links" aria-label="Footer">
+            <a href="#catalog">Services</a>
+            <a href="#process">Process</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#journal">Journal</a>
+          </nav>
+          <div class="foot-right">
+            <div class="foot-social" role="list" aria-label="Social links">
+              <a href="#top" aria-label="Mimeo Press on Instagram"
+                ><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <rect
+                    x="1.5"
+                    y="1.5"
+                    width="13"
+                    height="13"
+                    rx="3.5"
+                    stroke="#1E2430"
+                    stroke-width="1.6"
+                  />
+                  <circle
+                    cx="8"
+                    cy="8"
+                    r="3"
+                    stroke="#1E2430"
+                    stroke-width="1.6"
+                  />
+                  <circle cx="12" cy="4" r="1" fill="#1E2430" /></svg
+              ></a>
+              <a href="#top" aria-label="Mimeo Press on Mastodon"
+                ><svg width="16" height="16" viewBox="0 0 16 16">
+                  <path
+                    d="M2 10V5a6 6 0 0 1 12 0v4"
+                    fill="none"
+                    stroke="#1E2430"
+                    stroke-width="1.8"
+                  />
+                  <rect x="2" y="8" width="3.4" height="5" fill="#1E2430" />
+                  <rect
+                    x="10.6"
+                    y="8"
+                    width="3.4"
+                    height="5"
+                    fill="#1E2430"
+                  /></svg
+              ></a>
+              <a href="#top" aria-label="Email the studio"
+                ><svg width="16" height="16" viewBox="0 0 16 16">
+                  <rect
+                    x="1.5"
+                    y="3"
+                    width="13"
+                    height="10"
+                    fill="none"
+                    stroke="#1E2430"
+                    stroke-width="1.6"
+                  />
+                  <path
+                    d="M2 4l6 5 6-5"
+                    fill="none"
+                    stroke="#1E2430"
+                    stroke-width="1.6"
+                  /></svg
+              ></a>
+            </div>
+          </div>
+          <span class="copyright">© 2026 MIMO PRESS</span>
+        </div>
+        <div class="foot-colophon mono">
+          SET IN FRAUNCES 900 + WORK SANS + ROBOTO MONO — PRINTED ON RISO MZ-770
+          — 2 INKS — 50GSM NEWSPRINT — REG. SLIP 2PX, KEPT
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        var menuBtn = document.getElementById('menuBtn'),
+          mobileNav = document.getElementById('mobileNav')
+        menuBtn.addEventListener('click', function () {
+          var open = mobileNav.classList.toggle('open')
+          menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false')
+          menuBtn.textContent = open ? 'CLOSE' : 'MENU'
+        })
+        mobileNav.addEventListener('click', function (e) {
+          if (e.target.closest('a')) {
+            mobileNav.classList.remove('open')
+            menuBtn.setAttribute('aria-expanded', 'false')
+            var label = menuBtn.childNodes[menuBtn.childNodes.length - 1]
+            menuBtn.textContent = 'MENU'
+          }
+        })
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-q').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var item = btn.closest('.faq-item'),
+              open = item.classList.contains('open')
+            document.querySelectorAll('.faq-item.open').forEach(function (o) {
+              o.classList.remove('open')
+              o.querySelector('.faq-q').setAttribute('aria-expanded', 'false')
+            })
+            if (!open) {
+              item.classList.add('open')
+              btn.setAttribute('aria-expanded', 'true')
+            }
+          })
+        })
+
+        // reveal on scroll (register-slide)
+        var reduce = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+        var els = document.querySelectorAll('.reveal')
+        if (reduce || !('IntersectionObserver' in window)) {
+          els.forEach(function (el) {
+            el.classList.add('in')
+          })
+        } else {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add('in')
+                  io.unobserve(en.target)
+                }
+              })
+            },
+            { threshold: 0.14 },
+          )
+          els.forEach(function (el) {
+            io.observe(el)
+          })
+        }
+      })()
+    </script>
+<style id="footer-unify">/* one footer on every device */
+@media (max-width:767px){.foot-extra{display:none!important}.footer-row{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.4rem}.footer-row > *{min-width:0}.colophon-line{flex-basis:100%!important;text-align:center!important}}
+</style>
+</body>
+</html>

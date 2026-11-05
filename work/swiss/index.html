@@ -1,0 +1,1159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Prof. Anisur Rahman — Professor of English Literature</title>
+    <meta
+      name="description"
+      content="Prof. Anisur Rahman is a professor of English literature in Dhaka, working on postcolonial literature and translation studies. Research, publications, teaching, and talks."
+    />
+    <meta
+      property="og:title"
+      content="Prof. Anisur Rahman — Professor of English Literature"
+    />
+    <meta
+      property="og:description"
+      content="Research, teaching, and the patience both require. Postcolonial literature and translation studies in Dhaka."
+    />
+    <meta property="og:type" content="profile" />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&h=630&q=80"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%93%9A</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fafaf7;
+        --ink: #141414;
+        --muted: #6b6b6b;
+        --accent: #e5261f;
+        --line: rgba(20, 20, 20, 0.14);
+        --pad: clamp(20px, 6vw, 96px);
+        --head: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+        --body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: clamp(15px, 0.4vw + 14px, 17px);
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: 0;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--head);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.12;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+      ul,
+      ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      :where(
+        a,
+        button,
+        input,
+        textarea,
+        select,
+        summary,
+        [tabindex]
+      ):focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .shell {
+        width: 100%;
+        max-width: 1360px;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .mono {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--ink);
+        color: var(--bg);
+        padding: 12px 18px;
+        z-index: 50;
+        font-family: var(--mono);
+        font-size: 0.75rem;
+      }
+      .skip:focus {
+        left: 12px;
+        top: 12px;
+      }
+
+      /* Header */
+      .site-header {
+        border-bottom: 1px solid var(--line);
+      }
+      .header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px 28px;
+        padding-block: 18px;
+      }
+      .brand {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .brand span {
+        color: var(--muted);
+      }
+      .site-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .site-nav a {
+        padding-bottom: 2px;
+      }
+      .site-nav a:hover {
+        color: var(--ink);
+        text-decoration-color: var(--accent);
+      }
+
+      /* Hero */
+      .hero {
+        padding-block: clamp(32px, 5vw, 72px) clamp(48px, 6vw, 88px);
+      }
+      .hero .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: clamp(24px, 3vw, 48px);
+        align-items: end;
+      }
+      .hero-copy {
+        grid-column: 1/-1;
+        min-width: 0;
+      }
+      .hero-figure {
+        grid-column: 1/-1;
+        margin: 0;
+        min-width: 0;
+      }
+      @media (min-width: 900px) {
+        .hero-copy {
+          grid-column: span 7;
+        }
+        .hero-figure {
+          grid-column: span 5;
+        }
+      }
+      .kicker {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 6.4vw, 5rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+        margin-bottom: 20px;
+      }
+      .headline {
+        font-family: var(--head);
+        font-weight: 600;
+        font-size: clamp(1.25rem, 2.4vw, 1.9rem);
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+        max-width: 24ch;
+        margin-bottom: 20px;
+      }
+      .lede {
+        max-width: 56ch;
+        color: #2b2b2b;
+        margin-bottom: 24px;
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        color: var(--muted);
+        margin-bottom: 26px;
+      }
+      .hero-meta a:hover {
+        color: var(--ink);
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 24px;
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .hero-actions a {
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 3px;
+      }
+      .hero-actions a:hover {
+        text-decoration: none;
+        border-bottom-color: var(--accent);
+      }
+      .hero-figure img {
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        background: #ecece6;
+      }
+      .hero-figure figcaption {
+        margin-top: 10px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      /* Sections */
+      .sec {
+        padding-block: clamp(48px, 6.5vw, 96px);
+        border-top: 1px solid var(--line);
+      }
+      .sec-head {
+        margin-bottom: clamp(24px, 3vw, 44px);
+      }
+      .sec-marker {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 6px 14px;
+        margin-bottom: 14px;
+      }
+      .sec-num {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+      }
+      .sec-label {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .sec h2 {
+        font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+        letter-spacing: -0.03em;
+        max-width: 30ch;
+      }
+      .sec-intro {
+        max-width: 60ch;
+        color: var(--muted);
+        margin-top: 14px;
+      }
+
+      .grid-12 {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: clamp(16px, 2vw, 28px);
+      }
+      .interest {
+        grid-column: 1/-1;
+        min-width: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+      }
+      @media (min-width: 768px) {
+        .interest {
+          grid-column: span 6;
+        }
+      }
+      @media (min-width: 1024px) {
+        .interest {
+          grid-column: span 3;
+        }
+      }
+      .interest h3 {
+        font-size: 1.02rem;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      .interest p {
+        font-size: 0.94rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .interest .idx {
+        display: block;
+        color: var(--accent);
+        margin-bottom: 10px;
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+      }
+
+      /* Publications */
+      .cites {
+        max-width: 80ch;
+        border-bottom: 1px solid var(--line);
+      }
+      .cites li {
+        display: grid;
+        grid-template-columns: 2.4rem minmax(0, 1fr);
+        gap: 12px;
+        padding-block: 20px;
+        border-top: 1px solid var(--line);
+      }
+      .cites .idx {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        padding-top: 3px;
+      }
+      .cite-text {
+        font-size: 0.98rem;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+      }
+      .cite-text em {
+        font-style: italic;
+      }
+      .cite-text a {
+        text-decoration: underline;
+        text-decoration-color: var(--line);
+        text-underline-offset: 3px;
+      }
+      .cite-text a:hover {
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+      }
+      .pdf {
+        font-family: var(--mono);
+        font-size: 0.64rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .pdf:hover {
+        color: var(--accent);
+      }
+      .note {
+        font-family: var(--mono);
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 18px;
+      }
+
+      /* Teaching & talks rows */
+      .rows {
+        border-bottom: 1px solid var(--line);
+      }
+      .rows li {
+        display: grid;
+        gap: 8px;
+        padding-block: 20px;
+        border-top: 1px solid var(--line);
+        min-width: 0;
+      }
+      @media (min-width: 768px) {
+        .rows li {
+          grid-template-columns: 7.5rem minmax(0, 1fr) 12rem;
+          gap: 24px;
+          align-items: start;
+        }
+        .rows .row-meta {
+          text-align: right;
+        }
+      }
+      .row-code {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        text-transform: uppercase;
+        padding-top: 4px;
+      }
+      .row-title {
+        font-family: var(--head);
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+      .row-desc {
+        font-size: 0.93rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .row-meta {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 4px;
+      }
+      .row-meta a {
+        text-decoration: underline;
+        text-decoration-color: var(--line);
+        text-underline-offset: 3px;
+      }
+      .row-meta a:hover {
+        text-decoration-color: var(--accent);
+        color: var(--ink);
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 3vw, 48px);
+        align-items: start;
+      }
+      @media (min-width: 900px) {
+        .about-grid {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        }
+      }
+      .about-copy p + p {
+        margin-top: 16px;
+      }
+      .about-copy {
+        max-width: 60ch;
+      }
+      .edu {
+        margin-top: 26px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .about-figure {
+        margin: 0;
+      }
+      .about-figure img {
+        width: 100%;
+        aspect-ratio: 3/2;
+        object-fit: cover;
+        background: #ecece6;
+      }
+      .about-figure figcaption {
+        margin-top: 10px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 3vw, 48px);
+      }
+      @media (min-width: 900px) {
+        .contact-grid {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        }
+      }
+      .contact-lead {
+        max-width: 34ch;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+      .contact-email {
+        display: inline-block;
+        font-family: var(--head);
+        font-weight: 600;
+        font-size: clamp(1.25rem, 2.8vw, 2rem);
+        letter-spacing: -0.02em;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 4px;
+        overflow-wrap: anywhere;
+        max-width: 100%;
+      }
+      .contact-email:hover {
+        text-decoration: none;
+        border-bottom-color: var(--accent);
+      }
+      .contact-links {
+        margin-top: 28px;
+        max-width: 34rem;
+      }
+      .contact-links a {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 8px 18px;
+        padding-block: 12px;
+        border-top: 1px solid var(--line);
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .contact-links li:last-child a {
+        border-bottom: 1px solid var(--line);
+      }
+      .contact-links a span:last-child {
+        color: var(--muted);
+      }
+      .contact-links a:hover span:last-child {
+        color: var(--accent);
+      }
+      .hours {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+      .hours h3 {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 400;
+        margin-bottom: 14px;
+      }
+      .hours dl {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 8px 18px;
+        font-size: 0.93rem;
+      }
+      .hours dt {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 3px;
+      }
+      .hours dd {
+        margin: 0;
+      }
+      .hours .fine {
+        display: block;
+        margin-top: 16px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(32px, 4vw, 52px);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+      .footer-brand {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .footer-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .footer-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 16px;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .copyright {
+        grid-column: 1/-1;
+        margin: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+        font-family: var(--mono);
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      @media (min-width: 768px) {
+        .footer-grid {
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          column-gap: 32px;
+        }
+        .footer-nav ul {
+          justify-content: center;
+        }
+        .footer-social {
+          justify-content: flex-end;
+        }
+      }
+
+      /* Entrance animation — content is visible unless JS arms it */
+      .anim-armed [data-anim] {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      .anim-armed [data-anim].is-in {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.5s ease-out,
+          transform 0.5s ease-out;
+        transition-delay: var(--d, 0ms);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .anim-armed [data-anim],
+        .anim-armed [data-anim].is-in {
+          opacity: 1 !important;
+          transform: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <p class="brand">A. Rahman <span>/ English Literature</span></p>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#research">Research</a></li>
+            <li><a href="#publications">Publications</a></li>
+            <li><a href="#teaching">Teaching</a></li>
+            <li><a href="#talks">Talks</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="shell">
+          <div class="grid">
+            <div class="hero-copy" data-anim>
+              <p class="kicker mono">
+                Professor of English Literature · Dhaka, Bangladesh
+              </p>
+              <h1 id="hero-title">Prof. Anisur Rahman</h1>
+              <p class="headline">
+                Research, teaching, and the patience both require.
+              </p>
+              <p class="lede">
+                I work on postcolonial literature and translation studies, and I
+                have taught undergraduate and graduate seminars in Dhaka for
+                sixteen years. My current project asks what a Bengali reader
+                does with an English archive — and what the archive does back.
+              </p>
+              <p class="hero-meta mono">
+                16 years &middot; Dept. of English &middot;
+                <a href="mailto:anisur.rahman@university-demo.edu"
+                  >anisur.rahman@university-demo.edu</a
+                >
+              </p>
+              <div class="hero-actions">
+                <a href="#publications">Publications</a>
+                <a href="mailto:anisur.rahman@university-demo.edu">Email</a>
+              </div>
+            </div>
+            <figure class="hero-figure" data-anim>
+              <!-- REPLACE: portrait photo of Prof. Anisur Rahman | Replace with the real photo -->
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&h=1000&q=80"
+                width="800"
+                height="1000"
+                data-replace="portrait"
+                alt="Portrait of Prof. Anisur Rahman"
+              />
+              <figcaption>Departmental portrait, 2026 (placeholder)</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="research" aria-labelledby="research-title">
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">01</span
+              ><span class="sec-label">Research</span>
+            </div>
+            <h2 id="research-title">Research interests</h2>
+            <p class="sec-intro">
+              Four areas, one habit: reading closely, in two languages, against
+              the grain of the syllabus.
+            </p>
+          </div>
+          <div class="grid-12">
+            <div class="interest" data-anim>
+              <span class="idx">A</span>
+              <h3>Postcolonial literature</h3>
+              <p>
+                South Asian writing, colonial print, and the politics of
+                citation — who gets annotated, and by whom.
+              </p>
+            </div>
+            <div class="interest" data-anim>
+              <span class="idx">B</span>
+              <h3>Translation studies</h3>
+              <p>
+                What Bengali does to English, and what translation does to the
+                idea of an original text.
+              </p>
+            </div>
+            <div class="interest" data-anim>
+              <span class="idx">C</span>
+              <h3>Literary pedagogy</h3>
+              <p>
+                Syllabus design as an argument, and the classroom as a place
+                where close reading is still taught slowly.
+              </p>
+            </div>
+            <div class="interest" data-anim>
+              <span class="idx">D</span>
+              <h3>Print &amp; periodical history</h3>
+              <p>
+                Little magazines, departmental journals, and the short, stubborn
+                life of literary print in Dhaka.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="sec"
+        id="publications"
+        aria-labelledby="publications-title"
+      >
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">02</span
+              ><span class="sec-label">Selected work</span>
+            </div>
+            <h2 id="publications-title">Publications</h2>
+            <p class="sec-intro">
+              Five recent or representative pieces. Venues are placeholders;
+              volume and issue numbers stand in for real details.
+            </p>
+          </div>
+          <ol class="cites">
+            <li data-anim>
+              <span class="idx">01</span>
+              <p class="cite-text">
+                <a href="#"
+                  >&ldquo;Reading the Archive Otherwise: Postcolonial Literature
+                  and the Ethics of Citation.&rdquo;</a
+                >
+                <em>Journal of South Asian Letters</em>, vol. 12, no. 2 (2024),
+                pp. 44–67. <a class="pdf" href="#">PDF (placeholder)</a>
+              </p>
+            </li>
+            <li data-anim>
+              <span class="idx">02</span>
+              <p class="cite-text">
+                <a href="#"
+                  >&ldquo;Untranslatable, Again: Notes from a Bengali
+                  Classroom.&rdquo;</a
+                >
+                <em>Translation and Its Margins</em>, vol. 7, no. 1 (2023), pp.
+                12–31. <a class="pdf" href="#">PDF (placeholder)</a>
+              </p>
+            </li>
+            <li data-anim>
+              <span class="idx">03</span>
+              <p class="cite-text">
+                <a href="#"
+                  >&ldquo;The Provincial Cosmopolitan: Reading the Canon After
+                  the Archive.&rdquo;</a
+                >
+                <em>Journal of South Asian Letters</em>, vol. 10, no. 4 (2022),
+                pp. 88–109. <a class="pdf" href="#">PDF (placeholder)</a>
+              </p>
+            </li>
+            <li data-anim>
+              <span class="idx">04</span>
+              <p class="cite-text">
+                <a href="#"
+                  >&ldquo;Two Languages, One Sentence: A Translator&rsquo;s
+                  Notebook.&rdquo;</a
+                >
+                <em>Dhaka Review of English Studies</em>, vol. 5, no. 3 (2021),
+                pp. 5–22. <a class="pdf" href="#">PDF (placeholder)</a>
+              </p>
+            </li>
+            <li data-anim>
+              <span class="idx">05</span>
+              <p class="cite-text">
+                <a href="#"
+                  >&ldquo;Nation, Narration, and the Exam Syllabus.&rdquo;</a
+                >
+                <em>Studies in Curriculum and Literature</em>, vol. 3, no. 2
+                (2019), pp. 71–90. <a class="pdf" href="#">PDF (placeholder)</a>
+              </p>
+            </li>
+          </ol>
+          <p class="note">
+            Venue names and citation details are placeholders for this demo.
+          </p>
+        </div>
+      </section>
+
+      <section class="sec" id="teaching" aria-labelledby="teaching-title">
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">03</span
+              ><span class="sec-label">Teaching</span>
+            </div>
+            <h2 id="teaching-title">Courses</h2>
+            <p class="sec-intro">
+              Three courses I teach regularly, at undergraduate and graduate
+              level.
+            </p>
+          </div>
+          <ul class="rows">
+            <li data-anim>
+              <span class="row-code">ENG 201</span>
+              <div>
+                <p class="row-title">Novel Studies</p>
+                <p class="row-desc">
+                  The novel as a form, read slowly: narrative voice, time, and
+                  the problem of sympathy across six set texts.
+                </p>
+              </div>
+              <p class="row-meta">Undergraduate &middot; Spring term</p>
+            </li>
+            <li data-anim>
+              <span class="row-code">ENG 405</span>
+              <div>
+                <p class="row-title">Postcolonial Theory</p>
+                <p class="row-desc">
+                  Key arguments from Fanon to Spivak, paired with South Asian
+                  fiction and a weekly reading response.
+                </p>
+              </div>
+              <p class="row-meta">Undergraduate &middot; Autumn term</p>
+            </li>
+            <li data-anim>
+              <span class="row-code">ENG 510</span>
+              <div>
+                <p class="row-title">Translation Workshop</p>
+                <p class="row-desc">
+                  A studio course: students translate one Bengali essay across
+                  the term and defend every choice in writing.
+                </p>
+              </div>
+              <p class="row-meta">Graduate &middot; Spring term</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec" id="talks" aria-labelledby="talks-title">
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">04</span
+              ><span class="sec-label">Talks</span>
+            </div>
+            <h2 id="talks-title">Invited talks</h2>
+            <p class="sec-intro">
+              Recent seminars and conference papers. Venues are listed as
+              placeholders.
+            </p>
+          </div>
+          <ul class="rows">
+            <li data-anim>
+              <span class="row-code">2026</span>
+              <div>
+                <p class="row-title">The Archive Is a Syllabus</p>
+                <p class="row-desc">
+                  Departmental seminar series, Dhaka — venue TBA (placeholder).
+                </p>
+              </div>
+              <p class="row-meta">Seminar</p>
+            </li>
+            <li data-anim>
+              <span class="row-code">2025</span>
+              <div>
+                <p class="row-title">Translating the Footnote</p>
+                <p class="row-desc">
+                  Annual conference on literary translation, South Asia — venue
+                  TBA (placeholder).
+                </p>
+              </div>
+              <p class="row-meta">Conference paper</p>
+            </li>
+            <li data-anim>
+              <span class="row-code">2024</span>
+              <div>
+                <p class="row-title">Reading in Two Languages</p>
+                <p class="row-desc">
+                  Public lecture for a university literature circle — venue TBA
+                  (placeholder).
+                </p>
+              </div>
+              <p class="row-meta">Public lecture</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec" id="about" aria-labelledby="about-title">
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">05</span
+              ><span class="sec-label">About</span>
+            </div>
+            <h2 id="about-title">A slow reader, by profession</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-copy" data-anim>
+              <p>
+                I have taught English literature in Dhaka for sixteen years,
+                mostly to students who read in two languages and write in three.
+                My research began with a simple irritation: the postcolonial
+                canon arrived already annotated, and the annotations rarely
+                asked what a reader in Dhaka did with the text. Translation
+                studies gave me better questions.
+              </p>
+              <p>
+                These days I divide my time between a book on citation practices
+                in South Asian literary criticism, an ongoing translation of
+                nineteenth-century Bengali essays, and the unglamorous work of
+                reading drafts closely. I supervise dissertations on
+                postcolonial reading practices, translation ethics, and literary
+                pedagogy.
+              </p>
+              <p>
+                I am available for PhD supervision inquiries, translation
+                workshops, and departmental seminars. Email is the reliable way
+                to reach me.
+              </p>
+              <p class="edu">
+                PhD, English Literature — University of Dhaka, 2014
+                (placeholder). MA and BA (Hons), English — University of Dhaka
+                (placeholder).
+              </p>
+            </div>
+            <figure class="about-figure" data-anim>
+              <!-- REPLACE: seminar or desk photograph | Replace with the real photo -->
+              <img
+                src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=900&h=600&q=80"
+                width="900"
+                height="600"
+                data-replace="about-seminar"
+                alt="Seminar table with books and notes during a literature class"
+              />
+              <figcaption>
+                Seminar room, departmental archive — placeholder photo
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="contact" aria-labelledby="contact-title">
+        <div class="shell">
+          <div class="sec-head" data-anim>
+            <div class="sec-marker">
+              <span class="sec-num">06</span
+              ><span class="sec-label">Contact</span>
+            </div>
+            <h2 id="contact-title">Contact</h2>
+          </div>
+          <div class="contact-grid">
+            <div data-anim>
+              <p class="contact-lead">
+                For supervision inquiries, translation workshops, or a copy of
+                any paper listed above, write to the departmental address.
+              </p>
+              <a
+                class="contact-email"
+                href="mailto:anisur.rahman@university-demo.edu"
+                >anisur.rahman@university-demo.edu</a
+              >
+              <ul class="contact-links">
+                <li>
+                  <a href="#"
+                    ><span>Google Scholar</span
+                    ><span>Profile (placeholder)</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span>ResearchGate</span
+                    ><span>Profile (placeholder)</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span>LinkedIn</span><span>Profile (placeholder)</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="hours" data-anim>
+              <h3>Office hours</h3>
+              <dl>
+                <dt>Days</dt>
+                <dd>Saturday – Tuesday</dd>
+                <dt>Time</dt>
+                <dd>11:00 – 13:00</dd>
+                <dt>Room</dt>
+                <dd>Room 204, Arts Building (placeholder)</dd>
+              </dl>
+              <span class="fine"
+                >Please email ahead so the hour is yours. Replies within three
+                working days.</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="footer-grid">
+          <p class="footer-brand">Prof. Anisur Rahman</p>
+          <nav class="footer-nav" aria-label="Footer">
+            <ul>
+              <li><a href="#research">Research</a></li>
+              <li><a href="#publications">Publications</a></li>
+              <li><a href="#teaching">Teaching</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+          <ul class="footer-social">
+            <li><a href="#">Scholar</a></li>
+            <li><a href="#">ResearchGate</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ul>
+          <p class="copyright">
+            &copy; 2026 Prof. Anisur Rahman &middot; Portfolio demo —
+            placeholder content
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        if (!('IntersectionObserver' in window)) return
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return
+
+        var items = Array.prototype.slice.call(
+          document.querySelectorAll('[data-anim]'),
+        )
+        if (!items.length) return
+
+        document.body.classList.add('anim-armed')
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in')
+                io.unobserve(entry.target)
+              }
+            })
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        )
+
+        items.forEach(function (el) {
+          var section = el.closest('section') || document.body
+          var group = Array.prototype.slice.call(
+            section.querySelectorAll('[data-anim]'),
+          )
+          var index = group.indexOf(el)
+          if (index > 0)
+            el.style.setProperty('--d', Math.min(index, 5) * 80 + 'ms')
+          io.observe(el)
+        })
+      })()
+    </script>
+  </body>
+</html>

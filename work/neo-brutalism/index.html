@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nabil Hasan — Content Creator &amp; Performance Marketer</title>
+    <meta
+      name="description"
+      content="Nabil Hasan is a content creator and performance marketer in Dhaka with five years of turning quiet products into channels people follow. Strategy, short-form video and paid campaigns."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Nabil Hasan — Content Creator &amp; Performance Marketer"
+    />
+    <meta
+      property="og:description"
+      content="Attention is earned, not bought. Content strategy, short-form video and paid campaigns from Dhaka."
+    />
+    <meta property="og:site_name" content="Nabil Hasan" />
+    <meta property="og:url" content="https://example.com/" />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&h=630&q=80"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📣</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fdcb32;
+        --cream: #fff7e6;
+        --paper: #ffffff;
+        --ink: #000000;
+        --coral: #ff6b6b;
+        --blue: #4d96ff;
+        --border: 3px solid var(--ink);
+        --shadow: 6px 6px 0 var(--ink);
+        --shadow-lg: 8px 8px 0 var(--ink);
+        --display: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+        --body:
+          'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 1.0625rem;
+        line-height: 1.6;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+      ul,
+      ol {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      p {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--display);
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      :focus-visible {
+        outline: 3px solid var(--ink);
+        outline-offset: 3px;
+      }
+      ::selection {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .wrap {
+        width: min(1140px, 100% - 2rem);
+        margin-inline: auto;
+      }
+      section[id] {
+        scroll-margin-top: 5.5rem;
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--paper);
+        border: var(--border);
+        padding: 0.6rem 1rem;
+        z-index: 100;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .skip:focus {
+        left: 0.5rem;
+        top: 0.5rem;
+      }
+
+      /* header */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: var(--cream);
+        border-bottom: var(--border);
+      }
+      .header-in {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.6rem 1rem;
+        justify-content: space-between;
+        padding-block: 0.65rem;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-family: var(--display);
+        font-size: 0.95rem;
+        text-decoration: none;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        background: var(--ink);
+        color: var(--bg);
+        font-family: var(--body);
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        flex: none;
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem 1rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .nav a {
+        text-decoration: none;
+        border-bottom: 3px solid transparent;
+        padding-block: 0.1rem;
+      }
+      .nav a:hover {
+        border-bottom-color: var(--ink);
+      }
+      @media (max-width: 767px) {
+        .header-in {
+          gap: 0.5rem;
+        }
+        .nav {
+          flex: 0 0 100%;
+          justify-content: space-between;
+          font-size: 0.75rem;
+          letter-spacing: 0.03em;
+          column-gap: 0.3rem;
+        }
+      }
+
+      /* hero */
+      .hero {
+        padding-block: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+      }
+      .hero-grid {
+        display: grid;
+        gap: 1.75rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr);
+          gap: 2.5rem;
+          align-items: start;
+        }
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: var(--border);
+        border-radius: 999px;
+        padding: 0.25rem 0.8rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: var(--paper);
+      }
+      .chip--blue {
+        background: var(--blue);
+      }
+      .dot {
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 999px;
+        background: var(--ink);
+        flex: none;
+      }
+      .hero-name {
+        font-size: clamp(2.6rem, 10vw, 5.4rem);
+        margin-top: 1rem;
+      }
+      .hero-role {
+        margin-top: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        font-size: clamp(0.76rem, 2.4vw, 1rem);
+      }
+      .hero-quote {
+        margin-top: 1.1rem;
+        font-family: var(--display);
+        font-size: clamp(1.3rem, 4.6vw, 2.3rem);
+        line-height: 1.1;
+        background: var(--paper);
+        border: var(--border);
+        box-shadow: var(--shadow);
+        padding: 0.9rem 1.1rem;
+      }
+      .hero-bio {
+        margin-top: 1.1rem;
+        max-width: 54ch;
+      }
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+        margin-top: 1.4rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border: var(--border);
+        background: var(--paper);
+        color: var(--ink);
+        box-shadow: var(--shadow);
+        padding: 0.72rem 1.1rem;
+        font-family: var(--body);
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      .btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .btn--ink {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .hero-side {
+        display: grid;
+        gap: 1rem;
+      }
+      .frame {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        margin: 0;
+      }
+      .frame img {
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        border-bottom: var(--border);
+      }
+      .frame figcaption {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .facts {
+        display: grid;
+        gap: 0.6rem;
+      }
+      .facts li {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.75rem;
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+      }
+      .facts strong {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+
+      /* metrics strip */
+      .metrics-block {
+        padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      }
+      .metrics-label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0.7rem;
+      }
+      .metrics {
+        display: grid;
+        gap: 0.7rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      @media (min-width: 768px) {
+        .metrics {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .metric {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        padding: 0.8rem 0.9rem;
+      }
+      .metric-num {
+        font-family: var(--display);
+        font-size: clamp(1.45rem, 4.4vw, 2.1rem);
+        line-height: 1;
+      }
+      .metric-cap {
+        font-size: 0.83rem;
+        margin-top: 0.15rem;
+      }
+      .tag {
+        display: inline-block;
+        margin-top: 0.4rem;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        padding: 0 0.45rem;
+        font-size: 0.6rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        background: var(--coral);
+      }
+
+      /* sections */
+      .sec {
+        padding-block: clamp(2rem, 5vw, 3.4rem);
+      }
+      .band {
+        border-block: var(--border);
+        background: var(--cream);
+      }
+      .sec-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 0.8rem 1.5rem;
+        margin-bottom: 1.4rem;
+      }
+      .sec-title {
+        font-size: clamp(1.5rem, 4.4vw, 2.4rem);
+        text-transform: uppercase;
+      }
+      .sec-note {
+        max-width: 48ch;
+        font-size: 0.93rem;
+        font-weight: 500;
+      }
+      .card {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        padding: 1rem;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      .card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* channels */
+      .channels {
+        display: grid;
+        gap: 0.9rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 640px) {
+        .channels {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        .channels {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .channel-top {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .glyph {
+        display: grid;
+        place-items: center;
+        width: 1.9rem;
+        height: 1.9rem;
+        border: var(--border);
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        flex: none;
+      }
+      .glyph--coral {
+        background: var(--coral);
+      }
+      .glyph--blue {
+        background: var(--blue);
+      }
+      .channel h3 {
+        font-size: 1.02rem;
+        text-transform: uppercase;
+      }
+      .handle {
+        display: inline-block;
+        margin-block: 0.5rem 0.4rem;
+        border: 2px solid var(--ink);
+        padding: 0.05rem 0.4rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.78rem;
+        background: var(--cream);
+      }
+      .muted {
+        font-size: 0.9rem;
+      }
+      .stat-line {
+        margin-top: 0.7rem;
+        font-weight: 700;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .text-link {
+        display: inline-block;
+        margin-top: 0.55rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+        border-bottom: 3px solid var(--ink);
+      }
+      .text-link:hover {
+        background: var(--blue);
+      }
+
+      /* services */
+      .services {
+        display: grid;
+        gap: 0.9rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 768px) {
+        .services {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .service {
+        display: grid;
+        gap: 0.6rem;
+        align-content: start;
+      }
+      .service-num {
+        display: grid;
+        place-items: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        border: var(--border);
+        background: var(--blue);
+        font-family: var(--display);
+        font-size: 0.95rem;
+      }
+      .service h3 {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+      }
+      .service ul {
+        display: grid;
+        gap: 0.3rem;
+        font-size: 0.88rem;
+      }
+      .service li::before {
+        content: '+ ';
+        font-weight: 700;
+      }
+
+      /* success stories */
+      .stories {
+        display: grid;
+        gap: 1rem;
+      }
+      @media (min-width: 1024px) {
+        .stories {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .story {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        padding: clamp(1rem, 2.6vw, 1.5rem);
+        display: grid;
+        gap: 0.85rem;
+        align-content: start;
+      }
+      .story h3 {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+      }
+      .story-meta {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border-bottom: 2px solid var(--ink);
+        padding-bottom: 0.5rem;
+      }
+      .story p {
+        font-size: 0.93rem;
+      }
+      .label {
+        display: block;
+        margin-bottom: 0.1rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+      }
+      .callouts {
+        display: grid;
+        gap: 0.55rem;
+        grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+      }
+      .callout {
+        border: var(--border);
+        background: var(--cream);
+        padding: 0.6rem 0.7rem;
+      }
+      .callout-num {
+        font-family: var(--display);
+        font-size: 1.25rem;
+        line-height: 1.05;
+      }
+      .callout-cap {
+        font-size: 0.72rem;
+      }
+      .callout .tag {
+        margin-top: 0.35rem;
+      }
+
+      /* content grid */
+      .work-grid {
+        display: grid;
+        gap: 0.9rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 600px) {
+        .work-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        .work-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .tile {
+        display: block;
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        text-decoration: none;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+      .tile:hover,
+      .tile:focus-visible {
+        transform: translate(-2px, -2px);
+        box-shadow: var(--shadow-lg);
+      }
+      .tile img {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        border-bottom: var(--border);
+      }
+      .tile-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.6rem;
+        padding: 0.55rem 0.7rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+      .tile-body .platform {
+        font-weight: 500;
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        white-space: nowrap;
+        border: 2px solid var(--ink);
+        padding: 0 0.35rem;
+      }
+
+      /* testimonials */
+      .quotes {
+        display: grid;
+        gap: 0.9rem;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      @media (min-width: 768px) {
+        .quotes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .quote-card {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--paper);
+        padding: 1.1rem;
+        display: grid;
+        gap: 0.8rem;
+        align-content: start;
+      }
+      .quote-card blockquote {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+      .quote-card blockquote::before {
+        content: '\201C';
+        display: block;
+        font-family: var(--display);
+        font-size: 2.2rem;
+        line-height: 0.5;
+        margin-bottom: 0.4rem;
+      }
+      .quote-who {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        border-top: 2px solid var(--ink);
+        padding-top: 0.5rem;
+      }
+
+      /* contact */
+      .contact-wrap {
+        padding-block: clamp(2rem, 5vw, 3.4rem);
+      }
+      .contact {
+        border: var(--border);
+        box-shadow: var(--shadow);
+        background: var(--ink);
+        color: var(--bg);
+        padding: clamp(1.2rem, 4vw, 2.4rem);
+        display: grid;
+        gap: 1.2rem;
+      }
+      @media (min-width: 900px) {
+        .contact {
+          grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+          align-items: start;
+          gap: 2rem;
+        }
+      }
+      .contact h2 {
+        font-size: clamp(1.5rem, 4.6vw, 2.5rem);
+        text-transform: uppercase;
+        color: var(--paper);
+      }
+      .contact .email {
+        display: inline-block;
+        margin-top: 0.8rem;
+        font-family: var(--display);
+        font-size: clamp(0.95rem, 3.4vw, 1.85rem);
+        color: var(--bg);
+        text-decoration: none;
+        border-bottom: 4px solid var(--bg);
+        overflow-wrap: anywhere;
+      }
+      .contact .email:hover {
+        background: var(--blue);
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+      }
+      .contact :focus-visible {
+        outline: 3px solid var(--bg);
+        outline-offset: 4px;
+      }
+      .contact-list {
+        display: grid;
+        gap: 0.55rem;
+        font-size: 0.93rem;
+      }
+      .contact-list--spaced {
+        margin-top: 1rem;
+      }
+      .contact-list li {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.2rem 0.75rem;
+        justify-content: space-between;
+        border-bottom: 2px solid rgba(253, 203, 50, 0.35);
+        padding-bottom: 0.45rem;
+      }
+      .contact-list .k {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        font-size: 0.68rem;
+        padding-top: 0.12rem;
+      }
+      .contact-list a {
+        text-decoration: none;
+        border-bottom: 2px solid var(--bg);
+      }
+      .contact-list a:hover {
+        background: var(--blue);
+        color: var(--ink);
+        border-bottom-color: var(--ink);
+      }
+      .avail {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        padding: 0.22rem 0.7rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        background: var(--blue);
+        color: var(--ink);
+        width: fit-content;
+      }
+      .contact-note {
+        font-size: 0.85rem;
+        color: var(--cream);
+        margin-top: 0.7rem;
+      }
+
+      /* footer */
+      .site-footer {
+        border-top: var(--border);
+        background: var(--cream);
+        padding-block: 1.3rem;
+      }
+      .foot-grid {
+        display: grid;
+        gap: 0.9rem;
+      }
+      .foot-brand {
+        font-family: var(--display);
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1rem;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+      .foot-links a {
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+      }
+      .foot-links a:hover {
+        border-bottom-color: var(--ink);
+      }
+      .foot-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .foot-social a {
+        display: inline-flex;
+        border: 2px solid var(--ink);
+        padding: 0.15rem 0.5rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        background: var(--paper);
+      }
+      .foot-social a:hover {
+        background: var(--blue);
+      }
+      .foot-copy {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 0.8rem;
+        justify-content: space-between;
+        border-top: 2px solid var(--ink);
+        padding-top: 0.7rem;
+        font-size: 0.74rem;
+      }
+      @media (min-width: 768px) {
+        .foot-grid {
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: 0.75rem 1.5rem;
+        }
+        .foot-links {
+          justify-content: center;
+        }
+      }
+
+      /* entrance — class added only by JS, content visible without it */
+      .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+          opacity 0.22s ease,
+          transform 0.22s ease;
+      }
+      .js [data-reveal].is-in {
+        opacity: 1;
+        transform: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .js [data-reveal] {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .card,
+        .tile,
+        .btn {
+          transition: none;
+        }
+        .card:hover,
+        .tile:hover,
+        .tile:focus-visible,
+        .btn:hover {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-in">
+        <a class="brand" href="#top"
+          ><span class="brand-mark" aria-hidden="true">NH</span>Nabil Hasan</a
+        >
+        <nav class="nav" aria-label="Primary">
+          <a href="#channels">Channels</a>
+          <a href="#services">Services</a>
+          <a href="#results">Results</a>
+          <a href="#work">Content</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="wrap hero-grid">
+          <div data-reveal>
+            <p class="chip chip--blue">
+              <span class="dot" aria-hidden="true"></span>Open to brand
+              collaborations
+            </p>
+            <h1 class="hero-name">Nabil Hasan</h1>
+            <p class="hero-role">Content Creator &amp; Performance Marketer</p>
+            <p class="hero-quote">
+              &ldquo;Attention is earned, not bought.&rdquo;
+            </p>
+            <p class="hero-bio">
+              Five years in Dhaka turning quiet products into channels people
+              actually follow. Most of my work starts with one question: what
+              would make someone stop scrolling for this? I write, shoot, cut
+              and then measure &mdash; because a video that moves nothing is
+              just decoration.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn--ink" href="mailto:nabil@example.com"
+                >Work with me</a
+              >
+              <a class="btn" href="#work">See the content</a>
+            </div>
+          </div>
+
+          <aside class="hero-side" aria-label="At a glance">
+            <figure class="frame" data-reveal>
+              <!-- REPLACE: portrait photo | Replace with the real photo -->
+              <img
+                data-replace="portrait"
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&h=750&q=80"
+                width="600"
+                height="750"
+                loading="lazy"
+                alt="Nabil Hasan, content creator"
+              />
+              <figcaption>
+                <span>Dhaka</span><span>shooting day</span>
+              </figcaption>
+            </figure>
+            <ul class="facts">
+              <li>
+                <strong>5 years</strong><span>creating and measuring</span>
+              </li>
+              <li><strong>4 channels</strong><span>run end to end</span></li>
+              <li><strong>24 hrs</strong><span>typical reply time</span></li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="metrics-block" aria-labelledby="metrics-title">
+        <div class="wrap">
+          <h2 class="metrics-label" id="metrics-title">
+            Last 12 months &middot; figures marked sample
+          </h2>
+          <ul class="metrics" data-reveal>
+            <li class="metric">
+              <p class="metric-num">12.4M</p>
+              <p class="metric-cap">organic views</p>
+              <span class="tag">sample</span>
+            </li>
+            <li class="metric">
+              <p class="metric-num">48K</p>
+              <p class="metric-cap">new followers</p>
+              <span class="tag">sample</span>
+            </li>
+            <li class="metric">
+              <p class="metric-num">6.8%</p>
+              <p class="metric-cap">average engagement</p>
+              <span class="tag">sample</span>
+            </li>
+            <li class="metric">
+              <p class="metric-num">32</p>
+              <p class="metric-cap">brand campaigns</p>
+              <span class="tag">sample</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec" id="channels">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="sec-title">Four channels, one voice</h2>
+            <p class="sec-note">
+              Each platform gets its own format. The message stays the same.
+              Handles below are placeholders &mdash; swap them for the live
+              accounts.
+            </p>
+          </div>
+          <ul class="channels" data-reveal>
+            <li class="card channel">
+              <div class="channel-top">
+                <span class="glyph glyph--coral" aria-hidden="true">YT</span>
+                <h3>YouTube</h3>
+              </div>
+              <p class="handle">@nabilhasan</p>
+              <p class="muted">
+                Long-form reviews and eight-minute explainers. Two uploads a
+                month, scripted and cut in-house.
+              </p>
+              <p class="stat-line">
+                50K subscribers <span class="tag">sample</span>
+              </p>
+              <a class="text-link" href="#">Visit channel &rarr;</a>
+            </li>
+            <li class="card channel">
+              <div class="channel-top">
+                <span class="glyph glyph--blue" aria-hidden="true">IG</span>
+                <h3>Instagram</h3>
+              </div>
+              <p class="handle">@nabil.hasan</p>
+              <p class="muted">
+                Reels and carousels built for saves: quick demos, teardown
+                threads, behind-the-shoot clips.
+              </p>
+              <p class="stat-line">
+                21K followers <span class="tag">sample</span>
+              </p>
+              <a class="text-link" href="#">Visit channel &rarr;</a>
+            </li>
+            <li class="card channel">
+              <div class="channel-top">
+                <span class="glyph glyph--coral" aria-hidden="true">TT</span>
+                <h3>TikTok</h3>
+              </div>
+              <p class="handle">@nabilhasan</p>
+              <p class="muted">
+                Fast, unpolished hooks. I post three tests a week and keep only
+                the ones that hold past three seconds.
+              </p>
+              <p class="stat-line">
+                34K followers <span class="tag">sample</span>
+              </p>
+              <a class="text-link" href="#">Visit channel &rarr;</a>
+            </li>
+            <li class="card channel">
+              <div class="channel-top">
+                <span class="glyph glyph--blue" aria-hidden="true">LI</span>
+                <h3>LinkedIn</h3>
+              </div>
+              <p class="handle">/in/nabilhasan</p>
+              <p class="muted">
+                Written breakdowns of campaign numbers &mdash; what the
+                dashboards said and what I changed next.
+              </p>
+              <p class="stat-line">
+                9.2K followers <span class="tag">sample</span>
+              </p>
+              <a class="text-link" href="#">Visit channel &rarr;</a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec band" id="services">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="sec-title">What I do for brands</h2>
+            <p class="sec-note">
+              Three ways to work together, from a single sprint to a monthly
+              retainer.
+            </p>
+          </div>
+          <ul class="services" data-reveal>
+            <li class="card service">
+              <span class="service-num" aria-hidden="true">01</span>
+              <h3>Content strategy &amp; planning</h3>
+              <p>
+                A channel plan built on what the audience already watches, with
+                a posting calendar you can keep without me.
+              </p>
+              <ul>
+                <li>Audience and competitor audit</li>
+                <li>Monthly content calendar</li>
+                <li>Hook bank and format library</li>
+              </ul>
+            </li>
+            <li class="card service">
+              <span class="service-num" aria-hidden="true">02</span>
+              <h3>Short-form video, script to edit</h3>
+              <p>
+                I take one brief and return finished vertical cuts &mdash;
+                script, shot list, edit, captions and thumbnails.
+              </p>
+              <ul>
+                <li>Scripts and shot lists</li>
+                <li>Shoot or phone-footage edit</li>
+                <li>Captions, hooks, thumbnails</li>
+              </ul>
+            </li>
+            <li class="card service">
+              <span class="service-num" aria-hidden="true">03</span>
+              <h3>Paid campaigns that reuse the winners</h3>
+              <p>
+                Boost the organic cut that already works instead of paying to
+                test from zero. Meta and TikTok Ads, reported weekly.
+              </p>
+              <ul>
+                <li>Creative testing grid</li>
+                <li>Audience and budget setup</li>
+                <li>Weekly numbers report</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sec" id="results">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="sec-title">Two success stories</h2>
+            <p class="sec-note">
+              Client names are withheld on request. All figures are sample
+              figures for layout purposes.
+            </p>
+          </div>
+          <div class="stories" data-reveal>
+            <article class="story">
+              <p class="story-meta">
+                D2C skincare brand &middot; six-week launch
+              </p>
+              <h3>From product demo to a series people waited for</h3>
+              <p>
+                <span class="label">Problem</span>The launch content was
+                product-first and flat: three ads, same angle, reach dying after
+                day four.
+              </p>
+              <p>
+                <span class="label">Approach</span>Built a three-part creator
+                series around one real skin concern, shipped it natively on
+                Reels and TikTok, then put budget behind the single
+                best-performing cut.
+              </p>
+              <div class="callouts">
+                <div class="callout">
+                  <p class="callout-num">2.1M</p>
+                  <p class="callout-cap">views in three weeks</p>
+                  <span class="tag">sample</span>
+                </div>
+                <div class="callout">
+                  <p class="callout-num">4.4%</p>
+                  <p class="callout-cap">click-through to store</p>
+                  <span class="tag">sample</span>
+                </div>
+                <div class="callout">
+                  <p class="callout-num">3.0&times;</p>
+                  <p class="callout-cap">return on ad spend</p>
+                  <span class="tag">sample</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="story">
+              <p class="story-meta">
+                Test-prep startup &middot; enrollment push
+              </p>
+              <h3>Cheaper leads, better signups</h3>
+              <p>
+                <span class="label">Problem</span>Ad spend was buying cheap
+                leads that never enrolled. The hooks promised marks; the landing
+                page sold a course.
+              </p>
+              <p>
+                <span class="label">Approach</span>Recorded four proof videos
+                with real students, rewrote the first three seconds of every ad,
+                and moved the whole budget to the two hooks that held attention.
+              </p>
+              <div class="callouts">
+                <div class="callout">
+                  <p class="callout-num">9.7K</p>
+                  <p class="callout-cap">qualified leads</p>
+                  <span class="tag">sample</span>
+                </div>
+                <div class="callout">
+                  <p class="callout-num">38%</p>
+                  <p class="callout-cap">cheaper per enrollment</p>
+                  <span class="tag">sample</span>
+                </div>
+                <div class="callout">
+                  <p class="callout-num">6.2%</p>
+                  <p class="callout-cap">view-through to signup</p>
+                  <span class="tag">sample</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec band" id="work">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="sec-title">Recent content</h2>
+            <p class="sec-note">
+              Six pieces from the last quarter. Thumbnails are placeholders
+              &mdash; drop in the real frames.
+            </p>
+          </div>
+          <div class="work-grid" data-reveal>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 1 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-1"
+                src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for a 30-second product demo video"
+              />
+              <span class="tile-body"
+                ><span>30-second product cut</span
+                ><span class="platform">Reels</span></span
+              >
+            </a>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 2 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-2"
+                src="https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for a hook test series on TikTok"
+              />
+              <span class="tile-body"
+                ><span>Hook test, week 12</span
+                ><span class="platform">TikTok</span></span
+              >
+            </a>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 3 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-3"
+                src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for an eight-minute explainer on laptop and phone"
+              />
+              <span class="tile-body"
+                ><span>Eight-minute explainer</span
+                ><span class="platform">YouTube</span></span
+              >
+            </a>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 4 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-4"
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for a carousel breaking down campaign numbers"
+              />
+              <span class="tile-body"
+                ><span>Campaign teardown carousel</span
+                ><span class="platform">LinkedIn</span></span
+              >
+            </a>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 5 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-5"
+                src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for a behind-the-scenes shoot video"
+              />
+              <span class="tile-body"
+                ><span>Behind the shoot</span
+                ><span class="platform">Reels</span></span
+              >
+            </a>
+            <a class="tile" href="#">
+              <!-- REPLACE: video thumbnail 6 | Replace with the real photo -->
+              <img
+                data-replace="content-tile-6"
+                src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=500&q=80"
+                width="800"
+                height="500"
+                loading="lazy"
+                alt="Thumbnail for a client review meeting recapping the two-week ad test"
+              />
+              <span class="tile-body"
+                ><span>Two-week ad test recap</span
+                ><span class="platform">YouTube</span></span
+              >
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="testimonials">
+        <div class="wrap">
+          <div class="sec-head">
+            <h2 class="sec-title">What clients say</h2>
+          </div>
+          <div class="quotes" data-reveal>
+            <article class="quote-card">
+              <blockquote>
+                Nabil took a launch brief we were embarrassed by and made it
+                watchable. Then he showed us the retention graph that proved it.
+                The follow-up meeting was shorter than the first one.
+              </blockquote>
+              <p class="quote-who">
+                Farhana A. &middot; Brand Manager, skincare brand
+              </p>
+            </article>
+            <article class="quote-card">
+              <blockquote>
+                He reports like a marketer and edits like a filmmaker. We
+                stopped asking for more content and started asking which two
+                videos to put money behind.
+              </blockquote>
+              <p class="quote-who">
+                Tanvir R. &middot; Founder, test-prep startup
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-wrap" id="contact">
+        <div class="wrap">
+          <div class="contact" data-reveal>
+            <div>
+              <h2>Let&rsquo;s make something worth watching</h2>
+              <a class="email" href="mailto:nabil@example.com"
+                >nabil@example.com</a
+              >
+              <p class="contact-note">
+                Send a rough idea or a link &mdash; a one-line brief is enough
+                to start.
+              </p>
+            </div>
+            <div>
+              <p class="avail">
+                <span class="dot" aria-hidden="true"></span>Taking projects from
+                November
+              </p>
+              <ul class="contact-list contact-list--spaced">
+                <li>
+                  <span class="k">Phone</span
+                  ><a href="tel:+8801700000000">+880 1700 000000</a>
+                </li>
+                <li>
+                  <span class="k">Based in</span><span>Dhaka, Bangladesh</span>
+                </li>
+                <li>
+                  <span class="k">YouTube</span><a href="#">@nabilhasan</a>
+                </li>
+                <li>
+                  <span class="k">Instagram</span><a href="#">@nabil.hasan</a>
+                </li>
+                <li>
+                  <span class="k">TikTok</span><a href="#">@nabilhasan</a>
+                </li>
+                <li>
+                  <span class="k">LinkedIn</span><a href="#">/in/nabilhasan</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap foot-grid">
+        <a class="foot-brand" href="#top">Nabil Hasan</a>
+        <nav class="foot-links" aria-label="Footer">
+          <a href="#channels">Channels</a>
+          <a href="#services">Services</a>
+          <a href="#results">Results</a>
+          <a href="#work">Content</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="foot-social">
+          <a href="#">YouTube</a>
+          <a href="#">Instagram</a>
+          <a href="#">TikTok</a>
+          <a href="#">LinkedIn</a>
+        </div>
+        <p class="foot-copy">
+          <span>&copy; 2026 Nabil Hasan. All rights reserved.</span
+          ><span>Dhaka, Bangladesh</span>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+        if (reduce.matches || !('IntersectionObserver' in window)) return
+
+        document.documentElement.classList.add('js')
+
+        var items = Array.prototype.slice.call(
+          document.querySelectorAll('[data-reveal]'),
+        )
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in')
+                io.unobserve(entry.target)
+              }
+            })
+          },
+          { threshold: 0.08, rootMargin: '0px 0px -6% 0px' },
+        )
+
+        items.forEach(function (el) {
+          io.observe(el)
+        })
+
+        if (reduce.addEventListener) {
+          reduce.addEventListener('change', function (e) {
+            if (e.matches) {
+              items.forEach(function (el) {
+                el.classList.add('is-in')
+              })
+            }
+          })
+        }
+      })()
+    </script>
+  </body>
+</html>

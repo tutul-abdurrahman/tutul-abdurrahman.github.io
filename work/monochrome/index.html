@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nusrat Jahan — Product Designer (UI/UX)</title>
+    <meta
+      name="description"
+      content="Nusrat Jahan is a product designer in Dhaka with five years of experience in UI/UX. Selected case studies, design process, and contact."
+    />
+    <meta
+      property="og:title"
+      content="Nusrat Jahan — Product Designer (UI/UX)"
+    />
+    <meta
+      property="og:description"
+      content="Design that ships — grounded in research, not taste. Product design case studies from Dhaka."
+    />
+    <meta property="og:type" content="profile" />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1200&h=630&q=80"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%E2%97%BB%EF%B8%8F</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #fafafa;
+        --ink: #0f0f0f;
+        --muted: #8a8a8a;
+        --line: #e0e0e0;
+        --pad: clamp(20px, 6vw, 88px);
+        --display: 'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
+        --body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: clamp(15px, 0.4vw + 14px, 17px);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        border-radius: 2px;
+        filter: grayscale(100%) contrast(105%);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+        text-decoration-color: var(--ink);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--display);
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        line-height: 1.08;
+        margin: 0;
+      }
+      p {
+        margin: 0;
+      }
+      ul,
+      ol,
+      dl {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      :where(
+        a,
+        button,
+        input,
+        textarea,
+        select,
+        summary,
+        [tabindex]
+      ):focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 4px;
+      }
+      ::selection {
+        background: var(--ink);
+        color: var(--bg);
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1160px;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .measure {
+        max-width: 68ch;
+      }
+      .label {
+        font-family: var(--body);
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--ink);
+        color: var(--bg);
+        padding: 12px 18px;
+        z-index: 50;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .skip:focus {
+        left: 12px;
+        top: 12px;
+      }
+
+      /* Header */
+      .site-header {
+        border-bottom: 1px solid var(--line);
+      }
+      .header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px 28px;
+        padding-block: 20px;
+      }
+      .brand {
+        margin: 0;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: -0.01em;
+      }
+      .brand span {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .site-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 20px;
+        font-size: 0.68rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .site-nav a {
+        padding-bottom: 2px;
+      }
+      .site-nav a:hover {
+        color: var(--ink);
+        text-decoration: none;
+        box-shadow: 0 1px 0 var(--ink);
+      }
+
+      /* Hero */
+      .hero {
+        padding-block: clamp(36px, 6vw, 88px) clamp(48px, 7vw, 104px);
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: clamp(26px, 3.5vw, 56px);
+        align-items: end;
+      }
+      .hero-copy {
+        grid-column: 1/-1;
+        min-width: 0;
+      }
+      .hero-figure {
+        grid-column: 1/-1;
+        margin: 0;
+        min-width: 0;
+      }
+      @media (min-width: 900px) {
+        .hero-copy {
+          grid-column: span 7;
+        }
+        .hero-figure {
+          grid-column: span 5;
+        }
+      }
+      .hero h1 {
+        font-size: clamp(2.6rem, 7.4vw, 5.6rem);
+        letter-spacing: -0.045em;
+        margin: 16px 0 20px;
+      }
+      .statement {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(1.35rem, 2.8vw, 2.15rem);
+        line-height: 1.22;
+        letter-spacing: -0.02em;
+        max-width: 22ch;
+        margin-bottom: 22px;
+      }
+      .hero-lede {
+        max-width: 52ch;
+        color: #2e2e2e;
+        margin-bottom: 24px;
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 14px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .hero-meta span + span::before {
+        content: '·';
+        margin-right: 14px;
+        color: var(--line);
+      }
+      .hero-figure img {
+        width: 100%;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        background: #efefef;
+      }
+      .hero-figure figcaption {
+        margin-top: 10px;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* Sections */
+      .sec {
+        padding-block: clamp(52px, 7vw, 104px);
+        border-top: 1px solid var(--line);
+      }
+      .sec-head {
+        margin-bottom: clamp(28px, 4vw, 52px);
+      }
+      .sec-head h2 {
+        font-size: clamp(1.9rem, 4.6vw, 3.4rem);
+        margin-top: 14px;
+      }
+      .sec-head p {
+        margin-top: 14px;
+        color: var(--muted);
+        max-width: 58ch;
+      }
+      .sec-head .measure {
+        max-width: 68ch;
+      }
+
+      /* Case studies */
+      .case {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(20px, 3vw, 40px);
+        padding-block: clamp(32px, 5vw, 56px);
+        border-top: 1px solid var(--line);
+        min-width: 0;
+      }
+      .case:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+      @media (min-width: 1024px) {
+        .case {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+          align-items: start;
+        }
+        .case:nth-child(even) .case-media {
+          order: 2;
+        }
+      }
+      .case-media {
+        margin: 0;
+        min-width: 0;
+      }
+      .case-media img {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        background: #efefef;
+      }
+      .case-media figcaption {
+        margin-top: 10px;
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .case-body {
+        min-width: 0;
+      }
+      .case-index {
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .case-body h3 {
+        font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+        margin-bottom: 12px;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .chips li {
+        border: 1px solid var(--line);
+        border-radius: 2px;
+        padding: 4px 9px;
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .pah {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+      .pah dt {
+        font-size: 0.66rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .pah dd {
+        margin: 0;
+        font-size: 0.94rem;
+        line-height: 1.65;
+        color: #333;
+      }
+      .metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+      .metrics li {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 0.8rem;
+        border: 1px solid var(--ink);
+        border-radius: 2px;
+        padding: 6px 10px;
+        line-height: 1.3;
+      }
+      .metrics .sample {
+        color: var(--muted);
+        font-family: var(--body);
+        font-weight: 400;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .figures-note {
+        margin-top: 26px;
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        max-width: 68ch;
+      }
+
+      /* Process */
+      .steps {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        border-top: 1px solid var(--line);
+      }
+      @media (min-width: 768px) {
+        .steps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        .steps {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .step {
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+        min-width: 0;
+      }
+      @media (min-width: 768px) {
+        .step {
+          padding: 26px 24px 30px 0;
+        }
+        .step:nth-child(odd) {
+          border-right: 1px solid var(--line);
+        }
+        .step:nth-child(even) {
+          padding-left: 24px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .step {
+          padding: 26px 24px 30px 0;
+          border-right: 1px solid var(--line);
+        }
+        .step:last-child {
+          border-right: 0;
+          padding-right: 0;
+        }
+        .step:not(:first-child) {
+          padding-left: 24px;
+        }
+      }
+      .step-num {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: clamp(2rem, 3.6vw, 3rem);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        color: #bdbdbd;
+        margin-bottom: 14px;
+      }
+      .step h3 {
+        font-size: 1.05rem;
+        letter-spacing: -0.01em;
+        margin-bottom: 8px;
+      }
+      .step p {
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: #3a3a3a;
+      }
+      .step .deliverable {
+        display: block;
+        margin-top: 12px;
+        font-size: 0.66rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* About */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 4vw, 56px);
+      }
+      @media (min-width: 900px) {
+        .about-grid {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+        }
+      }
+      .about-copy {
+        max-width: 68ch;
+      }
+      .about-copy p + p {
+        margin-top: 16px;
+      }
+      .facts {
+        margin-top: 30px;
+        border-top: 1px solid var(--line);
+      }
+      .facts div {
+        display: grid;
+        grid-template-columns: 8rem minmax(0, 1fr);
+        gap: 12px;
+        padding-block: 12px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+      .facts dt {
+        font-size: 0.64rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        padding-top: 3px;
+      }
+      .facts dd {
+        margin: 0;
+      }
+
+      /* Testimonials */
+      .quotes {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(24px, 3vw, 40px);
+      }
+      @media (min-width: 768px) {
+        .quotes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .quote {
+        border-left: 1px solid var(--ink);
+        padding-left: 22px;
+        min-width: 0;
+      }
+      .quote blockquote {
+        margin: 0 0 16px;
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: clamp(1rem, 1.6vw, 1.25rem);
+        line-height: 1.45;
+        letter-spacing: -0.01em;
+      }
+      .quote figcaption {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .quote figcaption strong {
+        display: block;
+        color: var(--ink);
+        font-weight: 500;
+        margin-bottom: 2px;
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: clamp(28px, 4vw, 56px);
+      }
+      @media (min-width: 900px) {
+        .contact-grid {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+        }
+      }
+      .contact-lead {
+        max-width: 44ch;
+        color: var(--muted);
+        margin-bottom: 22px;
+      }
+      .contact-email {
+        display: inline-block;
+        max-width: 100%;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: clamp(1.3rem, 3.2vw, 2.2rem);
+        letter-spacing: -0.03em;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 4px;
+        overflow-wrap: anywhere;
+      }
+      .contact-email:hover {
+        text-decoration: none;
+        border-bottom-width: 2px;
+      }
+      .contact-note {
+        margin-top: 14px;
+        font-size: 0.78rem;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+      }
+      .contact-links {
+        margin-top: 30px;
+        border-top: 1px solid var(--line);
+        max-width: 30rem;
+      }
+      .contact-links li {
+        border-bottom: 1px solid var(--line);
+      }
+      .contact-links a {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 6px 16px;
+        padding-block: 12px;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .contact-links a span:last-child {
+        color: var(--muted);
+      }
+      .contact-aside {
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+        font-size: 0.9rem;
+        color: #3a3a3a;
+      }
+      .contact-aside .label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .contact-aside p + p {
+        margin-top: 10px;
+      }
+
+      /* Footer */
+      .site-footer {
+        border-top: 1px solid var(--line);
+        padding-block: clamp(32px, 4vw, 52px);
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+      }
+      .footer-brand {
+        margin: 0;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: -0.01em;
+      }
+      .footer-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .footer-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-size: 0.67rem;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .copyright {
+        grid-column: 1/-1;
+        margin: 0;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+        font-size: 0.64rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      @media (min-width: 768px) {
+        .footer-grid {
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          column-gap: 32px;
+        }
+        .footer-nav ul {
+          justify-content: center;
+        }
+        .footer-social {
+          justify-content: flex-end;
+        }
+      }
+
+      /* Entrance animation — fade only; visible unless JS arms it */
+      .anim-armed [data-anim] {
+        opacity: 0;
+      }
+      .anim-armed [data-anim].is-in {
+        opacity: 1;
+        transition: opacity 0.4s ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .anim-armed [data-anim],
+        .anim-armed [data-anim].is-in {
+          opacity: 1 !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <p class="brand">Nusrat Jahan <span>/ Product Designer</span></p>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="wrap">
+          <div class="hero-grid">
+            <div class="hero-copy" data-anim>
+              <p class="label">Product Designer (UI/UX) &middot; Dhaka</p>
+              <h1 id="hero-title">Nusrat Jahan</h1>
+              <p class="statement">
+                Design that ships — grounded in research, not taste.
+              </p>
+              <p class="hero-lede">
+                Five years of product design for fintech, SaaS, and field tools.
+                I work with engineering teams from the first interview question
+                to the handoff annotation, and I stay until the shipped build
+                matches the intent.
+              </p>
+              <p class="hero-meta">
+                <span>5 years</span><span>Dhaka, Bangladesh</span
+                ><span>Open to product work</span>
+              </p>
+            </div>
+            <figure class="hero-figure" data-anim>
+              <!-- REPLACE: portrait photo of Nusrat Jahan | Replace with the real photo -->
+              <img
+                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&h=1000&q=80"
+                width="800"
+                height="1000"
+                data-replace="portrait"
+                alt="Portrait of Nusrat Jahan, product designer"
+              />
+              <figcaption>Portrait, studio — placeholder photo</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="work" aria-labelledby="work-title">
+        <div class="wrap">
+          <div class="sec-head" data-anim>
+            <p class="label">01 / Selected work</p>
+            <h2 id="work-title">Three case studies</h2>
+            <p class="measure">
+              Each one is written the way the work happened: what was broken,
+              what I did about it, and what changed afterwards. Outcome figures
+              are sample numbers for this demo.
+            </p>
+          </div>
+
+          <article class="case" data-anim>
+            <figure class="case-media">
+              <!-- REPLACE: Maya Savings onboarding screens | Replace with the real project image -->
+              <img
+                src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=1200&h=750&q=80"
+                width="1200"
+                height="750"
+                data-replace="case-maya"
+                alt="Hand holding a phone displaying the savings app screens"
+              />
+              <figcaption>
+                Maya Savings — first-run onboarding (placeholder image)
+              </figcaption>
+            </figure>
+            <div class="case-body">
+              <p class="label case-index">Case 01</p>
+              <h3>Maya Savings — first-run onboarding</h3>
+              <ul class="chips">
+                <li>Consumer fintech</li>
+                <li>Mobile</li>
+                <li>2025</li>
+              </ul>
+              <dl class="pah">
+                <div>
+                  <dt>Problem</dt>
+                  <dd>
+                    62% of verified users left between OTP confirmation and the
+                    first deposit. Support heard the same sentence every week:
+                    &ldquo;I did not know what happens next.&rdquo;
+                  </dd>
+                </div>
+                <div>
+                  <dt>Approach</dt>
+                  <dd>
+                    Fourteen moderated interviews, a journey map of the first
+                    session, then three prototype rounds. I merged two steps,
+                    moved the goal amount before the funding screen, and rewrote
+                    permissions copy in plain Bangla and English.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Outcome</dt>
+                  <dd>
+                    Fewer exits, faster first deposits, and a design file the
+                    engineering team could build from without a meeting.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="metrics">
+                <li>
+                  Task success 42% → 89% <span class="sample">(sample)</span>
+                </li>
+                <li>
+                  Time to deposit 6m 40s → 2m 10s
+                  <span class="sample">(sample)</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="case" data-anim>
+            <figure class="case-media">
+              <!-- REPLACE: Trellis Admin permissions screens | Replace with the real project image -->
+              <img
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=750&q=80"
+                width="1200"
+                height="750"
+                data-replace="case-trellis"
+                alt="Admin dashboard showing a role and permission matrix"
+              />
+              <figcaption>
+                Trellis Admin — role and permission matrix (placeholder image)
+              </figcaption>
+            </figure>
+            <div class="case-body">
+              <p class="label case-index">Case 02</p>
+              <h3>Trellis Admin — multi-role permissions</h3>
+              <ul class="chips">
+                <li>B2B SaaS</li>
+                <li>Desktop web</li>
+                <li>2024</li>
+              </ul>
+              <dl class="pah">
+                <div>
+                  <dt>Problem</dt>
+                  <dd>
+                    Admins could not tell who could see what. Four support
+                    escalations a week, and every new workspace started with a
+                    spreadsheet of roles.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Approach</dt>
+                  <dd>
+                    I audited the existing role matrix, modelled object-level
+                    permissions in Figma, and added an inline preview that shows
+                    a role's visible screens before saving. Handoff included
+                    state tables for every permission edge case.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Outcome</dt>
+                  <dd>
+                    Setup became a two-click task, and the pilot ran five weeks
+                    with no permission errors reported.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="metrics">
+                <li>Setup time −58% <span class="sample">(sample)</span></li>
+                <li>
+                  Permission errors 0 in pilot
+                  <span class="sample">(sample)</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="case" data-anim>
+            <figure class="case-media">
+              <!-- REPLACE: Rent ledger mobile flow and printed slip | Replace with the real project image -->
+              <img
+                src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&w=1200&h=750&q=80"
+                width="1200"
+                height="750"
+                data-replace="case-ledger"
+                alt="Hand entering an amount on a digital payment keypad"
+              />
+              <figcaption>
+                Rent ledger — meter reading and printed slip (placeholder image)
+              </figcaption>
+            </figure>
+            <div class="case-body">
+              <p class="label case-index">Case 03</p>
+              <h3>Rent ledger — read, print, collect</h3>
+              <ul class="chips">
+                <li>Property management</li>
+                <li>Mobile + print</li>
+                <li>2024</li>
+              </ul>
+              <dl class="pah">
+                <div>
+                  <dt>Problem</dt>
+                  <dd>
+                    Monthly collection ran on paper. Meter readings were written
+                    twice — once in the field, once in the ledger — and the
+                    tenant copy was often illegible.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Approach</dt>
+                  <dd>
+                    I reversed the flow: read the meter, review the bill, print
+                    the slip, then collect and post to the ledger. Six slips per
+                    A4, large numerals, and an offline state for basements with
+                    no signal.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Outcome</dt>
+                  <dd>
+                    Collection cycles halved, duplicate entries nearly
+                    disappeared, and the printed slip became the record both
+                    sides trusted.
+                  </dd>
+                </div>
+              </dl>
+              <ul class="metrics">
+                <li>
+                  Collection cycle 5 days → 2 days
+                  <span class="sample">(sample)</span>
+                </li>
+                <li>
+                  Re-keyed entries −90% <span class="sample">(sample)</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <p class="figures-note">
+            Figures marked &ldquo;sample&rdquo; are illustrative placeholders,
+            not audited results.
+          </p>
+        </div>
+      </section>
+
+      <section class="sec" id="process" aria-labelledby="process-title">
+        <div class="wrap">
+          <div class="sec-head" data-anim>
+            <p class="label">02 / Process</p>
+            <h2 id="process-title">Four steps, no theatre</h2>
+            <p class="measure">
+              The same sequence every time, scaled to the size of the problem.
+              Research is not a phase I skip when the deadline is close; it is
+              the part that keeps the deadline honest.
+            </p>
+          </div>
+          <ol class="steps">
+            <li class="step" data-anim>
+              <p class="step-num">01</p>
+              <h3>Research</h3>
+              <p>
+                Interviews, support-ticket reading, and a look at what people
+                actually do instead of what the brief says they do.
+              </p>
+              <span class="deliverable">Deliverable — findings note</span>
+            </li>
+            <li class="step" data-anim>
+              <p class="step-num">02</p>
+              <h3>Wireframe</h3>
+              <p>
+                Flows and low-fidelity screens, tested early with three to five
+                users. Cheap to change, honest about gaps.
+              </p>
+              <span class="deliverable"
+                >Deliverable — flow + grayscale screens</span
+              >
+            </li>
+            <li class="step" data-anim>
+              <p class="step-num">03</p>
+              <h3>Visual design</h3>
+              <p>
+                Type, spacing, and states built on a token set the team can
+                extend without asking me for every screen.
+              </p>
+              <span class="deliverable"
+                >Deliverable — high-fidelity screens + tokens</span
+              >
+            </li>
+            <li class="step" data-anim>
+              <p class="step-num">04</p>
+              <h3>Handoff</h3>
+              <p>
+                Annotated specs, edge-case tables, and a build review. I stay in
+                the room until the shipped screen matches the file.
+              </p>
+              <span class="deliverable">Deliverable — spec + build review</span>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="sec" id="about" aria-labelledby="about-title">
+        <div class="wrap">
+          <div class="sec-head" data-anim>
+            <p class="label">03 / About</p>
+            <h2 id="about-title">A designer who reads the ticket queue</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-copy" data-anim>
+              <p>
+                I am a product designer based in Dhaka with five years of
+                experience across fintech, B2B SaaS, and field tools. I came to
+                design through front-end work, which is probably why my files
+                are organised the way engineers wish they were.
+              </p>
+              <p>
+                Most of my work starts with a support inbox or a research
+                session, not a mood board. I like problems where the interface
+                is only half the answer — the other half is a flow, a sentence
+                of copy, or a decision someone senior has to make.
+              </p>
+              <p>
+                I work in Figma with a token-based system, write my own handoff
+                notes, and test on a low-end Android phone before I call
+                anything done. Available for product design engagements and
+                design-system work, remote or in Dhaka.
+              </p>
+              <dl class="facts">
+                <dt>Experience</dt>
+                <dd>5 years, product and interface design</dd>
+                <dt>Based in</dt>
+                <dd>Dhaka, Bangladesh — remote-friendly</dd>
+                <dt>Tools</dt>
+                <dd>Figma, FigJam, Maze, Notion, basic HTML/CSS</dd>
+                <dt>Focus</dt>
+                <dd>Research-led product flows, design systems, handoff</dd>
+              </dl>
+            </div>
+            <div data-anim>
+              <p class="label">Working principle</p>
+              <p
+                style="
+                  margin-top: 12px;
+                  font-family: var(--display);
+                  font-weight: 500;
+                  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+                  line-height: 1.4;
+                  letter-spacing: -0.01em;
+                "
+              >
+                If a screen needs a paragraph of explanation in the handoff, the
+                screen is not finished.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="sec"
+        id="testimonials"
+        aria-labelledby="testimonials-title"
+      >
+        <div class="wrap">
+          <div class="sec-head" data-anim>
+            <p class="label">04 / Testimonials</p>
+            <h2 id="testimonials-title">What teams say</h2>
+          </div>
+          <div class="quotes">
+            <figure class="quote" data-anim>
+              <blockquote>
+                &ldquo;Nusrat turned a vague brief into a flow we could estimate
+                in a week. The research notes were the most useful document in
+                the project — we still cite them in planning.&rdquo;
+              </blockquote>
+              <figcaption>
+                <strong>Product lead</strong>Fintech client (placeholder)
+              </figcaption>
+            </figure>
+            <figure class="quote" data-anim>
+              <blockquote>
+                &ldquo;Her handoff is the only one my team has never had to
+                re-open a meeting for. States, edge cases, and copy were all
+                there before we wrote the first component.&rdquo;
+              </blockquote>
+              <figcaption>
+                <strong>Engineering manager</strong>B2B SaaS client
+                (placeholder)
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec" id="contact" aria-labelledby="contact-title">
+        <div class="wrap">
+          <div class="sec-head" data-anim>
+            <p class="label">05 / Contact</p>
+            <h2 id="contact-title">Tell me what is not working</h2>
+          </div>
+          <div class="contact-grid">
+            <div data-anim>
+              <p class="contact-lead">
+                A short note about the product, the problem, and the timeline is
+                enough to start. I reply within two working days.
+              </p>
+              <a class="contact-email" href="mailto:nusrat@example.com"
+                >nusrat@example.com</a
+              >
+              <p class="contact-note">
+                Available for product design, design systems, and research-led
+                redesigns.
+              </p>
+              <ul class="contact-links">
+                <li>
+                  <a href="#"
+                    ><span>LinkedIn</span><span>Profile (placeholder)</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span>Dribbble</span><span>Profile (placeholder)</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><span>Behance</span><span>Profile (placeholder)</span></a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="contact-aside" data-anim>
+              <span class="label">Working hours</span>
+              <p>Sunday – Thursday, 10:00 – 18:00 (GMT+6).</p>
+              <p>
+                Remote collaboration across Europe and South Asia; calls
+                scheduled in your timezone.
+              </p>
+              <p>
+                Portfolio PDF and full case-study walkthrough available on
+                request.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-grid">
+          <p class="footer-brand">Nusrat Jahan</p>
+          <nav class="footer-nav" aria-label="Footer">
+            <ul>
+              <li><a href="#work">Work</a></li>
+              <li><a href="#process">Process</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </nav>
+          <ul class="footer-social">
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Dribbble</a></li>
+            <li><a href="#">Behance</a></li>
+          </ul>
+          <p class="copyright">
+            &copy; 2026 Nusrat Jahan &middot; Portfolio demo — placeholder
+            content
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        if (!('IntersectionObserver' in window)) return
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return
+
+        var items = Array.prototype.slice.call(
+          document.querySelectorAll('[data-anim]'),
+        )
+        if (!items.length) return
+
+        document.body.classList.add('anim-armed')
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in')
+                io.unobserve(entry.target)
+              }
+            })
+          },
+          { rootMargin: '0px 0px -6% 0px', threshold: 0.05 },
+        )
+
+        items.forEach(function (el) {
+          io.observe(el)
+        })
+      })()
+    </script>
+  </body>
+</html>

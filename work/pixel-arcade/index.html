@@ -1,0 +1,2335 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quarter Up Arcade — Press Start</title>
+    <meta
+      name="description"
+      content="Quarter Up Arcade: 48 coin-op cabinets, 12 pinball machines, tournaments, and a full bar. Swipe in, press start, top the scoreboard."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ TOKENS ============ */
+      :root {
+        --bg: #12121a;
+        --bg-alt: #1c1c28;
+        --fg: #f0f0e8;
+        --muted: #9a9ab0;
+        --gold: #ffc93c;
+        --gold-light: #ffe38a;
+        --red: #ff4b3e;
+        --cyan: #37d8e0;
+        --seam: #3a3a52;
+        --green: #4cd964;
+        --font-display: 'Press Start 2P', monospace;
+        --font-body: 'Pixelify Sans', 'Segoe UI', sans-serif;
+        --step-ease: steps(2, end);
+        --glow-cyan: 0 0 12px rgba(55, 216, 224, 0.35);
+        --glow-gold: 0 0 12px rgba(255, 201, 60, 0.4);
+      }
+
+      /* ============ RESET / BASE ============ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        border-radius: 0 !important;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--font-body);
+        font-size: 17px;
+        line-height: 1.65;
+        overflow-x: hidden;
+        -webkit-font-smoothing: none;
+        image-rendering: pixelated;
+      }
+      img,
+      svg {
+        image-rendering: pixelated;
+        display: block;
+      }
+      a {
+        color: var(--cyan);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--gold-light);
+      }
+      :focus-visible {
+        outline: 4px solid var(--cyan);
+        outline-offset: 4px;
+      }
+      main {
+        position: relative;
+        z-index: 2;
+      }
+      section {
+        padding: 64px 20px;
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+      .wrap-read {
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      h1,
+      h2,
+      h3,
+      .pixelfont {
+        font-family: var(--font-display);
+        line-height: 1.5;
+        text-shadow: 2px 2px 0 #000;
+        word-break: break-word;
+      }
+      h2 {
+        font-size: 24px;
+        margin-bottom: 16px;
+      }
+      h3 {
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      .kicker {
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--cyan);
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        text-shadow: 2px 2px 0 #000;
+      }
+      .kicker::before {
+        content: '■ ';
+      }
+      p {
+        color: var(--fg);
+      }
+      .dim {
+        color: var(--muted);
+      }
+
+      /* ============ CRT SHELL ============ */
+      .crt-scanlines {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.18) 0 2px,
+          transparent 2px 4px
+        );
+        mix-blend-mode: multiply;
+      }
+      .crt-vignette {
+        position: fixed;
+        inset: 0;
+        z-index: 51;
+        pointer-events: none;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 60%,
+          rgba(0, 0, 0, 0.45) 100%
+        );
+      }
+
+      /* ============ PIXEL CORNERS ============ */
+      .px-corners {
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+
+      /* ============ HUD CHIPS ============ */
+      .hud-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--bg-alt);
+        border: 4px solid var(--seam);
+        padding: 10px 14px;
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--fg);
+        text-shadow: 2px 2px 0 #000;
+        white-space: nowrap;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .hud-chip .lbl {
+        color: var(--muted);
+      }
+      .icon-sprite {
+        width: 16px;
+        height: 16px;
+        shape-rendering: crispEdges;
+      }
+
+      /* ============ BUTTONS ============ */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        min-width: 44px;
+        padding: 14px 20px;
+        font-family: var(--font-display);
+        font-size: 11px;
+        line-height: 1.4;
+        text-shadow: 2px 2px 0 #000;
+        background: var(--bg-alt);
+        color: var(--fg);
+        border: 4px solid var(--fg);
+        white-space: nowrap;
+        cursor: pointer;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+        transition:
+          transform 160ms var(--step-ease),
+          box-shadow 160ms var(--step-ease),
+          border-color 160ms var(--step-ease);
+      }
+      .btn:hover {
+        animation: wiggle 160ms var(--step-ease);
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: #12121a;
+        border-color: #12121a;
+        box-shadow: 0 0 12px rgba(255, 201, 60, 0.4);
+      }
+      .btn-primary:hover {
+        box-shadow: 0 0 20px rgba(255, 201, 60, 0.6);
+        animation-name: wiggle;
+      }
+      .btn-primary:active {
+        transform: translate(4px, 4px);
+      }
+      .btn-secondary {
+        background: var(--bg-alt);
+        color: var(--fg);
+        border-color: var(--fg);
+      }
+      .btn-secondary:hover {
+        border-color: var(--cyan);
+        box-shadow: var(--glow-cyan);
+      }
+      .btn-secondary:active {
+        transform: translate(4px, 4px);
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: transparent;
+        color: var(--cyan);
+        box-shadow: none;
+        text-shadow: 2px 2px 0 #000;
+      }
+      .btn-ghost:hover {
+        color: var(--gold-light);
+      }
+      .btn:disabled,
+      .btn[aria-disabled='true'] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .btn-sm {
+        padding: 10px 14px;
+        font-size: 10px;
+        min-height: 44px;
+      }
+      @keyframes wiggle {
+        0% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(-4px, 0);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      /* ============ DIALOG BOX ============ */
+      .dialog {
+        position: relative;
+        background: var(--bg-alt);
+        border: 4px solid var(--fg);
+        padding: 24px;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .dialog::before {
+        content: '';
+        position: absolute;
+        inset: 10px;
+        border: 4px solid var(--seam);
+        pointer-events: none;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .dlg-cursor {
+        display: inline-block;
+        width: 12px;
+        height: 16px;
+        background: var(--gold);
+        vertical-align: -2px;
+      }
+      .blink {
+        animation: blink 530ms steps(1) infinite;
+      }
+      @keyframes blink {
+        0%,
+        49% {
+          opacity: 1;
+        }
+        50%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* ============ SPRITES ============ */
+      .bob {
+        animation: bob 1000ms steps(2) infinite;
+        transform-origin: center;
+      }
+      @keyframes bob {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      /* ============ HEADER ============ */
+      header.hudbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: rgba(18, 18, 26, 0.96);
+        border-bottom: 4px solid var(--seam);
+        padding: 12px 20px;
+      }
+      .hudbar-in {
+        position: relative;
+        z-index: 61;
+        max-width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .logo-lock {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--fg);
+      }
+      .logo-lock span {
+        font-family: var(--font-display);
+        font-size: 11px;
+        text-shadow: 2px 2px 0 #000;
+        line-height: 1.5;
+      }
+      nav.hud-nav {
+        display: none;
+      }
+      nav.hud-nav a {
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--fg);
+        padding: 10px 8px;
+        position: relative;
+        white-space: nowrap;
+        text-shadow: 2px 2px 0 #000;
+      }
+      nav.hud-nav a:hover,
+      nav.hud-nav a[aria-current='true'] {
+        color: var(--gold);
+      }
+      nav.hud-nav a:hover::before {
+        content: '▶ ';
+        color: var(--cyan);
+      }
+      .hud-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: auto;
+        flex-wrap: wrap;
+      }
+      .menu-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 10px 14px;
+        font-family: var(--font-display);
+        font-size: 10px;
+        background: var(--bg-alt);
+        color: var(--fg);
+        border: 4px solid var(--seam);
+        cursor: pointer;
+        text-shadow: 2px 2px 0 #000;
+      }
+      .mobile-nav {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .mobile-nav a {
+        font-family: var(--font-display);
+        font-size: 11px;
+        color: var(--fg);
+        padding: 14px 8px;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .mobile-nav a::before {
+        content: '▶';
+        color: var(--cyan);
+      }
+      .mobile-nav.open {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        background: var(--bg-alt);
+        padding: 96px 20px 40px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border-top: none;
+        margin-top: 0;
+      }
+      @media (min-width: 1024px) {
+        nav.hud-nav {
+          display: flex;
+          gap: 8px;
+        }
+        .menu-btn,
+        .mobile-nav {
+          display: none !important;
+        }
+      }
+
+      /* ============ 3.2 HERO / TITLE SCREEN ============ */
+      .hero {
+        position: relative;
+        padding: 80px 20px 64px;
+        text-align: center;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at 50% 20%,
+            rgba(55, 216, 224, 0.1),
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 20% 90%,
+            rgba(255, 201, 60, 0.06),
+            transparent 40%
+          );
+      }
+      .hero-stars {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.5;
+      }
+      .hero-wrap {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .hero .insert {
+        display: inline-block;
+        margin-bottom: 24px;
+      }
+      .hero-title {
+        font-size: clamp(24px, 6vw, 48px);
+        color: var(--fg);
+        text-shadow:
+          3px 3px 0 #000,
+          6px 6px 0 var(--gold);
+        margin-bottom: 20px;
+        animation: titleIn 240ms steps(3) both;
+      }
+      @keyframes titleIn {
+        0% {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        66% {
+          opacity: 0.66;
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .hero-sub {
+        font-size: 20px;
+        color: var(--muted);
+        max-width: 600px;
+        margin: 0 auto 28px;
+        font-weight: 500;
+      }
+      .hero-cta {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+      }
+      .press-start {
+        animation: blinkCta 530ms steps(1) infinite;
+      }
+      @keyframes blinkCta {
+        0%,
+        79% {
+          box-shadow: 0 0 12px rgba(255, 201, 60, 0.4);
+        }
+        80%,
+        100% {
+          box-shadow: 0 0 24px rgba(255, 201, 60, 0.75);
+        }
+      }
+      .hero-mascot {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 24px;
+      }
+      .highscore {
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 16px 20px;
+        font-size: 18px;
+      }
+      .highscore .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        line-height: 2;
+      }
+      .highscore .name {
+        color: var(--cyan);
+      }
+      .highscore .pts {
+        color: var(--gold);
+      }
+
+      /* ============ ATTRACT MARQUEE ============ */
+      .marquee {
+        border-block: 4px solid var(--seam);
+        background: var(--bg-alt);
+        overflow: hidden;
+        padding: 12px 0;
+      }
+      .marquee-track {
+        display: flex;
+        gap: 48px;
+        width: max-content;
+        animation: marquee 24s steps(48) infinite;
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #000;
+        white-space: nowrap;
+      }
+      .marquee-track span::after {
+        content: ' ■';
+        color: var(--cyan);
+      }
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ============ 3.3 STATS ============ */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .stat {
+        background: var(--bg-alt);
+        border: 4px solid var(--seam);
+        padding: 20px;
+        text-align: center;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .stat .num {
+        font-family: var(--font-display);
+        font-size: 18px;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #000;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+      .stat .lbl {
+        font-size: 16px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      @media (min-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      /* ============ 3.4 STORY ============ */
+      .story-box {
+        display: grid;
+        gap: 20px;
+        grid-template-columns: 1fr;
+      }
+      .story-portrait {
+        width: 96px;
+        height: 96px;
+        background: var(--bg);
+        border: 4px solid var(--seam);
+        padding: 8px;
+        flex: none;
+      }
+      .story-text {
+        font-size: 19px;
+        line-height: 1.8;
+        min-height: 120px;
+      }
+      .story-text .cursor-mark {
+        display: inline-block;
+        width: 12px;
+        height: 18px;
+        background: var(--fg);
+        vertical-align: -3px;
+        margin-left: 4px;
+      }
+      .typewriter {
+        white-space: pre-wrap;
+      }
+      @media (min-width: 768px) {
+        .story-box {
+          grid-template-columns: 112px 1fr;
+          align-items: start;
+        }
+        .story-portrait {
+          width: 112px;
+          height: 112px;
+        }
+      }
+
+      /* ============ 3.5 FEATURES ============ */
+      .feat-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      @media (min-width: 640px) {
+        .feat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .feat-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .card {
+        background: var(--bg-alt);
+        border: 4px solid var(--seam);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition:
+          border-color 160ms var(--step-ease),
+          transform 160ms var(--step-ease);
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .card:hover {
+        border-color: var(--gold);
+      }
+      .card:hover .icon-sprite {
+        animation: bob 1000ms steps(2) infinite;
+      }
+      .card-sprite {
+        width: 48px;
+        height: 48px;
+        background: var(--bg);
+        border: 4px solid var(--seam);
+        display: grid;
+        place-items: center;
+        padding: 6px;
+      }
+      .card-sprite svg {
+        width: 32px;
+        height: 32px;
+      }
+      .get-chip {
+        align-self: flex-start;
+        font-family: var(--font-display);
+        font-size: 9px;
+        background: var(--gold);
+        color: #12121a;
+        text-shadow: none;
+        padding: 6px 10px;
+      }
+      .card p {
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      /* ============ 3.6 BENEFITS ============ */
+      .inv-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      @media (min-width: 640px) {
+        .inv-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .inv-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .slot {
+        background: var(--bg);
+        border: 4px solid var(--seam);
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .slot .icon-sprite {
+        width: 32px;
+        height: 32px;
+        flex: none;
+      }
+      .slot .t {
+        font-weight: 700;
+        color: var(--fg);
+        line-height: 1.4;
+      }
+      .slot .d {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .xp-panel {
+        margin-top: 24px;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .xp-panel .cap {
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #000;
+      }
+      .xp-bar {
+        flex: 1;
+        min-width: 160px;
+        height: 20px;
+        background: var(--bg);
+        border: 4px solid var(--seam);
+        position: relative;
+      }
+      .xp-fill {
+        position: absolute;
+        inset: 2px auto 2px 2px;
+        width: 85%;
+        background: repeating-linear-gradient(
+          90deg,
+          var(--gold) 0 8px,
+          var(--gold-light) 8px 12px
+        );
+        animation: xpfill 800ms steps(12) both;
+      }
+      @keyframes xpfill {
+        from {
+          width: 0;
+        }
+        to {
+          width: 85%;
+        }
+      }
+      .xp-panel .pct {
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--fg);
+        text-shadow: 2px 2px 0 #000;
+      }
+
+      /* ============ 3.7 PROCESS / WORLD MAP ============ */
+      .worldmap {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .node {
+        background: var(--bg-alt);
+        border: 4px solid var(--seam);
+        padding: 20px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        position: relative;
+        z-index: 1;
+        clip-path: polygon(
+          0 8px,
+          8px 8px,
+          8px 0,
+          calc(100% - 8px) 0,
+          calc(100% - 8px) 8px,
+          100% 8px,
+          100% calc(100% - 8px),
+          calc(100% - 8px) calc(100% - 8px),
+          calc(100% - 8px) 100%,
+          8px 100%,
+          8px calc(100% - 8px),
+          0 calc(100% - 8px)
+        );
+      }
+      .node .code {
+        font-family: var(--font-display);
+        font-size: 14px;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #000;
+        white-space: nowrap;
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+      .node.cur {
+        border-color: var(--gold);
+        box-shadow: 0 0 16px rgba(255, 201, 60, 0.3);
+      }
+      .node p {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .path-dots {
+        width: 4px;
+        min-height: 40px;
+        margin-left: 44px;
+        background: repeating-linear-gradient(
+          0deg,
+          var(--seam) 0 8px,
+          transparent 8px 16px
+        );
+      }
+      @media (min-width: 900px) {
+        .worldmap {
+          flex-direction: row;
+          gap: 20px;
+          align-items: stretch;
+        }
+        .path-dots {
+          display: block;
+          width: 56px;
+          min-height: auto;
+          flex: 1;
+          position: relative;
+          top: 88px;
+          background: repeating-linear-gradient(
+            90deg,
+            var(--seam) 0 8px,
+            transparent 8px 16px
+          );
+        }
+        .node {
+          flex: 1;
+        }
+      }
+      .walker {
+        position: relative;
+        display: inline-block;
+      }
+      .walker svg {
+        vertical-align: middle;
+      }
+
+      /* ============ 3.8 PRICING ============ */
+      .price-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      @media (min-width: 640px) {
+        .price-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .price-card {
+        position: relative;
+      }
+      .price-card.featured {
+        border-color: var(--gold);
+        box-shadow: 0 0 16px rgba(255, 201, 60, 0.3);
+      }
+      .up-flag {
+        position: absolute;
+        top: -24px;
+        left: 16px;
+        font-family: var(--font-display);
+        font-size: 9px;
+        background: var(--gold);
+        color: #12121a;
+        text-shadow: none;
+        padding: 6px 10px;
+        animation: bob 1000ms steps(2) infinite;
+      }
+      .tier-name {
+        font-family: var(--font-display);
+        font-size: 13px;
+        color: var(--fg);
+        text-shadow: 2px 2px 0 #000;
+        line-height: 1.5;
+      }
+      .price-chip {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-size: 16px;
+        color: #12121a;
+        background: var(--gold);
+        padding: 10px 16px;
+        margin: 8px 0 16px;
+        text-shadow: none;
+      }
+      .price-chip small {
+        font-size: 9px;
+        display: block;
+        margin-top: 4px;
+      }
+      .ticklist {
+        list-style: none;
+        margin: 0 0 24px;
+        flex: 1;
+      }
+      .ticklist li {
+        padding: 8px 0 8px 28px;
+        position: relative;
+        color: var(--fg);
+        font-weight: 500;
+        line-height: 1.5;
+      }
+      .ticklist li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 12px;
+        width: 14px;
+        height: 14px;
+        background: var(--green);
+        box-shadow: 2px 2px 0 #000;
+      }
+      .price-card .btn {
+        width: 100%;
+        margin-top: auto;
+      }
+
+      /* ============ 3.9 TESTIMONIALS ============ */
+      .rev-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      @media (min-width: 768px) {
+        .rev-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .rev .stars {
+        color: var(--gold);
+        letter-spacing: 4px;
+        font-size: 15px;
+        margin-bottom: 12px;
+        text-shadow: 2px 2px 0 #000;
+      }
+      .rev blockquote {
+        font-size: 18px;
+        line-height: 1.7;
+        font-weight: 500;
+        color: var(--fg);
+        margin-bottom: 16px;
+      }
+      .rev .att {
+        font-family: var(--font-display);
+        font-size: 9px;
+        color: var(--cyan);
+        text-shadow: 2px 2px 0 #000;
+        line-height: 1.8;
+      }
+      .rev .att small {
+        display: block;
+        color: var(--muted);
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 500;
+        text-shadow: none;
+      }
+
+      /* ============ 3.10 FAQ ============ */
+      .faq {
+        max-width: 680px;
+        margin-inline: auto;
+      }
+      .faq-item {
+        border-bottom: 4px solid var(--seam);
+      }
+      .faq-item:first-child {
+        border-top: 4px solid var(--seam);
+      }
+      .faq-q {
+        width: 100%;
+        min-height: 60px;
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--fg);
+        padding: 16px 8px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .faq-q .code {
+        font-family: var(--font-display);
+        font-size: 10px;
+        color: var(--gold);
+        text-shadow: 2px 2px 0 #000;
+        flex: none;
+      }
+      .faq-q .tri {
+        color: var(--cyan);
+        transition: transform 160ms steps(2);
+        flex: none;
+        font-family: var(--font-display);
+        font-size: 10px;
+        text-shadow: none;
+      }
+      .faq-q[aria-expanded='true'] .tri {
+        transform: rotate(90deg);
+      }
+      .faq-a {
+        padding: 4px 8px 20px 60px;
+        color: var(--muted);
+        font-weight: 500;
+        display: none;
+      }
+      .faq-a.open {
+        display: block;
+      }
+
+      /* ============ 3.11 JOURNAL ============ */
+      .journal-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      @media (min-width: 640px) {
+        .journal-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .j-card .scene {
+        background: var(--bg);
+        border: 4px solid var(--seam);
+        margin-bottom: 16px;
+      }
+      .j-card .scene svg {
+        width: 100%;
+        height: auto;
+      }
+      .j-card .wcode {
+        font-family: var(--font-display);
+        font-size: 9px;
+        color: var(--muted);
+        text-shadow: 2px 2px 0 #000;
+        margin-bottom: 8px;
+      }
+      .j-card h3 {
+        margin-bottom: 4px;
+      }
+      .j-card .view {
+        font-weight: 700;
+      }
+
+      /* ============ 3.12 FINAL CTA ============ */
+      .boss {
+        background:
+          linear-gradient(
+            0deg,
+            rgba(255, 75, 62, 0.08),
+            rgba(255, 75, 62, 0.08)
+          ),
+          var(--bg);
+        border-block: 4px solid var(--red);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .boss .continue {
+        font-size: clamp(28px, 7vw, 56px);
+        color: var(--fg);
+        text-shadow:
+          3px 3px 0 #000,
+          6px 6px 0 var(--red);
+        margin-bottom: 20px;
+      }
+      .cd-chip {
+        margin-bottom: 28px;
+      }
+      .cd-chip .n {
+        color: var(--red);
+      }
+      .boss-cta {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .boss .btn-primary:hover {
+        animation: shake 240ms steps(3);
+      }
+      @keyframes shake {
+        0% {
+          transform: translate(0, 0);
+        }
+        33% {
+          transform: translate(-4px, 0);
+        }
+        66% {
+          transform: translate(4px, 0);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+      .boss-note {
+        margin-top: 20px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      /* ============ 3.13 FOOTER ============ */
+      footer.credits {
+        border-top: 4px solid var(--seam);
+        background: var(--bg-alt);
+        padding: 20px;
+      }
+      .slim-foot {
+        max-width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+      }
+      .foot-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .foot-brand span {
+        font-family: var(--font-display);
+        font-size: 9px;
+        text-shadow: 2px 2px 0 #000;
+      }
+      .foot-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .foot-links a {
+        color: var(--muted);
+        font-weight: 600;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .foot-links a:hover {
+        color: var(--gold);
+      }
+      .foot-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        color: var(--muted);
+      }
+      .foot-right .socials {
+        display: flex;
+        gap: 10px;
+      }
+      .foot-right .socials a {
+        display: inline-flex;
+        min-width: 44px;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+      }
+      .foot-copy {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .foot-extras {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .slim-foot {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 12px 24px;
+          min-height: 96px;
+        }
+        .foot-brand {
+          justify-self: start;
+        }
+        .foot-links {
+          justify-self: center;
+        }
+        .foot-right {
+          justify-self: end;
+        }
+        .foot-copy {
+          grid-column: 1 / -1;
+          width: 100%;
+          text-align: center;
+          border-top: 4px solid var(--seam);
+          padding-top: 12px;
+        }
+        .foot-extras {
+          display: none !important;
+        }
+      }
+      @media (max-width: 767px) {
+        .foot-extras {
+          display: grid;
+          gap: 16px;
+          max-width: 1120px;
+          margin: 8px auto 0;
+          padding-top: 16px;
+          border-top: 4px solid var(--seam);
+          grid-template-columns: 1fr;
+        }
+        .foot-extras .made {
+          color: var(--muted);
+          font-weight: 600;
+          text-align: center;
+          line-height: 1.8;
+        }
+      }
+
+      /* ============ REDUCED MOTION ============ */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+        .faq-a {
+          display: block;
+        }
+        .faq-q .tri {
+          transform: rotate(90deg);
+        }
+        .highscore,
+        .story-text {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CRT shell -->
+    <div class="crt-scanlines" aria-hidden="true"></div>
+    <div class="crt-vignette" aria-hidden="true"></div>
+
+    <!-- Sprite sheet -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      style="display: none"
+      aria-hidden="true"
+    >
+      <symbol id="sp-heart" viewBox="0 0 16 16">
+        <path
+          fill="#FF4B3E"
+          d="M3 2h3v2h4V2h3v2h1v4h-1v2h-2v2h-2v2H7V12H5v-2H3V8H2V4h1z"
+        />
+      </symbol>
+      <symbol id="sp-coin" viewBox="0 0 16 16">
+        <path fill="#FFC93C" d="M5 2h6v2h2v8h-2v2H5v-2H3V4h2z" />
+        <path fill="#FFE38A" d="M5 4h2v6H5z" />
+        <path fill="#B8860B" d="M11 4h2v6h-2z" />
+      </symbol>
+      <symbol id="sp-star" viewBox="0 0 16 16">
+        <path
+          fill="#FFC93C"
+          d="M7 1h2v4h3v2h1v2h-2v2h1v3h1v1h-3v-1H9v-2H7v2H5v1H2v-1h1v-3h1V9H2V7h1V5h3V1z"
+        />
+      </symbol>
+      <symbol id="sp-joystick" viewBox="0 0 16 16">
+        <path fill="#37D8E0" d="M6 1h4v1H6z" />
+        <path fill="#37D8E0" d="M7 2h2v6H7z" />
+        <path fill="#3A3A52" d="M4 8h8v2H4z" />
+        <path fill="#3A3A52" d="M5 10h6v2H5z" />
+        <path fill="#3A3A52" d="M3 12h10v2H3z" />
+        <path fill="#F0F0E8" d="M6 10h4v1H6z" />
+      </symbol>
+      <symbol id="sp-trophy" viewBox="0 0 16 16">
+        <path fill="#FFC93C" d="M4 2h8v6H4z" />
+        <path fill="#FFE38A" d="M5 3h2v4H5z" />
+        <path fill="#B8860B" d="M2 4h2v4H2zM12 4h2v4h-2z" />
+        <path fill="#FFC93C" d="M7 8h2v3H7z" />
+        <path fill="#3A3A52" d="M5 11h6v2H5z" />
+        <path fill="#FF4B3E" d="M4 13h8v1H4z" />
+      </symbol>
+      <symbol id="sp-drink" viewBox="0 0 16 16">
+        <path fill="#FF6FB5" d="M5 2h4v1l-3 5-1-5z" />
+        <path fill="#F0F0E8" d="M4 4h8v1l-4 7-4-7z" opacity=".9" />
+        <path fill="#37D8E0" d="M5 6h6l-3 5z" />
+        <path fill="#3A3A52" d="M3 12h10v2H3z" />
+      </symbol>
+      <symbol id="sp-ticket" viewBox="0 0 16 16">
+        <path fill="#FFC93C" d="M2 4h12v3H11v2h3v3H2V9h3V7H2z" />
+        <path fill="#12121A" d="M7 8h2v1H7z" />
+      </symbol>
+      <symbol id="sp-cart" viewBox="0 0 16 16">
+        <path fill="#F0F0E8" d="M2 3h2l2 6h6l2-4H5V4H2z" />
+        <path fill="#37D8E0" d="M5 11h2v2H5zM10 11h2v2h-2z" />
+      </symbol>
+      <symbol id="sp-mushroom" viewBox="0 0 16 16">
+        <path fill="#FF4B3E" d="M3 2h10v2h2v4H1V4h2z" />
+        <path fill="#F0F0E8" d="M5 5h2v2H5zM10 4h2v2h-2z" />
+        <path fill="#FFE38A" d="M3 8h10v2H3z" />
+        <path fill="#F0F0E8" d="M4 10h8v4H4z" />
+        <path fill="#12121A" d="M6 11h1v2H6zM9 11h1v2H9z" />
+      </symbol>
+      <symbol id="sp-walker" viewBox="0 0 16 16">
+        <path fill="#F0F0E8" d="M5 2h6v2H5z" />
+        <path fill="#FFE38A" d="M6 4h4v4H6z" />
+        <path fill="#F0F0E8" d="M4 8h8v2H4z" />
+        <path fill="#37D8E0" d="M3 10h4v2H3zM9 10h4v2H9z" />
+        <path fill="#12121A" d="M6 3h1v2H6zM9 3h1v2H9z" />
+      </symbol>
+      <symbol id="sp-marker" viewBox="0 0 16 16">
+        <path
+          fill="#FFC93C"
+          d="M6 2h4v1h2v2h1v6h-2v-1H7v2H4v-1h2v-2H5V8H4V5h1V3h1z"
+        />
+        <path fill="#12121A" d="M6 6h4v2H6z" />
+      </symbol>
+      <symbol id="sp-pinball" viewBox="0 0 16 16">
+        <path fill="#37D8E0" d="M4 2h8v2h2v8h-2v2H4v-2H2V4h2z" />
+        <path fill="#FF4B3E" d="M6 6h4v4H6z" />
+        <path fill="#FFE38A" d="M7 3h2v2H7z" />
+        <path fill="#12121A" d="M2 5h1v2H2zM13 5h1v2h-1z" />
+      </symbol>
+      <symbol id="sp-ghost" viewBox="0 0 16 16">
+        <path fill="#37D8E0" d="M4 2h8v2h2v9h-2v-2h-2v2H8v-2H6v2H4v-2H2V4h2z" />
+        <path fill="#12121A" d="M5 5h2v3H5zM9 5h2v3H9z" />
+        <path fill="#F0F0E8" d="M6 6h1v1H6zM10 6h1v1h-1z" />
+      </symbol>
+      <symbol id="sp-xbird" viewBox="0 0 16 16">
+        <path
+          fill="#F0F0E8"
+          d="M3 2h3v1h1v1h2V3h4v2l-4 3v1l3 4h1v1h-3l-3-4H4v3H2V8h2V7h2V6H5V5H4V4H3z"
+        />
+      </symbol>
+      <symbol id="sp-igrid" viewBox="0 0 16 16">
+        <path
+          fill="#F0F0E8"
+          d="M3 2h10v2H3zM3 12h10v2H3zM2 3v10h2V3zM12 3v10h2V3z"
+        />
+        <path fill="#FF6FB5" d="M6 5h4v6H6z" />
+        <path fill="#12121A" d="M7 6h2v2H7z" />
+      </symbol>
+      <symbol id="sp-cabinet" viewBox="0 0 32 32">
+        <path fill="#3A3A52" d="M4 2h24v28H4z" />
+        <path fill="#12121A" d="M6 4h20v24H6z" />
+        <path fill="#37D8E0" d="M8 6h16v10H8z" />
+        <path fill="#12121A" d="M10 8h4v2h-4zM16 10h4v2h-4zM12 12h4v2h-4z" />
+        <path fill="#FFC93C" d="M8 18h16v2H8z" />
+        <path fill="#FF4B3E" d="M9 22h4v4H9z" />
+        <path fill="#37D8E0" d="M15 22h4v4h-4z" />
+        <path fill="#4CD964" d="M21 22h3v4h-3z" />
+      </symbol>
+      <symbol id="sp-coin-mascot" viewBox="0 0 32 32">
+        <path
+          fill="#FFC93C"
+          d="M9 4h14v2h4v2h2v14h-2v2h-4v2H9v-2H5v-2H3V8h2V6h4z"
+        />
+        <path fill="#FFE38A" d="M9 8h2v12H9z" />
+        <path fill="#B8860B" d="M23 8h2v12h-2z" />
+        <path fill="#12121A" d="M13 12h2v4h-2zM19 12h2v4h-2z" />
+        <path fill="#12121A" d="M12 20h8v2h-8z" />
+      </symbol>
+      <symbol id="sp-portrait" viewBox="0 0 32 32">
+        <path fill="#FFC93C" d="M8 6h16v2h4v10h-2v6h-2v2H8v-2H6v-6H4V8h4z" />
+        <path fill="#FFE38A" d="M8 8h4v4H8z" />
+        <path fill="#12121A" d="M12 12h3v3h-3zM19 12h3v3h-3z" />
+        <path fill="#37D8E0" d="M13 13h2v2h-2zM20 13h2v2h-2z" />
+        <path fill="#12121A" d="M12 20h10v1H12z" />
+        <path fill="#FF4B3E" d="M10 3h3v2h-3zM20 3h3v2h-3z" />
+        <path fill="#FFE38A" d="M22 8h4v4h-4z" />
+      </symbol>
+    </svg>
+
+    <!-- 3.1 HEADER / HUD BAR -->
+    <header class="hudbar">
+      <div class="hudbar-in">
+        <a class="logo-lock" href="#top" aria-label="Quarter Up Arcade home">
+          <svg class="icon-sprite" width="24" height="24" aria-hidden="true">
+            <use href="#sp-cabinet" />
+          </svg>
+          <span>QUARTER UP ARCADE</span>
+        </a>
+        <nav class="hud-nav" aria-label="Main">
+          <a href="#cabinets">CABINETS</a>
+          <a href="#perks">PERKS</a>
+          <a href="#tournaments">TOURNAMENTS</a>
+          <a href="#pricing">GAME PASS</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <div class="hud-right">
+          <span class="hud-chip" aria-hidden="true"
+            ><span class="lbl">LIVES</span>
+            <svg class="icon-sprite" aria-hidden="true">
+              <use href="#sp-heart" />
+            </svg>
+            <svg class="icon-sprite" aria-hidden="true">
+              <use href="#sp-heart" />
+            </svg>
+            <svg class="icon-sprite" aria-hidden="true">
+              <use href="#sp-heart" />
+            </svg>
+          </span>
+          <span class="hud-chip" aria-hidden="true"
+            ><span class="lbl">COIN</span>× 07</span
+          >
+          <a class="btn btn-primary btn-sm" href="#pricing">INSERT COIN</a>
+          <button class="menu-btn" aria-expanded="false" aria-controls="mobnav">
+            MENU ▶
+          </button>
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobnav" aria-label="Mobile">
+        <a href="#cabinets">CABINETS</a>
+        <a href="#perks">PERKS</a>
+        <a href="#tournaments">TOURNAMENTS</a>
+        <a href="#pricing">GAME PASS</a>
+        <a href="#reviews">PLAYERS</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- 3.2 HERO / TITLE SCREEN -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-stars" aria-hidden="true"></div>
+        <div class="hero-wrap">
+          <span class="hud-chip insert">CHAIN 121 COINS SERVED SINCE 2017</span>
+          <div class="hero-mascot">
+            <svg
+              class="bob"
+              viewBox="0 0 32 32"
+              width="96"
+              height="96"
+              aria-hidden="true"
+              style="shape-rendering: crispEdges"
+            >
+              <use href="#sp-coin-mascot" />
+            </svg>
+          </div>
+          <h1 class="hero-title" id="hero-title">
+            PRESS START ON<br />REAL ARCADE NIGHTS
+          </h1>
+          <p class="hero-sub">
+            48 coin-op cabinets, 12 pinball machines, a full bar and a kitchen
+            that stays open till close. Swipe a card, feed a cabinet, write your
+            name on the wall.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-primary press-start" href="#pricing"
+              >▶ PRESS START</a
+            >
+            <a class="btn btn-secondary" href="#tournaments">TOUR THE RANKS</a>
+          </div>
+          <div class="dialog highscore">
+            <div class="rows">
+              <div class="row">
+                <span class="name">1UP</span><span class="pts">099990</span>
+              </div>
+              <div class="row">
+                <span class="name">YOU</span><span class="pts">004200</span>
+              </div>
+            </div>
+            <span aria-hidden="true"
+              >Score panel resets nightly — the wall remembers everything.</span
+            ><span class="dlg-cursor blink" aria-hidden="true"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ATTRACT MODE MARQUEE -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>ATTRACT MODE</span><span>2-FOR-1 TUESDAYS</span
+          ><span>PINBALL NIGHT EVERY WEDNESDAY</span
+          ><span>LEAGUE SEASON 9 OPENS FRI</span><span>21+ AFTER 9 PM</span>
+          <span>ATTRACT MODE</span><span>2-FOR-1 TUESDAYS</span
+          ><span>PINBALL NIGHT EVERY WEDNESDAY</span
+          ><span>LEAGUE SEASON 9 OPENS FRI</span><span>21+ AFTER 9 PM</span>
+        </div>
+      </div>
+
+      <!-- 3.3 STATS BAR -->
+      <section aria-labelledby="stats-t">
+        <div class="wrap">
+          <p class="kicker" id="stats-t">SCORE PANEL</p>
+          <div class="stats-grid">
+            <div class="stat">
+              <div class="num">48</div>
+              <div class="lbl">CABINETS, ALL QUARTER-OP</div>
+            </div>
+            <div class="stat">
+              <div class="num">12</div>
+              <div class="lbl">PINBALL MACHINES</div>
+            </div>
+            <div class="stat">
+              <div class="num">1,204</div>
+              <div class="lbl">SCORES ON THE WALL</div>
+            </div>
+            <div class="stat">
+              <div class="num">★4.8</div>
+              <div class="lbl">REVIEWS FROM 2,300 PLAYERS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.4 STORY SCREEN -->
+      <section aria-labelledby="story-t">
+        <div class="wrap-read">
+          <p class="kicker" id="story-t">STORY SCREEN</p>
+          <div class="dialog story-box">
+            <div
+              class="story-portrait px-corners"
+              style="clip-path: none; border-radius: 0 !important"
+            >
+              <svg
+                viewBox="0 0 32 32"
+                width="104"
+                height="104"
+                aria-label="Pixel portrait of the house mascot, a crowned coin face"
+                style="shape-rendering: crispEdges"
+              >
+                <use href="#sp-portrait" />
+              </svg>
+            </div>
+            <div>
+              <p class="typewriter story-text">
+                THE OWNER WALKED INTO A DEAD ARCADE IN 2017 AND BOUGHT 40 OF ITS
+                CABINETS. WE RESTORED EVERY BOARD BY HAND, ADDED A BAR, AND
+                SWAPPED TICKETS FOR SWIPE CARDS. SEASON 9 OF OUR LEAGUE STARTS
+                FRIDAY — SAVE POINT UNLOCKED.
+                <span class="cursor-mark blink" aria-hidden="true"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.5 FEATURES / LEVEL 1 -->
+      <section id="cabinets" aria-labelledby="feat-t">
+        <div class="wrap">
+          <p class="kicker" id="feat-t">LEVEL 1 — POWER-UPS</p>
+          <h2>WHAT A NIGHT HERE PLAYS LIKE</h2>
+          <div class="feat-grid">
+            <article class="card">
+              <div class="card-sprite">
+                <svg class="icon-sprite" aria-hidden="true">
+                  <use href="#sp-joystick" />
+                </svg>
+              </div>
+              <h3>48 CABINETS, ONE CARD</h3>
+              <p>
+                Every cabinet takes the same house card. Load once, swipe
+                forever — no pocket change, no quarter bag, no waiting for
+                change.
+              </p>
+              <span class="get-chip">GET!</span>
+            </article>
+            <article class="card">
+              <div class="card-sprite">
+                <svg class="icon-sprite" aria-hidden="true">
+                  <use href="#sp-trophy" />
+                </svg>
+              </div>
+              <h3>WEEKLY TOURNAMENTS</h3>
+              <p>
+                High-score runs every Wednesday, brackets every Friday. Winner
+                takes a $100 game card and a permanent slot on the wall.
+              </p>
+              <span class="get-chip">GET!</span>
+            </article>
+            <article class="card">
+              <div class="card-sprite">
+                <svg class="icon-sprite" aria-hidden="true">
+                  <use href="#sp-drink" />
+                </svg>
+              </div>
+              <h3>BAR AND KITCHEN</h3>
+              <p>
+                16 taps rotate weekly, the pizza oven fires till midnight, and
+                drinks reach the cabinet you are parked at — just order by lane.
+              </p>
+              <span class="get-chip">GET!</span>
+            </article>
+            <article class="card">
+              <div class="card-sprite">
+                <svg class="icon-sprite" aria-hidden="true">
+                  <use href="#sp-marker" />
+                </svg>
+              </div>
+              <h3>THE SCORE WALL</h3>
+              <p>
+                Every machine logs its top 10 to our wall display nightly. Put
+                your three letters up on Galaga and watch strangers study them.
+              </p>
+              <span class="get-chip">GET!</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.6 BENEFITS / LEVEL 2 -->
+      <section id="perks" aria-labelledby="perk-t">
+        <div class="wrap">
+          <p class="kicker" id="perk-t">LEVEL 2 — INVENTORY</p>
+          <h2>SIX THINGS EVERY PLAYER KEEPS</h2>
+          <div class="inv-grid">
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-pinball" />
+              </svg>
+              <div>
+                <div class="t">12 pinball machines</div>
+                <div class="d">
+                  Two of them refurbished 1992 tables, straight from a closed
+                  Michigan hall.
+                </div>
+              </div>
+            </div>
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-ticket" />
+              </svg>
+              <div>
+                <div class="t">Prizes without ticket jams</div>
+                <div class="d">
+                  Points land on your card the second you beat the minigame.
+                  Real prizes, digital ticket.
+                </div>
+              </div>
+            </div>
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-cart" />
+              </svg>
+              <div>
+                <div class="t">Group bays for 6–12</div>
+                <div class="d">
+                  Lane rentals from $60: 4 cabinets, table space, and your own
+                  buzzer ranking.
+                </div>
+              </div>
+            </div>
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-mushroom" />
+              </svg>
+              <div>
+                <div class="t">Card credit never expires</div>
+                <div class="d">
+                  Load $25 next visit or next year — the balance stays put,
+                  forever.
+                </div>
+              </div>
+            </div>
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-star" />
+              </svg>
+              <div>
+                <div class="t">Player's Club XP</div>
+                <div class="d">
+                  Every swipe earns XP. Levels unlock free plays, birthdays and
+                  lane upgrades.
+                </div>
+              </div>
+            </div>
+            <div class="slot">
+              <svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-joystick" />
+              </svg>
+              <div>
+                <div class="t">Fix-first cabinet policy</div>
+                <div class="d">
+                  A dead cabinet goes back on the floor within a week, logs
+                  fixed by our own techs.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dialog xp-panel">
+            <span class="cap">XP +85%</span>
+            <div class="xp-bar">
+              <div class="xp-fill" aria-hidden="true"></div>
+            </div>
+            <span class="pct">LV. 6 / 10 TO FREE MONTH</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.7 PROCESS / LEVEL 3 -->
+      <section id="tournaments" aria-labelledby="map-t">
+        <div class="wrap">
+          <p class="kicker" id="map-t">LEVEL 3 — WORLD MAP</p>
+          <h2>THREE NODES TO YOUR FIRST SCORE</h2>
+          <div class="worldmap">
+            <article class="node">
+              <svg
+                class="icon-sprite"
+                style="width: 48px; height: 48px"
+                aria-hidden="true"
+              >
+                <use href="#sp-coin" />
+              </svg>
+              <div>
+                <div class="code">1-1 GRAB A CARD</div>
+                <p>
+                  Register free at the desk or online. Your card is your
+                  identity — score wall, XP, and tournament brackets all hang
+                  off it.
+                </p>
+              </div>
+            </article>
+            <div class="path-dots" aria-hidden="true"></div>
+            <article class="node">
+              <svg
+                class="icon-sprite"
+                style="width: 48px; height: 48px"
+                aria-hidden="true"
+              >
+                <use href="#sp-ticket" />
+              </svg>
+              <div>
+                <div class="code">1-2 LOAD AND PLAY</div>
+                <p>
+                  Load $20 or more and the machine sweetens it: $20 becomes $24
+                  on your first load. Swipe, pick a lane, press start.
+                </p>
+              </div>
+            </article>
+            <div class="path-dots" aria-hidden="true"></div>
+            <article class="node cur">
+              <svg
+                class="icon-sprite walker"
+                style="width: 48px; height: 48px"
+                aria-hidden="true"
+              >
+                <use href="#sp-walker" />
+              </svg>
+              <div>
+                <div class="code">1-3 TOP THE WALL</div>
+                <p>
+                  Every cabinet posts its nightly top 10. Hit a board, type your
+                  three letters, and come back Friday to defend it in bracket
+                  play.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.8 PRICING / LEVEL 4 -->
+      <section id="pricing" aria-labelledby="price-t">
+        <div class="wrap">
+          <p class="kicker" id="price-t">LEVEL 4 — CHOOSE YOUR PASS</p>
+          <h2>GAME PASS TIERS</h2>
+          <div class="price-grid">
+            <article class="card price-card">
+              <div class="tier-name">COIN-OP</div>
+              <div class="price-chip">$0<small>+ PAY AS YOU PLAY</small></div>
+              <ul class="ticklist">
+                <li>Free Player's Club card</li>
+                <li>Swipe-to-play, ~$0.25 avg play</li>
+                <li>Weekly score-wall access</li>
+              </ul>
+              <a class="btn btn-secondary" href="#faq">START HERE</a>
+            </article>
+            <article class="card price-card featured">
+              <span class="up-flag" aria-hidden="true">1UP</span>
+              <div class="tier-name">CONSOLE</div>
+              <div class="price-chip">$29<small>/ MONTH / PLAYER</small></div>
+              <ul class="ticklist">
+                <li>Unlimited free play, all 48 cabinets</li>
+                <li>$10 bar credit monthly</li>
+                <li>Skip-the-queue league signup</li>
+                <li>Bring-one-free guest pass ×4</li>
+              </ul>
+              <a class="btn btn-primary" href="#faq">GO CONSOLE</a>
+            </article>
+            <article class="card price-card">
+              <div class="tier-name">ARCADE PRO</div>
+              <div class="price-chip">
+                $59<small>/ MONTH / HOUSEHOLD</small>
+              </div>
+              <ul class="ticklist">
+                <li>4 player seats + 2 guest passes</li>
+                <li>Unlimited free play for the house</li>
+                <li>$25 bar + kitchen credit monthly</li>
+                <li>Reserved lane one night monthly</li>
+              </ul>
+              <a class="btn btn-secondary" href="#faq">GO PRO</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.9 TESTIMONIALS / LEVEL 5 -->
+      <section id="reviews" aria-labelledby="rev-t">
+        <div class="wrap">
+          <p class="kicker" id="rev-t">LEVEL 5 — PLAYER REVIEWS</p>
+          <h2>WHAT THE RANKS SAY</h2>
+          <div class="rev-grid">
+            <article class="dialog rev">
+              <div class="stars" aria-label="5 out of 5 stars">★ ★ ★ ★ ★</div>
+              <blockquote>
+                "I came for the drinks, stayed because somebody finally fixed
+                Vector Forest's yoke. My initials have sat on that board for 41
+                weeks."
+              </blockquote>
+              <p class="att">
+                PLAYER 1 — LV. 88<small>Maya R., scoreboard regular</small>
+              </p>
+            </article>
+            <article class="dialog rev">
+              <div class="stars" aria-label="5 out of 5 stars">★ ★ ★ ★ ★</div>
+              <blockquote>
+                "Booked a lane for my daughter's 10th. Eleven kids, four
+                cabinets, zero quarters to babysit. The single cards did all the
+                work."
+              </blockquote>
+              <p class="att">
+                PLAYER 2 — LV. 42<small>Devon P., party-booker</small>
+              </p>
+            </article>
+            <article class="dialog rev">
+              <div class="stars" aria-label="4 out of 5 stars">★ ★ ★ ★ ☆</div>
+              <blockquote>
+                "League brackets run on time now, and the $100 card is real.
+                Only wish was the taco bar stayed open past midnight."
+              </blockquote>
+              <p class="att">
+                PLAYER 3 — LV. 27<small>Sana K., Wednesday league</small>
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.10 FAQ / LEVEL 6 -->
+      <section id="faq" aria-labelledby="faq-t">
+        <div class="wrap faq">
+          <p class="kicker" id="faq-t">LEVEL 6 — HELP SCREEN</p>
+          <h2>QUESTIONS FROM THE FLOOR</h2>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa1">
+              <span class="code">Q-01</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>Do you sell coins or only cards?</span>
+            </button>
+            <div class="faq-a" id="fa1">
+              Cards only. A 10-minute load takes about a $20 top-up; a few
+              vintage cabinets on the back wall still take real quarters — those
+              are marked with a gold tag.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa2">
+              <span class="code">Q-02</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>Is the arcade all-ages?</span>
+            </button>
+            <div class="faq-a" id="fa2">
+              Under 21 until 9 pm, always with an adult. After 9 pm it is 21+
+              only and the bar takes over the main floor. The front row of
+              cabinets keeps family hours all day.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa3">
+              <span class="code">Q-03</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>How does the wall scoring work?</span>
+            </button>
+            <div class="faq-a" id="fa3">
+              Cabinets report their top 10 nightly to the wall displays.
+              Register your three-letter code to your card once, and your runs
+              are linked to your Player's Club XP automatically.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa4">
+              <span class="code">Q-04</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>Can I book a birthday or a company night?</span>
+            </button>
+            <div class="faq-a" id="fa4">
+              Lane bays rent for $60 per 90 minutes (4 to 12 players) and
+              whole-floor private events start at $900. Both include a live
+              scoreboard projection for group brackets.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa5">
+              <span class="code">Q-05</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>How do I join the league?</span>
+            </button>
+            <div class="faq-a" id="fa5">
+              Season 9 signup opens Friday at the desk or online. Free play
+              rotates, ranked brackets run Wednesdays and Fridays, and season
+              finals pay the top player a $100 game card.
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false" aria-controls="fa6">
+              <span class="code">Q-06</span
+              ><span class="tri" aria-hidden="true">▶</span
+              ><span>What if a cabinet eats my credit?</span>
+            </button>
+            <div class="faq-a" id="fa6">
+              Tell any floor tech — flagged cabinets get moved offline within
+              the hour. Lost credit goes back on balance same night; we do not
+              make you wait for a manager.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.11 JOURNAL / LEVEL 7 -->
+      <section id="journal" aria-labelledby="j-t">
+        <div class="wrap">
+          <p class="kicker" id="j-t">LEVEL 7 — STAGE STORIES</p>
+          <h2>FROM THE SHOP LOG</h2>
+          <div class="journal-grid">
+            <article class="j-card">
+              <div class="scene px-corners" aria-hidden="true">
+                <svg
+                  viewBox="0 0 32 32"
+                  style="shape-rendering: crispEdges"
+                  role="img"
+                  aria-label="Pixel scene of three arcade cabinets glowing in a dark room"
+                >
+                  <rect width="32" height="32" fill="#12121A" />
+                  <rect x="2" y="6" width="8" height="20" fill="#3A3A52" />
+                  <rect x="3" y="8" width="6" height="8" fill="#37D8E0" />
+                  <rect x="3" y="18" width="6" height="6" fill="#12121A" />
+                  <rect x="12" y="4" width="8" height="22" fill="#3A3A52" />
+                  <rect x="13" y="6" width="6" height="10" fill="#FF4B3E" />
+                  <rect x="13" y="18" width="6" height="6" fill="#12121A" />
+                  <rect x="22" y="6" width="8" height="20" fill="#3A3A52" />
+                  <rect x="23" y="8" width="6" height="8" fill="#FFC93C" />
+                  <rect x="23" y="18" width="6" height="6" fill="#12121A" />
+                  <rect x="0" y="26" width="32" height="6" fill="#1C1C28" />
+                </svg>
+              </div>
+              <p class="wcode">WORLD 2-1</p>
+              <h3>Restoring a cabinet: vector to go</h3>
+              <a class="view" href="#journal">VIEW ▶</a>
+            </article>
+            <article class="j-card">
+              <div class="scene px-corners" aria-hidden="true">
+                <svg
+                  viewBox="0 0 32 32"
+                  style="shape-rendering: crispEdges"
+                  role="img"
+                  aria-label="Pixel scene of a pinball playfield with flippers and bumpers"
+                >
+                  <rect width="32" height="32" fill="#12121A" />
+                  <rect x="4" y="2" width="24" height="28" fill="#1C1C28" />
+                  <rect x="6" y="4" width="20" height="2" fill="#FFC93C" />
+                  <rect x="10" y="10" width="4" height="4" fill="#37D8E0" />
+                  <rect x="18" y="8" width="4" height="4" fill="#FF4B3E" />
+                  <rect x="14" y="15" width="4" height="4" fill="#4CD964" />
+                  <path fill="#F0F0E8" d="M8 26h6l-2 2H10z" />
+                  <path fill="#F0F0E8" d="M18 26h6l-2 2h-2z" />
+                  <circle cx="16" cy="22" r="1" fill="#FFE38A" />
+                  <circle cx="16" cy="22" r="1" fill="#FFE38A" />
+                  <rect x="0" y="30" width="32" height="2" fill="#3A3A52" />
+                </svg>
+              </div>
+              <p class="wcode">WORLD 2-2</p>
+              <h3>Pinball night: rules of the house</h3>
+              <a class="view" href="#journal">VIEW ▶</a>
+            </article>
+            <article class="j-card">
+              <div class="scene px-corners" aria-hidden="true">
+                <svg
+                  viewBox="0 0 32 32"
+                  style="shape-rendering: crispEdges"
+                  role="img"
+                  aria-label="Pixel scene of a scoreboard wall with glowing initials"
+                >
+                  <rect width="32" height="32" fill="#12121A" />
+                  <rect x="2" y="2" width="28" height="24" fill="#1C1C28" />
+                  <rect x="4" y="4" width="6" height="3" fill="#FFC93C" />
+                  <rect x="12" y="4" width="6" height="3" fill="#37D8E0" />
+                  <rect x="20" y="4" width="6" height="3" fill="#FF4B3E" />
+                  <rect x="4" y="10" width="6" height="3" fill="#37D8E0" />
+                  <rect x="12" y="10" width="6" height="3" fill="#FFC93C" />
+                  <rect x="20" y="10" width="6" height="3" fill="#F0F0E8" />
+                  <rect x="4" y="16" width="6" height="3" fill="#FF4B3E" />
+                  <rect x="12" y="16" width="6" height="3" fill="#F0F0E8" />
+                  <rect x="20" y="16" width="6" height="3" fill="#4CD964" />
+                  <rect x="4" y="22" width="24" height="2" fill="#3A3A52" />
+                </svg>
+              </div>
+              <p class="wcode">WORLD 2-3</p>
+              <h3>Score census: reading the wall</h3>
+              <a class="view" href="#journal">VIEW ▶</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.12 FINAL CTA / BOSS STAGE -->
+      <section class="boss" aria-labelledby="boss-t">
+        <div class="wrap">
+          <h2 class="continue" id="boss-t">CONTINUE?</h2>
+          <div class="hud-chip cd-chip" aria-live="polite">
+            CONTINUE? <span class="n" id="cd">9</span>
+          </div>
+          <p class="hero-sub" style="max-width: 560px; margin: 0 auto 28px">
+            Your card has a balance. The wall has nine open slots. The pizza has
+            not closed yet.
+          </p>
+          <div class="boss-cta">
+            <a class="btn btn-primary" href="#top">YES — PRESS START</a>
+            <a class="btn btn-ghost" href="#pricing">NO THANKS</a>
+          </div>
+          <p class="boss-note" style="color: var(--muted); font-weight: 500">
+            Season 9 brackets open Friday 7 pm —
+            <a href="#tournaments">reserve a seat</a> while the board is warm.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- 3.13 FOOTER / CREDITS -->
+    <footer class="credits">
+      <div class="slim-foot">
+        <div class="foot-brand">
+          <svg class="icon-sprite" width="20" height="20" aria-hidden="true">
+            <use href="#sp-cabinet" />
+          </svg>
+          <span>QUARTER UP ARCADE</span>
+        </div>
+        <nav class="foot-links" aria-label="Stage select">
+          <a href="#cabinets">CABINETS</a>
+          <a href="#pricing">GAME PASS</a>
+          <a href="#tournaments">TOURNAMENTS</a>
+          <a href="#faq">FAQ</a>
+          <a href="#top">TITLE</a>
+        </nav>
+        <div class="foot-right">
+          <div class="socials">
+            <a href="#top" aria-label="Quarter Up Arcade on social feed"
+              ><svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-xbird" /></svg
+            ></a>
+            <a href="#top" aria-label="Quarter Up Arcade photos"
+              ><svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-igrid" /></svg
+            ></a>
+            <a href="#top" aria-label="Quarter Up Arcade chat community"
+              ><svg class="icon-sprite" aria-hidden="true">
+                <use href="#sp-ghost" /></svg
+            ></a>
+          </div>
+        </div>
+        <p class="foot-copy">© 2026 PLAYER ONE</p>
+      </div>
+      <div class="foot-extras">
+        <p class="made">
+          MADE WITH ♥, PIXELS, AND A CULINARY ESTIMATE: 4,120 PIZZAS THIS YEAR.
+          <span class="dlg-cursor blink" aria-hidden="true"></span>
+        </p>
+        <p class="made">
+          812 N COIN STREET · CONTINUE? ALWAYS. · ALL SCORES RESET ON A FRIDAY
+          NIGHT, EXCEPT THE WALL'S.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        var rm = window.matchMedia('(prefers-reduced-motion: reduce)')
+        // Countdown
+        var cd = document.getElementById('cd')
+        if (cd && !rm.matches) {
+          var n = 9
+          setInterval(function () {
+            n = n > 0 ? n - 1 : 9
+            cd.textContent = n
+          }, 1000)
+        }
+        // FAQ accordion
+        document.querySelectorAll('.faq-q').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var open = btn.getAttribute('aria-expanded') === 'true'
+            document.querySelectorAll('.faq-q').forEach(function (b) {
+              b.setAttribute('aria-expanded', 'false')
+              document
+                .getElementById(b.getAttribute('aria-controls'))
+                .classList.remove('open')
+            })
+            if (!open) {
+              btn.setAttribute('aria-expanded', 'true')
+              document
+                .getElementById(btn.getAttribute('aria-controls'))
+                .classList.add('open')
+            }
+          })
+        })
+        // Mobile nav
+        var mb = document.querySelector('.menu-btn')
+        var mn = document.getElementById('mobnav')
+        if (mb && mn) {
+          mb.addEventListener('click', function () {
+            var open = mn.classList.toggle('open')
+            mb.setAttribute('aria-expanded', open ? 'true' : 'false')
+            mb.textContent = open ? 'MENU ▼' : 'MENU ▶'
+          })
+          mn.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+              mn.classList.remove('open')
+              mb.setAttribute('aria-expanded', 'false')
+              mb.textContent = 'MENU ▶'
+            })
+          })
+        }
+      })()
+    </script>
+    <style id="v2-fix">
+      /* v2 fix pass */
+      img,
+      svg,
+      video {
+        max-width: 100% !important;
+      }
+      [class*='journal'] img,
+      [class*='post'] img,
+      [class*='article'] img {
+        aspect-ratio: 4 / 3 !important;
+        object-fit: cover !important;
+        max-height: 260px !important;
+      }
+      [class*='stats']:not(span):not(a):not(button) {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+        gap: 12px !important;
+        align-items: start !important;
+      }
+      @media (max-width: 1023px) {
+        *,
+        *::before,
+        *::after {
+          min-width: 0 !important;
+        }
+        html,
+        body {
+          overflow-x: clip;
+        }
+        [class*='grid'] {
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+          ) !important;
+        }
+      }
+      @media (min-width: 768px) {
+        #faq .wrap.faq {
+          max-width: 680px !important;
+          margin-inline: auto !important;
+        }
+      }
+      /* footer band at 768px+: row 1 = brand / links / socials, row 2 = copyright alone */
+      @media (min-width: 768px) {
+        .slim-foot {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: 12px 24px;
+        }
+        .slim-foot > .foot-brand {
+          justify-self: start;
+        }
+        .slim-foot > .foot-links {
+          justify-self: center;
+        }
+        .slim-foot > .foot-right {
+          justify-self: end;
+        }
+        .slim-foot > .foot-copy {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+<style id="footer-unify">/* one footer on every device */
+@media (max-width:767px){}
+</style>
+</body>
+</html>

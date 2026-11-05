@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Morsel — Meal kits, tray by tray</title>
+<meta name="description" content="Morsel delivers pre-portioned meal kits in a tidy 12-cell tray. 30-minute recipes, zero food waste, weekly plans from $9.99 a serving.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   MORSEL — BENTO BOX "TRAY PRECISION"
+   Tokens
+   ============================================================ */
+:root{
+  --background:#F5F4F1;
+  --background-alt:#EAE8E3;
+  --ink:#1A1A18;
+  --ink-soft:#6E6B64;
+  --accent:#D64530;        /* lacquer red */
+  --accent-light:#E4715C;
+  --matcha:#2E5E4E;
+  --tamago:#E8B33A;
+  --border:#DDD9D0;
+  --ivory:#FBFAF7;
+  --font-display:'Zen Kaku Gothic New','Helvetica Neue',Arial,sans-serif;
+  --font-body:'Manrope','Helvetica Neue',Arial,sans-serif;
+  --font-mono:'JetBrains Mono','SFMono-Regular',Consolas,sans-serif;
+  --r-tray:1.75rem;
+  --r-well:0.75rem;
+  --gap:12px;
+  --shadow-rest:0 1px 2px rgba(26,26,24,0.05), 0 8px 24px rgba(26,26,24,0.06);
+  --shadow-hover:0 2px 4px rgba(26,26,24,0.06), 0 14px 32px rgba(26,26,24,0.10);
+  --rim:inset 0 0 0 1.5px var(--accent-light);
+  --maxw:1120px;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--background);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%;}
+h1,h2,h3{font-family:var(--font-display);font-weight:900;line-height:1.08;margin:0;letter-spacing:-0.015em;}
+p{margin:0;}
+a{color:inherit;}
+ul{margin:0;padding:0;list-style:none;}
+.shell{max-width:var(--maxw);margin:0 auto;padding:0 20px;width:100%;}
+section{padding:56px 0;}
+@media(min-width:1024px){section{padding:80px 0;}}
+
+/* Compartment code */
+.code{
+  font-family:var(--font-mono);
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.2em;
+  color:var(--ink-soft);
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:22px;
+}
+.code::before{
+  content:"";
+  width:10px;height:2px;background:var(--accent);
+  border-radius:1px;
+}
+
+/* ============================================================
+   Trays — the core container. Everything sits in a tray.
+   ============================================================ */
+.tray{
+  background:var(--ivory);
+  border-radius:var(--r-tray);
+  box-shadow:var(--shadow-rest);
+  transition:box-shadow 180ms cubic-bezier(0.2,0.8,0.2,1), transform 180ms cubic-bezier(0.2,0.8,0.2,1);
+}
+.tray-alt{background:var(--background-alt);}
+.tray-quiet{background:var(--background-alt);border:1px solid var(--border);}
+.tray-lacquer{background:var(--accent);color:var(--ivory);}
+.tray-matcha{background:var(--matcha);color:var(--ivory);}
+a.tray:hover,.link-lift:hover{
+  box-shadow:var(--shadow-hover), var(--rim);
+  transform:translateY(-2px);
+}
+/* Icon wells — small solid color squares inside trays */
+.well{
+  width:52px;height:52px;
+  border-radius:var(--r-well);
+  display:flex;align-items:center;justify-content:center;
+  flex:0 0 auto;
+}
+.well svg{width:26px;height:26px;}
+.well-matcha{background:var(--matcha);color:#FFFFFF;}
+.well-tamago{background:var(--tamago);color:var(--ink);}
+.well-lacquer{background:var(--accent);color:#FFFFFF;}
+.well-light{background:var(--accent-light);color:#FFFFFF;}
+
+/* Buttons — pill trio */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;
+  padding:0 24px;
+  border-radius:9999px;
+  border:0;
+  cursor:pointer;
+  font-family:var(--font-body);
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:0.02em;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:box-shadow 180ms cubic-bezier(0.2,0.8,0.2,1), transform 180ms cubic-bezier(0.2,0.8,0.2,1), background-color 180ms ease, color 180ms ease;
+}
+.btn-primary{background:var(--accent);color:var(--ivory);}
+.btn-primary:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.btn-secondary{background:var(--background-alt);color:var(--ink);}
+.btn-secondary:hover{box-shadow:var(--rim);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--ink);padding:0 8px;}
+.btn-ghost:hover{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:5px;}
+.btn:active{transform:translateY(0);}
+.btn[disabled],.btn.disabled{opacity:0.5;pointer-events:none;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px;}
+.btn:focus-visible{outline:none;border-radius:9999px;box-shadow:0 0 0 2px var(--background),0 0 0 4px var(--accent);}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;}
+.btn-row > .btn{flex:1 1 auto;}
+@media(min-width:640px){
+  .btn-row{flex-wrap:nowrap;}
+  .btn-row > .btn{flex:0 0 auto;width:auto;}
+  .btn-row > .btn.btn-ghost{flex:1 1 auto;}
+}
+
+/* Section head — always its own tray */
+.section-head{margin-bottom:36px;padding:32px 28px;}
+@media(min-width:1024px){.section-head{padding:36px 40px;}}
+.section-head h2{font-size:clamp(30px,4.4vw,44px);margin:14px 0 10px;}
+.section-head .lede{font-weight:500;font-size:16.5px;color:var(--ink);max-width:60ch;}
+
+/* ============================================================
+   3.1 Header — floating pill tray
+   ============================================================ */
+.site-header{padding:16px 0 0;position:sticky;top:12px;z-index:60;}
+.header-pill{
+  max-width:var(--maxw);
+  margin:0 auto;
+  background:var(--background-alt);
+  border-radius:9999px;
+  box-shadow:var(--shadow-rest);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;
+  padding:10px 12px 10px 22px;
+  min-height:64px;
+}
+.brand{
+  display:inline-flex;align-items:center;gap:10px;
+  text-decoration:none;
+  font-family:var(--font-display);font-weight:900;font-size:20px;letter-spacing:-0.01em;
+}
+.brand-dot{
+  width:30px;height:30px;border-radius:var(--r-well);
+  background:var(--accent);
+  display:inline-flex;align-items:center;justify-content:center;
+  color:#FFFFFF;font-family:var(--font-mono);font-size:12px;font-weight:700;
+}
+.main-nav ul{display:none;}
+.header-cta{display:none;}
+.menu-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:48px;min-height:48px;
+  border-radius:9999px;
+  border:0;background:var(--ivory);
+  cursor:pointer;color:var(--ink);
+  box-shadow:var(--shadow-rest);
+  transition:box-shadow 150ms ease, transform 150ms ease;
+}
+.menu-btn:hover{box-shadow:var(--rim), var(--shadow-rest);}
+.menu-btn svg{width:22px;height:22px;}
+.menu-panel{
+  display:none;
+  position:fixed;
+  inset:76px 16px auto 16px;
+  z-index:90;
+  max-width:calc(100vw - 32px);
+  background:var(--ivory);
+  border-radius:var(--r-tray);
+  box-shadow:var(--shadow-hover);
+  padding:12px;
+}
+.menu-panel.open{display:block;}
+.menu-panel a{
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:48px;padding:10px 16px;
+  font-weight:600;text-decoration:none;
+  border-radius:var(--r-well);
+}
+.menu-panel a:hover{background:var(--background-alt);box-shadow:var(--rim);}
+.menu-panel .code{color:var(--ink);}
+.menu-panel .panel-cta{padding:10px 4px 6px;}
+.menu-panel .panel-cta .btn{width:100%;}
+@media(min-width:1024px){
+  .menu-btn{display:none;}
+  .menu-panel{display:none !important;}
+  .main-nav ul{display:flex;gap:2px;}
+  .main-nav a{
+    display:inline-flex;align-items:center;
+    min-height:44px;padding:8px 16px;
+    font-weight:600;font-size:14.5px;text-decoration:none;
+    border-radius:9999px;
+  }
+  .main-nav a:hover{background:var(--ivory);box-shadow:var(--rim);}
+  .header-cta{display:inline-flex;margin-left:4px;}
+  .header-cta .btn{min-height:48px;}
+}
+
+/* ============================================================
+   3.2 Hero — tray cluster
+   ============================================================ */
+.hero{padding:24px 0 32px;}
+.hero-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:var(--gap);
+}
+.hero-main{
+  grid-column:1 / -1;
+  padding:36px 28px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-main h1{font-size:clamp(40px,7vw,76px);margin:18px 0 16px;}
+.hero-main h1 .lacquer-word{color:var(--accent);}
+.hero-main .lede{font-weight:500;font-size:17px;max-width:54ch;color:var(--ink);}
+.hero-actions{margin:26px 0 0;}
+.hero-actions .btn{min-height:52px;}
+.hero-fine{margin-top:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft);}
+.hero-img{
+  grid-column:1 / -1;
+  min-height:280px;
+  padding:0;
+  position:relative;
+  overflow:hidden;
+  background:var(--tamago);
+}
+.hero-img .tray-scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.hero-img .bento-illu{width:min(480px,88%);}
+.mini-stat{
+  padding:20px;
+  display:flex;flex-direction:column;gap:4px;justify-content:space-between;
+}
+.mini-stat .n{font-family:var(--font-display);font-weight:900;font-size:30px;line-height:1;}
+.mini-stat .l{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-soft);}
+.mini-stat.warm{background:var(--tamago);}
+.mini-stat.warm .l{color:rgba(26,26,24,0.66);}
+.mini-stat.green{background:var(--matcha);color:var(--ivory);}
+.mini-stat.green .l{color:rgba(251,250,247,0.8);}
+.hero-cta-tray{
+  padding:22px;
+  display:flex;flex-direction:column;justify-content:center;gap:14px;
+}
+.hero-cta-tray .btn{width:100%;}
+@media(min-width:768px){
+  .hero-grid{grid-template-columns:repeat(12,1fr);}
+  .hero-main{grid-column:span 8;padding:48px 44px;grid-row:span 2;}
+  .hero-img{grid-column:span 4;grid-row:span 3;min-height:0;}
+  .mini-stat,.hero-cta-tray{grid-column:span 4;}
+}
+@media(min-width:1024px){
+  .hero-grid{grid-template-rows:repeat(3,auto);}
+  .hero-main{grid-row:span 3;padding:52px 52px;}
+}
+
+/* ============================================================
+   3.3 Stats bar — 4 square trays
+   ============================================================ */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);}
+.stat-tray{
+  padding:24px 20px;
+  display:flex;flex-direction:column;gap:10px;
+  min-height:150px;
+  justify-content:space-between;
+}
+.stat-tray .num{font-family:var(--font-body);font-weight:800;font-size:clamp(34px,4vw,44px);line-height:1;letter-spacing:-0.02em;}
+.stat-tray .lbl{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);}
+.stat-tray .row-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.stat-tray .code{text-indent:-9999px;width:10px;overflow:hidden;padding:0;}
+@media(min-width:1024px){.stats-grid{grid-template-columns:repeat(4,1fr);}}
+
+/* ============================================================
+   3.4 Philosophy
+   ============================================================ */
+.philosophy{
+  padding:44px 32px;
+  display:grid;gap:28px;
+  align-items:center;
+}
+.philosophy h2{font-size:clamp(28px,3.8vw,40px);margin:14px 0 0;}
+.inset-well{
+  background:var(--matcha);color:var(--ivory);
+  border-radius:calc(var(--r-tray) - 10px);
+  padding:28px 26px;
+}
+.inset-well p{font-weight:500;font-size:15.5px;line-height:1.7;}
+.inset-well .code{color:rgba(251,250,247,0.75);}
+.inset-well .code::before{background:var(--tamago);}
+@media(min-width:1024px){
+  .philosophy{grid-template-columns:1.1fr 1fr;gap:40px;padding:52px 48px;}
+}
+
+/* ============================================================
+   3.5 Features — mosaic of 5 trays
+   ============================================================ */
+.features-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);}
+.feat-hero{
+  padding:32px 28px;
+  display:flex;flex-direction:column;gap:18px;
+}
+.feat-hero h3{font-size:clamp(24px,3vw,32px);}
+.feat-hero p{font-weight:500;font-size:15.5px;max-width:48ch;}
+.feat-hero .illu{
+  background:var(--background-alt);
+  border-radius:var(--r-tray);
+  padding:24px;
+  display:flex;justify-content:center;
+  margin-top:auto;
+}
+.feat-cell{
+  padding:24px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.feat-cell h3{font-size:19px;}
+.feat-cell p{font-weight:500;font-size:14.5px;}
+@media(min-width:768px){
+  .features-grid{grid-template-columns:repeat(2,1fr);}
+  .feat-hero{grid-column:span 2;}
+}
+@media(min-width:1024px){
+  .features-grid{grid-template-columns:repeat(3,1fr);}
+  .feat-hero{grid-column:span 2;grid-row:span 2;flex-direction:row;align-items:flex-end;gap:36px;padding:40px 40px;}
+  .feat-hero .copy{flex:1 1 55%;}
+  .feat-hero .illu{flex:1 1 45%;margin-top:0;height:100%;}
+}
+
+/* ============================================================
+   3.6 Benefits — checklist tray + numbers tray
+   ============================================================ */
+.benefits-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);}
+.check-tray{padding:32px 28px;}
+.check-tray h3{font-size:24px;margin-bottom:22px;}
+.check-item{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--border);}
+.check-item:first-of-type{border-top:0;padding-top:0;}
+.tick-well{
+  width:30px;height:30px;border-radius:var(--r-well);
+  background:var(--matcha);color:#FFFFFF;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.tick-well svg{width:15px;height:15px;}
+.check-item b{font-weight:700;display:block;font-size:15.5px;}
+.check-item span{font-weight:500;font-size:14px;color:var(--ink-soft);}
+.numbers-tray{padding:32px 28px;display:flex;flex-direction:column;gap:18px;}
+.numbers-tray h3{font-size:24px;}
+.ba-row{
+  background:var(--ivory);
+  border-radius:calc(var(--r-tray) - 8px);
+  padding:18px 20px;
+  display:grid;gap:8px;
+}
+.ba-row .ba-labels{display:flex;justify-content:space-between;gap:10px;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);}
+.ba-row .ba-labels .after{color:var(--matcha);}
+.ba-bar{height:10px;border-radius:9999px;background:var(--background-alt);position:relative;overflow:hidden;}
+.ba-bar i{position:absolute;inset:0 auto 0 0;background:var(--border);border-radius:9999px;}
+.ba-bar i.hot{background:var(--accent, #D64530);}
+.ba-row .ba-what{font-weight:600;font-size:14px;}
+@media(min-width:1024px){
+  .benefits-grid{grid-template-columns:1fr 1fr;align-items:stretch;}
+}
+
+/* ============================================================
+   3.7 Process — 3 trays + lacquer gutter line
+   ============================================================ */
+.process-wrap{position:relative;}
+.process-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);position:relative;}
+.process-tray{padding:30px 28px;display:flex;flex-direction:column;gap:14px;position:relative;}
+.process-tray .code{color:var(--accent);}
+.process-tray .code::before{background:var(--accent-light);}
+.process-tray h3{font-size:22px;}
+.process-tray p{font-weight:500;font-size:14.5px;}
+.process-tray .step-art{
+  margin-top:auto;background:var(--background-alt);
+  border-radius:var(--r-well);
+  height:64px;display:flex;align-items:center;justify-content:center;
+}
+.process-gutter{
+  display:none;
+  position:absolute;left:0;right:0;top:44px;
+  height:2px;background:linear-gradient(to right, transparent, var(--accent) 8%, var(--accent) 92%, transparent);
+  border-radius:2px;z-index:0;
+}
+@media(min-width:1024px){
+  .process-grid{grid-template-columns:repeat(3,1fr);}
+  .process-gutter{display:block;}
+  .process-tray{box-shadow:var(--shadow-rest);}
+  .process-tray::before{
+    content:"";
+    position:absolute;top:-14px;left:50%;margin-left:-6px;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--background);border:3px solid var(--accent);
+    z-index:2;
+  }
+}
+
+/* ============================================================
+   3.8 Pricing
+   ============================================================ */
+.pricing-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);align-items:stretch;}
+.price-tray{padding:32px 28px;display:flex;flex-direction:column;}
+.price-tray .tier{font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-soft);}
+.price-tray .price{font-family:var(--font-display);font-weight:900;font-size:44px;letter-spacing:-0.02em;margin:10px 0 2px;}
+.price-tray .per{font-weight:600;font-size:13.5px;color:var(--ink-soft);}
+.price-tray .tier-desc{font-weight:500;font-size:14px;margin:14px 0 18px;}
+.price-tray ul{display:flex;flex-direction:column;gap:12px;margin-bottom:26px;}
+.price-tray li{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:14.5px;}
+.price-tray li .tick-well{width:22px;height:22px;border-radius:6px;}
+.price-tray li .tick-well svg{width:11px;height:11px;}
+.price-tray .btn{margin-top:auto;width:100%;}
+.price-tray.featured{
+  background:var(--accent);color:var(--ivory);
+  border-radius:var(--r-tray);
+  box-shadow:var(--shadow-hover);
+}
+.price-tray.featured .tier,.price-tray.featured .per,.price-tray.featured .tier-desc{color:rgba(251,250,247,0.82);}
+.price-tray.featured .badge{
+  position:absolute;top:-14px;left:28px;
+  background:var(--tamago);color:var(--ink);
+  font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;
+  padding:7px 14px;border-radius:9999px;
+  box-shadow:var(--shadow-rest);
+}
+.price-tray.featured .btn{background:var(--ivory);color:var(--accent);}
+.price-tray.featured .btn:hover{background:#FFFFFF;transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.price-tray.featured li{
+  border-bottom:1px solid rgba(251,250,247,0.22);padding-bottom:12px;
+}
+.price-tray.featured{position:relative;}
+@media(min-width:1024px){
+  .pricing-grid{grid-template-columns:repeat(3,1fr);}
+  .price-tray.featured{transform:translateY(-12px);padding-top:44px;padding-bottom:44px;}
+  .price-tray.featured:hover,.price-tray.featured{transform:translateY(-12px);}
+}
+
+/* ============================================================
+   3.9 Testimonials
+   ============================================================ */
+.testi-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);}
+.quote-tray{padding:30px 28px;display:flex;flex-direction:column;gap:20px;}
+.quote-tray .q{font-weight:500;font-size:16px;line-height:1.65;}
+.quote-tray .q::before{content:"\201C";font-family:var(--font-display);font-weight:900;font-size:34px;color:var(--accent);line-height:0;vertical-align:-12px;margin-right:4px;}
+.quote-tray .who{display:flex;align-items:center;gap:14px;margin-top:auto;}
+.quote-tray .who .portrait{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:0.05em;
+  flex:0 0 auto;
+}
+.p-matcha{background:var(--matcha);color:#FFFFFF;}
+.p-lacquer{background:var(--accent);color:#FFFFFF;}
+.p-tamago{background:var(--tamago);color:var(--ink);}
+.quote-tray .who b{display:block;font-weight:700;font-size:15px;}
+.quote-tray .who span{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);}
+.quote-tray .stars{font-family:var(--font-mono);font-size:12px;letter-spacing:0.3em;color:var(--tamago);}
+@media(min-width:1024px){
+  .testi-grid{grid-template-columns:repeat(12,1fr);}
+  .quote-tray.wide{grid-column:span 6;}
+  .quote-tray:not(.wide){grid-column:span 3;}
+}
+
+/* ============================================================
+   3.10 FAQ
+   ============================================================ */
+.faq-list{display:flex;flex-direction:column;gap:var(--gap);}
+.faq-tray{overflow:visible;}
+.faq-q{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:transparent;border:0;
+  padding:22px 26px;
+  min-height:44px;
+  cursor:pointer;text-align:left;
+  font-family:var(--font-body);font-weight:700;font-size:16.5px;color:var(--ink);
+}
+.faq-q:hover{box-shadow:var(--rim);}
+.faq-q .glyph{
+  width:36px;height:36px;border-radius:var(--r-well);flex:0 0 auto;
+  background:var(--background-alt);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-weight:700;font-size:18px;
+  transition:transform 200ms cubic-bezier(0.2,0.8,0.2,1), background-color 200ms ease;
+}
+.faq-tray.open .glyph{transform:rotate(90deg);background:var(--accent);color:#FFFFFF;}
+.faq-a{
+  display:none;
+  margin:0 20px 20px;
+  background:var(--background-alt);
+  border-radius:var(--r-well);
+  padding:20px 22px;
+  font-weight:500;font-size:14.5px;line-height:1.7;
+}
+.faq-tray.open .faq-a{display:block;}
+.faq-a b{font-weight:700;}
+
+/* ============================================================
+   3.11 Journal
+   ============================================================ */
+.journal-grid{display:grid;grid-template-columns:1fr;gap:var(--gap);}
+.post-tray{overflow:hidden;display:flex;flex-direction:column;}
+.post-well{height:170px;position:relative;}
+.post-well svg{width:100%;height:100%;}
+.journal-illu-green{background:var(--matcha);}
+.journal-illu-lacquer{background:var(--accent);}
+.journal-illu-tamago{background:var(--tamago);}
+.post-body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.post-body .code{color:var(--ink);}
+.post-body .code::before{background:var(--accent-light);}
+.post-body h3{font-size:20px;}
+.post-body p{font-weight:500;font-size:14px;color:var(--ink-soft);flex:1;}
+.post-link{
+  font-weight:700;font-size:14px;text-decoration:none;
+  width:fit-content;
+  border-bottom:2px solid var(--accent);
+  padding-bottom:2px;
+}
+.post-link:hover{color:var(--accent);}
+@media(min-width:1024px){.journal-grid{grid-template-columns:repeat(3,1fr);}}
+
+/* ============================================================
+   3.12 Final CTA — the one full-span lacquer tray
+   ============================================================ */
+.final-wrap{padding-bottom:80px;}
+.final-tray{
+  border-radius:calc(var(--r-tray) + 8px);
+  box-shadow:var(--shadow-hover);
+  padding:56px 28px 32px;
+  display:grid;gap:var(--gap);
+}
+.final-call{padding:8px 0 24px;text-align:left;}
+.final-call .code{color:rgba(251,250,247,0.75);}
+.final-call .code::before{background:var(--tamago);}
+.final-call h2{color:var(--ivory);font-size:clamp(34px,5vw,58px);margin:14px 0 12px;}
+.final-call p{color:rgba(251,250,247,0.85);font-weight:500;font-size:16px;max-width:52ch;}
+.final-actions{display:grid;gap:var(--gap);}
+.final-actions .btn{width:100%;background:var(--ivory);color:var(--accent);min-height:56px;}
+.final-actions .btn:hover{background:#FFFFFF;transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.footnote-tray{
+  background:rgba(26,26,24,0.18);
+  border-radius:var(--r-well);
+  padding:14px 18px;
+  font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(251,250,247,0.85);
+}
+@media(min-width:1024px){
+  .final-tray{padding:64px 56px 40px;grid-template-columns:1.4fr 1fr;align-items:start;}
+  .final-call{padding:24px 0;}
+  .final-actions{display:flex;gap:12px;align-self:start;margin-top:24px;}
+  .final-actions .btn{width:auto;}
+  .footnote-tray{grid-column:1 / -1;}
+}
+
+/* ============================================================
+   3.13 Footer — dark sumi tray
+   ============================================================ */
+.site-footer{padding:0 0 24px;}
+.footer-tray{
+  background:var(--ink);color:var(--ivory);
+  border-radius:calc(var(--r-tray) + 4px);
+  padding:30px 26px;
+  display:flex;flex-direction:column;gap:24px;
+}
+.footer-brand{display:flex;align-items:center;gap:10px;}
+.footer-brand .brand-dot{background:var(--accent);}
+.footer-brand b{font-family:var(--font-display);font-weight:900;font-size:19px;}
+.footer-blurb{font-weight:500;font-size:14px;color:rgba(251,250,247,0.72);max-width:38ch;}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px 22px;}
+.footer-links a{
+  min-height:44px;display:inline-flex;align-items:center;
+  font-weight:600;font-size:14px;text-decoration:none;
+  color:rgba(251,250,247,0.85);
+}
+.footer-links a:hover{color:#FFFFFF;text-decoration:underline;text-decoration-color:var(--accent-light);text-decoration-thickness:2px;text-underline-offset:5px;}
+.footer-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;}
+.socials{display:flex;gap:10px;}
+.socials a{
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(251,250,247,0.10);
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--ivory);
+  transition:background-color 150ms ease, box-shadow 150ms ease;
+}
+.socials a:hover{background:var(--accent);box-shadow:var(--rim);}
+.socials svg{width:18px;height:18px;}
+.colophon{font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(251,250,247,0.6);}
+/* Slim footer at 768px+ */
+@media(min-width:768px){
+  .footer-tray{
+    flex-direction:row;align-items:center;justify-content:space-between;
+    gap:20px;padding:20px 28px;
+  }
+  .footer-blurb,.footer-cols-mobile{display:none;}
+  .footer-links{flex-wrap:nowrap;}
+  .footer-links a{font-size:13px;}
+  .footer-meta{flex-wrap:nowrap;gap:14px;}
+  .colophon{font-size:10.5px;white-space:nowrap;}
+  .footer-brand b{font-size:17px;white-space:nowrap;}
+}
+
+/* Stacked mobile extras (richer footer under 768px) */
+.footer-cols-mobile{display:grid;gap:18px;background:rgba(251,250,247,0.06);border-radius:var(--r-tray);padding:22px;}
+.footer-cols-mobile .col b{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(251,250,247,0.6);display:block;margin-bottom:10px;}
+.footer-cols-mobile .col a{display:flex;align-items:center;min-height:40px;font-weight:600;font-size:14px;text-decoration:none;color:rgba(251,250,247,0.85);}
+@media(min-width:768px){.footer-cols-mobile{display:none;}}
+
+/* ============================================================
+   Motion — snap and settle
+   ============================================================ */
+@keyframes tray-land{
+  from{opacity:0;transform:scale(0.98);}
+  to{opacity:1;transform:scale(1);}
+}
+.tray-in{animation:tray-land 300ms cubic-bezier(0.2,0.8,0.2,1) both;}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation:none !important;
+    transition:none !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 3.1 HEADER ============ -->
+<header class="site-header">
+  <div class="header-pill">
+    <a class="brand" href="#top" aria-label="Morsel home">
+      <span class="brand-dot" aria-hidden="true">M</span>
+      Morsel
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="#features">What &rsquo;s inside</a></li>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#pricing">Plans</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#journal">Journal</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-primary" href="#pricing">Choose your plan</a>
+    </div>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menuPanel" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+  </div>
+  <div class="menu-panel" id="menuPanel">
+    <nav aria-label="Mobile">
+      <a href="#features"><span>What &rsquo;s inside</span></a>
+      <a href="#process"><span>How it works</span></a>
+      <a href="#pricing"><span>Plans</span></a>
+      <a href="#faq"><span>FAQ</span></a>
+      <a href="#journal"><span>Journal</span></a>
+    </nav>
+    <div class="panel-cta"><a class="btn btn-primary" href="#pricing">Choose your plan</a></div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ 3.2 HERO ============ -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="shell">
+      <div class="hero-grid">
+        <div class="tray tray-in hero-main">
+          <span class="code">00 — MEAL KITS, TRAY BY TRAY</span>
+          <h1 id="heroTitle">Dinner, portioned <span class="lacquer-word">precisely</span>.</h1>
+          <p class="lede">Morsel packs every recipe into a 12-compartment tray: protein, produce, pantry and the 5-step card each in their own cell. Cook in about 30 minutes, toss nothing away.</p>
+          <div class="btn-row hero-actions">
+            <a class="btn btn-primary" href="#pricing">Start with 3 meals</a>
+            <a class="btn btn-secondary" href="#features">See what &rsquo;s in the tray</a>
+          </div>
+          <p class="hero-fine">From $9.99 per serving &middot; skip any week &middot; free delivery over $60</p>
+        </div>
+
+        <div class="tray hero-img" role="img" aria-label="Illustration of a Morsel bento tray with twelve compartments: salmon fillet, rice, greens, eggs, sauce cups and a recipe card, all in flat color wells.">
+          <div class="tray-scene" aria-hidden="true">
+            <svg class="bento-illu" viewBox="0 0 420 300">
+              <rect x="6" y="6" width="408" height="288" rx="28" fill="#FBFAF7"/>
+              <rect x="22" y="22" width="236" height="160" rx="18" fill="#F5F4F1"/>
+              <rect x="34" y="34" width="212" height="136" rx="14" fill="#2E5E4E"/>
+              <path d="M60 118 Q120 74 220 96 Q190 128 130 132 Q88 134 60 118 Z" fill="#E4715C"/>
+              <path d="M70 112 Q126 82 204 96" fill="none" stroke="#FBFAF7" stroke-width="4" stroke-linecap="round"/>
+              <rect x="270" y="22" width="128" height="76" rx="18" fill="#F5F4F1"/>
+              <ellipse cx="334" cy="60" rx="44" ry="26" fill="#E8B33A"/>
+              <path d="M304 56 h60" stroke="#FBFAF7" stroke-width="4" stroke-linecap="round"/>
+              <rect x="270" y="106" width="128" height="76" rx="18" fill="#F5F4F1"/>
+              <circle cx="306" cy="144" r="20" fill="#FBFAF7"/>
+              <circle cx="306" cy="144" r="11" fill="#E8B33A"/>
+              <circle cx="352" cy="150" r="16" fill="#FBFAF7"/>
+              <circle cx="352" cy="150" r="8" fill="#E8B33A"/>
+              <rect x="22" y="190" width="122" height="88" rx="18" fill="#EAE8E3"/>
+              <circle cx="83" cy="234" r="30" fill="#2E5E4E"/>
+              <circle cx="83" cy="234" r="22" fill="#D64530"/>
+              <rect x="152" y="190" width="122" height="88" rx="18" fill="#EAE8E3"/>
+              <rect x="176" y="210" width="74" height="10" rx="5" fill="#1A1A18"/>
+              <rect x="176" y="228" width="74" height="10" rx="5" fill="#1A1A18"/>
+              <rect x="176" y="246" width="52" height="10" rx="5" fill="#1A1A18"/>
+              <rect x="282" y="190" width="116" height="88" rx="18" fill="#EAE8E3"/>
+              <rect x="296" y="200" width="88" height="68" rx="12" fill="#FBFAF7"/>
+              <rect x="304" y="208" width="72" height="8" rx="4" fill="#D64530"/>
+              <rect x="304" y="222" width="56" height="6" rx="3" fill="#DDD9D0"/>
+              <rect x="304" y="234" width="64" height="6" rx="3" fill="#DDD9D0"/>
+              <rect x="304" y="246" width="48" height="6" rx="3" fill="#DDD9D0"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="tray tray-in mini-stat warm">
+          <span class="n">30 min</span>
+          <span class="l">Average cook time</span>
+        </div>
+        <div class="tray tray-in mini-stat green">
+          <span class="n">0 g</span>
+          <span class="l">Food waste per box</span>
+        </div>
+        <div class="tray tray-in hero-cta-tray tray-alt">
+          <p style="font-weight:700;font-size:15px;">Not sure where to start?</p>
+          <a class="btn btn-primary" href="#pricing">Take the 60-second quiz</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.3 STATS ============ -->
+  <section class="stats" aria-label="Morsel by the numbers">
+    <div class="shell">
+      <div class="stats-grid">
+        <div class="tray tray-in stat-tray">
+          <div class="row-top"><span class="num">21,400</span><span class="code" aria-hidden="true">01</span></div>
+          <span class="lbl">Meals cooked weekly</span>
+        </div>
+        <div class="tray tray-in stat-tray tray-alt">
+          <div class="row-top"><span class="num">4.8 / 5</span><span class="code" aria-hidden="true">02</span></div>
+          <span class="lbl">From 9,120 rated deliveries</span>
+        </div>
+        <div class="tray tray-in stat-tray">
+          <div class="row-top"><span class="num">68</span><span class="code" aria-hidden="true">03</span></div>
+          <span class="lbl">Recipes on the rotation</span>
+        </div>
+        <div class="tray tray-in stat-tray tray-alt">
+          <div class="row-top"><span class="num">92%</span><span class="code" aria-hidden="true">04</span></div>
+          <span class="lbl">Ingredients pre-portioned</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.4 PHILOSOPHY ============ -->
+  <section aria-labelledby="philTitle">
+    <div class="shell">
+      <div class="tray tray-in tray-alt philosophy">
+        <div>
+          <span class="code">01 — PHILOSOPHY</span>
+          <h2 id="philTitle">Order isn't a constraint. It's the whole flavor.</h2>
+        </div>
+        <div class="inset-well">
+          <span class="code">WHY PORTIONING</span>
+          <p>Grocery shopping asks you to buy a bunch of cilantro for one garnish and guess how much rice a family of four actually eats. Morsel does the guessing once, in a kitchen with a scale. Every compartment holds exactly what the recipe needs — so the half-wilted bunch in your crisper drawer simply stops existing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.5 FEATURES ============ -->
+  <section id="features" aria-labelledby="featTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head tray-quiet">
+        <span class="code">02 — WHAT &RSQUO;S INSIDE</span>
+        <h2 id="featTitle">Five compartments, zero guesswork</h2>
+        <p class="lede">Every kit opens the same tidy way. Once you've cooked three Morsel nights, your hands know the tray before your eyes do.</p>
+      </div>
+      <div class="features-grid">
+        <div class="tray tray-in feat-hero">
+          <div class="copy">
+            <span class="code">02 · A — THE INGREDIENT WELLS</span>
+            <h3>Pre-portioned, vacuum-tidied, in the order you cook them</h3>
+            <p>Compartment 1 holds the protein, the smallest wells hold the spices. Open left to right and the recipe writes itself — our test cooks averaged 4 minutes from box to stove, measured across 600 deliveries in August 2026.</p>
+          </div>
+          <div class="illu" aria-hidden="true">
+            <svg viewBox="0 0 300 170" width="280">
+              <rect x="6" y="6" width="288" height="158" rx="20" fill="#FBFAF7"/>
+              <rect x="18" y="18" width="126" height="134" rx="14" fill="#F5F4F1"/>
+              <rect x="30" y="30" width="102" height="110" rx="10" fill="#D64530"/>
+              <rect x="156" y="18" width="60" height="62" rx="12" fill="#F5F4F1"/>
+              <rect x="164" y="26" width="44" height="46" rx="9" fill="#E8B33A"/>
+              <rect x="222" y="18" width="60" height="62" rx="12" fill="#F5F4F1"/>
+              <rect x="230" y="26" width="44" height="46" rx="9" fill="#2E5E4E"/>
+              <rect x="156" y="88" width="60" height="64" rx="12" fill="#F5F4F1"/>
+              <rect x="164" y="96" width="44" height="48" rx="9" fill="#E4715C"/>
+              <rect x="222" y="88" width="60" height="64" rx="12" fill="#F5F4F1"/>
+              <rect x="230" y="96" width="44" height="48" rx="9" fill="#1A1A18"/>
+            </svg>
+          </div>
+        </div>
+        <div class="tray tray-in feat-cell">
+          <div class="well well-matcha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+          </div>
+          <h3>30-minute recipes, timed to the tray</h3>
+          <p>Every card is written for 5 steps and one pan. Median cook, start to plate: 29 minutes.</p>
+        </div>
+        <div class="tray tray-in feat-cell">
+          <div class="well well-tamago">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7L6.8 19l1-5.8L3.5 9.2l5.9-.9z"/></svg>
+          </div>
+          <h3>Six chefs rotate 68 recipes</h3>
+          <p>A rotating cast of 6 working chefs adds 6 new recipes a month and retires the weakest performer.</p>
+        </div>
+        <div class="tray tray-in feat-cell">
+          <div class="well well-lacquer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M6 12V7a6 6 0 0 1 12 0v5M8 18a4 4 0 0 0 8 0"/></svg>
+          </div>
+          <h3>Zero-waste portions</h3>
+          <p>92% of ingredients arrive pre-measured. The remaining 8% (oils, salt, pepper) are your pantry's job.</p>
+        </div>
+        <div class="tray tray-in feat-cell">
+          <div class="well well-light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2M3 12h18"/></svg>
+          </div>
+          <h3>Chilled chain, cold at your door</h3>
+          <p>Insulated, curbside-recyclable liners held at 4°C in transit. Delivery-temp check prints on each box.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.6 BENEFITS ============ -->
+  <section aria-labelledby="benTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head">
+        <span class="code">03 — WHY IT WORKS</span>
+        <h2 id="benTitle">What changes after one month</h2>
+        <p class="lede">We surveyed 1,250 households after their first 4 deliveries. The numbers below are theirs, not ours.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="tray tray-in check-tray">
+          <h3>The household report</h3>
+          <div class="check-item">
+            <span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <div><b>Dinner decisions drop to zero</b><span>Plans and portions arrive decided. 81% reported "no 5pm scramble" by week 3.</span></div>
+          </div>
+          <div class="check-item">
+            <span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <div><b>Produce waste nearly vanishes</b><span>Average household threw away $26.40 less produce per month.</span></div>
+          </div>
+          <div class="check-item">
+            <span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <div><b>Fewer takeaway nights</b><span>Takeaway orders fell from 4.2 to 1.6 per week on average across the cohort.</span></div>
+          </div>
+          <div class="check-item">
+            <span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <div><b>New skills, quietly</b><span>63% said they cooked a technique for the first time — pickling, searing, or emulsifying.</span></div>
+          </div>
+        </div>
+        <div class="tray tray-in tray-alt numbers-tray">
+          <span class="code">03 · B — BEFORE / AFTER</span>
+          <h3>Same kitchens, 4 weeks apart</h3>
+          <div class="ba-row">
+            <div class="ba-labels"><span>WEEK OF SIGNUP</span><span class="after">WEEK 4</span></div>
+            <div class="ba-bar" role="img" aria-label="Takeaway nights per week: 4.2 before, 1.6 after."><i style="width:100%;"></i><i class="hot" style="width:38%;"></i></div>
+            <p class="ba-what">Takeaway nights — 4.2 → 1.6 per week</p>
+          </div>
+          <div class="ba-row">
+            <div class="ba-labels"><span>WEEK OF SIGNUP</span><span class="after">WEEK 4</span></div>
+            <div class="ba-bar" role="img" aria-label="Produce thrown out: 31 dollars before, 4 dollars 60 after."><i style="width:100%;"></i><i class="hot" style="width:15%;"></i></div>
+            <p class="ba-what">Produce binned — $31.00 → $4.60 per month</p>
+          </div>
+          <div class="ba-row">
+            <div class="ba-labels"><span>WEEK OF SIGNUP</span><span class="after">WEEK 4</span></div>
+            <div class="ba-bar" role="img" aria-label="Home-cooked dinners: 2.9 before, 5.6 after, out of seven."><i style="width:41%;"></i><i class="hot" style="width:80%;"></i></div>
+            <p class="ba-what">Home-cooked dinners — 2.9 → 5.6 of 7 per week</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.7 PROCESS ============ -->
+  <section id="process" aria-labelledby="procTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head tray-quiet">
+        <span class="code">04 — HOW IT WORKS</span>
+        <h2 id="procTitle">Three steps, one tray to unpack</h2>
+        <p class="lede">From quiz to plate in a single week. Most members complete step 1 during a lunch break.</p>
+      </div>
+      <div class="process-wrap">
+        <div class="process-gutter" aria-hidden="true"></div>
+        <div class="process-grid">
+          <div class="tray tray-in process-tray">
+            <span class="code">STEP 01 — SET YOUR TABLE</span>
+            <h3>Tell us how you eat</h3>
+            <p>Pick 3, 4 or 5 meals a week and any exclusions — vegetarian, pescatarian, no-shellfish. The 60-second quiz suggests a starting rotation; you can override every slot.</p>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 40" width="110"><circle cx="20" cy="20" r="12" fill="#D64530"/><circle cx="60" cy="20" r="12" fill="#E8B33A"/><circle cx="100" cy="20" r="12" fill="#2E5E4E"/></svg>
+            </div>
+          </div>
+          <div class="tray tray-in process-tray">
+            <span class="code">STEP 02 — WE PACK THE TRAY</span>
+            <h3>Portioned the night before delivery</h3>
+            <p>Trays are packed the evening before your delivery day and ride at 4°C. Each compartment is labeled 1 through 12 and cross-referenced on the recipe card taped to the lid.</p>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 40" width="110"><rect x="6" y="8" width="46" height="26" rx="6" fill="#FBFAF7"/><rect x="14" y="14" width="12" height="12" rx="3" fill="#D64530"/><rect x="30" y="14" width="12" height="12" rx="3" fill="#E8B33A"/><path d="M62 22h20m0 0l-6-6m6 6l-6 6" stroke="#1A1A18" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="88" y="8" width="26" height="26" rx="6" fill="#2E5E4E"/></svg>
+            </div>
+          </div>
+          <div class="tray tray-in process-tray">
+            <span class="code">STEP 03 — COOK, IN ORDER</span>
+            <h3>Five steps to the plate</h3>
+            <p>Follow the numbered wells, left to right, and dinner is on the table in about 30 minutes. Rate each meal in the app; the rotation learns by Thursday.</p>
+            <div class="step-art" aria-hidden="true">
+              <svg viewBox="0 0 120 40" width="110"><rect x="10" y="10" width="100" height="20" rx="10" fill="#FBFAF7"/><circle cx="30" cy="20" r="7" fill="#D64530"/><circle cx="50" cy="20" r="7" fill="#E8B33A"/><circle cx="70" cy="20" r="7" fill="#E4715C"/><circle cx="90" cy="20" r="7" fill="#2E5E4E"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.8 PRICING ============ -->
+  <section id="pricing" aria-labelledby="priceTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head">
+        <span class="code">05 — PLANS</span>
+        <h2 id="priceTitle">Priced per serving, not per box</h2>
+        <p class="lede">Three plans, one radius of tidy. Every plan skips any week, swaps recipes until Monday noon, and cancels in two taps.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="tray tray-in price-tray">
+          <span class="tier">TASTER · 3 MEALS / WK</span>
+          <span class="price">$11.99</span>
+          <span class="per">per serving · $71.94 billed weekly</span>
+          <p class="tier-desc">For one cook or a couple easing into routine. Two-serving dinner kits.</p>
+          <ul>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>3 dinner kits, serves 2</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Full 68-recipe rotation access</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Skip, swap or pause any week</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>$7.99 delivery, free over $60</li>
+          </ul>
+          <a class="btn btn-secondary" href="#final">Try the Taster</a>
+        </div>
+        <div class="tray tray-in price-tray featured">
+          <span class="badge">MOST CHOSEN</span>
+          <span class="tier">HOUSEHOLD · 4 MEALS / WK</span>
+          <span class="price">$9.99</span>
+          <span class="per">per serving · $79.92 billed weekly</span>
+          <p class="tier-desc">Four weekly kits for 2 to 4 eaters. Ending meal-planning chaos has never been this affordable.</p>
+          <ul>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>4 dinner kits, serves 2 or 4</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Free delivery, every week</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Priority access to new recipes</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>One weekly breakfast add-on at 40% off</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Price locked for 12 months</li>
+          </ul>
+          <a class="btn" href="#final">Choose the Household</a>
+        </div>
+        <div class="tray tray-in price-tray">
+          <span class="tier">FAMILY · 5 MEALS / WK</span>
+          <span class="price">$8.49</span>
+          <span class="per">per serving · $84.90 billed weekly</span>
+          <p class="tier-desc">Five weekly kits, built for families of 4 and teenagers with opinions.</p>
+          <ul>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>5 dinner kits, serves 4</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Free delivery, always</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Weekend lunch kit included 2x / month</li>
+            <li><span class="tick-well" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>Priority support, 7 days a week</li>
+          </ul>
+          <a class="btn btn-secondary" href="#final">Feed the Family</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.9 TESTIMONIALS ============ -->
+  <section aria-labelledby="testiTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head tray-quiet">
+        <span class="code">06 — FROM THE KITCHEN TABLE</span>
+        <h2 id="testiTitle">Members, in their own words</h2>
+        <p class="lede">Pulled from verified post-delivery ratings. 9,120 reviews and counting.</p>
+      </div>
+      <div class="testi-grid">
+        <div class="tray tray-in quote-tray wide">
+          <span class="stars" aria-label="Rated 5 out of 5">★★★★★</span>
+          <p class="q">The tray is the product. My partner used to cook, I used to order in, and we argued about groceries more than about anything else. Now the box lands, the compartments do the talking, and Tuesday salmon night has survived 14 straight weeks — including two rounds of flu.</p>
+          <div class="who">
+            <span class="portrait p-matcha" aria-hidden="true">RH</span>
+            <div><b>Rosa H.</b><span>Household plan · 7 months in</span></div>
+          </div>
+        </div>
+        <div class="tray tray-in quote-tray">
+          <span class="stars" aria-label="Rated 5 out of 5">★★★★★</span>
+          <p class="q">I live alone and used to bin half my produce. The Taster plan cut my grocery bill by a third in the first month.</p>
+          <div class="who">
+            <span class="portrait p-lacquer" aria-hidden="true">DK</span>
+            <div><b>Daniel K.</b><span>Taster plan · 3 months in</span></div>
+          </div>
+        </div>
+        <div class="tray tray-in quote-tray">
+          <span class="stars" aria-label="Rated 4 out of 5">★★★★☆</span>
+          <p class="q">Five kids' worth of opinions and one tray that keeps everyone fed. The Family plan lunch add-on is secretly our best feature.</p>
+          <div class="who">
+            <span class="portrait p-tamago" aria-hidden="true">AM</span>
+            <div><b>Amara M.</b><span>Family plan · 11 months in</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.10 FAQ ============ -->
+  <section id="faq" aria-labelledby="faqTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head">
+        <span class="code">07 — FREQUENTLY ASKED</span>
+        <h2 id="faqTitle">The short answers</h2>
+        <p class="lede">Five questions cover most inboxes. Anything else reaches a human within one business day.</p>
+      </div>
+      <div class="faq-list">
+        <div class="tray faq-tray open">
+          <button class="faq-q" aria-expanded="true" aria-controls="faqA1" id="faqQ1">
+            <span>How fresh is the food when it arrives?</span>
+            <span class="glyph" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id="faqA1" role="region" aria-labelledby="faqQ1">
+            <p><b>Packed the evening before delivery and shipped at 4°C</b> in insulated, curbside-recyclable liners. Protein typically carries 4 to 6 days of fridge life from arrival, produce is date-coded per compartment, and the delivery-temp check prints on every box so you can verify the cold chain yourself.</p>
+          </div>
+        </div>
+        <div class="tray faq-tray">
+          <button class="faq-q" aria-expanded="false" aria-controls="faqA2" id="faqQ2">
+            <span>Can I skip a week or cancel easily?</span>
+            <span class="glyph" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id="faqA2" role="region" aria-labelledby="faqQ2">
+            <p><b>Yes — both take under ten seconds in the app.</b> Skip any week, pause for a month, or cancel outright, all until 11:59pm Sunday before your delivery day. No phone calls, no retention scripts, no "are you sure" maze. Your in-app history stays if you ever come back.</p>
+          </div>
+        </div>
+        <div class="tray faq-tray">
+          <button class="faq-q" aria-expanded="false" aria-controls="faqA3" id="faqQ3">
+            <span>What about allergies and dietary exclusions?</span>
+            <span class="glyph" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id="faqA3" role="region" aria-labelledby="faqQ3">
+            <p><b>Every recipe is tagged for 9 allergens,</b> and the quiz filters the rotation by vegetarian, pescatarian, and no-shellfish profiles automatically. Trays keep excluded allergens out of your box entirely — but note our kitchen handles all 9 allergens on shared lines, so Morsel is not suitable for severe anaphylactic allergies. That's printed on the lid, not buried.</p>
+          </div>
+        </div>
+        <div class="tray faq-tray">
+          <button class="faq-q" aria-expanded="false" aria-controls="faqA4" id="faqQ4">
+            <span>Where do you currently deliver?</span>
+            <span class="glyph" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id="faqA4" role="region" aria-labelledby="faqQ4">
+            <p><b>Greater Boston, NYC metro, and the Philadelphia corridor</b> as of October 2026, with Chicago launching in January 2027. Delivery windows are 2 hours, chosen per week, Tuesday through Saturday. If your zip is in an upcoming region, the quiz reserves your launch-week discount automatically.</p>
+          </div>
+        </div>
+        <div class="tray faq-tray">
+          <button class="faq-q" aria-expanded="false" aria-controls="faqA5" id="faqQ5">
+            <span>What if something in the tray is missing or off?</span>
+            <span class="glyph" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" id="faqA5" role="region" aria-labelledby="faqQ5">
+            <p><b>Report it in the app and the affected meal is credited instantly</b> — no photo receipts required under $15. Anything above that, or a temperature concern, gets a next-day replacement box where coverage allows. Across September 2026, 0.7% of trays needed any credit at all.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.11 JOURNAL ============ -->
+  <section id="journal" aria-labelledby="journalTitle">
+    <div class="shell">
+      <div class="tray tray-in section-head tray-quiet">
+        <span class="code">08 — THE MORSEL JOURNAL</span>
+        <h2 id="journalTitle">Notes from the test kitchen</h2>
+        <p class="lede">Recipe development, portioning science and the occasional admission of failure.</p>
+      </div>
+      <div class="journal-grid">
+        <a class="tray tray-in post-tray link-lift" href="#journal">
+          <div class="post-well journal-illu-green" aria-hidden="true">
+            <svg viewBox="0 0 360 170" preserveAspectRatio="xMidYMid slice">
+              <rect x="40" y="30" width="280" height="110" rx="20" fill="#FBFAF7"/>
+              <circle cx="120" cy="85" r="36" fill="#E4715C"/>
+              <circle cx="120" cy="85" r="22" fill="#E8B33A"/>
+              <rect x="185" y="55" width="100" height="12" rx="6" fill="#2E5E4E"/>
+              <rect x="185" y="78" width="80" height="10" rx="5" fill="#DDD9D0"/>
+              <rect x="185" y="96" width="90" height="10" rx="5" fill="#DDD9D0"/>
+            </svg>
+          </div>
+          <div class="post-body">
+            <span class="code">SEP 28, 2026 · 6 MIN READ</span>
+            <h3>Miso butter cod, and the 40-gram question</h3>
+            <p>Why our most-requested recipe took 11 rounds to portion, and what a kitchen scale taught us about "a knob of butter."</p>
+            <span class="post-link">Read the note</span>
+          </div>
+        </a>
+        <a class="tray tray-in post-tray link-lift" href="#journal">
+          <div class="post-well journal-illu-lacquer" aria-hidden="true">
+            <svg viewBox="0 0 360 170" preserveAspectRatio="xMidYMid slice">
+              <rect x="50" y="36" width="260" height="98" rx="18" fill="#FBFAF7"/>
+              <rect x="66" y="50" width="66" height="70" rx="10" fill="#E8B33A"/>
+              <rect x="146" y="50" width="66" height="70" rx="10" fill="#2E5E4E"/>
+              <rect x="226" y="50" width="66" height="70" rx="10" fill="#E4715C"/>
+              <circle cx="99" cy="85" r="14" fill="#FBFAF7"/>
+              <circle cx="179" cy="85" r="14" fill="#FBFAF7"/>
+              <circle cx="259" cy="85" r="14" fill="#FBFAF7"/>
+            </svg>
+          </div>
+          <div class="post-body">
+            <span class="code">SEP 19, 2026 · 4 MIN READ</span>
+            <h3>The 12-compartment tray, drawn to scale</h3>
+            <p>Our packaging engineer walks through 9 prototype layouts, one sad cilantro avalanche, and the tray that finally shipped.</p>
+            <span class="post-link">Read the note</span>
+          </div>
+        </a>
+        <a class="tray tray-in post-tray link-lift" href="#journal">
+          <div class="post-well journal-illu-tamago" aria-hidden="true">
+            <svg viewBox="0 0 360 170" preserveAspectRatio="xMidYMid slice">
+              <rect x="60" y="42" width="240" height="86" rx="16" fill="#FBFAF7"/>
+              <path d="M90 108 Q140 52 200 74 Q250 90 274 66" fill="none" stroke="#2E5E4E" stroke-width="10" stroke-linecap="round"/>
+              <circle cx="90" cy="108" r="9" fill="#D64530"/>
+              <circle cx="274" cy="66" r="9" fill="#E4715C"/>
+            </svg>
+          </div>
+          <div class="post-body">
+            <span class="code">SEP 10, 2026 · 5 MIN READ</span>
+            <h3>October rotation: 6 in, 1 out</h3>
+            <p>Miso-butter cod leads the new pack, chana masala gets a portion refresh, and the recipe we retired — with numbers.</p>
+            <span class="post-link">Read the note</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3.12 FINAL CTA ============ -->
+  <section id="final" class="final-wrap" aria-labelledby="finalTitle">
+    <div class="shell">
+      <div class="tray tray-in tray-lacquer final-tray">
+        <div class="final-call">
+          <span class="code">09 — YOUR FIRST TRAY</span>
+          <h2 id="finalTitle">Open a box this Thursday.</h2>
+          <p>Start with the Taster plan at $11.99 per serving. If the first week doesn't earn a place in your routine, cancel before Tuesday and we refund the box in full — including the salmon.</p>
+        </div>
+        <div class="final-actions">
+          <a class="btn" href="#pricing">Choose your plan</a>
+          <a class="btn btn-ghost" style="color:var(--ivory);text-decoration-color:var(--tamago);" href="#faq">Read the FAQ first</a>
+        </div>
+        <div class="footnote-tray">
+          Free delivery over $60 · First-week refund guarantee · Cancel in two taps
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ 3.13 FOOTER ============ -->
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-tray">
+      <div class="footer-brand">
+        <span class="brand-dot" aria-hidden="true">M</span>
+        <b>Morsel</b>
+      </div>
+      <p class="footer-blurb">Pre-portioned meal kits in a 12-compartment tray. Cook in 30, waste nothing.</p>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#features">What &rsquo;s inside</a>
+        <a href="#process">How it works</a>
+        <a href="#pricing">Plans</a>
+        <a href="#faq">FAQ</a>
+        <a href="#journal">Journal</a>
+      </nav>
+      <div class="footer-meta">
+        <div class="socials">
+          <a href="#top" aria-label="Morsel on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#top" aria-label="Morsel on YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10.5 9.5v5l4.5-2.5z" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#top" aria-label="Morsel on X">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 4l16 16M20 4L4 20"/></svg>
+          </a>
+        </div>
+      </div>
+      <span class="colophon">© 2026 Morsel Kitchens Inc. · Boston, MA</span>
+      <!-- Stacked extras — mobile only (hidden 768px+) -->
+      <div class="footer-cols-mobile">
+        <div class="col">
+          <b>COMPANY</b>
+          <a href="#journal">Journal</a>
+          <a href="#final">Careers — 6 open roles</a>
+        </div>
+        <div class="col">
+          <b>SUPPORT</b>
+          <a href="#faq">FAQ</a>
+          <a href="#faq">Delivery regions</a>
+          <a href="#faq">Contact a human</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  /* Mobile nav */
+  var btn = document.getElementById('menuBtn');
+  var panel = document.getElementById('menuPanel');
+  if (btn && panel){
+    btn.addEventListener('click', function(){
+      var open = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    panel.addEventListener('click', function(e){
+      if (e.target.closest('a')){
+        panel.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
+  /* FAQ accordion */
+  var trays = document.querySelectorAll('.faq-tray');
+  trays.forEach(function(tray){
+    var q = tray.querySelector('.faq-q');
+    if (!q) return;
+    q.addEventListener('click', function(){
+      var isOpen = tray.classList.contains('open');
+      trays.forEach(function(other){
+        other.classList.remove('open');
+        other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+      });
+      if (!isOpen){
+        tray.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+})();
+</script>
+<style id="v2-fix">
+/* v2 fix pass */
+img, svg, video { max-width: 100% !important; }
+[class*="journal"] img, [class*="post"] img, [class*="article"] img {
+  aspect-ratio: 4 / 3 !important; object-fit: cover !important; max-height: 260px !important;
+}
+[class*="stats"]:not(span):not(a):not(button) {
+  display: grid !important; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+  gap: 12px !important; align-items: start !important;
+}
+@media (max-width: 1023px) {
+  *, *::before, *::after { min-width: 0 !important; }
+  html, body { overflow-x: clip; }
+  [class*="grid"] { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) !important; }
+}
+@media (min-width: 768px) {
+  #faq .faq-list { max-width: 680px !important; margin-inline: auto !important; }
+}
+[class*="blob"], [class*="clay"], [class*="squish"] { display: none !important; }
+[class*="card"], [class*="tray"], [class*="cell"] { border: 1px solid rgba(17,17,26,.14) !important; border-radius: 14px !important; box-shadow: 0 1px 2px rgba(17,17,26,.08) !important; }
+</style>
+  <style>
+    /* UI-fix overrides (final): footer copyright on its own row at 768px+ */
+    @media (min-width: 768px) {
+      .footer-tray { flex-wrap: wrap !important }
+      .footer-tray > .colophon { flex-basis: 100% !important; text-align: center !important; white-space: normal !important }
+      #faq .faq-list { max-width: 680px !important; margin-inline: auto !important }
+    }
+  </style>
+<style id="footer-unify">/* one footer on every device */
+@media (max-width:767px){.footer-cols-mobile{display:none!important}.footer-blurb{display:none!important}.colophon{flex-basis:100%!important;text-align:center!important}}
+</style>
+</body>
+</html>

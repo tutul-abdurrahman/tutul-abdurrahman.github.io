@@ -1,0 +1,3594 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meridian Atlas — Small-Group Expeditions, Run Like Clockwork</title>
+    <meta
+      name="description"
+      content="Meridian Atlas runs 44 small-group expeditions across 31 countries with rail-and-sail logistics, fixed departure boards and real route maps. Reserve a seat on the 2026 schedule."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Mulish:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --background: #f6f4ef;
+        --background-alt: #ece9e1;
+        --foreground: #1c2733;
+        --muted-foreground: #5c6b7a;
+        --accent: #125a8c;
+        --accent-light: #2f7fbf;
+        --accent-secondary: #d64545;
+        --accent-tertiary: #2e8b57;
+        --alert: #f5c518;
+        --border: #c9c4b8;
+        --paper: #f6f4ef;
+        --font-display: 'Archivo', Helvetica, Arial, sans-serif;
+        --font-body: 'Mulish', Helvetica, Arial, sans-serif;
+        --font-mono: 'Space Mono', Consolas, monospace;
+        --r-plate: 4px;
+        --r-ticket: 8px;
+        --r-dot: 9999px;
+        --shadow-ticket: 0 2px 0 rgba(28, 39, 51, 0.12);
+        --seam: 1px solid var(--border);
+        --seam-2: 2px solid var(--border);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-body);
+        font-size: 1.0625rem;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      ul,
+      ol {
+        list-style: none;
+      }
+      a {
+        color: var(--accent);
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .container {
+        max-width: 1152px;
+        margin: 0 auto;
+        padding: 0 24px;
+        width: 100%;
+      }
+      section {
+        padding: 80px 0;
+        position: relative;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      .mono {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .label {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .center {
+        text-align: center;
+      }
+      .section-head {
+        max-width: 640px;
+        margin-bottom: 44px;
+        position: relative;
+        z-index: 2;
+      }
+      .section-head.center {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .section-head h2 {
+        font-size: clamp(1.9rem, 4.4vw, 2.7rem);
+        margin-top: 10px;
+      }
+      .section-head p {
+        margin-top: 12px;
+        color: var(--muted-foreground);
+      }
+      .grid {
+        display: grid;
+        gap: 24px;
+      }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 48px;
+        padding: 13px 26px;
+        border: none;
+        border-radius: var(--r-plate);
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        cursor: pointer;
+        text-decoration: none;
+        transition: 150ms ease;
+      }
+      .button .arrow {
+        transition: translate 150ms ease;
+      }
+      .button-primary {
+        background: var(--accent);
+        color: var(--paper);
+      }
+      .button-primary:hover {
+        background: var(--accent-light);
+      }
+      .button-primary:hover .arrow {
+        translate: 4px 0;
+      }
+      .button-secondary {
+        background: var(--paper);
+        color: var(--foreground);
+        border: var(--seam-2);
+        box-shadow: var(--shadow-ticket);
+      }
+      .button-secondary:hover {
+        translate: 0 -2px;
+      }
+      .button-ghost {
+        background: transparent;
+        color: var(--accent);
+        border: 2px solid transparent;
+      }
+      .button-ghost:hover {
+        text-decoration: underline;
+      }
+      .button:active {
+        translate: 0 1px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: var(--r-plate);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border: var(--seam);
+        background: var(--paper);
+      }
+      .chip-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex: none;
+      }
+      .stamp {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: var(--r-plate);
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .stamp-green {
+        background: var(--accent-tertiary);
+        color: var(--paper);
+      }
+      .stamp-red {
+        background: var(--accent-secondary);
+        color: var(--paper);
+      }
+      .split-flap {
+        display: inline-flex;
+        gap: 2px;
+      }
+      .split-flap span {
+        display: inline-grid;
+        place-items: center;
+        min-width: 1.1em;
+        padding: 0.06em 0.12em;
+        background: var(--foreground);
+        color: var(--paper);
+        border-radius: 3px;
+        position: relative;
+        font-family: var(--font-display);
+        font-weight: 800;
+      }
+      .split-flap span::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(50% - 1px);
+        height: 2px;
+        background: var(--background-alt);
+        opacity: 0.6;
+      }
+      .board-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .flap-in span {
+          animation: flap 0.75s steps(5) backwards;
+        }
+        .flap-in span:nth-child(2) {
+          animation-delay: 120ms;
+        }
+        .flap-in span:nth-child(3) {
+          animation-delay: 240ms;
+        }
+        .flap-in span:nth-child(4) {
+          animation-delay: 360ms;
+        }
+        .flap-in span:nth-child(5) {
+          animation-delay: 480ms;
+        }
+        .flap-in span:nth-child(6) {
+          animation-delay: 600ms;
+        }
+        .flap-in span:nth-child(7) {
+          animation-delay: 720ms;
+        }
+        .flap-in span:nth-child(8) {
+          animation-delay: 840ms;
+        }
+        @keyframes flap {
+          from {
+            transform: rotateX(90deg);
+          }
+          to {
+            transform: rotateX(0);
+          }
+        }
+        .draw-in {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          animation: draw 700ms ease-out forwards;
+        }
+        @keyframes draw {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      }
+      .ticket {
+        background: var(--paper);
+        border: var(--seam-2);
+        border-radius: var(--r-ticket);
+        box-shadow: var(--shadow-ticket);
+        overflow: hidden;
+        position: relative;
+        transition: 200ms ease;
+      }
+      .ticket:hover {
+        translate: 0 -2px;
+      }
+      .sticker {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+      }
+      .perf-left {
+        position: relative;
+        border-left: 2px dotted var(--border);
+      }
+      .perf-left::before,
+      .perf-left::after {
+        content: '';
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        background: var(--background);
+        border: var(--seam-2);
+        border-radius: 50%;
+        left: -9px;
+      }
+      .perf-left::before {
+        top: -7px;
+      }
+      .perf-left::after {
+        bottom: -7px;
+      }
+      .barcode {
+        background: repeating-linear-gradient(
+          90deg,
+          var(--foreground) 0 2px,
+          transparent 2px 5px,
+          var(--foreground) 5px 9px,
+          transparent 9px 12px,
+          var(--foreground) 12px 13px,
+          transparent 13px 17px
+        );
+      }
+      .section-code {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+      }
+      .route-spine {
+        position: absolute;
+        left: 24px;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: var(--accent);
+        border-radius: 3px;
+      }
+      .route-spine::after {
+        content: '';
+        position: absolute;
+        left: -4px;
+        top: -10px;
+        border: 7px solid transparent;
+        border-top-color: var(--accent);
+      }
+      .station-dot {
+        position: absolute;
+        left: -9px;
+        top: 20px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: var(--paper);
+        border: 4px solid var(--accent);
+      }
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--paper);
+        color: var(--foreground);
+        padding: 12px 20px;
+        border: var(--seam-2);
+        border-radius: var(--r-plate);
+        z-index: 99;
+      }
+      .skip-link:focus {
+        left: 8px;
+        top: 8px;
+      }
+      input[type='email'] {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 14px;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--foreground);
+        background: var(--background-alt);
+        border: var(--seam-2);
+        border-radius: var(--r-plate);
+      }
+      input[type='email']::placeholder {
+        color: var(--muted-foreground);
+      }
+      input[type='email']:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
+      input[type='email']:read-only {
+        display: none;
+      }
+      .pictogram {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid var(--foreground);
+        display: grid;
+        place-items: center;
+        background: var(--paper);
+      }
+      details summary {
+        cursor: pointer;
+        list-style: none;
+      }
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+      .sprite {
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+      .center {
+        text-align: center;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <svg class="sprite" aria-hidden="true">
+      <symbol id="i-pin" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z" />
+          <circle cx="12" cy="10" r="2.6" />
+        </g>
+      </symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path d="M15.5 8.5 13 13l-4.5 2.5L11 11z" />
+        </g>
+      </symbol>
+      <symbol id="i-frame" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <rect x="3" y="6" width="18" height="13" rx="2" />
+          <path d="M8.5 6l1.5-2h4l1.5 2" />
+          <circle cx="12" cy="12.5" r="3.4" />
+        </g>
+      </symbol>
+      <symbol id="i-tent" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 4 3 19h18L12 4z" />
+          <path d="M12 10.5 8.5 19M12 10.5 15.5 19" />
+        </g>
+      </symbol>
+      <symbol id="i-ticket" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <path d="M4 8a2 2 0 0 0 0 8v2h16v-2a2 2 0 0 1 0-8V6H4v2z" />
+          <path d="M9 6v12" stroke-dasharray="2 3" />
+        </g>
+      </symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24">
+        <g
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 12h14" />
+          <path d="M13 6l6 6-6 6" />
+        </g>
+      </symbol>
+    </svg>
+
+    <!-- 3.1 HEADER -->
+    <header
+      style="
+        background: var(--paper);
+        border-bottom: var(--seam-2);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+      "
+    >
+      <div
+        class="container"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          min-height: 76px;
+          gap: 16px;
+        "
+      >
+        <a
+          href="#top"
+          aria-label="Meridian Atlas home"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--foreground);
+            text-decoration: none;
+          "
+        >
+          <span aria-hidden="true" style="display: inline-flex; gap: 4px">
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent);
+              "
+            ></span>
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent-tertiary);
+              "
+            ></span>
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent-secondary);
+              "
+            ></span>
+          </span>
+          <span
+            style="
+              font-family: var(--font-display);
+              font-weight: 800;
+              font-size: 1.1rem;
+              letter-spacing: 0.02em;
+            "
+            >MERIDIAN&nbsp;ATLAS</span
+          >
+        </a>
+        <nav
+          aria-label="Primary"
+          style="display: none; align-items: center; gap: 22px"
+          id="nav-desk"
+        >
+          <a
+            href="#routes"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              color: var(--foreground);
+              min-height: 44px;
+            "
+            class="nav-link"
+          >
+            <span
+              class="pictogram"
+              style="width: 32px; height: 32px"
+              aria-hidden="true"
+              ><svg width="18" height="18" viewBox="0 0 24 24">
+                <use href="#i-pin" /></svg
+            ></span>
+            <span class="label" style="color: var(--foreground)">Routes</span>
+          </a>
+          <a
+            href="#journey"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              color: var(--foreground);
+              min-height: 44px;
+            "
+          >
+            <span
+              class="pictogram"
+              style="width: 32px; height: 32px"
+              aria-hidden="true"
+              ><svg width="18" height="18" viewBox="0 0 24 24">
+                <use href="#i-compass" /></svg
+            ></span>
+            <span class="label" style="color: var(--foreground)"
+              >How it works</span
+            >
+          </a>
+          <a
+            href="#tickets"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              color: var(--foreground);
+              min-height: 44px;
+            "
+          >
+            <span
+              class="pictogram"
+              style="width: 32px; height: 32px"
+              aria-hidden="true"
+              ><svg width="18" height="18" viewBox="0 0 24 24">
+                <use href="#i-ticket" /></svg
+            ></span>
+            <span class="label" style="color: var(--foreground)">Fares</span>
+          </a>
+          <a
+            href="#dispatch"
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 9px;
+              color: var(--foreground);
+              min-height: 44px;
+            "
+          >
+            <span
+              class="pictogram"
+              style="width: 32px; height: 32px"
+              aria-hidden="true"
+              ><svg width="18" height="18" viewBox="0 0 24 24">
+                <use href="#i-frame" /></svg
+            ></span>
+            <span class="label" style="color: var(--foreground)"
+              >Dispatches</span
+            >
+          </a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span class="chip" aria-label="Departures gate B12"
+            ><span class="chip-dot" aria-hidden="true"></span>GATE B12</span
+          >
+          <a
+            class="button button-primary"
+            href="#tickets"
+            id="cta-desk"
+            style="display: none"
+            >Boards now <span class="arrow" aria-hidden="true">→</span></a
+          >
+          <button
+            class="nav-burger"
+            id="menu-btn"
+            aria-expanded="false"
+            aria-controls="nav-mobile"
+            aria-label="Open menu"
+            style="
+              min-width: 44px;
+              min-height: 44px;
+              background: var(--paper);
+              border: var(--seam-2);
+              border-radius: var(--r-plate);
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              font-family: var(--font-mono);
+              font-size: 0.7rem;
+              letter-spacing: 0.12em;
+            "
+          >
+            MENU
+          </button>
+        </div>
+      </div>
+      <div
+        id="nav-mobile"
+        hidden
+        style="border-top: var(--seam-2); background: var(--background-alt)"
+      >
+        <nav aria-label="Mobile" class="container" style="padding: 12px 0 18px">
+          <ul>
+            <li>
+              <a
+                href="#routes"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  padding: 13px 4px;
+                  min-height: 44px;
+                  color: var(--foreground);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  letter-spacing: 0.12em;
+                "
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent)"
+                  aria-hidden="true"
+                ></span
+                >ROUTES</a
+              >
+            </li>
+            <li>
+              <a
+                href="#journey"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  padding: 13px 4px;
+                  min-height: 44px;
+                  color: var(--foreground);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  letter-spacing: 0.12em;
+                "
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                  aria-hidden="true"
+                ></span
+                >HOW IT WORKS</a
+              >
+            </li>
+            <li>
+              <a
+                href="#tickets"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  padding: 13px 4px;
+                  min-height: 44px;
+                  color: var(--foreground);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  letter-spacing: 0.12em;
+                "
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-secondary)"
+                  aria-hidden="true"
+                ></span
+                >FARES</a
+              >
+            </li>
+            <li>
+              <a
+                href="#dispatch"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  padding: 13px 4px;
+                  min-height: 44px;
+                  color: var(--foreground);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  letter-spacing: 0.12em;
+                "
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent)"
+                  aria-hidden="true"
+                ></span
+                >DISPATCHES</a
+              >
+            </li>
+            <li>
+              <a
+                href="#faq"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  padding: 13px 4px;
+                  min-height: 44px;
+                  color: var(--foreground);
+                  font-family: var(--font-mono);
+                  font-size: 0.8rem;
+                  letter-spacing: 0.12em;
+                "
+                ><span
+                  class="chip-dot"
+                  style="background: var(--muted-foreground)"
+                  aria-hidden="true"
+                ></span
+                >INFORMATION</a
+              >
+            </li>
+          </ul>
+          <a
+            class="button button-primary"
+            href="#tickets"
+            style="width: 100%; margin-top: 10px"
+            >Get boarding pass
+            <span class="arrow" aria-hidden="true">→</span></a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- 3.2 HERO -->
+      <section
+        class="hero"
+        style="padding: 56px 0 72px; border-bottom: var(--seam-2)"
+      >
+        <div
+          class="container hero-grid"
+          style="display: grid; gap: 56px; align-items: center"
+        >
+          <div>
+            <div
+              class="mono"
+              style="color: var(--muted-foreground); margin-bottom: 14px"
+            >
+              DEPARTURES · MORNING OF 2026-10-07 · ALL TIMES LOCAL
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                margin-bottom: 18px;
+              "
+              class="flap-in"
+              aria-label="Departures board reading: NOW BOARDING MERIDIAN ATLAS EXPEDITIONS"
+            >
+              <span class="mono-flap" style="display: none"></span>
+              <span style="display: none"></span>
+              <div
+                class="split-flap"
+                data-flap="NOW"
+                style="
+                  font-size: clamp(2rem, 5.4vw, 3.6rem);
+                  color: var(--foreground);
+                "
+              >
+                <span>N</span><span>O</span><span>W</span>
+              </div>
+              <div
+                class="split-flap"
+                data-flap="BOARD"
+                style="
+                  font-size: clamp(2rem, 5.4vw, 3.6rem);
+                  color: var(--foreground);
+                "
+              >
+                <span>B</span><span>O</span><span>A</span><span>R</span
+                ><span>D</span>
+              </div>
+              <div
+                class="split-flap"
+                data-flap="ING"
+                style="
+                  font-size: clamp(2rem, 5.4vw, 3.6rem);
+                  color: var(--accent);
+                "
+              >
+                <span>I</span><span>N</span><span>G</span>
+              </div>
+            </div>
+            <h1
+              style="
+                font-size: clamp(1.6rem, 4vw, 2.4rem);
+                max-width: 560px;
+                margin-top: 16px;
+                color: var(--foreground);
+              "
+            >
+              Small-group expeditions, run like clockwork.
+            </h1>
+            <p
+              style="
+                margin-top: 16px;
+                max-width: 540px;
+                color: var(--muted-foreground);
+              "
+            >
+              Meridian Atlas runs 44 overland and coastal routes across 31
+              countries. Fixed departure boards, rail-and-sail logistics, and no
+              more than 24 travelers per crew. Pick a route, book a seat, and we
+              handle every leg from there.
+            </p>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 28px;
+                max-width: 400px;
+              "
+              class="cta-col"
+            >
+              <a class="button button-primary" href="#tickets"
+                >Get boarding pass
+                <span class="arrow" aria-hidden="true">→</span></a
+              >
+              <a class="button button-secondary" href="#routes">View routes</a>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 8px;
+                margin-top: 26px;
+                align-items: center;
+              "
+            >
+              <span class="chip" aria-hidden="true"
+                ><span class="chip-dot" style="background: var(--accent)"></span
+                >LIS</span
+              >
+              <span
+                aria-hidden="true"
+                style="
+                  width: 38px;
+                  height: 5px;
+                  background: var(--accent);
+                  border-radius: 3px;
+                "
+              ></span>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                ></span
+                >MRK</span
+              >
+              <span
+                aria-hidden="true"
+                style="
+                  width: 38px;
+                  height: 5px;
+                  background: var(--accent-tertiary);
+                  border-radius: 3px;
+                "
+              ></span>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-secondary)"
+                ></span
+                >FEZ</span
+              >
+            </div>
+          </div>
+          <div>
+            <!-- boarding-pass hero card -->
+            <article
+              class="ticket"
+              style="
+                display: grid;
+                grid-template-columns: 1fr;
+                position: relative;
+              "
+            >
+              <div
+                class="section-code"
+                style="
+                  background: linear-gradient(
+                    90deg,
+                    var(--accent) 0 33%,
+                    var(--accent-tertiary) 33% 66%,
+                    var(--accent-secondary) 66% 100%
+                  );
+                "
+                aria-hidden="true"
+              ></div>
+              <div style="padding: 26px 24px 18px">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 12px;
+                  "
+                >
+                  <div class="mono" style="color: var(--muted-foreground)">
+                    MERIDIAN ATLAS · EXPEDITION TICKET
+                  </div>
+                  <span class="stamp stamp-green">ON TIME</span>
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr;
+                    gap: 12px;
+                    align-items: center;
+                    margin-top: 22px;
+                  "
+                >
+                  <div>
+                    <div class="label">FROM</div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 800;
+                        font-size: 1.9rem;
+                      "
+                    >
+                      LIS
+                    </div>
+                    <div class="mono" style="color: var(--muted-foreground)">
+                      Lisbon, 09:15
+                    </div>
+                  </div>
+                  <div
+                    aria-hidden="true"
+                    style="
+                      display: grid;
+                      justify-items: center;
+                      align-self: center;
+                    "
+                  >
+                    <svg width="90" height="26" viewBox="0 0 90 26">
+                      <path
+                        d="M2 13 H78"
+                        stroke="var(--foreground)"
+                        stroke-width="2"
+                        stroke-dasharray="4 5"
+                      />
+                      <path
+                        d="M72 7l10 6-10 6"
+                        fill="none"
+                        stroke="var(--foreground)"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <div style="text-align: right">
+                    <div class="label">TO</div>
+                    <div
+                      style="
+                        font-family: var(--font-display);
+                        font-weight: 800;
+                        font-size: 1.9rem;
+                        color: var(--accent);
+                      "
+                    >
+                      FEZ
+                    </div>
+                    <div class="mono" style="color: var(--muted-foreground)">
+                      Fez, 18:40
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 10px;
+                    margin-top: 22px;
+                  "
+                >
+                  <div>
+                    <div class="label">DATE</div>
+                    <div class="mono" style="margin-top: 4px">2026-11-04</div>
+                  </div>
+                  <div>
+                    <div class="label">GATE</div>
+                    <div class="mono" style="margin-top: 4px">B12</div>
+                  </div>
+                  <div>
+                    <div class="label">SEAT</div>
+                    <div class="mono" style="margin-top: 4px">08A</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style="display: grid; grid-template-columns: 1fr 84px"
+                class="pass-lower"
+              >
+                <div
+                  class="perf-left"
+                  style="padding: 16px 20px; border-top: var(--seam-2)"
+                >
+                  <div class="mono" style="color: var(--muted-foreground)">
+                    TICKET NO.
+                  </div>
+                  <div
+                    class="mono"
+                    style="
+                      color: var(--foreground);
+                      font-weight: 700;
+                      margin-top: 4px;
+                    "
+                  >
+                    MA-4417-092
+                  </div>
+                </div>
+                <div
+                  class="barcode"
+                  aria-hidden="true"
+                  style="
+                    border-top: var(--seam-2);
+                    border-left: 2px dotted var(--border);
+                    min-height: 56px;
+                  "
+                ></div>
+              </div>
+            </article>
+            <p
+              class="mono"
+              style="
+                color: var(--muted-foreground);
+                margin-top: 12px;
+                text-align: center;
+              "
+            >
+              FARES FROM £690 · 24 SEATS PER DEPARTURE
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.3 STATS BAR -->
+      <section
+        aria-label="Expedition statistics"
+        style="
+          padding: 40px 0;
+          background: var(--background-alt);
+          border-bottom: var(--seam-2);
+        "
+      >
+        <div class="container">
+          <dl
+            class="grid stats-grid"
+            style="grid-template-columns: repeat(2, 1fr); gap: 28px"
+          >
+            <div
+              style="border-left: 5px solid var(--accent); padding-left: 16px"
+            >
+              <dt class="label">Routes operating</dt>
+              <dd
+                style="
+                  font-family: var(--font-display);
+                  font-weight: 800;
+                  font-size: 2.1rem;
+                  margin-top: 2px;
+                "
+              >
+                44
+              </dd>
+              <dd
+                class="mono"
+                style="color: var(--muted-foreground); margin-top: 2px"
+              >
+                31 COUNTRIES
+              </dd>
+            </div>
+            <div
+              style="
+                border-left: 5px solid var(--accent-tertiary);
+                padding-left: 16px;
+              "
+            >
+              <dt class="label">Travelers per year</dt>
+              <dd
+                style="
+                  font-family: var(--font-display);
+                  font-weight: 800;
+                  font-size: 2.1rem;
+                  margin-top: 2px;
+                "
+              >
+                1,260
+              </dd>
+              <dd
+                class="mono"
+                style="color: var(--muted-foreground); margin-top: 2px"
+              >
+                2025 SEASON
+              </dd>
+            </div>
+            <div
+              style="
+                border-left: 5px solid var(--accent-secondary);
+                padding-left: 16px;
+              "
+            >
+              <dt class="label">Departures on time</dt>
+              <dd
+                style="
+                  font-family: var(--font-display);
+                  font-weight: 800;
+                  font-size: 2.1rem;
+                  margin-top: 2px;
+                "
+              >
+                96%
+              </dd>
+              <dd
+                class="mono"
+                style="color: var(--muted-foreground); margin-top: 2px"
+              >
+                12-MONTH ROLLING
+              </dd>
+            </div>
+            <div
+              style="border-left: 5px solid var(--accent); padding-left: 16px"
+            >
+              <dt class="label">Average group size</dt>
+              <dd
+                style="
+                  font-family: var(--font-display);
+                  font-weight: 800;
+                  font-size: 2.1rem;
+                  margin-top: 2px;
+                "
+              >
+                18
+              </dd>
+              <dd
+                class="mono"
+                style="color: var(--muted-foreground); margin-top: 2px"
+              >
+                SEATS CAP 24
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- 3.4 ANNOUNCEMENT -->
+      <section
+        class="hero"
+        style="
+          padding: 48px 0;
+          background: var(--background-alt);
+          border-bottom: var(--seam-2);
+        "
+      >
+        <div class="container">
+          <div
+            style="
+              max-width: 880px;
+              margin: 0 auto;
+              background: var(--paper);
+              border: var(--seam-2);
+              border-radius: var(--r-ticket);
+              box-shadow: var(--shadow-ticket);
+              padding: 28px 26px;
+              display: grid;
+              gap: 14px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+                flex-wrap: wrap;
+              "
+            >
+              <div class="mono" style="color: var(--muted-foreground)">
+                SVC. NOTE — 09:15 · DISRUPTION DESK
+              </div>
+              <span class="chip"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-secondary)"
+                ></span
+                >SAHARA LINE</span
+              >
+            </div>
+            <h2
+              style="
+                font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                font-family: var(--font-display);
+              "
+            >
+              Reminder: Sahara Line departure moves to MarrakechMenara station
+              from 15 October
+            </h2>
+            <p style="color: var(--muted-foreground)">
+              Track works between Marrakech and Fez run from 15 November. All
+              Sahara Line expeditions will depart from Marrakech Menara Gate C
+              from 15 October to 12 December; Fez rail connections unchanged. If
+              your booking is affected we have already emailed you a free
+              rebooking window.
+            </p>
+            <a
+              href="#faq"
+              style="
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                color: var(--accent);
+                font-family: var(--font-display);
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                font-size: 0.8rem;
+              "
+              >Check your booking
+              <span class="arrow" aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.5 FEATURES -->
+      <section id="routes" style="position: relative">
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent)"
+              >STOP 01 · ROUTES</span
+            >
+            <h2 style="margin-top: 10px">Four reasons travelers come back</h2>
+            <p>
+              Every expedition is built around the same stops. Here is what a
+              booking with Meridian Atlas actually gets you.
+            </p>
+          </div>
+          <div
+            class="grid cards-4"
+            style="align-items: stretch; position: relative"
+          >
+            <span
+              aria-hidden="true"
+              style="
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 24px;
+                height: 5px;
+                background: var(--accent);
+                border-radius: 3px;
+              "
+            ></span>
+            <article
+              class="ticket reveal"
+              style="
+                padding: 26px 22px;
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <div class="pictogram" aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  style="color: var(--accent)"
+                >
+                  <use href="#i-pin" />
+                </svg>
+              </div>
+              <h3 style="font-size: 1.2rem">Fixed departure boards</h3>
+              <p class="mono" style="color: var(--muted-foreground)">STOP 01</p>
+              <p style="color: var(--muted-foreground); flex: 1">
+                Every route publishes a departure board with times, legs and
+                gate assignments 6 months ahead. No dates moving, no surprise
+                cancellations.
+              </p>
+            </article>
+            <article
+              class="ticket reveal"
+              style="
+                padding: 26px 22px;
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <div class="pictogram" aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  style="color: var(--accent-tertiary)"
+                >
+                  <use href="#i-compass" />
+                </svg>
+              </div>
+              <h3 style="font-size: 1.2rem">Real route maps</h3>
+              <p class="mono" style="color: var(--muted-foreground)">STOP 02</p>
+              <p style="color: var(--muted-foreground); flex: 1">
+                Each booking ships with a printed expedition map — the same
+                hand-checked route our expedition leader walks, marked with
+                every stop and leg.
+              </p>
+            </article>
+            <article
+              class="ticket reveal"
+              style="
+                padding: 26px 22px;
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <div class="pictogram" aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  style="color: var(--accent-secondary)"
+                >
+                  <use href="#i-frame" />
+                </svg>
+              </div>
+              <h3 style="font-size: 1.2rem">Travel-documentary pacing</h3>
+              <p class="mono" style="color: var(--muted-foreground)">STOP 03</p>
+              <p style="color: var(--muted-foreground); flex: 1">
+                Long stops at the good places. Two nights minimum anywhere we
+                stop, so you are not photographing through a train window.
+              </p>
+            </article>
+            <article
+              class="ticket reveal"
+              style="
+                padding: 26px 22px;
+                position: relative;
+                z-index: 2;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <div class="pictogram" aria-hidden="true">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  style="color: var(--accent)"
+                >
+                  <use href="#i-tent" />
+                </svg>
+              </div>
+              <h3 style="font-size: 1.2rem">Expedition-leader crew</h3>
+              <p class="mono" style="color: var(--muted-foreground)">STOP 04</p>
+              <p style="color: var(--muted-foreground); flex: 1">
+                One lead and one support guide per group, both
+                wilderness-certified, group cap of 24. 18 travelers is the
+                average per leg.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.6 BENEFITS -->
+      <section
+        id="journey"
+        style="
+          background: var(--background-alt);
+          border-top: var(--seam-2);
+          border-bottom: var(--seam-2);
+        "
+      >
+        <div class="container benefit-grid" style="display: grid; gap: 40px">
+          <div>
+            <span class="mono" style="color: var(--accent-tertiary)"
+              >STOP 02 · HOW IT WORKS</span
+            >
+            <h2 style="font-size: clamp(1.8rem, 4vw, 2.4rem); margin-top: 10px">
+              A journey list, not a brochure
+            </h2>
+            <p style="color: var(--muted-foreground); margin-top: 12px">
+              Below is what the 2026 Andalusia Line actually covers, from the
+              day you pay to the day you fly home. Same wan spelling of
+              itinerary, fewer adjectives.
+            </p>
+            <div
+              style="
+                margin-top: 24px;
+                background: var(--paper);
+                border: var(--seam-2);
+                border-radius: var(--r-ticket);
+                box-shadow: var(--shadow-ticket);
+                padding: 24px;
+              "
+            >
+              <div class="mono" style="color: var(--muted-foreground)">
+                ANDALUSIA LINE · LEG 01–06
+              </div>
+              <p style="margin-top: 8px; color: var(--foreground)">
+                8 days · 6 stations · 17–24 March 2026 · from £1,240
+              </p>
+            </div>
+          </div>
+          <ol
+            style="
+              position: relative;
+              padding-left: 40px;
+              display: grid;
+              gap: 26px;
+            "
+          >
+            <span
+              aria-hidden="true"
+              style="
+                position: absolute;
+                left: 12px;
+                top: 6px;
+                bottom: 34px;
+                width: 5px;
+                background: var(--accent-tertiary);
+                border-radius: 3px;
+              "
+            ></span>
+            <li
+              style="
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  left: -38px;
+                  top: 2px;
+                  width: 18px;
+                  height: 18px;
+                  border-radius: 50%;
+                  background: var(--paper);
+                  border: 5px solid var(--accent-tertiary);
+                "
+              ></span>
+              <div style="flex: 1">
+                <div class="label">
+                  Station 1 · Leave your passport unclericked
+                </div>
+                <p style="color: var(--muted-foreground); margin-top: 4px">
+                  Visas, insurance letters and vaccination guidance built into
+                  your booking, emailed 90, 30 and 7 days out.
+                </p>
+              </div>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                ></span
+                >−8 HRS ADMIN</span
+              >
+            </li>
+            <li
+              style="
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  left: -38px;
+                  top: 2px;
+                  width: 18px;
+                  height: 18px;
+                  border-radius: 50%;
+                  background: var(--paper);
+                  border: 5px solid var(--accent-tertiary);
+                "
+              ></span>
+              <div style="flex: 1">
+                <div class="label">Station 2 · Rail-and-sail, all booked</div>
+                <p style="color: var(--muted-foreground); margin-top: 4px">
+                  Every train, ferry, two overnight sleepers and a camel leg are
+                  booked and waiting before you leave home.
+                </p>
+              </div>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                ></span
+                >0 CONNECTIONS LEFT TO YOU</span
+              >
+            </li>
+            <li
+              style="
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  left: -38px;
+                  top: 2px;
+                  width: 18px;
+                  height: 18px;
+                  border-radius: 50%;
+                  background: var(--paper);
+                  border: 5px solid var(--accent-tertiary);
+                "
+              ></span>
+              <div style="flex: 1">
+                <div class="label">Station 3 · Two nights minimum anywhere</div>
+                <p style="color: var(--muted-foreground); margin-top: 4px">
+                  No single-night, five-town blur. You unpack twice per leg and
+                  walk the same street twice, not just twice past it.
+                </p>
+              </div>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                ></span
+                >2 NIGHTS MIN</span
+              >
+            </li>
+            <li
+              style="
+                position: relative;
+                display: flex;
+                align-items: flex-start;
+                gap: 16px;
+              "
+            >
+              <span
+                aria-hidden="true"
+                style="
+                  position: absolute;
+                  left: -38px;
+                  top: 2px;
+                  width: 18px;
+                  height: 18px;
+                  border-radius: 50%;
+                  background: var(--paper);
+                  border: 5px solid var(--accent-tertiary);
+                "
+              ></span>
+              <div style="flex: 1">
+                <div class="label">Station 4 · A crew of 24 max</div>
+                <p style="color: var(--muted-foreground); margin-top: 4px">
+                  Small enough that dinner reservations bend to the group, not
+                  the other way around. Average crew per leg: 18.
+                </p>
+              </div>
+              <span class="chip" aria-hidden="true"
+                ><span
+                  class="chip-dot"
+                  style="background: var(--accent-tertiary)"
+                ></span
+                >CAP 24</span
+              >
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 3.7 PROCESS (route map) -->
+      <section style="position: relative">
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent-secondary)"
+              >STOP 03 · PROCESS</span
+            >
+            <h2 style="margin-top: 10px">
+              Three stations from booking to boarding
+            </h2>
+            <p>
+              The same blue-line spine that runs down this page is your booking
+              path: reserve, confirm, board.
+            </p>
+          </div>
+          <div class="grid process-grid" style="align-items: stretch">
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="padding: 24px 22px 18px; flex: 1">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                  "
+                >
+                  <span
+                    class="stamp"
+                    style="background: var(--accent); color: var(--paper)"
+                    >LEG 01</span
+                  >
+                  <span class="chip"
+                    ><span
+                      class="chip-dot"
+                      style="background: var(--accent)"
+                    ></span
+                    >WEB</span
+                  >
+                </div>
+                <h3
+                  style="
+                    font-size: 1.4rem;
+                    margin-top: 16px;
+                    letter-spacing: 0.04em;
+                    text-transform: uppercase;
+                  "
+                >
+                  RESERVE
+                </h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: 8px;
+                    margin-bottom: 14px;
+                  "
+                >
+                  Pick route, date and fare class. A £60 deposit holds the seat
+                  for 48 hours while you check flights home.
+                </p>
+                <div
+                  class="mono"
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: auto;
+                    border-top: var(--seam);
+                    padding-top: 12px;
+                  "
+                >
+                  ≈ 4 MIN ONLINE
+                </div>
+              </div>
+            </article>
+            <div aria-hidden="true" style="display: grid; place-items: center">
+              <svg width="46" height="22" viewBox="0 0 46 22">
+                <path
+                  d="M0 11h34"
+                  stroke="var(--foreground)"
+                  stroke-width="2"
+                />
+                <path
+                  d="M32 5l9 6-9 6"
+                  fill="none"
+                  stroke="var(--foreground)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="padding: 24px 22px 18px; flex: 1">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                  "
+                >
+                  <span
+                    class="stamp"
+                    style="background: var(--accent); color: var(--paper)"
+                    >LEG 02</span
+                  >
+                  <span class="chip"
+                    ><span
+                      class="chip-dot"
+                      style="background: var(--accent)"
+                    ></span
+                    >PAPER</span
+                  >
+                </div>
+                <h3
+                  style="
+                    font-size: 1.4rem;
+                    margin-top: 16px;
+                    letter-spacing: 0.04em;
+                    text-transform: uppercase;
+                  "
+                >
+                  CONFIRM
+                </h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: 8px;
+                    margin-bottom: 14px;
+                  "
+                >
+                  Balance is due 60 days out. You get the printed route map, the
+                  ticket wallet and a packing sheet by post.
+                </p>
+                <div
+                  class="mono"
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: auto;
+                    border-top: var(--seam);
+                    padding-top: 12px;
+                  "
+                >
+                  T-60 DAYS BEFORE
+                </div>
+              </div>
+            </article>
+            <div aria-hidden="true" style="display: grid; place-items: center">
+              <svg width="46" height="22" viewBox="0 0 46 22">
+                <path
+                  d="M0 11h34"
+                  stroke="var(--foreground)"
+                  stroke-width="2"
+                />
+                <path
+                  d="M32 5l9 6-9 6"
+                  fill="none"
+                  stroke="var(--foreground)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="padding: 24px 22px 18px; flex: 1">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                  "
+                >
+                  <span class="stamp stamp-red">EXPRESS</span>
+                  <span class="chip"
+                    ><span
+                      class="chip-dot"
+                      style="background: var(--accent-secondary)"
+                    ></span
+                    >PLATFORM</span
+                  >
+                </div>
+                <h3
+                  style="
+                    font-size: 1.4rem;
+                    margin-top: 16px;
+                    letter-spacing: 0.04em;
+                    text-transform: uppercase;
+                  "
+                >
+                  BOARD
+                </h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: 8px;
+                    margin-bottom: 14px;
+                  "
+                >
+                  Meet the crew at the gate 30 minutes before. Luggage goes
+                  ahead by road; you carry a day pack. That is it.
+                </p>
+                <div
+                  class="mono"
+                  style="
+                    color: var(--muted-foreground);
+                    margin-top: auto;
+                    border-top: var(--seam);
+                    padding-top: 12px;
+                  "
+                >
+                  T-30 MIN AT GATE
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.8 PRICING -->
+      <section
+        id="tickets"
+        style="
+          background: var(--background-alt);
+          border-top: var(--seam-2);
+          border-bottom: var(--seam-2);
+          position: relative;
+        "
+      >
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent)"
+              >STOP 04 · FARES</span
+            >
+            <h2 style="margin-top: 10px">Three fare classes, one route</h2>
+            <p>
+              Same crew, same leader, same route for every passenger. What
+              changes is the room, the flexibility and how much we handle for
+              you.
+            </p>
+          </div>
+          <div class="grid fare-grid" style="align-items: stretch">
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div
+                class="section-code"
+                style="background: var(--accent)"
+                aria-hidden="true"
+              ></div>
+              <div
+                style="
+                  padding: 28px 22px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                "
+              >
+                <div class="mono" style="color: var(--muted-foreground)">
+                  FARE CLASS
+                </div>
+                <h3
+                  style="
+                    font-size: 1.5rem;
+                    margin-top: 4px;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
+                  "
+                >
+                  Standard
+                </h3>
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-weight: 800;
+                    font-size: 2.4rem;
+                    color: var(--accent);
+                    margin-top: 10px;
+                  "
+                >
+                  £690
+                </div>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    font-size: 0.95rem;
+                    margin-top: 4px;
+                  "
+                >
+                  Shared twin room · per traveler
+                </p>
+                <ul style="margin-top: 18px; display: grid; gap: 10px; flex: 1">
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Full route as published, all legs booked</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Printed expedition map and ticket wallet</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Breakfast daily, 4 group dinners</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Free date change once, up to 30 days out</span>
+                  </li>
+                </ul>
+                <a
+                  class="button button-secondary"
+                  href="#faq"
+                  style="margin-top: auto; width: 100%"
+                  >Choose Standard</a
+                >
+              </div>
+            </article>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column; position: relative"
+            >
+              <div class="sticker" aria-hidden="true">
+                <span class="stamp stamp-red">EXPRESS</span>
+              </div>
+              <div
+                class="section-code"
+                style="
+                  background: linear-gradient(
+                    90deg,
+                    var(--accent) 0 50%,
+                    var(--accent-secondary) 50% 100%
+                  );
+                "
+              ></div>
+              <div
+                style="
+                  padding: 28px 22px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                "
+              >
+                <div class="mono" style="color: var(--muted-foreground)">
+                  FARE CLASS · MOST BOOKED
+                </div>
+                <h3
+                  style="
+                    font-size: 1.5rem;
+                    margin-top: 4px;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
+                    color: var(--accent);
+                  "
+                >
+                  Return
+                </h3>
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-weight: 800;
+                    font-size: 2.4rem;
+                    color: var(--accent);
+                    margin-top: 10px;
+                  "
+                >
+                  £1,240
+                </div>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    font-size: 0.95rem;
+                    margin-top: 4px;
+                  "
+                >
+                  Private room · per traveler
+                </p>
+                <ul style="margin-top: 18px; display: grid; gap: 10px; flex: 1">
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Everything in Standard</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Private twin room every night</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Unlimited free date changes to 14 days out</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>All dinners included, dietary changes handled</span>
+                  </li>
+                </ul>
+                <a
+                  class="button button-primary"
+                  href="#faq"
+                  style="margin-top: auto; width: 100%"
+                  >Choose Return
+                  <span class="arrow" aria-hidden="true">→</span></a
+                >
+              </div>
+            </article>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div
+                class="section-code"
+                style="background: var(--accent-tertiary)"
+                aria-hidden="true"
+              ></div>
+              <div
+                style="
+                  padding: 28px 22px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                "
+              >
+                <div class="mono" style="color: var(--muted-foreground)">
+                  FARE CLASS
+                </div>
+                <h3
+                  style="
+                    font-size: 1.5rem;
+                    margin-top: 4px;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
+                    color: var(--accent-tertiary);
+                  "
+                >
+                  Travelcard
+                </h3>
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-weight: 800;
+                    font-size: 2.4rem;
+                    color: var(--accent-tertiary);
+                    margin-top: 10px;
+                  "
+                >
+                  £2,180
+                </div>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    font-size: 0.95rem;
+                    margin-top: 4px;
+                  "
+                >
+                  Season pass · 3 expeditions, 1 year
+                </p>
+                <ul style="margin-top: 18px; display: grid; gap: 10px; flex: 1">
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Three expeditions in 12 months, mix classes</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Priority boarding on sold-out routes</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Bring a companion at Standard fare</span>
+                  </li>
+                  <li style="display: flex; gap: 10px; align-items: flex-start">
+                    <span
+                      aria-hidden="true"
+                      style="
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background: var(--accent-tertiary);
+                        flex: none;
+                        margin-top: 7px;
+                      "
+                    ></span
+                    ><span>Locked-in 2027 pricing</span>
+                  </li>
+                </ul>
+                <a
+                  class="button button-secondary"
+                  href="#faq"
+                  style="margin-top: auto; width: 100%"
+                  >Choose Travelcard</a
+                >
+              </div>
+            </article>
+          </div>
+          <p
+            class="mono"
+            style="color: var(--muted-foreground); margin-top: 20px"
+          >
+            FLIGHTS TO/FROM NOT INCLUDED · SINGLE SUPPLEMENT £210 · UNDER-18S
+            HALF FARE
+          </p>
+        </div>
+      </section>
+
+      <!-- 3.9 TESTIMONIALS -->
+      <section style="position: relative">
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent-tertiary)"
+              >STOP 05 · PASSENGER NOTES</span
+            >
+            <h2 style="margin-top: 10px">What goes in the logbook</h2>
+          </div>
+          <div class="grid cards-3" style="align-items: stretch">
+            <figure
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div
+                style="
+                  padding: 24px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span class="stamp stamp-green">ON TIME</span>
+                  <span class="mono" style="color: var(--muted-foreground)"
+                    >TICKET MA-3903-118</span
+                  >
+                </div>
+                <blockquote style="flex: 1; color: var(--foreground)">
+                  "The departure board said 09:15 and we left at 09:15. I have
+                  never NOT been early for anything in my life; somehow the
+                  Andalusia Line made being relaxed feel like being punctual."
+                </blockquote>
+                <figcaption style="border-top: var(--seam); padding-top: 14px">
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    RUTH VANE
+                  </div>
+                  <div
+                    class="mono"
+                    style="color: var(--muted-foreground); margin-top: 2px"
+                  >
+                    PASSENGER — SEAT 14B · ANDALUSIA LINE, 17 MARCH 2026
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+            <figure
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div
+                style="
+                  padding: 24px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span class="stamp stamp-green">ON TIME</span>
+                  <span class="mono" style="color: var(--muted-foreground)"
+                    >TICKET MA-4526-072</span
+                  >
+                </div>
+                <blockquote style="flex: 1; color: var(--foreground)">
+                  "I booked the Sahara Line knowing nothing about Morocco and
+                  came home with two people I now text every week. Eighteen is
+                  the exact right size for a group: waiter remembers you, guide
+                  knows your name."
+                </blockquote>
+                <figcaption style="border-top: var(--seam); padding-top: 14px">
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    DAMIEN OKAFOR
+                  </div>
+                  <div
+                    class="mono"
+                    style="color: var(--muted-foreground); margin-top: 2px"
+                  >
+                    PASSENGER — SEAT 03C · SAHARA LINE, 04 NOVEMBER 2025
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+            <figure
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div
+                style="
+                  padding: 24px 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                "
+              >
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                  "
+                >
+                  <span class="stamp stamp-red">EXPRESS</span>
+                  <span class="mono" style="color: var(--muted-foreground)"
+                    >TICKET MA-5011-241</span
+                  >
+                </div>
+                <blockquote style="flex: 1; color: var(--foreground)">
+                  "Third Travelcard year. My one complaint is that colleagues
+                  now assume I can explain my November and April every time
+                  something goes wrong in the office."
+                </blockquote>
+                <figcaption style="border-top: var(--seam); padding-top: 14px">
+                  <div
+                    style="
+                      font-family: var(--font-display);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    LENA MISCHKE
+                  </div>
+                  <div
+                    class="mono"
+                    style="color: var(--muted-foreground); margin-top: 2px"
+                  >
+                    PASSENGER — SEAT 06A · LAPLAND LINE + SAHARA LINE, 2026
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.10 FAQ -->
+      <section
+        id="faq"
+        style="
+          background: var(--background-alt);
+          border-top: var(--seam-2);
+          border-bottom: var(--seam-2);
+          position: relative;
+        "
+      >
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container faq-wrap" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent)"
+              >STOP 06 · INFORMATION DESK</span
+            >
+            <h2 style="margin-top: 10px">Frequently asked, plainly answered</h2>
+          </div>
+          <div style="max-width: 680px; margin-inline: auto">
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-01</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >Do I need to be fit for an expedition?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                Every route lists a grade on the departure board — simple as
+                that. Grades 1 and 2 need comfortable walking and a daypack;
+                grade 3 routes (Lapland winter, High Atlas) need stamina for 6–8
+                hour days. We can move you between grades up to 30 days out at
+                no charge.
+              </div>
+            </details>
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-02</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >What is actually included in the fare?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                Every in-country leg (rail, ferry, coach, the odd camel),
+                accommodation per your fare class, breakfast as standard, the
+                expedition map, ticket wallet, packing sheet, leader and support
+                guide, and all permits and museum entries on the published route
+                list. Flights to the join point are yours to book.
+              </div>
+            </details>
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-03</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >Can I travel alone?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                Most of our passengers do — 62% booked solo in 2025. Standard
+                fare means a shared twin room with a matched solo traveler of
+                the same gender; the single supplement is £210 if you prefer
+                your own room.
+              </div>
+            </details>
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-04</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >What happens if a leg is disrupted?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                This is why crews carry radio and why the announcement panel
+                exists. In 2025, 96% of legs left as scheduled and the rest were
+                re-routed within an average of 2 hours. If a delay runs past a
+                meal stop, the food and the onward ticket are on us.
+              </div>
+            </details>
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-05</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >Is there an age limit?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                16–85 as a rule of thumb: under-18s travel at half fare with a
+                guardian, and there is no upper limit if your doctor is content
+                with the route grade you have chosen. Our oldest 2025 passenger
+                was 79, on the Andalusia Line.
+              </div>
+            </details>
+            <details
+              class="faq-row reveal"
+              style="border-bottom: var(--seam-2)"
+            >
+              <summary
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  padding: 20px 4px;
+                  min-height: 44px;
+                "
+              >
+                <span class="mono" style="color: var(--accent); flex: none"
+                  >Q-06</span
+                >
+                <span
+                  style="
+                    flex: 1;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                  "
+                  >How far out should I book?</span
+                >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  class="faq-arrow"
+                  style="
+                    flex: none;
+                    transition: rotate 200ms ease;
+                    color: var(--accent);
+                  "
+                  aria-hidden="true"
+                >
+                  <use href="#i-arrow" />
+                </svg>
+              </summary>
+              <div
+                style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
+              >
+                Spring and autumn departures fill 4–6 months early; winter
+                Lapland fills by September. The departure boards on this page
+                show exact seat counts per class, and the £60 deposit holds a
+                seat for 48 hours while you check flights.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.11 JOURNAL -->
+      <section id="dispatch" style="position: relative">
+        <span class="route-spine" aria-hidden="true"></span>
+        <div class="container" style="padding-left: calc(24px + 32px)">
+          <div class="section-head">
+            <span class="mono" style="color: var(--accent-secondary)"
+              >STOP 07 · DISPATCHES</span
+            >
+            <h2 style="margin-top: 10px">Postcards from the current season</h2>
+          </div>
+          <div class="grid cards-3" style="align-items: stretch">
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="position: relative; border-bottom: var(--seam-2)">
+                <img
+                  src="https://images.unsplash.com/photo-1771154138962-8fbd5c5b7ad7?auto=format&fit=crop&w=1200&q=80"
+                  alt="A caravan of camels walking across open desert terrain at ground level"
+                  width="1200"
+                  height="800"
+                  loading="lazy"
+                  style="width: 100%; height: 220px; object-fit: cover"
+                />
+                <span
+                  class="stamp"
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: var(--paper);
+                    color: var(--foreground);
+                    border: var(--seam-2);
+                    box-shadow: var(--shadow-ticket);
+                  "
+                  >12 SEP 2026 · DESPATCH 17</span
+                >
+              </div>
+              <div
+                style="
+                  padding: 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                "
+              >
+                <span class="mono" style="color: var(--accent-secondary)"
+                  >SAHARA LINE</span
+                >
+                <h3 style="font-size: 1.15rem">Fourteen dunes, one tea stop</h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    flex: 1;
+                    font-size: 0.95rem;
+                  "
+                >
+                  The Sahara Line's November departure crosses the Erg Chegaga
+                  corridor the slow way — with a tea stop our support guide
+                  swears by, and a night camp that books out in 3 hours.
+                </p>
+                <a
+                  href="#faq"
+                  style="
+                    color: var(--accent);
+                    text-decoration: underline;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  >Open →</a
+                >
+              </div>
+            </article>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="position: relative; border-bottom: var(--seam-2)">
+                <img
+                  src="https://images.unsplash.com/photo-1527685609591-44b0aef2400b?auto=format&fit=crop&w=1200&q=80"
+                  alt="A tall ship under full white sails crossing open water"
+                  width="1200"
+                  height="674"
+                  loading="lazy"
+                  style="width: 100%; height: 220px; object-fit: cover"
+                />
+                <span
+                  class="stamp"
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: var(--paper);
+                    color: var(--foreground);
+                    border: var(--seam-2);
+                    box-shadow: var(--shadow-ticket);
+                  "
+                  >24 AUG 2026 · DESPATCH 16</span
+                >
+              </div>
+              <div
+                style="
+                  padding: 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                "
+              >
+                <span class="mono" style="color: var(--accent-tertiary)"
+                  >ATLANTIC LINE</span
+                >
+                <h3 style="font-size: 1.15rem">
+                  The coastal leg, not the shortcut
+                </h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    flex: 1;
+                    font-size: 0.95rem;
+                  "
+                >
+                  Nine hours on a chartered coastal freighter from Porto to Vigo
+                  saves us nothing in time and costs us a new leg in the 2027
+                  draft: passengers keep asking for more of it.
+                </p>
+                <a
+                  href="#faq"
+                  style="
+                    color: var(--accent);
+                    text-decoration: underline;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  >Open →</a
+                >
+              </div>
+            </article>
+            <article
+              class="ticket reveal"
+              style="display: flex; flex-direction: column"
+            >
+              <div style="position: relative; border-bottom: var(--seam-2)">
+                <img
+                  src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=80"
+                  alt="A black DSLR camera.
+
+ resting on an open paper map beside several printed photographs"
+                  width="1200"
+                  height="798"
+                  loading="lazy"
+                  style="width: 100%; height: 220px; object-fit: cover"
+                />
+                <span
+                  class="stamp"
+                  style="
+                    position: absolute;
+                    bottom: 10px;
+                    left: 10px;
+                    background: var(--paper);
+                    color: var(--foreground);
+                    border: var(--seam-2);
+                    box-shadow: var(--shadow-ticket);
+                  "
+                  >02 JUL 2026 · DESPATCH 15</span
+                >
+              </div>
+              <div
+                style="
+                  padding: 22px;
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                "
+              >
+                <span class="mono" style="color: var(--accent)"
+                  >ANDALUSIA LINE</span
+                >
+                <h3 style="font-size: 1.15rem">
+                  Why the itinerary ships printed
+                </h3>
+                <p
+                  style="
+                    color: var(--muted-foreground);
+                    flex: 1;
+                    font-size: 0.95rem;
+                  "
+                >
+                  A route you can spread on a table changes how you plan a day.
+                  Notes from the print room and why we still post a paper map
+                  before every departure.
+                </p>
+                <a
+                  href="#faq"
+                  style="
+                    color: var(--accent);
+                    text-decoration: underline;
+                    font-family: var(--font-display);
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  "
+                  >Open →</a
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3.12 FINAL CTA -->
+      <section
+        class="hero"
+        id="cta"
+        style="
+          background: var(--accent);
+          color: var(--paper);
+          padding: 88px 0 0;
+          border-top: var(--seam-2);
+        "
+      >
+        <div class="container center" style="padding-bottom: 0">
+          <div class="mono" style="color: #bfd9ee; margin-bottom: 18px">
+            DEPARTURES BOARD · 2026 SEASON · LAST CALL
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 8px;
+              margin-bottom: 20px;
+            "
+            class="flap-cta"
+            aria-label="Departures board reading: LAST CALL"
+          >
+            <div
+              class="split-flap"
+              style="font-size: clamp(2.2rem, 6vw, 4.2rem)"
+            >
+              <span>L</span><span>A</span><span>S</span><span>T</span>
+            </div>
+            <div
+              class="split-flap"
+              style="font-size: clamp(2.2rem, 6vw, 4.2rem)"
+            >
+              <span>C</span><span>A</span><span>L</span><span>L</span>
+            </div>
+          </div>
+          <h2
+            style="
+              font-size: clamp(1.3rem, 3vw, 1.8rem);
+              max-width: 640px;
+              margin: 0 auto;
+              opacity: 0.95;
+            "
+          >
+            Twelve seats left across the 2026 winter departures. Reserve now,
+            confirm later.
+          </h2>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+              justify-content: center;
+              align-items: center;
+              max-width: 440px;
+              margin: 28px auto 0;
+            "
+            class="cta-col"
+          >
+            <a
+              class="button button-primary"
+              href="#tickets"
+              style="background: var(--paper); color: var(--accent)"
+              >Get boarding pass
+              <span class="arrow" aria-hidden="true">→</span></a
+            >
+            <a
+              class="button"
+              href="#routes"
+              style="
+                background: transparent;
+                color: var(--paper);
+                border: 2px solid var(--paper);
+              "
+              >View routes</a
+            >
+          </div>
+          <div
+            class="mono"
+            style="color: #bfd9ee; margin-top: 22px; padding-bottom: 34px"
+          >
+            NEXT DEPARTURE · SAHARA LINE · 04 NOV 2026 · LIS → FEZ · 09:15
+          </div>
+        </div>
+        <div
+          aria-hidden="true"
+          style="height: 6px; background: var(--alert)"
+        ></div>
+      </section>
+    </main>
+
+    <!-- 3.13 FOOTER -->
+    <footer
+      id="site-footer"
+      class="site-footer"
+      style="background: var(--paper); border-top: var(--seam-2)"
+    >
+      <!-- RICH STACKED FOOTER: below 768px -->
+      <div class="container foot-stack-div is-stack">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--foreground);
+          "
+        >
+          <span aria-hidden="true" style="display: inline-flex; gap: 4px">
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent);
+              "
+            ></span>
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent-tertiary);
+              "
+            ></span>
+            <span
+              style="
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: var(--accent-secondary);
+              "
+            ></span>
+          </span>
+          <span
+            style="
+              font-family: var(--font-display);
+              font-weight: 800;
+              font-size: 1.05rem;
+              letter-spacing: 0.02em;
+            "
+            >MERIDIAN ATLAS</span
+          >
+        </div>
+        <nav aria-label="Footer">
+          <ul>
+            <li>
+              <a
+                href="#routes"
+                style="
+                  display: block;
+                  padding: 12px 0;
+                  color: var(--accent);
+                  font-family: var(--font-display);
+                  font-weight: 700;
+                  font-size: 0.85rem;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                "
+                >Routes</a
+              >
+            </li>
+            <li>
+              <a
+                href="#tickets"
+                style="
+                  display: block;
+                  padding: 12px 0;
+                  color: var(--accent);
+                  font-family: var(--font-display);
+                  font-weight: 700;
+                  font-size: 0.85rem;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                "
+                >Fares</a
+              >
+            </li>
+            <li>
+              <a
+                href="#faq"
+                style="
+                  display: block;
+                  padding: 12px 0;
+                  color: var(--accent);
+                  font-family: var(--font-display);
+                  font-weight: 700;
+                  font-size: 0.85rem;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                "
+                >FAQ</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="foot-right-block"
+          style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap"
+        >
+          <div
+            class="foot-social-wrap"
+            style="display: flex; align-items: center; gap: 14px"
+          >
+            <a
+              href="#top"
+              aria-label="Meridian Atlas newsletter"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                border: var(--seam-2);
+                border-radius: var(--r-plate);
+                color: var(--foreground);
+              "
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <rect x="3" y="6" width="18" height="13" rx="2" />
+                <path d="m4 7 8 6 8-6" />
+              </svg>
+            </a>
+            <a
+              href="#top"
+              aria-label="Meridian Atlas press kit"
+              style="
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                border: var(--seam-2);
+                border-radius: var(--r-plate);
+                color: var(--foreground);
+              "
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path
+                  d="M12 3c2.5 2.4 3.8 5.6 3.8 9S14.5 18.6 12 21c-2.5-2.4-3.8-5.6-3.8-9S9.5 5.4 12 3z"
+                />
+              </svg>
+            </a>
+          </div>
+          <div class="mono foot-ticket" style="color: var(--muted-foreground)">
+            MA-TICKET-9999-001
+          </div>
+        </div>
+        <p style="color: var(--muted-foreground); font-size: 0.85rem">
+          © 2026 Meridian Atlas Ltd · Operated under licence, bonded, ABTA-style
+          scheme.
+        </p>
+        <span class="foot-copyright-inline" style="color: var(--foreground)"
+          >© 2026 Meridian Atlas Ltd · EST. 2009</span
+        >
+      </div>
+    </footer>
+
+    <script>
+      /* Nav toggle */
+      ;(function () {
+        var btn = document.getElementById('menu-btn'),
+          nav = document.getElementById('nav-mobile')
+        if (btn && nav) {
+          btn.addEventListener('click', function () {
+            var open = nav.hidden
+            nav.hidden = !open
+            btn.setAttribute('aria-expanded', String(open))
+          })
+          nav.addEventListener('click', function (e) {
+            if (e.target.closest('a')) {
+              nav.hidden = true
+              btn.setAttribute('aria-expanded', 'false')
+            }
+          })
+        }
+        var form = document.querySelector('.foot-form')
+        if (form && document.getElementById('newsletter-ok')) {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault()
+            document.getElementById('newsletter-ok').hidden = false
+            form.reset()
+          })
+        }
+        /* reveal */
+        var items = document.querySelectorAll('.reveal')
+        var reduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+        if (!reduced && 'IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en, i) {
+                if (en.isIntersecting) {
+                  setTimeout(function () {
+                    en.target.classList.add('in')
+                  }, i * 80)
+                  io.unobserve(en.target)
+                }
+              })
+            },
+            { threshold: 0.12 },
+          )
+          items.forEach(function (el) {
+            io.observe(el)
+          })
+        } else {
+          items.forEach(function (el) {
+            el.classList.add('in')
+          })
+        }
+        /* FAQ arrow rotation */
+        document.querySelectorAll('.faq-row').forEach(function (d) {
+          d.addEventListener('toggle', function () {
+            d.classList.toggle('open', d.open)
+          })
+        })
+      })()
+    </script>
+
+    <style>
+      .foot-form {
+        display: none;
+      }
+      .foot-copyright-inline {
+        display: none;
+      }
+      .faq-row .faq-arrow {
+        rotate: 0deg;
+      }
+      .faq-row.open .faq-arrow {
+        rotate: 90deg;
+      }
+      details[open] .faq-arrow {
+        rotate: 90deg;
+      }
+      .reveal {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .reveal {
+          opacity: 0;
+          translate: 0 12px;
+          transition:
+            opacity 500ms ease-out,
+            translate 500ms ease-out;
+        }
+        .reveal.in {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+      @media (min-width: 640px) {
+        .grid-2-sm {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .cta-col {
+          flex-direction: row;
+        }
+      }
+      @media (min-width: 768px) {
+        .grid-2 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .nav-desk-cols {
+          display: inline-flex !important;
+        }
+        #nav-desk {
+          display: inline-flex !important;
+        }
+        #cta-desk {
+          display: inline-flex !important;
+        }
+        .nav-burger {
+          display: none !important;
+        }
+        .hero-grid {
+          grid-template-columns: 55% 45%;
+        }
+        .cards-3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .credit-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .process-grid {
+          grid-template-columns: 1fr auto 1fr auto 1fr;
+        }
+        .process-grid > div[aria-hidden] {
+          display: none;
+        }
+        .fare-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .cards-4-inline {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .benefit-grid {
+          grid-template-columns: 45% 55%;
+        }
+      }
+      .cards-4-inline {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 1024px) {
+        .cards-4 {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .pass-lower {
+        display: grid;
+        grid-template-columns: 1fr 84px;
+      }
+      @media (max-width: 1023px) {
+        #nav-desk {
+          display: none;
+        }
+        #cta-desk {
+          display: none;
+        }
+      }
+      @media (min-width: 768px) {
+        /* SLIM FOOTER per brief: two-row band — row 1 brand / links / socials */
+        .foot-stack-div {
+          padding: 0;
+        }
+        .foot-stack-div.is-stack {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: 10px 28px;
+          padding: 16px 0;
+        }
+        .foot-stack-div.is-stack > div:first-child {
+          justify-self: start;
+        }
+        .foot-stack-div.is-stack > nav {
+          display: block;
+          justify-self: center;
+        }
+        .foot-stack-div.is-stack > nav ul {
+          display: flex;
+          align-items: center;
+          gap: 26px;
+          margin: 0;
+          padding: 0;
+        }
+        .foot-stack-div.is-stack > nav ul a {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+        }
+        .foot-stack-div.is-stack > .foot-right-block {
+          justify-self: end;
+        }
+        .foot-stack-div.is-stack > p {
+          display: none;
+        }
+        /* row 2 — copyright alone, never beside row-1 items */
+        .foot-stack-div.is-stack > .foot-copyright-inline {
+          grid-column: 1 / -1;
+          display: inline;
+          justify-self: center;
+          text-align: center;
+        }
+        .foot-copyright-inline {
+          font-family: var(--font-display);
+          font-weight: 700;
+          font-size: 0.72rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .foot-stack-div.is-stack .foot-ticket {
+          font-size: 0.68rem;
+        }
+      }
+      @media (max-width: 767px) {
+        .foot-stack-div > nav ul {
+          display: grid;
+          gap: 4px;
+        }
+      }
+
+      /* ============ V2 SURGICAL FIX PASS ============ */
+      /* FAQ list cap — 680px centred, matched to the other v2 pages
+         (previously the width came only from an inline style on the wrapper) */
+      .faq-wrap .faq-row {
+        max-width: 680px !important;
+        margin-inline: auto !important;
+      }
+      /* Mobile menu: fixed panel directly under the sticky header — opening
+         must not push the page down */
+      #nav-mobile:not([hidden]) {
+        position: fixed;
+        inset: 76px 0 0;
+        z-index: 60;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+      }
+      /* Footer band at 768px+: row 1 = brand / links / socials,
+         row 2 = copyright alone, full width */
+      @media (min-width: 768px) {
+        .foot-stack-div.is-stack > .foot-copyright-inline {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          width: 100%;
+          justify-self: center;
+          text-align: center;
+        }
+      }
+    </style>
+<style id="journal-fix">
+/* Journal images: bounded boxes, equal cards, never inflated by intrinsic height */
+#dispatch .ticket img { height: auto !important; width: 100% !important; aspect-ratio: 4 / 3 !important; object-fit: cover !important; max-height: 420px !important; }
+#dispatch .ticket{overflow:hidden}
+/* equal-height cards inside the journal grid */
+.journal-grid, #journal .grid.cards-3, #cahier .journal-grid, #dispatch .grid.cards-3 { align-items: stretch !important; }
+.journal-grid > *, #journal .grid.cards-3 > *, #cahier .journal-grid > *, #dispatch .grid.cards-3 > * { display: flex; flex-direction: column; }
+.journal-grid > * > :last-child, #journal .grid.cards-3 > * > :last-child { margin-top: auto; }
+/* Small screens: header keeps only logo + menu (extra chips hidden, burger pinned right) */
+@media (max-width: 1023px) {
+  header .chip { display: none !important }
+  #menu-btn.nav-burger { margin-left: auto !important; flex: none !important }
+}
+</style>
+
+</body>
+</html>

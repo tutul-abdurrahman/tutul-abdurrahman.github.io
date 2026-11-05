@@ -1,0 +1,3455 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Northbeam Structural — Structural Engineering &amp; Architecture
+    </title>
+    <meta
+      name="description"
+      content="Northbeam Structural drafts the structure before it is built. Post-tensioned slabs, long-span floors, mass timber hybrids and retrofit engineering issued as buildable drawings."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ TOKENS ============ */
+      :root {
+        --background: #0f3556;
+        --background-alt: #0b2942;
+        --foreground: #e6f0f8;
+        --muted-foreground: #8fb4d4;
+        --accent: #f2b705;
+        --accent-light: #ffd34d;
+        --accent-secondary: #7fc7e0;
+        --accent-tertiary: #e4572e;
+        --border: #3e6b94;
+        --font-display: 'Saira Condensed', sans-serif;
+        --font-body: 'IBM Plex Sans', sans-serif;
+        --font-mono: 'IBM Plex Mono', monospace;
+        --lw-hairline: 1px;
+        --lw-object: 2px;
+        --lw-cut: 3px;
+      }
+      /* ============ RESET / BASE ============ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      /* 5mm grid paper at 8% over the drafting field */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(
+            to right,
+            rgba(230, 240, 248, 0.08) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(230, 240, 248, 0.08) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to right,
+            rgba(230, 240, 248, 0.04) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(230, 240, 248, 0.04) 1px,
+            transparent 1px
+          );
+        background-size:
+          40px 40px,
+          40px 40px,
+          8px 8px,
+          8px 8px;
+      }
+      main,
+      header,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      p a {
+        text-decoration: underline dashed rgba(242, 183, 5, 0.5);
+        text-underline-offset: 4px;
+      }
+      p a:hover {
+        color: var(--accent-light);
+        text-decoration-style: solid;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      ::selection {
+        background: var(--accent);
+        color: var(--background);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        line-height: 1.05;
+        font-weight: 700;
+      }
+      .mono {
+        font-family: var(--font-mono);
+      }
+      /* utilities */
+      .wrap {
+        max-width: 72rem;
+        margin-inline: auto;
+        padding-inline: 1.25rem;
+      }
+      .read {
+        max-width: 48rem;
+      }
+      .section {
+        padding-block: 5rem;
+        border-top: var(--lw-hairline) var(--border);
+      }
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .eyebrow::before {
+        content: '';
+        width: 2rem;
+        height: 1px;
+        background: var(--accent);
+        display: inline-block;
+      }
+      .section-title {
+        font-size: clamp(1.9rem, 4vw, 2.8rem);
+        margin: 0.6rem 0 1rem;
+      }
+      .section-sub {
+        color: var(--muted-foreground);
+        max-width: 44rem;
+      }
+      /* hatch fill — always 45 deg */
+      .hatch {
+        background-image: repeating-linear-gradient(
+          45deg,
+          var(--border) 0,
+          var(--border) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+        background-color: var(--background-alt);
+      }
+      /* sheet = card. square corners, object-line border, hairline header */
+      .sheet {
+        background: var(--background-alt);
+        border: var(--lw-object) solid var(--border);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .sheet-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        border-bottom: var(--lw-hairline) solid var(--border);
+        padding: 0.55rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+      }
+      .sheet-body {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        flex: 1;
+      }
+      .sheet::after {
+        /* corner ticks draw on hover */
+        content: '';
+        position: absolute;
+        inset: -2px;
+        pointer-events: none;
+        background:
+          linear-gradient(var(--accent), var(--accent)) top left/14px 2px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) top left/2px 14px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) top right/14px 2px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) top right/2px 14px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) bottom left/14px 2px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) bottom left/2px 14px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) bottom right/14px 2px
+            no-repeat,
+          linear-gradient(var(--accent), var(--accent)) bottom right/2px 14px
+            no-repeat;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+      }
+      .sheet:hover {
+        border-color: var(--accent);
+      }
+      .sheet:hover::after {
+        opacity: 1;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .sheet::after {
+          transition: none;
+        }
+      }
+      /* callout balloon */
+      .balloon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 9999px;
+        border: var(--lw-object) solid var(--accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        color: var(--accent);
+        background: var(--background-alt);
+        flex: none;
+      }
+      /* buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.65rem;
+        min-height: 48px;
+        padding: 0.7rem 1.4rem;
+        border: var(--lw-object) solid transparent;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        white-space: nowrap;
+        cursor: pointer;
+        position: relative;
+        background: none;
+      }
+      .btn .code {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: none;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--background);
+        border-color: var(--accent);
+      }
+      .btn-primary:hover {
+        background: var(--accent-light);
+        border-color: var(--accent-light);
+      }
+      .btn-primary::before,
+      .btn-primary::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border: var(--lw-object) solid var(--accent);
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+      }
+      .btn-primary::before {
+        top: -6px;
+        left: -6px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .btn-primary::after {
+        bottom: -6px;
+        right: -6px;
+        border-left: none;
+        border-top: none;
+      }
+      .btn-primary:hover::before,
+      .btn-primary:hover::after {
+        opacity: 1;
+      }
+      .btn-secondary {
+        border-color: var(--foreground);
+        color: var(--foreground);
+      }
+      .btn-secondary:hover {
+        background: var(--background-alt);
+        border-color: var(--accent);
+        color: var(--accent-light);
+      }
+      .btn-ghost {
+        color: var(--accent);
+        border-color: transparent;
+        letter-spacing: 0.06em;
+        border-bottom: var(--lw-hairline) dashed var(--accent);
+      }
+      .btn-ghost:hover {
+        color: var(--accent-light);
+        border-bottom-style: solid;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+      .btn-row > * {
+        flex: 1 1 100%;
+      }
+      @media (min-width: 640px) {
+        .btn-row > * {
+          flex: 0 1 auto;
+        }
+      }
+      /* registration marks at the four page corners */
+      .reg {
+        position: fixed;
+        z-index: 2;
+        width: 18px;
+        height: 18px;
+        pointer-events: none;
+      }
+      .reg::before,
+      .reg::after {
+        content: '';
+        position: absolute;
+        background: var(--muted-foreground);
+      }
+      .reg::before {
+        left: 50%;
+        top: 0;
+        width: 1px;
+        height: 100%;
+      }
+      .reg::after {
+        top: 50%;
+        left: 0;
+        height: 1px;
+        width: 100%;
+      }
+      .reg-tl {
+        top: 6px;
+        left: 6px;
+      }
+      .reg-tr {
+        top: 6px;
+        right: 6px;
+      }
+      @media (min-width: 640px) {
+        .reg-bl {
+          bottom: 6px;
+          left: 6px;
+        }
+        .reg-br {
+          bottom: 6px;
+          right: 6px;
+        }
+      }
+      .reg-bl {
+        bottom: 6px;
+        left: 6px;
+      }
+      .reg-br {
+        bottom: 6px;
+        right: 6px;
+      }
+      /* dimension line label */
+      .dim-label {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        background: var(--background);
+        padding: 0 0.4rem;
+        white-space: nowrap;
+      }
+      /* reveal motion (draw-in / wipe) */
+      .draw path,
+      .draw line,
+      .draw polyline,
+      .draw circle,
+      .draw rect {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 1;
+        animation: drawin 600ms ease-out forwards;
+      }
+      @keyframes drawin {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      .wipe {
+        animation: wipein 400ms ease-out both;
+      }
+      @keyframes wipein {
+        from {
+          clip-path: inset(0 0 100% 0);
+        }
+        to {
+          clip-path: inset(0 0 0% 0);
+        }
+      }
+      .stamp-anim {
+        animation: stamp 250ms ease-out both;
+        animation-delay: 150ms;
+      }
+      @keyframes stamp {
+        from {
+          transform: rotate(-4deg) scale(1.15);
+          opacity: 0;
+        }
+        to {
+          transform: rotate(-4deg) scale(1);
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .draw path,
+        .draw line,
+        .draw polyline,
+        .draw circle,
+        .draw rect {
+          animation: none;
+          stroke-dasharray: none;
+          stroke-dashoffset: 0;
+        }
+        .wipe {
+          animation: none;
+          clip-path: none;
+        }
+        .stamp-anim {
+          animation: none;
+          transform: rotate(-4deg);
+          opacity: 1;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+      /* ============ 3.1 HEADER — TITLE BLOCK ============ */
+      .titleblock {
+        background: var(--background-alt);
+        border-bottom: var(--lw-cut) solid var(--border);
+      }
+      .titleblock-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: stretch;
+        max-width: 72rem;
+        margin-inline: auto;
+      }
+      .tb-cell {
+        padding: 0.8rem 1rem;
+        border-right: var(--lw-hairline) var(--border);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+      }
+      .tb-label {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .tb-value {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .tb-value .rev-flag {
+        color: var(--accent-tertiary);
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        margin-left: 0.5rem;
+      }
+      .tb-project {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .wordmark {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        color: var(--foreground);
+      }
+      .wordmark svg {
+        flex: none;
+      }
+      .wordmark strong {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        line-height: 1;
+      }
+      .wordmark small {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        color: var(--muted-foreground);
+        text-transform: uppercase;
+        line-height: 1.4;
+      }
+      .tb-cells {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        .tb-cells {
+          display: flex;
+        }
+      }
+      .tb-nav {
+        display: none;
+        align-items: center;
+        gap: 1.4rem;
+        padding: 0 1.2rem;
+      }
+      .tb-nav a {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .tb-nav a:hover {
+        color: var(--accent);
+      }
+      @media (min-width: 1024px) {
+        .tb-nav {
+          display: flex;
+        }
+      }
+      .tb-cta {
+        padding: 0.6rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .tb-cta .btn {
+        min-height: 44px;
+        padding: 0.45rem 1rem;
+        font-size: 0.85rem;
+      }
+      .menu-btn {
+        background: none;
+        border: var(--lw-hairline) var(--border);
+        color: var(--foreground);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 0 0.9rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .menu-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      @media (min-width: 1024px) {
+        .menu-btn {
+          display: none;
+        }
+      }
+      .mobile-nav {
+        display: none;
+        background: var(--background-alt);
+        border-bottom: var(--lw-object) var(--border);
+      }
+      .mobile-nav.open {
+        display: block;
+      }
+      .mobile-nav ul {
+        list-style: none;
+      }
+      .mobile-nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 1.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--foreground);
+        border-top: var(--lw-hairline) var(--border);
+      }
+      .mobile-nav a:hover {
+        color: var(--accent);
+        background: var(--background);
+      }
+      /* ============ 3.2 HERO ============ */
+      .hero {
+        border-top: none;
+        padding-block: 3.5rem 4rem;
+      }
+      .hero-grid {
+        display: grid;
+        gap: 3rem;
+        align-items: start;
+      }
+      @media (min-width: 640px) {
+        .hero-grid {
+          grid-template-columns: 1.05fr 1fr;
+          gap: 2.5rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          gap: 4rem;
+        }
+      }
+      .revnote {
+        border: var(--lw-object) solid var(--border);
+        position: relative;
+      }
+      .revnote-tag {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+        background: var(--background-alt);
+        border: var(--lw-hairline) var(--border);
+        border-bottom: none;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 0.25rem 0.7rem;
+      }
+      .revnote-inner {
+        padding: 1.5rem 1.5rem 2rem;
+      }
+      @media (min-width: 1024px) {
+        .revnote-inner {
+          padding: 2.5rem;
+        }
+      }
+      .hero-h1 {
+        font-size: clamp(2.6rem, 6vw, 4.6rem);
+        margin-bottom: 1.2rem;
+      }
+      .hero-h1 .amber {
+        color: var(--accent);
+      }
+      .hero-lead {
+        color: var(--muted-foreground);
+        font-size: 1.05rem;
+        margin-bottom: 1.8rem;
+        max-width: 34rem;
+      }
+      .hero-dim {
+        display: flex;
+        align-items: center;
+        max-width: 22rem;
+        margin-bottom: 2rem;
+      }
+      .hero-dim .arm {
+        flex: 1;
+        height: 1px;
+        background: var(--accent);
+        position: relative;
+      }
+      .hero-dim .arm::before,
+      .hero-dim .arm::after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        border: 5px solid transparent;
+      }
+      .hero-dim .arm:first-child::before {
+        left: 0;
+        border-right-color: var(--accent);
+      }
+      .hero-dim .arm:last-child::after {
+        right: 0;
+        border-left-color: var(--accent);
+      }
+      .hero-cta {
+        align-items: center;
+      }
+      /* elevation drawing panel */
+      .elevation {
+        border: var(--lw-cut) solid var(--border);
+        background: var(--background-alt);
+      }
+      .elevation .sheet-head {
+        border-bottom: var(--lw-object) var(--border);
+      }
+      .elevation svg {
+        width: 100%;
+        height: auto;
+      }
+      .elev-cap {
+        border-top: var(--lw-hairline) var(--border);
+        padding: 0.55rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        color: var(--muted-foreground);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .callouts {
+        display: flex;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        padding: 0.9rem 1rem;
+        border-top: var(--lw-hairline) var(--border);
+      }
+      .callout {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.82rem;
+        color: var(--muted-foreground);
+      }
+      /* ============ 3.3 STATS — TOLERANCE TABLE ============ */
+      .stats {
+        padding-block: 0;
+      }
+      .stats-grid {
+        display: grid;
+      }
+      .stat-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0.35rem 1rem;
+        border-bottom: var(--lw-hairline) var(--border);
+        border-right: var(--lw-hairline) var(--border);
+        padding: 1.1rem 0.25rem;
+        align-items: baseline;
+      }
+      .stat-row dt {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .stat-row dd {
+        font-family: var(--font-mono);
+        font-size: 1.4rem;
+        color: var(--accent);
+        text-align: right;
+        white-space: nowrap;
+      }
+      .stat-row dd small {
+        font-size: 0.8rem;
+        color: var(--muted-foreground);
+        margin-left: 0.3rem;
+      }
+      @media (min-width: 1024px) {
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-row {
+          grid-template-columns: 1fr;
+          border-bottom: none;
+          padding: 1.6rem 1.4rem;
+        }
+        .stats-grid .stat-row:last-child {
+          border-right: none;
+        }
+        .stat-row dd {
+          text-align: left;
+          margin-top: 0.4rem;
+        }
+      }
+      @media (max-width: 1023px) {
+        .stats-grid .stat-row:last-child {
+          border-right: none;
+        }
+      }
+      /* ============ 3.4 GENERAL NOTES ============ */
+      .notes-grid {
+        display: grid;
+        gap: 2.5rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 1024px) {
+        .notes-grid {
+          grid-template-columns: 1fr 1.15fr;
+          gap: 4rem;
+        }
+      }
+      .notes ol {
+        list-style: none;
+        counter-reset: note;
+      }
+      .notes li {
+        counter-increment: note;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.9rem;
+        padding: 0.95rem 0;
+        border-bottom: var(--lw-hairline) var(--border);
+        font-size: 0.95rem;
+      }
+      .notes li::before {
+        content: 'NOTE ' counter(note) ':';
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        padding-top: 0.25rem;
+        white-space: nowrap;
+      }
+      .notes li span {
+        color: var(--muted-foreground);
+      }
+      .notes li span strong {
+        color: var(--foreground);
+        font-weight: 600;
+      }
+      .mission {
+        border: var(--lw-object) solid var(--border);
+        padding: 2.2rem 1.8rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1.4rem;
+      }
+      .mission h3 {
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        line-height: 1.15;
+      }
+      .mission h3 em {
+        font-style: normal;
+        color: var(--foreground);
+      }
+      .rev-cloud {
+        display: inline-block;
+        border: var(--lw-hairline) dashed var(--accent);
+        border-radius: 1rem;
+        padding: 0.5rem 1rem;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+      }
+      .mission p {
+        color: var(--muted-foreground);
+        font-size: 0.95rem;
+      }
+      /* ============ PLATES ============ */
+      .plate-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--background);
+        background: var(--accent);
+        padding: 0.3rem 0.8rem;
+        margin-bottom: 1rem;
+      }
+      .features-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .detail-top {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+      .detail-figure {
+        border: var(--lw-hairline) solid var(--border);
+        background-image: repeating-linear-gradient(
+          45deg,
+          rgba(62, 107, 148, 0.35) 0,
+          rgba(62, 107, 148, 0.35) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+        background-color: var(--background);
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+      }
+      .detail-figure svg {
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+      }
+      .sheet-body h3 {
+        font-size: 1.3rem;
+      }
+      .spec-line {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: var(--muted-foreground);
+        text-transform: uppercase;
+      }
+      .sheet-body p {
+        color: var(--muted-foreground);
+        font-size: 0.92rem;
+      }
+      .sheet-body p strong {
+        color: var(--foreground);
+      }
+      .tick-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        margin-top: auto;
+      }
+      .tick-list li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.85rem;
+        color: var(--muted-foreground);
+        align-items: baseline;
+      }
+      .tick-list li::before {
+        content: '—';
+        color: var(--accent);
+        flex: none;
+      }
+      /* benefits table */
+      .spec-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2.5rem;
+      }
+      .spec-table th {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        text-align: left;
+        padding: 0.8rem 1rem;
+        border-bottom: var(--lw-object) solid var(--border);
+        white-space: nowrap;
+      }
+      .spec-table th.num,
+      .spec-table td.num {
+        text-align: right;
+      }
+      .spec-table td {
+        padding: 1rem;
+        border-bottom: var(--lw-hairline) solid var(--border);
+        vertical-align: top;
+      }
+      .spec-table td.benefit strong {
+        display: block;
+        font-weight: 600;
+        color: var(--foreground);
+      }
+      .spec-table td.benefit span {
+        color: var(--muted-foreground);
+        font-size: 0.85rem;
+      }
+      .spec-table td.num {
+        font-family: var(--font-mono);
+        color: var(--accent);
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+      .spec-table td.num small {
+        display: block;
+        font-size: 0.68rem;
+        color: var(--muted-foreground);
+        letter-spacing: 0.1em;
+      }
+      .spec-table td.ghost {
+        font-family: var(--font-mono);
+        color: var(--accent-secondary);
+        font-size: 0.85rem;
+        border-bottom-style: dashed;
+        border-bottom-color: var(--accent-secondary);
+      }
+      .spec-table td.ghost small {
+        display: block;
+        font-size: 0.68rem;
+        color: var(--muted-foreground);
+        letter-spacing: 0.1em;
+      }
+      .ghost-note {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        color: var(--accent-secondary);
+        margin-top: 0.9rem;
+        text-transform: uppercase;
+      }
+      @media (max-width: 639px) {
+        .spec-table th:nth-child(3),
+        .spec-table td.ghost {
+          display: none;
+        }
+        .spec-table th,
+        .spec-table td {
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+        }
+      }
+      /* process */
+      .process-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+        position: relative;
+      }
+      @media (min-width: 640px) {
+        .process-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .step {
+        position: relative;
+      }
+      .step-num {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2.6rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .guide {
+        display: none;
+        position: absolute;
+        top: 2rem;
+        right: -1.6rem;
+        width: 3.2rem;
+        height: 2px;
+        z-index: 1;
+        background-image: linear-gradient(
+          90deg,
+          var(--accent-secondary) 0 6px,
+          transparent 6px 12px
+        );
+        background-size: 12px 2px;
+      }
+      .guide::after {
+        content: '';
+        position: absolute;
+        right: -1px;
+        top: -4px;
+        border: 5px solid transparent;
+        border-left-color: var(--accent-secondary);
+      }
+      @media (min-width: 640px) {
+        .step:not(:last-child) .guide {
+          display: block;
+        }
+      }
+      .step-code {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        color: var(--accent-secondary);
+        text-transform: uppercase;
+      }
+      .step h3 {
+        font-size: 1.25rem;
+        margin: 0.5rem 0 0.4rem;
+      }
+      .step p {
+        color: var(--muted-foreground);
+        font-size: 0.92rem;
+        margin-bottom: 1rem;
+      }
+      .iso {
+        border: var(--lw-hairline) solid var(--border);
+        padding: 0.9rem;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+      .iso svg {
+        width: 100%;
+        max-width: 170px;
+        height: auto;
+      }
+      /* pricing BOM */
+      .pricing-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+        align-items: stretch;
+      }
+      @media (min-width: 640px) {
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .pricing-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .bom {
+        border: var(--lw-object) solid var(--border);
+        background: var(--background-alt);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+      .bom-header {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 1rem;
+        border-bottom: var(--lw-hairline) solid var(--border);
+        padding: 0.6rem 1rem;
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.15em;
+        color: var(--muted-foreground);
+        text-transform: uppercase;
+      }
+      .bom-body {
+        padding: 1.4rem 1.25rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        flex: 1;
+      }
+      .bom-body h3 {
+        font-size: 1.35rem;
+      }
+      .bom-price {
+        font-family: var(--font-mono);
+        font-size: 1.7rem;
+        color: var(--accent);
+      }
+      .bom-price small {
+        font-size: 0.75rem;
+        color: var(--muted-foreground);
+        display: block;
+        letter-spacing: 0.1em;
+      }
+      .bom ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .bom li {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 0.7rem;
+        align-items: baseline;
+        font-size: 0.9rem;
+        color: var(--muted-foreground);
+      }
+      .bom li .q {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--accent-secondary);
+        white-space: nowrap;
+      }
+      .bom li .code {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        opacity: 0.75;
+        white-space: nowrap;
+      }
+      .bom .btn {
+        margin-top: auto;
+        width: 100%;
+      }
+      .flag {
+        position: absolute;
+        top: -14px;
+        right: 14px;
+        background: var(--accent-tertiary);
+        color: #fff;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.8rem;
+        z-index: 1;
+      }
+      /* ============ 3.9 TESTIMONIALS ============ */
+      .quotes-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .quotes-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .quotes-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .quote-sheet {
+        border: var(--lw-object) solid var(--border);
+        background: var(--background-alt);
+        display: flex;
+        flex-direction: column;
+      }
+      .quote-dates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: var(--lw-hairline) solid var(--border);
+      }
+      .quote-dates div {
+        padding: 0.5rem 0.9rem;
+      }
+      .quote-dates div + div {
+        border-left: var(--lw-hairline) solid var(--border);
+      }
+      .quote-dates .tb-label {
+        display: block;
+      }
+      .quote-dates .tb-value {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+      }
+      .quote-body {
+        padding: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex: 1;
+      }
+      .quote-body blockquote {
+        font-size: 0.98rem;
+        color: var(--foreground);
+      }
+      .quote-body blockquote::before {
+        content: '\201C';
+        font-family: var(--font-display);
+        font-size: 2rem;
+        color: var(--accent);
+        display: block;
+        line-height: 0.6;
+        margin-bottom: 0.5rem;
+      }
+      .attrib {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: var(--muted-foreground);
+        text-transform: uppercase;
+        margin-top: auto;
+        line-height: 1.8;
+      }
+      .attrib strong {
+        color: var(--foreground);
+        font-weight: 500;
+      }
+      .verified {
+        align-self: flex-start;
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+        border: var(--lw-hairline) solid var(--accent);
+        padding: 0.28rem 0.7rem;
+        text-transform: uppercase;
+        box-shadow: 0 0 12px rgba(242, 183, 5, 0.25);
+      }
+      /* ============ 3.10 FAQ ============ */
+      .faq {
+        max-width: 56rem;
+        margin: 2.5rem auto 0;
+      }
+      .faq-item {
+        border-bottom: var(--lw-hairline) solid var(--border);
+      }
+      .faq-q {
+        width: 100%;
+        background: none;
+        border: none;
+        color: var(--foreground);
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1.1rem;
+        align-items: center;
+        padding: 1.2rem 0.35rem;
+        min-height: 44px;
+        text-align: left;
+      }
+      .faq-q:hover .code-col {
+        color: var(--accent);
+      }
+      .faq-q .code-col {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+      }
+      .faq-q h3 {
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: none;
+        letter-spacing: 0;
+        line-height: 1.5;
+      }
+      .faq-toggle {
+        width: 2rem;
+        height: 2rem;
+        flex: none;
+        border: var(--lw-object) solid var(--accent);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent);
+        font-size: 1.15rem;
+        line-height: 1;
+        transition: transform 200ms ease-out;
+      }
+      .faq-item.open .faq-toggle {
+        transform: rotate(45deg);
+      }
+      .faq-a {
+        display: none;
+        padding: 0 0.35rem 1.4rem 3.4rem;
+        color: var(--muted-foreground);
+        font-size: 0.95rem;
+      }
+      .faq-a .code-col-a {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent);
+        display: block;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.12em;
+      }
+      .faq-item.open .faq-a {
+        display: block;
+      }
+      @media (max-width: 479px) {
+        .faq-a {
+          padding-left: 0.35rem;
+        }
+        .faq-q {
+          grid-template-columns: 1fr auto;
+        }
+        .faq-q .code-col {
+          display: none;
+        }
+      }
+      /* ============ 3.11 JOURNAL ============ */
+      .journal-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .journal-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .journal-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .journal-well {
+        border: var(--lw-hairline) solid var(--border);
+        background-image: repeating-linear-gradient(
+          45deg,
+          rgba(62, 107, 148, 0.3) 0,
+          rgba(62, 107, 148, 0.3) 1px,
+          transparent 1px,
+          transparent 7px
+        );
+        background-color: var(--background);
+        padding: 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .journal-well svg {
+        width: 100%;
+        max-width: 190px;
+        height: auto;
+      }
+      .journal-code {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        color: var(--muted-foreground);
+      }
+      .journal-card h3 {
+        font-size: 1.25rem;
+        margin: 0.4rem 0 0.5rem;
+      }
+      .journal-card p {
+        color: var(--muted-foreground);
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
+      }
+      .journal-link {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        min-height: 44px;
+      }
+      .journal-link:hover {
+        color: var(--accent-light);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      /* ============ 3.12 FINAL CTA ============ */
+      .release {
+        border-top: var(--lw-cut) solid var(--border);
+        border-bottom: var(--lw-cut) solid var(--border);
+        background: var(--background-alt);
+        padding-block: 4.5rem;
+        overflow: hidden;
+      }
+      .release-grid {
+        display: grid;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .release-grid {
+          grid-template-columns: 1fr auto;
+        }
+      }
+      .release h2 {
+        font-size: clamp(2rem, 4.5vw, 3.2rem);
+        margin-bottom: 1rem;
+      }
+      .release p {
+        color: var(--muted-foreground);
+        max-width: 34rem;
+        margin-bottom: 1.8rem;
+      }
+      .stamp {
+        display: inline-block;
+        transform: rotate(-4deg);
+        border: 3px solid var(--accent);
+        color: var(--accent);
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.9rem 1.6rem;
+        box-shadow:
+          0 0 12px rgba(242, 183, 5, 0.25),
+          inset 0 0 12px rgba(242, 183, 5, 0.12);
+        white-space: nowrap;
+      }
+      .stamp small {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.65rem;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        text-align: center;
+        color: var(--accent);
+        margin-top: 0.4rem;
+      }
+      /* ============ 3.13 FOOTER — SIGNATURE BLOCK ============ */
+      .footer {
+        border-top: none;
+      }
+      .sigblock {
+        background: var(--background-alt);
+        border-top: var(--lw-cut) solid var(--border);
+      }
+      .sig-grid {
+        display: grid;
+      }
+      .sig-grid .tb-cell {
+        padding: 1.2rem 1.25rem;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+      }
+      .footer-links a {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        border-bottom: var(--lw-hairline) solid var(--border);
+        padding: 0 1.25rem;
+      }
+      .footer-links a:hover {
+        color: var(--accent);
+      }
+      .footer-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1.2rem 1.25rem;
+      }
+      .social-row {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .social-row a {
+        width: 44px;
+        height: 44px;
+        border: var(--lw-hairline) solid var(--border);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--muted-foreground);
+      }
+      .social-row a:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .footer-note {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.1em;
+        color: var(--muted-foreground);
+      }
+      @media (min-width: 768px) {
+        .sig-grid {
+          grid-template-columns: auto 1fr auto;
+          align-items: stretch;
+          height: 100%;
+        }
+        .sig-grid > .tb-cell {
+          display: flex;
+          align-items: center;
+        }
+        .footer-links {
+          flex-direction: row;
+          align-items: center;
+          border-left: var(--lw-hairline) solid var(--border);
+          border-right: var(--lw-hairline) solid var(--border);
+        }
+        .footer-links a {
+          border-bottom: none;
+          border-right: var(--lw-hairline) solid var(--border);
+          padding: 0 1.1rem;
+          flex: 1;
+          justify-content: center;
+        }
+        .footer-links a:last-child {
+          border-right: none;
+        }
+        .footer-meta {
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 1rem 1.25rem;
+        }
+        /* slim band: hide the stacked extras that only make sense below 768px */
+        .sig-extra {
+          display: none !important;
+        }
+      }
+      @media (max-width: 767px) {
+        .sig-extra {
+          display: grid;
+        }
+        .sig-extra .tb-cell {
+          border-top: var(--lw-hairline) solid var(--border);
+        }
+      }
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--accent);
+        color: var(--background);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        padding: 0.7rem 1.2rem;
+        z-index: 99;
+      }
+      .skip-link:focus {
+        left: 1rem;
+        top: 1rem;
+      }
+
+      /* ============ SPEC OVERRIDES ============ */
+      /* FAQ — narrow measure, centered */
+      .faq {
+        max-width: 680px !important;
+        margin-inline: auto !important;
+      }
+      /* Footer — copyright on its own row, below the title-block band */
+      .sig-copy {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        border-top: var(--lw-hairline) solid var(--border);
+        padding: 0.85rem 1.25rem;
+      }
+      /* Mobile menu — full-screen fixed overlay instead of an in-flow panel */
+      .mobile-nav {
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        border-bottom: none;
+        padding: 5rem 0 2.5rem;
+        overflow-y: auto;
+      }
+      .menu-btn {
+        position: relative;
+        z-index: 41;
+      }
+      .menu-btn[aria-expanded='true'] {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: var(--background);
+      }
+      body.menu-open {
+        overflow: hidden;
+      }
+      /* the panel lives inside the header's stacking context, so lift the header
+         above main/footer (both z-index:1, later in the DOM) while it is open */
+      body.menu-open .titleblock {
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <span class="reg reg-tl" aria-hidden="true"></span>
+    <span class="reg reg-tr" aria-hidden="true"></span>
+    <span class="reg reg-bl" aria-hidden="true"></span>
+    <span class="reg reg-br" aria-hidden="true"></span>
+
+    <!-- ============ 3.1 HEADER — TITLE BLOCK ============ -->
+    <header class="titleblock">
+      <div class="titleblock-grid">
+        <div class="tb-cell tb-project">
+          <a
+            class="wordmark"
+            href="#top"
+            aria-label="Northbeam Structural — home"
+          >
+            <svg
+              width="34"
+              height="34"
+              viewBox="0 0 34 34"
+              fill="none"
+              stroke="#F2B705"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M4 30 L17 4 L30 30 Z" />
+              <path d="M4 30 H30" />
+              <path d="M10.5 19 H23.5" />
+            </svg>
+            <span
+              ><strong>Northbeam Structural</strong
+              ><small>Consulting Engineers</small></span
+            >
+          </a>
+        </div>
+        <nav class="tb-nav" aria-label="Primary">
+          <a href="#notes">Notes</a>
+          <a href="#features">Plates</a>
+          <a href="#process">Sequence</a>
+          <a href="#pricing">Fees</a>
+          <a href="#faq">QA</a>
+          <a href="#journal">Archive</a>
+        </nav>
+        <div class="tb-cells tb-cell">
+          <span class="tb-label">Sheet</span>
+          <span class="tb-value mono">01 / 13</span>
+        </div>
+        <div class="tb-cells tb-cell">
+          <span class="tb-label">Scale</span>
+          <span class="tb-value mono">1 : 1</span>
+        </div>
+        <div class="tb-cells tb-cell">
+          <span class="tb-label">Rev</span>
+          <span class="tb-value mono"
+            >C<span class="rev-flag">ISSUED</span></span
+          >
+        </div>
+        <div class="tb-cta">
+          <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+          >
+            Menu +
+          </button>
+          <a class="btn btn-primary" href="#contact"
+            >Request Quote <span class="code">NRB-01</span></a
+          >
+        </div>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <ul>
+          <li><a href="#notes">General Notes</a></li>
+          <li><a href="#features">Detail Plates</a></li>
+          <li><a href="#process">Work Sequence</a></li>
+          <li><a href="#pricing">Fee Schedule</a></li>
+          <li><a href="#faq">Queries</a></li>
+          <li><a href="#journal">Drawing Archive</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- ============ 3.2 HERO ============ -->
+      <section class="section hero" id="top">
+        <div class="wrap hero-grid">
+          <div class="revnote">
+            <span class="revnote-tag"
+              >REV C — ISSUED FOR CONSTRUCTION REVIEW</span
+            >
+            <div class="revnote-inner">
+              <h1 class="hero-h1">
+                We draft the structure <span class="amber">before</span> anyone
+                pours it.
+              </h1>
+              <p class="hero-lead">
+                Northbeam Structural is a 24-person engineering studio for
+                developers, architects and main contractors. Every scheme leaves
+                this office as a dimensioned, checked, buildable drawing set —
+                with member sizes, loads and tolerances you can hold a site to.
+              </p>
+              <div
+                class="hero-dim"
+                role="img"
+                aria-label="Dimension line annotation: minimum 44 pixels, the studio's drafting standard for interactive elements"
+              >
+                <span class="arm" aria-hidden="true"></span>
+                <span class="dim-label">MIN 44 PX</span>
+                <span class="arm" aria-hidden="true"></span>
+              </div>
+              <div class="btn-row hero-cta">
+                <a class="btn btn-primary" href="#contact"
+                  >Request Quote <span class="code">→ NRB-01</span></a
+                >
+                <a class="btn btn-secondary" href="#features"
+                  >View Plates <span class="code">→ 3 DTL</span></a
+                >
+              </div>
+            </div>
+          </div>
+
+          <figure class="elevation wipe">
+            <div class="sheet-head">
+              <span>FIG. 01 — FRONT ELEVATION, TYPICAL FRAME</span
+              ><span>DWG-0101</span>
+            </div>
+            <svg
+              class="draw"
+              viewBox="0 0 420 340"
+              fill="none"
+              role="img"
+              aria-label="Front elevation line drawing of a six-storey concrete frame, 24 000 millimetres wide and 21 600 millimetres tall, with callouts to the slab, column and pad footing"
+            >
+              <line
+                x1="60"
+                y1="34"
+                x2="360"
+                y2="34"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <path d="M60 34 l8 -4 v8 Z" fill="#F2B705" />
+              <path d="M360 34 l-8 -4 v8 Z" fill="#F2B705" />
+              <line
+                x1="60"
+                y1="26"
+                x2="60"
+                y2="42"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <line
+                x1="360"
+                y1="26"
+                x2="360"
+                y2="42"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <text
+                x="210"
+                y="22"
+                fill="#F2B705"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11"
+                text-anchor="middle"
+                letter-spacing="2"
+              >
+                24 000 MM
+              </text>
+              <line
+                x1="392"
+                y1="56"
+                x2="392"
+                y2="304"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <path d="M392 56 l-4 8 h8 Z" fill="#F2B705" />
+              <path d="M392 304 l-4 -8 h8 Z" fill="#F2B705" />
+              <line
+                x1="384"
+                y1="56"
+                x2="400"
+                y2="56"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <line
+                x1="384"
+                y1="304"
+                x2="400"
+                y2="304"
+                stroke="#F2B705"
+                stroke-width="1"
+              />
+              <text
+                x="410"
+                y="185"
+                fill="#F2B705"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11"
+                text-anchor="middle"
+                letter-spacing="2"
+                transform="rotate(90 410 185)"
+              >
+                21 600 MM
+              </text>
+              <g stroke="#E6F0F8" stroke-width="2">
+                <line x1="60" y1="56" x2="60" y2="304" />
+                <line x1="135" y1="56" x2="135" y2="304" />
+                <line x1="210" y1="56" x2="210" y2="304" />
+                <line x1="285" y1="56" x2="285" y2="304" />
+                <line x1="360" y1="56" x2="360" y2="304" />
+                <line x1="60" y1="56" x2="360" y2="56" />
+                <line x1="60" y1="104" x2="360" y2="104" />
+                <line x1="60" y1="152" x2="360" y2="152" />
+                <line x1="60" y1="200" x2="360" y2="200" />
+                <line x1="60" y1="248" x2="360" y2="248" />
+                <line x1="60" y1="304" x2="360" y2="304" />
+              </g>
+              <g stroke="#7FC7E0" stroke-width="1" stroke-dasharray="5 5">
+                <line x1="60" y1="248" x2="135" y2="304" />
+                <line x1="135" y1="248" x2="210" y2="304" />
+                <line x1="285" y1="248" x2="360" y2="304" />
+              </g>
+              <g stroke="#3E6B94" stroke-width="1">
+                <line x1="44" y1="322" x2="376" y2="322" />
+                <line x1="52" y1="330" x2="368" y2="330" />
+                <line x1="52" y1="330" x2="60" y2="322" />
+                <line x1="90" y1="330" x2="98" y2="322" />
+                <line x1="128" y1="330" x2="136" y2="322" />
+                <line x1="166" y1="330" x2="174" y2="322" />
+                <line x1="204" y1="330" x2="212" y2="322" />
+                <line x1="242" y1="330" x2="250" y2="322" />
+                <line x1="280" y1="330" x2="288" y2="322" />
+                <line x1="318" y1="330" x2="326" y2="322" />
+                <line x1="356" y1="330" x2="364" y2="322" />
+              </g>
+              <g stroke="#F2B705" stroke-width="1">
+                <line x1="210" y1="104" x2="210" y2="78" />
+                <circle cx="210" cy="66" r="10" fill="#0B2942" />
+                <line x1="135" y1="200" x2="100" y2="164" />
+                <circle cx="94" cy="158" r="10" fill="#0B2942" />
+                <line x1="285" y1="322" x2="322" y2="288" />
+                <circle cx="328" cy="282" r="10" fill="#0B2942" />
+              </g>
+              <g
+                fill="#F2B705"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11"
+                text-anchor="middle"
+              >
+                <text x="210" y="70">1</text>
+                <text x="94" y="162">2</text>
+                <text x="328" y="286">3</text>
+              </g>
+            </svg>
+            <figcaption class="elev-cap">
+              <span>NORTHBEAM STANDARD FRAME — 4 BAYS @ 6 000 MM</span
+              ><span>SLAB DEFLECTION LIMIT L/250</span>
+            </figcaption>
+            <div class="callouts">
+              <span class="callout"
+                ><span class="balloon" aria-hidden="true">1</span>P/T transfer
+                slab, 325 mm</span
+              >
+              <span class="callout"
+                ><span class="balloon" aria-hidden="true">2</span>RC column, 400
+                × 400 mm</span
+              >
+              <span class="callout"
+                ><span class="balloon" aria-hidden="true">3</span>Pad footing,
+                2.4 × 2.4 m</span
+              >
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ 3.3 STATS — TOLERANCE TABLE ============ -->
+      <section class="section stats" aria-label="Studio record">
+        <div class="wrap">
+          <dl class="stats-grid">
+            <div class="stat-row">
+              <dt>Projects Delivered</dt>
+              <dd>142<small>NOS.</small></dd>
+            </div>
+            <div class="stat-row">
+              <dt>Largest Clear Span</dt>
+              <dd>48<small>M</small></dd>
+            </div>
+            <div class="stat-row">
+              <dt>First-Pass Drawing Approval</dt>
+              <dd>97<small>%</small></dd>
+            </div>
+            <div class="stat-row">
+              <dt>Site RFI Turnaround</dt>
+              <dd>240<small>MIN</small></dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============ 3.4 GENERAL NOTES ============ -->
+      <section class="section" id="notes">
+        <div class="wrap">
+          <span class="plate-tag">GENERAL NOTES — SHEET 04</span>
+          <h2 class="section-title">How this office works</h2>
+          <p class="section-sub read">
+            Five notes. They apply to every drawing, every fee, every site
+            visit. If one of them ever costs you a day, the other five will save
+            you a month.
+          </p>
+          <div class="notes-grid">
+            <div class="notes">
+              <ol>
+                <li>
+                  <span
+                    ><strong>All figures carry units.</strong> Member sizes,
+                    loads and tolerances are stated on the drawing, not in an
+                    email. A number without a unit is not issued.</span
+                  >
+                </li>
+                <li>
+                  <span
+                    ><strong>One engineer owns your job.</strong> From survey to
+                    construction issue, the same chartered engineer signs your
+                    sheets. No handover to a tier of account managers.</span
+                  >
+                </li>
+                <li>
+                  <span
+                    ><strong>No undrawable geometry.</strong> We do not model
+                    what we cannot build. Every curve on our drawings has a
+                    setting-out method a site crew can execute with a tape and a
+                    string line.</span
+                  >
+                </li>
+                <li>
+                  <span
+                    ><strong>RFIs answered in 240 minutes</strong> or less
+                    during working hours — measured, logged monthly, and the
+                    figure has held since 2023.</span
+                  >
+                </li>
+                <li>
+                  <span
+                    ><strong>Fees are fixed per stage.</strong> Appraisal,
+                    scheme, detail design, construction issue. Change the scope
+                    and we re-quote; otherwise the number holds.</span
+                  >
+                </li>
+              </ol>
+            </div>
+            <aside class="mission hatch">
+              <span
+                class="mono"
+                style="
+                  font-size: 0.7rem;
+                  letter-spacing: 0.18em;
+                  color: var(--muted-foreground);
+                  text-transform: uppercase;
+                "
+                >Mission Statement — Rev C</span
+              >
+              <h3>The plan is the product. <em>Trust the drawing.</em></h3>
+              <p>
+                <span class="rev-cloud"
+                  >A structure is only as good as the sheet it was issued
+                  on.</span
+                >
+              </p>
+              <p>
+                We exist for the moment a site crew opens a Northbeam set and
+                knows exactly what to build, in what order, and what tolerance
+                holds it together. That is the whole business.
+              </p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.5 FEATURES — PLATE 1 ============ -->
+      <section class="section" id="features">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 1 — DETAIL VIEWS</span>
+          <h2 class="section-title">Three details we are asked for most</h2>
+          <p class="section-sub read">
+            Each is drawn the way it is issued: hatched section, real
+            dimensions, and the callouts a site engineer queries first.
+          </p>
+          <div class="features-grid">
+            <article class="sheet">
+              <div class="sheet-head">
+                <span>DETAIL A — SCALE 2:1</span><span>DTL-101</span>
+              </div>
+              <div class="sheet-body">
+                <div class="detail-top">
+                  <span class="balloon" aria-hidden="true">1</span>
+                  <h3>Post-Tensioned Transfer Slab</h3>
+                </div>
+                <div class="detail-figure" aria-hidden="true">
+                  <svg viewBox="0 0 220 110" fill="none">
+                    <rect
+                      x="10"
+                      y="40"
+                      width="200"
+                      height="24"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="10"
+                      y1="40"
+                      x2="210"
+                      y2="64"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="10"
+                      y1="64"
+                      x2="210"
+                      y2="40"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="40"
+                      y1="64"
+                      x2="40"
+                      y2="98"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="180"
+                      y1="64"
+                      x2="180"
+                      y2="98"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="86"
+                      y1="34"
+                      x2="134"
+                      y2="34"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M86 34 l6 -3 v6 Z" fill="#F2B705" />
+                    <path d="M134 34 l-6 -3 v6 Z" fill="#F2B705" />
+                    <line
+                      x1="86"
+                      y1="28"
+                      x2="86"
+                      y2="40"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="134"
+                      y1="28"
+                      x2="134"
+                      y2="40"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <text
+                      x="110"
+                      y="20"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="10"
+                      text-anchor="middle"
+                    >
+                      325 MM
+                    </text>
+                  </svg>
+                </div>
+                <p class="spec-line">
+                  Span 12 000 MM · Load 14.5 KN/M² · Draped Tendon
+                </p>
+                <p>
+                  Podium columns stop; apartments keep their plan. Our transfer
+                  slabs are <strong>pre-cambered 12 mm</strong> and tendon
+                  profiles are plotted on the drawing, not left to the
+                  specialist.
+                </p>
+                <ul class="tick-list">
+                  <li>Punching shear checked at every column</li>
+                  <li>Stage-by-stage stressing sequence issued</li>
+                  <li>Deformed-shape chart for the site crew</li>
+                </ul>
+              </div>
+            </article>
+            <article class="sheet">
+              <div class="sheet-head">
+                <span>DETAIL B — SCALE 2:1</span><span>DTL-102</span>
+              </div>
+              <div class="sheet-body">
+                <div class="detail-top">
+                  <span class="balloon" aria-hidden="true">2</span>
+                  <h3>Vibration-Limited Long-Span Floor</h3>
+                </div>
+                <div class="detail-figure" aria-hidden="true">
+                  <svg viewBox="0 0 220 110" fill="none">
+                    <path
+                      d="M10 78 Q60 30 110 78 T210 78"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="10"
+                      y1="78"
+                      x2="210"
+                      y2="78"
+                      stroke="#E6F0F8"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="10"
+                      y1="78"
+                      x2="10"
+                      y2="100"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="210"
+                      y1="78"
+                      x2="210"
+                      y2="100"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M30 66 q8 -14 16 0 q8 -14 16 0"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="3 3"
+                    />
+                    <path
+                      d="M150 66 q8 -14 16 0 q8 -14 16 0"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="3 3"
+                    />
+                    <line
+                      x1="110"
+                      y1="16"
+                      x2="110"
+                      y2="36"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M110 36 l-3 -6 h6 Z" fill="#F2B705" />
+                    <path d="M110 16 l-3 6 h6 Z" fill="#F2B705" />
+                    <text
+                      x="126"
+                      y="14"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="10"
+                    >
+                      L/500 CAMBER
+                    </text>
+                  </svg>
+                </div>
+                <p class="spec-line">
+                  Span 18 000 MM · Response Factor ≤ 4.0 · Office Use
+                </p>
+                <p>
+                  Gyms over offices, meeting rooms over studios. We model
+                  footfall response before sizing members, so the floor
+                  <strong>passes the test the day it opens</strong>.
+                </p>
+                <ul class="tick-list">
+                  <li>Footfall analysis to CCIP-2006</li>
+                  <li>Partition layout locked with the architect</li>
+                  <li>Site vibration log template included</li>
+                </ul>
+              </div>
+            </article>
+            <article class="sheet">
+              <div class="sheet-head">
+                <span>DETAIL C — SCALE 2:1</span><span>DTL-103</span>
+              </div>
+              <div class="sheet-body">
+                <div class="detail-top">
+                  <span class="balloon" aria-hidden="true">3</span>
+                  <h3>Mass Timber Hybrid Frame</h3>
+                </div>
+                <div class="detail-figure" aria-hidden="true">
+                  <svg viewBox="0 0 220 110" fill="none">
+                    <rect
+                      x="24"
+                      y="30"
+                      width="22"
+                      height="66"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <rect
+                      x="174"
+                      y="30"
+                      width="22"
+                      height="66"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <rect
+                      x="24"
+                      y="14"
+                      width="172"
+                      height="16"
+                      stroke="#E6F0F8"
+                      stroke-width="2"
+                    />
+                    <line
+                      x1="46"
+                      y1="22"
+                      x2="174"
+                      y2="22"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <g stroke="#7FC7E0" stroke-width="1">
+                      <path
+                        d="M60 96 l14 -14 M74 96 l14 -14 M88 96 l14 -14 M102 96 l14 -14"
+                      />
+                    </g>
+                    <line
+                      x1="24"
+                      y1="104"
+                      x2="196"
+                      y2="104"
+                      stroke="#3E6B94"
+                      stroke-width="1"
+                    />
+                    <line
+                      x1="124"
+                      y1="4"
+                      x2="124"
+                      y2="40"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M124 4 l-3 6 h6 Z" fill="#F2B705" />
+                    <path d="M124 40 l-3 -6 h6 Z" fill="#F2B705" />
+                    <text
+                      x="146"
+                      y="6"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="10"
+                    >
+                      GL24H 200
+                    </text>
+                  </svg>
+                </div>
+                <p class="spec-line">
+                  Glulam + RC Core · 6 Storeys · −32 % Carbon vs RC
+                </p>
+                <p>
+                  Timber grids with a concrete core and a steel transfer where
+                  spans demand it.
+                  <strong
+                    >Moisture and fire strategy drawn on the same sheet</strong
+                  >
+                  as the members.
+                </p>
+                <ul class="tick-list">
+                  <li>Exposed timber with 60-min fire rating</li>
+                  <li>Connection details shop-drawable</li>
+                  <li>EPD data cited on every sheet</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.6 BENEFITS — PLATE 2 ============ -->
+      <section class="section" id="benefits">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 2 — MEASURED OUTCOMES</span>
+          <h2 class="section-title">What changes on your project</h2>
+          <p class="section-sub read">
+            The same building, engineered two ways. The amber column is the
+            Northbeam figure; the cyan dashed column is the ghost of the scheme
+            it replaced.
+          </p>
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th scope="col">Benefit</th>
+                <th scope="col" class="num">Northbeam</th>
+                <th scope="col" class="num">Before (Ghost)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="benefit">
+                  <strong>Column-free central hall</strong
+                  ><span
+                    >Single transfer truss, clear space from Level 1 to the
+                    roof</span
+                  >
+                </td>
+                <td class="num">18 M<small>CLEAR SPAN</small></td>
+                <td
+                  class="ghost"
+                  aria-label="Previous value: 9 metres clear span with 2 intermediate columns"
+                >
+                  9 M<small>+2 INTERMEDIATE COLS</small>
+                </td>
+              </tr>
+              <tr>
+                <td class="benefit">
+                  <strong>Floor-to-floor construction cycle</strong
+                  ><span>Steel deck, pre-fabricated drops, staged pours</span>
+                </td>
+                <td class="num">5 D<small>PER SLAB</small></td>
+                <td
+                  class="ghost"
+                  aria-label="Previous value: 9 days per slab, reinforced concrete flat slab"
+                >
+                  9 D<small>RC FLAT SLAB</small>
+                </td>
+              </tr>
+              <tr>
+                <td class="benefit">
+                  <strong>Embodied carbon, substructure to roof</strong
+                  ><span
+                    >Mass timber hybrid, whole-life audit issued with the
+                    set</span
+                  >
+                </td>
+                <td class="num">−32 %<small>VS RC BASELINE</small></td>
+                <td
+                  class="ghost"
+                  aria-label="Previous value: 0 percent, reinforced concrete baseline"
+                >
+                  0 %<small>RC BASELINE</small>
+                </td>
+              </tr>
+              <tr>
+                <td class="benefit">
+                  <strong>First-pass drawing approval</strong
+                  ><span
+                    >Checked in-house against 14 authority comments we
+                    track</span
+                  >
+                </td>
+                <td class="num">97 %<small>SETS, 2025–26</small></td>
+                <td
+                  class="ghost"
+                  aria-label="Previous value: 71 percent, typical industry first-pass approval"
+                >
+                  71 %<small>TYPICAL INDUSTRY</small>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="ghost-note">
+            - - - Dashed column = superseded scheme, shown for reference only -
+            - -
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.7 PROCESS — PLATE 3 ============ -->
+      <section class="section" id="process">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 3 — ASSEMBLY SEQUENCE</span>
+          <h2 class="section-title">Three operations, one drawing set</h2>
+          <p class="section-sub read">
+            Each operation issues its own numbered sheet pack. You always know
+            what is signed, what is checked and what comes next.
+          </p>
+          <div class="process-grid">
+            <article class="step sheet wipe">
+              <span class="guide" aria-hidden="true"></span>
+              <div class="sheet-head">
+                <span>OPER. 10</span><span>PACK-10</span>
+              </div>
+              <div class="sheet-body">
+                <span class="step-num" aria-hidden="true">1</span>
+                <span class="step-code"
+                  >STEP 1 / SURVEY &amp; LOAD TAKE-OFF</span
+                >
+                <h3>Measure the truth</h3>
+                <p>
+                  Two days on your site with a total station and a floor-load
+                  meter. Existing structure, ground conditions and as-built
+                  deviations go into one survey model — not into folklore.
+                </p>
+                <div class="iso" aria-hidden="true">
+                  <svg viewBox="0 0 170 90" fill="none">
+                    <path
+                      d="M10 70 L60 40 L120 40 L160 66 L110 88 L12 88 Z"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M10 70 L110 88 M60 40 L62 62 L160 66"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="76"
+                      y1="52"
+                      x2="76"
+                      y2="76"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <text
+                      x="82"
+                      y="50"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="9"
+                    >
+                      ±3 MM
+                    </text>
+                  </svg>
+                </div>
+                <ul class="tick-list">
+                  <li>Deliverable: survey pack + load schedule</li>
+                  <li>Duration: 5 working days</li>
+                </ul>
+              </div>
+            </article>
+            <article class="step sheet wipe">
+              <span class="guide" aria-hidden="true"></span>
+              <div class="sheet-head">
+                <span>OPER. 20</span><span>PACK-20</span>
+              </div>
+              <div class="sheet-body">
+                <span class="step-num" aria-hidden="true">2</span>
+                <span class="step-code">STEP 2 / SCHEME + MEMBER SIZING</span>
+                <h3>Size every member</h3>
+                <p>
+                  Grids, member sizes, cambers and connections resolved into a
+                  coordinated model. Every size carries its governing load case
+                  on the sheet, so the checker sees what the designer saw.
+                </p>
+                <div class="iso" aria-hidden="true">
+                  <svg viewBox="0 0 170 90" fill="none">
+                    <rect
+                      x="24"
+                      y="18"
+                      width="120"
+                      height="14"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="24"
+                      y1="32"
+                      x2="24"
+                      y2="80"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="84"
+                      y1="32"
+                      x2="84"
+                      y2="80"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="144"
+                      y1="32"
+                      x2="144"
+                      y2="80"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="144"
+                      y1="32"
+                      x2="164"
+                      y2="48"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="48"
+                      y1="10"
+                      x2="48"
+                      y2="44"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M48 10 l-3 6 h6 Z" fill="#F2B705" />
+                    <path d="M48 44 l-3 -6 h6 Z" fill="#F2B705" />
+                    <text
+                      x="56"
+                      y="8"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="9"
+                    >
+                      6000 MM
+                    </text>
+                  </svg>
+                </div>
+                <ul class="tick-list">
+                  <li>Deliverable: scheme pack, 60–90 sheets</li>
+                  <li>Duration: 4–6 weeks by scale</li>
+                </ul>
+              </div>
+            </article>
+            <article class="step sheet wipe">
+              <div class="sheet-head">
+                <span>OPER. 30</span><span>PACK-30</span>
+              </div>
+              <div class="sheet-body">
+                <span class="step-num" aria-hidden="true">3</span>
+                <span class="step-code"
+                  >STEP 3 / CONSTRUCTION ISSUE + SITE SUPPORT</span
+                >
+                <h3>Issue and hold the line</h3>
+                <p>
+                  For-construction drawings, revision-flagged, with a site
+                  engineer on call. RFIs answered inside 240 minutes; every
+                  answer lands in the drawing set, never just in a chat thread.
+                </p>
+                <div class="iso" aria-hidden="true">
+                  <svg viewBox="0 0 170 90" fill="none">
+                    <path d="M20 74 H130" stroke="#E6F0F8" stroke-width="1.5" />
+                    <path
+                      d="M20 74 V50 M20 50 H40 V74"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="150"
+                      y1="80"
+                      x2="150"
+                      y2="30"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M150 80 l-8 -12 M150 80 l8 -12"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                    />
+                    <circle
+                      cx="150"
+                      cy="20"
+                      r="10"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                      fill="#0B2942"
+                    />
+                    <path
+                      d="M146 20 l3 3 l6 -6"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="130"
+                      y1="62"
+                      x2="142"
+                      y2="26"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                  </svg>
+                </div>
+                <ul class="tick-list">
+                  <li>Deliverable: PACK-30, rev-flagged</li>
+                  <li>Duration: run of the build</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.8 PRICING — PLATE 4 ============ -->
+      <section class="section" id="pricing">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 4 — BILL OF MATERIALS</span>
+          <h2 class="section-title">Fee schedule, itemised</h2>
+          <p class="section-sub read">
+            Three standard line items and one custom order. Quantities are per
+            project unless noted. All fees fixed per stage, ex-VAT.
+          </p>
+          <div class="pricing-grid">
+            <article class="bom">
+              <div class="bom-header">
+                <span>Item</span><span>Qty</span><span>Price</span>
+              </div>
+              <div class="bom-body">
+                <h3>Scheme Appraisal</h3>
+                <p class="bom-price">
+                  $6,500 <small>FIXED · 10 WORKING DAYS</small>
+                </p>
+                <ul>
+                  <li>
+                    <span class="q">1</span>Site survey + desk study<span
+                      class="code"
+                      >ITM-01</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Feasibility load take-off<span
+                      class="code"
+                      >ITM-02</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Go / no-go memo, signed<span
+                      class="code"
+                      >ITM-03</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Order-of-cost input<span
+                      class="code"
+                      >ITM-04</span
+                    >
+                  </li>
+                </ul>
+                <a class="btn btn-secondary" href="#contact"
+                  >Order Item <span class="code">→ NRB-A</span></a
+                >
+              </div>
+            </article>
+            <article class="bom">
+              <span class="flag" aria-label="Recommended option">SELECTED</span>
+              <div class="bom-header">
+                <span>Item</span><span>Qty</span><span>Price</span>
+              </div>
+              <div class="bom-body">
+                <h3>Full Structural Package</h3>
+                <p class="bom-price">
+                  $48,000 <small>PER PROJECT · TO 8 000 M²</small>
+                </p>
+                <ul>
+                  <li>
+                    <span class="q">3</span>Survey, scheme, issue packs<span
+                      class="code"
+                      >ITM-11</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Chartered engineer of record<span
+                      class="code"
+                      >ITM-12</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">∞</span>RFIs @ 240-min turnaround<span
+                      class="code"
+                      >ITM-13</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">2</span>Site visits per stage<span
+                      class="code"
+                      >ITM-14</span
+                    >
+                  </li>
+                </ul>
+                <a class="btn btn-primary" href="#contact"
+                  >Request Quote <span class="code">→ NRB-B</span></a
+                >
+              </div>
+            </article>
+            <article class="bom">
+              <div class="bom-header">
+                <span>Item</span><span>Qty</span><span>Price</span>
+              </div>
+              <div class="bom-body">
+                <h3>Retrofit &amp; Compliance</h3>
+                <p class="bom-price">
+                  $92,000 <small>PROGRAMME · TYP. 9 MONTHS</small>
+                </p>
+                <ul>
+                  <li>
+                    <span class="q">1</span>Condition survey, full frame<span
+                      class="code"
+                      >ITM-21</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Strength verification + tests<span
+                      class="code"
+                      >ITM-22</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">3</span>Phased strengthening packs<span
+                      class="code"
+                      >ITM-23</span
+                    >
+                  </li>
+                  <li>
+                    <span class="q">1</span>Occupied-building logistics
+                    plan<span class="code">ITM-24</span>
+                  </li>
+                </ul>
+                <a class="btn btn-secondary" href="#contact"
+                  >Order Item <span class="code">→ NRB-C</span></a
+                >
+              </div>
+            </article>
+          </div>
+          <p class="ghost-note" style="margin-top: 1.6rem">
+            ITEM NOT LISTED? CUSTOM BOMS ISSUED WITHIN 3 WORKING DAYS —
+            <a href="#contact">REQUEST QUOTE</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.9 TESTIMONIALS — PLATE 5 ============ -->
+      <section class="section" id="reports">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 5 — FIELD REPORTS</span>
+          <h2 class="section-title">Filed from site</h2>
+          <p class="section-sub read">
+            Every report is date-stamped and tied to a live project number. We
+            edit for length, never for content.
+          </p>
+          <div class="quotes-grid">
+            <article class="quote-sheet">
+              <div class="quote-dates">
+                <div>
+                  <span class="tb-label">Report Date</span
+                  ><span class="tb-value">2026-04-18</span>
+                </div>
+                <div>
+                  <span class="tb-label">Site No.</span
+                  ><span class="tb-value">SITE 04</span>
+                </div>
+              </div>
+              <div class="quote-body">
+                <blockquote>
+                  The transfer slab drawings arrived with the tendon profile
+                  already coordinated against the services. Our specialist
+                  re-issued nothing. That has never happened on one of our jobs
+                  before.
+                </blockquote>
+                <p class="attrib">
+                  <strong>M. Okafor</strong> — Development Director<br />Halewick
+                  Estates · PRJ-0088
+                </p>
+                <span class="verified">Verified</span>
+              </div>
+            </article>
+            <article class="quote-sheet">
+              <div class="quote-dates">
+                <div>
+                  <span class="tb-label">Report Date</span
+                  ><span class="tb-value">2026-02-09</span>
+                </div>
+                <div>
+                  <span class="tb-label">Site No.</span
+                  ><span class="tb-value">SITE 11</span>
+                </div>
+              </div>
+              <div class="quote-body">
+                <blockquote>
+                  Thirty-one RFIs across the frame package. Twenty-eight
+                  answered the same working day, three inside the 240-minute
+                  promise on a Friday afternoon. The site log tells the whole
+                  story.
+                </blockquote>
+                <p class="attrib">
+                  <strong>P. Whitcombe</strong> — Contracts Manager<br />Stannard
+                  &amp; Frey Construction · PRJ-0104
+                </p>
+                <span class="verified">Verified</span>
+              </div>
+            </article>
+            <article class="quote-sheet">
+              <div class="quote-dates">
+                <div>
+                  <span class="tb-label">Report Date</span
+                  ><span class="tb-value">2025-11-27</span>
+                </div>
+                <div>
+                  <span class="tb-label">Site No.</span
+                  ><span class="tb-value">SITE 07</span>
+                </div>
+              </div>
+              <div class="quote-body">
+                <blockquote>
+                  Their retrofit drawings were the first set our approved
+                  inspector passed without a technical query. The hidden
+                  benefit: crews stopped calling the office because the sheets
+                  already answered it.
+                </blockquote>
+                <p class="attrib">
+                  <strong>R. Achterberg</strong> — Head of Estates<br />Merebank
+                  Trust Schools · PRJ-0071
+                </p>
+                <span class="verified">Verified</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.10 FAQ — PLATE 6 ============ -->
+      <section class="section" id="faq">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 6 — QUERIES &amp; REPLIES</span>
+          <h2 class="section-title">Queries raised, answered</h2>
+          <p class="section-sub read" style="margin-inline: auto">
+            Standard pre-appointment questions. Coded the way we do on site:
+            Q-01 and down the sheet.
+          </p>
+          <div class="faq" id="faqList">
+            <div class="faq-item open">
+              <button
+                class="faq-q"
+                aria-expanded="true"
+                aria-controls="faq-a-1"
+                id="faq-q-1"
+              >
+                <span class="code-col">Q-01</span>
+                <h3>
+                  Do you take on small projects — a single house extension, for
+                  example?
+                </h3>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-a"
+                id="faq-a-1"
+                role="region"
+                aria-labelledby="faq-q-1"
+              >
+                <span class="code-col-a">A-01 — REPLY, REV C</span>
+                Yes, under the Scheme Appraisal item. Extensions typically start
+                at the $6,500 fixed fee; if the structural work is
+                straightforward we will say so on day one rather than let a
+                package grow to fit a fee.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="faq-a-2"
+                id="faq-q-2"
+              >
+                <span class="code-col">Q-02</span>
+                <h3>How fast can you mobilise once we sign?</h3>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-a"
+                id="faq-a-2"
+                role="region"
+                aria-labelledby="faq-q-2"
+              >
+                <span class="code-col-a">A-02 — REPLY, REV C</span>
+                Site survey within 10 working days of instruction for standard
+                frames; 15 for occupied or live-logistics sites. We hold two
+                mobilisation slots open per month and will confirm the exact
+                date in the fee proposal.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="faq-a-3"
+                id="faq-q-3"
+              >
+                <span class="code-col">Q-03</span>
+                <h3>Who actually signs the drawings?</h3>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-a"
+                id="faq-a-3"
+                role="region"
+                aria-labelledby="faq-q-3"
+              >
+                <span class="code-col-a">A-03 — REPLY, REV C</span>
+                One chartered engineer (CEng, MIStructE) is named as engineer of
+                record on your title block and stays with the job end to end.
+                The signature block on every sheet matches the name in your
+                contract.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="faq-a-4"
+                id="faq-q-4"
+              >
+                <span class="code-col">Q-04</span>
+                <h3>What happens if the scope changes mid-project?</h3>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-a"
+                id="faq-a-4"
+                role="region"
+                aria-labelledby="faq-q-4"
+              >
+                <span class="code-col-a">A-04 — REPLY, REV C</span>
+                We re-issue the affected stage as a priced variation before any
+                work starts — the same way a drawing goes to Rev B before it is
+                built. No change proceeds on a verbal agreement. Average
+                variation turnaround in 2026 to date: 6 working days.
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="faq-a-5"
+                id="faq-q-5"
+              >
+                <span class="code-col">Q-05</span>
+                <h3>Do you carry professional indemnity insurance?</h3>
+                <span class="faq-toggle" aria-hidden="true">+</span>
+              </button>
+              <div
+                class="faq-a"
+                id="faq-a-5"
+                role="region"
+                aria-labelledby="faq-q-5"
+              >
+                <span class="code-col-a">A-05 — REPLY, REV C</span>
+                Yes — $5,000,000 per claim, renewable each policy year, with the
+                certificate issued alongside every fee proposal. Collateral
+                warranties are available at contract-execution stage.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.11 JOURNAL — PLATE 7 ============ -->
+      <section class="section" id="journal">
+        <div class="wrap">
+          <span class="plate-tag">PLATE 7 — DRAWING ARCHIVE</span>
+          <h2 class="section-title">Recent sheets from the archive</h2>
+          <p class="section-sub read">
+            Selected notes from the drawing office — how a detail was won, lost,
+            or redrawn. The full archive holds 141 entries.
+          </p>
+          <div class="journal-grid">
+            <article class="journal-card sheet">
+              <div class="sheet-head">
+                <span>DWG-0142</span><span>2026-03</span>
+              </div>
+              <div class="sheet-body">
+                <div class="journal-well" aria-hidden="true">
+                  <svg viewBox="0 0 190 90" fill="none">
+                    <path
+                      d="M10 78 L60 30 L110 62 L150 38 L180 78 Z"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="10"
+                      y1="78"
+                      x2="180"
+                      y2="78"
+                      stroke="#3E6B94"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="60"
+                      y1="30"
+                      x2="60"
+                      y2="18"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                    />
+                    <circle
+                      cx="60"
+                      cy="12"
+                      r="5"
+                      stroke="#F2B705"
+                      stroke-width="1.5"
+                    />
+                    <text
+                      x="100"
+                      y="20"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="9"
+                    >
+                      SETTLEMENT 8 MM
+                    </text>
+                  </svg>
+                </div>
+                <span class="journal-code">SHEET ARCHIVE — STRUCTURES</span>
+                <h3>The house that settled 8 mm, and why we let it</h3>
+                <p>
+                  A monitored, designed settlement on London clay — the soil
+                  mechanics, the instrumentation plot, and the client phone call
+                  that mattered more than the graph.
+                </p>
+                <a class="journal-link" href="#journal">View Sheet →</a>
+              </div>
+            </article>
+            <article class="journal-card sheet">
+              <div class="sheet-head">
+                <span>DWG-0137</span><span>2026-01</span>
+              </div>
+              <div class="sheet-body">
+                <div class="journal-well" aria-hidden="true">
+                  <svg viewBox="0 0 190 90" fill="none">
+                    <rect
+                      x="30"
+                      y="22"
+                      width="130"
+                      height="46"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <line
+                      x1="72"
+                      y1="22"
+                      x2="72"
+                      y2="68"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="118"
+                      y1="22"
+                      x2="118"
+                      y2="68"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="30"
+                      y1="80"
+                      x2="160"
+                      y2="80"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M30 80 l7 -3 v6 Z" fill="#F2B705" />
+                    <path d="M160 80 l-7 -3 v6 Z" fill="#F2B705" />
+                    <text
+                      x="95"
+                      y="14"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="9"
+                      text-anchor="middle"
+                    >
+                      BAY OVERRIDE
+                    </text>
+                  </svg>
+                </div>
+                <span class="journal-code">SHEET ARCHIVE — DETAILING</span>
+                <h3>
+                  Redrawing a transfer beam three times taught us the quieter
+                  way
+                </h3>
+                <p>
+                  The contractor's crane hit the service corridor nobody
+                  modelled. Field notes on clash-led redesign — and the
+                  coordination sheet that now ships standard in PACK-20.
+                </p>
+                <a class="journal-link" href="#journal">View Sheet →</a>
+              </div>
+            </article>
+            <article class="journal-card sheet">
+              <div class="sheet-head">
+                <span>DWG-0129</span><span>2025-10</span>
+              </div>
+              <div class="sheet-body">
+                <div class="journal-well" aria-hidden="true">
+                  <svg viewBox="0 0 190 90" fill="none">
+                    <path
+                      d="M20 70 Q95 10 170 70"
+                      stroke="#E6F0F8"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M35 70 Q95 24 155 70"
+                      stroke="#7FC7E0"
+                      stroke-width="1"
+                      stroke-dasharray="4 4"
+                    />
+                    <line
+                      x1="95"
+                      y1="26"
+                      x2="95"
+                      y2="12"
+                      stroke="#F2B705"
+                      stroke-width="1"
+                    />
+                    <path d="M95 12 l-3 6 h6 Z" fill="#F2B705" />
+                    <text
+                      x="101"
+                      y="10"
+                      fill="#F2B705"
+                      font-family="IBM Plex Mono, monospace"
+                      font-size="9"
+                    >
+                      46 M SPAN
+                    </text>
+                    <line
+                      x1="20"
+                      y1="76"
+                      x2="170"
+                      y2="76"
+                      stroke="#3E6B94"
+                      stroke-width="1.5"
+                    />
+                  </svg>
+                </div>
+                <span class="journal-code">SHEET ARCHIVE — TIMBER</span>
+                <h3>
+                  Testing the 46-metre glulam arch the calculator rejected
+                </h3>
+                <p>
+                  Two physical load tests on a full-size arch before anyone
+                  signed. What the model missed, what the timber did, and the
+                  detail drawing that came out of the debris.
+                </p>
+                <a class="journal-link" href="#journal">View Sheet →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.12 FINAL CTA ============ -->
+      <section class="release" id="contact">
+        <div class="wrap release-grid">
+          <div>
+            <span class="plate-tag" style="margin-bottom: 1.2rem"
+              >RELEASE BAND — SHEET 12</span
+            >
+            <h2>Have a site? Send us the survey.</h2>
+            <p>
+              A fee proposal within 3 working days, drawn from your drawings or
+              your survey file. If we are not the right studio for the job, the
+              memo will say so and name who is.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="#contact"
+                >Request Quote <span class="code">→ NRB-01</span></a
+              >
+              <a class="btn btn-ghost" href="#journal">Browse the archive →</a>
+            </div>
+          </div>
+          <div
+            class="stamp stamp-anim"
+            role="img"
+            aria-label="Stamp reading: Approved for release, Northbeam Structural, dated 2026-10-07, revision C"
+          >
+            APPROVED FOR RELEASE
+            <small>NORTHBEAM STRUCTURAL LTD · 2026-10-07 · REV C</small>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 3.13 FOOTER — SIGNATURE BLOCK ============ -->
+    <footer class="footer sigblock">
+      <div class="sig-grid">
+        <div class="tb-cell">
+          <a
+            class="wordmark"
+            href="#top"
+            aria-label="Northbeam Structural — back to top"
+          >
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 34 34"
+              fill="none"
+              stroke="#F2B705"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M4 30 L17 4 L30 30 Z" />
+              <path d="M4 30 H30" />
+              <path d="M10.5 19 H23.5" />
+            </svg>
+            <span><strong>Northbeam Structural</strong></span>
+          </a>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="#notes">Notes</a>
+          <a href="#features">Plates</a>
+          <a href="#pricing">Fees</a>
+          <a href="#faq">Queries</a>
+          <a href="#journal">Archive</a>
+        </nav>
+        <div class="footer-meta">
+          <div class="social-row">
+            <a href="#top" aria-label="LinkedIn">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" />
+                <path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0" />
+              </svg>
+            </a>
+            <a href="#top" aria-label="Instagram">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <circle cx="12" cy="12" r="4" />
+                <path d="M17 7v.01" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- stacked extras: visible below 768px only -->
+      <div class="sig-extra">
+        <div class="tb-cell">
+          <span class="tb-label">Drawn By</span
+          ><span class="tb-value">A. Oyelaran, CEng</span>
+        </div>
+        <div class="tb-cell">
+          <span class="tb-label">Checked</span
+          ><span class="tb-value">S. Lindqvist, CEng</span>
+        </div>
+        <div class="tb-cell">
+          <span class="tb-label">Date</span
+          ><span class="tb-value mono">2026-10-07</span>
+        </div>
+        <div
+          class="tb-cell"
+          style="
+            color: var(--muted-foreground);
+            font-size: 0.85rem;
+            border-right: none;
+          "
+        >
+          Structural engineering &amp; architecture. 3 Foundry Wharf, Studio 12.
+          All drawings issued under NRB drawing standards, Rev C.
+        </div>
+      </div>
+      <!-- copyright — own row below the band at >=768px, last when stacked -->
+      <div class="sig-copy">
+        <span class="footer-note"
+          >© 2026 NORTHBEAM STRUCTURAL LTD · SHEET 13/13</span
+        >
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        var btn = document.getElementById('menuBtn')
+        var nav = document.getElementById('mobileNav')
+        if (btn && nav) {
+          var setMenu = function (open) {
+            nav.classList.toggle('open', open)
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false')
+            btn.textContent = open ? 'Menu −' : 'Menu +'
+          }
+          btn.addEventListener('click', function () {
+            setMenu(!nav.classList.contains('open'))
+          })
+          /* tapping a link closes the full-screen panel */
+          nav.addEventListener('click', function (e) {
+            if (e.target.closest('a')) setMenu(false)
+          })
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && nav.classList.contains('open')) {
+              setMenu(false)
+            }
+          })
+        }
+        document.querySelectorAll('.faq-item').forEach(function (item) {
+          var q = item.querySelector('.faq-q')
+          if (!q) return
+          q.addEventListener('click', function () {
+            var isOpen = item.classList.contains('open')
+            document
+              .querySelectorAll('#faqList .faq-item.open')
+              .forEach(function (o) {
+                o.classList.remove('open')
+                var oq = o.querySelector('.faq-q')
+                if (oq) oq.setAttribute('aria-expanded', 'false')
+              })
+            if (!isOpen) {
+              item.classList.add('open')
+              q.setAttribute('aria-expanded', 'true')
+            }
+          })
+        })
+      })()
+    </script>
+<style id="footer-unify">/* one footer on every device */
+@media (max-width:767px){.sig-extra{display:none!important}.sig-copy{flex-basis:100%!important;text-align:center!important}}
+</style>
+</body>
+</html>

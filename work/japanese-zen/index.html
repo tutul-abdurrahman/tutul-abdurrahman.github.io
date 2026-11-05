@@ -1,0 +1,1940 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ma — Tea House &amp; Ceramics Studio · Yanaka, Tokyo</title>
+    <meta
+      name="description"
+      content="Ma is a tea house and ceramics studio in Yanaka, Tokyo. Quiet seatings, wood-fired bowls, and tea that tastes of place."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ TOKENS ============ */
+      :root{
+        --washi:#F4EFE4;
+        --washi-alt:#EAE3D3;
+        --ink:#1C1A17;
+        --ink-faded:#7A736A;
+        --indigo:#2B3A67;
+        --matcha:#7D8C5C;
+        --persimmon:#C4562F;
+        --border-ink:#1C1A17;
+        --shadow-whisper:0 2px 8px rgba(28,26,23,.05);
+        --font-mincho:'Shippori Mincho', 'Hiragino Mincho ProN', serif;
+        --font-gothic:'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+        --maxw:72rem;
+      }
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+      body{
+        font-family:var(--font-gothic);
+        font-weight:400;
+        line-height:1.9;
+        color:var(--ink);
+        background-color:var(--washi);
+        /* Washi fiber texture — fine noise + horizontal fibers, ~5% */
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0 0.09 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3Cpath d='M0 36 q60 3 120 0 t120 0' stroke='%231C1A17' stroke-width='0.4' opacity='0.05' fill='none'/%3E%3Cpath d='M0 148 q60 -2 120 0 t120 0' stroke='%231C1A17' stroke-width='0.4' opacity='0.04' fill='none'/%3E%3Cpath d='M0 88 q80 2 160 0 t80 0' stroke='%231C1A17' stroke-width='0.3' opacity='0.04' fill='none'/%3E%3C/svg%3E");
+        -webkit-font-smoothing:antialiased;
+        overflow-x:hidden;
+      }
+      img{max-width:100%;display:block}
+      a{color:var(--indigo);text-decoration:none}
+      a:hover{color:var(--indigo);text-decoration:underline;text-underline-offset:.35em;text-decoration-thickness:1px}
+      h1,h2,h3,h4{font-family:var(--font-mincho);font-weight:600;line-height:1.35;letter-spacing:.01em}
+      :focus-visible{outline:2px solid var(--persimmon);outline-offset:3px}
+      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+      .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:1.5rem}
+      section{padding-block:clamp(6rem,10vw,9rem)}
+
+      /* ============ SIGNATURE UTILITIES ============ */
+      /* Vertical text rail (desktop art, horizontal overline on small screens) */
+      .rail{
+        font-family:var(--font-mincho);font-weight:500;
+        letter-spacing:.3em;
+        writing-mode:vertical-rl;
+        text-orientation:mixed;
+        color:var(--ink-faded);
+        font-size:.8rem;
+      }
+      @media (max-width:1023px){
+        .rail{writing-mode:horizontal-tb;letter-spacing:.25em}
+        .sec-head{flex-direction:column}
+        .sec-head .rail{width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .sec-head-meta{width:100%}
+        /* gridline trick: keep max-width to container */
+        .wrap > .sec-head{max-width:100%}
+      }
+      /* Overline label */
+      .overline{
+        font-family:var(--font-gothic);font-size:.75rem;font-weight:500;
+        letter-spacing:.3em;text-transform:uppercase;color:var(--ink-faded);
+      }
+      /* Tapered sumi brushstroke divider (2-4px, ends thin) */
+      .brush-divider{display:block;width:clamp(120px,18%,200px);height:5px;color:var(--ink)}
+      .brush-divider svg{display:block;width:100%;height:100%}
+      /* Hanko seal */
+      .hanko{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:2.4rem;height:2.4rem;flex:none;
+        background:var(--persimmon);color:var(--washi);
+        font-family:var(--font-mincho);font-weight:600;font-size:1.3rem;
+        border-radius:2px;transform:rotate(-2deg);
+        box-shadow:var(--shadow-whisper);
+      }
+      .hanko svg{width:70%;height:70%}
+      .enso-abs{pointer-events:none}
+
+      /* ============ BUTTONS ============ */
+      .btn{
+        font-family:var(--font-mincho);font-weight:500;font-size:1rem;
+        display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+        min-height:48px;padding:.85rem 1.75rem;
+        white-space:nowrap;border-radius:0;border:1px solid var(--border-ink);
+        cursor:pointer;transition:background-color .25s ease-out,color .25s ease-out,transform .25s ease-out,border-color .25s ease-out;
+        text-align:center;
+      }
+      .btn:active{transform:translateY(1px)}
+      .btn:disabled,.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
+      .btn-primary{background:var(--ink);color:var(--washi)}
+      .btn-primary:hover{background:var(--indigo);border-color:var(--indigo);color:var(--washi);transform:translateY(-1px)}
+      .btn-secondary{background:var(--washi);color:var(--ink)}
+      .btn-secondary:hover{background:var(--matcha);border-color:var(--matcha);color:var(--washi);transform:translateY(-1px)}
+      .btn-indigo-o{background:transparent;color:var(--indigo);border-color:var(--indigo)}
+      .btn-indigo-o:hover{background:var(--indigo);color:var(--washi);transform:translateY(-1px)}
+      .btn-ghost{
+        background:transparent;color:var(--indigo);border:none;padding-inline:.25rem;
+        text-decoration:none;min-height:48px;
+      }
+      .btn-ghost .u{position:relative}
+      .btn-ghost .u::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:var(--ink);transform-origin:left;transition:transform .4s ease-out}
+      .btn-ghost:hover .u::after{transform:scaleX(.55)}
+      .btn:focus-visible{outline:2px solid var(--persimmon);outline-offset:3px}
+      /* On indigo bands */
+      .btn-washi{background:var(--washi);color:var(--ink);border-color:var(--washi)}
+      .btn-washi:hover{background:var(--washi-alt);transform:translateY(-1px)}
+      .btn-outline-washi{background:transparent;color:var(--washi);border-color:var(--washi)}
+      .btn-outline-washi:hover{background:rgba(244,239,228,.12);transform:translateY(-1px)}
+      .row-btn{display:flex;flex-direction:column;gap:.75rem}
+      @media (min-width:640px){.row-btn{flex-direction:row;align-items:stretch}.row-btn>.btn{width:auto;min-width:11rem}}
+      @media (max-width:639px){.row-btn>.btn{width:100%}}
+
+      /* ============ WASHI SHEET CARDS ============ */
+      .sheet{
+        background:var(--washi-alt);
+        border:1px solid var(--border-ink);
+        box-shadow:var(--shadow-whisper);
+        padding:clamp(2rem,4vw,2.75rem);
+        display:flex;flex-direction:column;
+        transition:box-shadow .3s ease-out,transform .3s ease-out,box-shadow .3s ease-out,border-width .2s ease-out;
+      }
+      .sheet:hover{x);box-shadow:0 4px 14px rgba(28,26,23,.09);border-width:2px}
+      .sheet--snow{background:var(--washi)}
+
+      /* ============ HEADER ============ */
+      .site-header{
+        position:sticky;top:0;z-index:50;
+        background:var(--washi);
+        border-bottom:1px solid var(--border-ink);
+      }
+      .site-header::after{
+        /* faint fiber band under the ink rule */
+        content:"";display:block;height:6px;
+        background:repeating-linear-gradient(90deg,rgba(28,26,23,.06) 0 2px,transparent 2px 9px);
+        opacity:.5;
+      }
+      .header-inner{position:relative;z-index:61;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4.5rem;max-width:var(--maxw);margin-inline:auto;padding-inline:1.5rem}
+      .brand{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--font-mincho);font-weight:600;font-size:1.15rem;color:var(--ink);text-decoration:none}
+      .brand:hover{text-decoration:none}
+      .brand .hanko{width:2rem;height:2rem;font-size:1.05rem}
+      .main-nav{display:none}
+      @media (min-width:1024px){.main-nav{display:flex;align-items:center;gap:2.25rem}}
+      .main-nav a{font-size:.95rem;color:var(--ink);text-decoration:none;padding:.5rem 0}
+      .main-nav a:hover{color:var(--indigo);text-decoration:underline;text-underline-offset:.4em;text-decoration-thickness:1px}
+      .header-cta{display:none}
+      @media (min-width:1024px){.header-cta{display:inline-flex}}
+      .nav-toggle{
+        display:inline-flex;flex-direction:column;justify-content:center;gap:6px;
+        width:48px;height:48px;padding:12px;background:transparent;border:1px solid var(--border-ink);cursor:pointer;
+      }
+      @media (min-width:1024px){.nav-toggle{display:none}}
+      .nav-toggle span{display:block;height:1.5px;width:100%;background:var(--ink);transition:transform .3s ease-out,opacity .3s ease-out}
+      .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+      .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+      .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+      .mobile-sheet{
+        display:none;background:var(--washi);border-top:1px solid var(--border-ink);
+        padding:1rem 1.5rem 1.75rem;
+        overflow-y:auto;overscroll-behavior:contain;
+      }
+      .mobile-sheet.open{display:block;position:fixed;inset:0;z-index:60;padding:6rem 1.5rem 1.75rem}
+      .mobile-sheet a{display:block;font-family:var(--font-mincho);font-size:1.1rem;padding:.75rem 0;border-bottom:1px solid rgba(28,26,23,.15);color:var(--ink)}
+      .mobile-sheet .btn{width:100%;margin-top:1.25rem}
+
+      /* ============ HERO ============ */
+      .hero{padding-block:clamp(5rem,9vw,8rem) clamp(6rem,10vw,9rem)}
+      .hero-grid{
+        display:grid;gap:clamp(3rem,6vw,5rem);
+        align-items:center;
+      }
+      @media (min-width:1024px){.hero-grid{grid-template-columns:5fr 6fr}}
+      .hero-rail-row{display:flex;gap:1.25rem;align-items:flex-start;margin-bottom:1.5rem;min-height:9rem}
+      @media (min-width:1024px){
+        /* rail stands full height at the left edge of its column */
+        .hero-rail-row{min-height:12rem}
+        .hero-rail-row .rail{align-self:stretch}
+        .hero-rail-row .overline{padding-top:.35rem}
+      }
+      .hero h1{font-size:clamp(2.6rem,6vw,4.4rem);font-weight:600;line-height:1.25;margin-bottom:1.5rem;max-width:14ch}
+      .hero h1 .p{color:var(--persimmon)}
+      .hero .lead{font-size:1.125rem;color:var(--ink-faded);max-width:38ch;margin-bottom:2.25rem}
+      .hero-img-block{position:relative;max-width:520px;margin-inline:auto}
+      .hero-img{
+        position:relative;z-index:2;border:1px solid var(--border-ink);
+        padding:clamp(.75rem,2vw,1.25rem);background:var(--washi-alt);
+        box-shadow:var(--shadow-whisper);
+      }
+      .hero-img img{aspect-ratio:4/5;height:auto;object-fit:cover;width:100%;filter:saturate(.85) contrast(1.02)}
+      .hero .enso-abs{z-index:3;top:-3.5rem;right:-3rem;width:clamp(9rem,18vw,13rem)}
+      /* Ink-wash ground orbs */
+      .wash-orb{
+        position:absolute;border-radius:50%;z-index:1;
+        background:radial-gradient(circle at 40% 40%, rgba(28,26,23,.10), rgba(28,26,23,0) 70%);
+      }
+
+      /* ============ ENSO (brush-drawn ring) ============ */
+      .enso{width:100%;aspect-ratio:1;color:var(--ink)}
+      .enso .ring{fill:none;stroke:currentColor;stroke-linecap:round}
+      .enso .ring-main{stroke-width:5.5;stroke-dasharray:0 100;stroke-dashoffset:0;transition:stroke-dasharray 1.2s ease-out}
+      .enso.in .ring-main,.enso.live .ring-main{stroke-dasharray:90 100}
+      .enso .ring-ghost{stroke-width:2.25;stroke-dasharray:0 100;transition:stroke-dasharray 1.2s ease-out .15s}
+      .enso.in .ring-ghost,.enso.live .ring-ghost{stroke-dasharray:84 100}
+      @media (prefers-reduced-motion:reduce){
+        .enso .ring-main,.enso .ring-ghost{stroke-dasharray:92 100 !important;transition:none}
+      }
+
+      /* ============ STATS ============ */
+      .stats{padding-block:clamp(4.5rem,7vw,7rem)}
+      .stats-track{
+        display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem 1.5rem;
+        padding-block:1rem;position:relative;
+      }
+      @media (min-width:768px){.stats-track{grid-template-columns:repeat(4,1fr)}}
+      .brush-div{display:block;width:min(200px,60%);height:8px;color:var(--ink);opacity:.85;margin-inline:auto}
+      .brush-div svg{display:block;width:100%;height:100%}
+      @media (max-width:767px){.brush-div{grid-column:1 / -1;width:160px;margin-bottom:-1rem;margin-inline:0}}
+      @media (min-width:768px){.brush-div{display:none}}
+      .stat{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start}
+      .stat .num{font-family:var(--font-mincho);font-weight:600;font-size:clamp(2.4rem,4.5vw,3.4rem);line-height:1;letter-spacing:.04em}
+      .stat.c1 .num{color:var(--indigo)}
+      .stat.c2 .num{color:var(--matcha)}
+      .stat.c3 .num{color:var(--indigo)}
+      .stat.c4 .num{color:var(--matcha)}
+      .stat .lbl{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faded);font-weight:500}
+
+      /* ============ PROCLAMATION ============ */
+      .procl{position:relative}
+      .procl .sheet{
+        position:relative;max-width:46rem;margin-inline:auto;
+        padding:clamp(3rem,7vw,4.5rem) clamp(1.5rem,6vw,4rem);
+        text-align:center;overflow:hidden;
+      }
+      .procl .enso-bg{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:min(24rem,70%);opacity:.08;color:var(--ink);z-index:0}
+      .procl-inner{position:relative;z-index:1}
+      .procl h2{font-size:clamp(2rem,4.5vw,3rem);margin:.9rem auto 1.5rem;max-width:16ch}
+      .procl p{color:var(--ink-faded);max-width:56ch;margin-inline:auto;text-align:left}
+      .procl p::first-letter{
+        font-family:var(--font-mincho);font-weight:700;float:left;
+        font-size:3.6rem;line-height:.85;padding:.35rem .85rem 0 0;color:var(--indigo);
+      }
+      .procl .seal{position:absolute;right:1.25rem;bottom:1.25rem;z-index:1}
+
+      /* ============ FEATURES ============ */
+      .sec-head{display:flex;gap:1.5rem;align-items:flex-start;margin-bottom:clamp(3rem,6vw,4.5rem)}
+      @media (min-width:1024px){.sec-head{min-height:11rem;align-items:stretch}}
+      .sec-head .rail{flex:none}
+      .sec-head-meta h2{font-size:clamp(1.9rem,4vw,2.8rem);margin:.9rem 0 1.1rem;max-width:20ch}
+      .sec-head-meta p{color:var(--ink-faded);max-width:52ch}
+      .features-grid{display:grid;gap:2rem}
+      @media (min-width:768px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+      @media (min-width:1024px){.features-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+      .feature .icon{width:3.25rem;height:3.25rem;margin-bottom:1.75rem}
+      .feature h3{font-size:1.35rem;margin-bottom:1.1rem}
+      .feature p{color:var(--ink-faded);font-size:.98rem}
+      .feature .fg-num{font-family:var(--font-mincho);color:var(--ink);opacity:.22;font-size:.85rem;letter-spacing:.25em;margin-top:auto;padding-top:2rem}
+
+      /* ============ BENEFITS ============ */
+      .benefits .sec-head{margin-bottom:clamp(2.5rem,5vw,3.5rem)}
+      .benefits-list{
+        display:grid;gap:0 3.5rem;max-width:62rem;
+      }
+      @media (min-width:768px){.benefits-list{grid-template-columns:repeat(2,1fr)}}
+      .benefit{
+        display:flex;gap:1.25rem;align-items:flex-start;
+        padding:1.5rem 0;border-bottom:1px solid rgba(28,26,23,.35);
+      }
+      .benefit .ensoidx{width:2.6rem;height:2.6rem;flex:none;margin-top:.15rem;color:var(--indigo)}
+      .benefit h3{font-family:var(--font-mincho);font-size:1.15rem;font-weight:600;margin-bottom:.3rem;color:var(--ink)}
+      .benefit p{color:var(--ink-faded);font-size:.95rem}
+
+      /* ============ PROCESS ============ */
+      .process-lines{position:relative;display:grid;gap:3rem;margin-top:1rem}
+      @media (min-width:768px){
+        .process-lines{grid-template-columns:repeat(3,1fr);gap:2.5rem}
+        /* one shared tapered brushstroke track behind the three badges */
+        .brush-track{
+          position:absolute;top:2.6rem;left:6%;right:6%;height:10px;color:var(--ink);opacity:.85;
+        }
+      }
+      .step{position:relative}
+      .step .badge{
+        width:5.2rem;height:5.2rem;border-radius:50%;
+        background:var(--washi);border:1px solid var(--border-ink);
+        display:flex;align-items:center;justify-content:center;
+        font-family:var(--font-mincho);font-weight:600;font-size:1.9rem;
+        position:relative;z-index:2;
+        box-shadow:var(--shadow-whisper);
+      }
+      @media (min-width:768px){.step .badge{background:var(--washi-alt)}}
+      .step .badge.n2{color:var(--indigo)}
+      .step .badge.n3{color:var(--matcha)}
+      .step h3{font-size:1.3rem;margin:1.5rem 0 .8rem}
+      .step p{color:var(--ink-faded);font-size:.98rem;max-width:34ch}
+      .step .k{margin-top:1rem;font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-faded)}
+
+      /* ============ PRICING ============ */
+      .pricing-grid{display:grid;gap:2rem;align-items:stretch}
+      @media (min-width:768px){.pricing-grid{grid-template-columns:repeat(2,1fr)}}
+      @media (min-width:1024px){.pricing-grid{grid-template-columns:repeat(3,1fr)}}
+      .plan{position:relative}
+      .plan .tier{font-family:var(--font-mincho);font-size:1.25rem;font-weight:600;margin-bottom:.5rem}
+      .plan .for{font-size:.85rem;color:var(--ink-faded);margin-bottom:1.5rem}
+      .plan .price{font-family:var(--font-mincho);font-size:clamp(2.2rem,3.5vw,2.8rem);font-weight:600;line-height:1;display:flex;align-items:baseline;gap:.4rem}
+      .plan .price .cur{font-size:.55em;color:var(--ink-faded)}
+      .plan .per{font-size:.85rem;color:var(--ink-faded)}
+      .plan ul{list-style:none;margin:1.9rem 0 0;display:grid;gap:.85rem}
+      .plan li{display:flex;gap:.8rem;align-items:flex-start;font-size:.95rem;color:var(--ink-faded)}
+      .plan li svg{flex:none;width:1.05em;height:1.05em;margin-top:.35em;color:var(--matcha)}
+      .plan .btn{margin-top:auto}
+      .plan.tariff-band{
+        background:var(--indigo);color:var(--washi);border-color:var(--indigo);
+      }
+      .plan.tariff-band .for,.plan.tariff-band .per,.plan.tariff-band li{color:rgba(244,239,228,.72)}
+      .plan.tariff-band li svg{color:var(--washi)}
+      .plan.tariff-band .price .cur{color:rgba(244,239,228,.6)}
+      .plan .seal-top{position:absolute;top:-1.4rem;right:1.75rem;z-index:2}
+      .plan .btn-washi{color:var(--ink);border-color:var(--washi)}
+      .plan .btn-washi:hover{background:var(--washi-alt)}
+      .plan-note{text-align:center;color:var(--ink-faded);font-size:.9rem;margin-top:2.5rem}
+
+      /* ============ TESTIMONIALS ============ */
+      .tsti-grid{display:grid;gap:2rem}
+      @media (min-width:1024px){.tsti-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+      .quote{position:relative}
+      .quote .mark{color:var(--ink);opacity:.15;width:3rem;height:auto;margin-bottom:.75rem}
+      .quote blockquote{font-size:1rem;color:var(--ink);margin-bottom:1.75rem}
+      .quote .quote-meta{display:flex;align-items:center;gap:1rem;margin-top:auto}
+      .quote .avatar{width:3rem;height:3rem;border-radius:50%;border:1px solid var(--border-ink);overflow:hidden;flex:none;background:var(--washi)}
+      .quote .avatar img{width:100%;height:100%;object-fit:cover;filter:saturate(.8)}
+      .quote .who{font-family:var(--font-mincho);font-weight:600;font-size:.98rem;line-height:1.4}
+      .quote .role{font-size:.8rem;color:var(--ink-faded)}
+
+      /* ============ FAQ ============ */
+      .faq-list{max-width:54rem;border-top:1px solid var(--border-ink)}
+      .faq-item{border-bottom:1px solid var(--border-ink)}
+      .faq-q{
+        width:100%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+        background:none;border:none;cursor:pointer;text-align:left;
+        font-family:var(--font-mincho);font-weight:600;font-size:1.12rem;color:var(--ink);
+        padding:1.4rem 0;min-height:44px;
+      }
+      .faq-q .toggle{flex:none;width:1.15rem;height:1.15rem;color:var(--ink);transition:transform .4s ease-out}
+      .faq-q[aria-expanded="true"] .toggle{transform:rotate(45deg)}
+      .faq-a{
+        overflow:hidden;max-height:0;opacity:0;
+        transition:max-height .5s ease-out,opacity .5s ease-out;
+      }
+      .faq-item.open .faq-a{opacity:1}
+      .faq-a p{color:var(--ink-faded);padding-bottom:1.6rem;max-width:60ch;line-height:2}
+      @media (prefers-reduced-motion:reduce){.faq-a{transition:opacity .3s ease-out}.faq-q .toggle{transition:none}}
+
+      /* ============ JOURNAL ============ */
+      .journal-grid{display:grid;gap:2rem}
+      @media (min-width:768px){.journal-grid{grid-template-columns:repeat(2,1fr)}}
+      @media (min-width:1024px){.journal-grid{grid-template-columns:repeat(3,1fr);align-items:stretch}}
+      .post{display:flex;flex-direction:column}
+      .post .frame{border:1px solid var(--border-ink);padding:.6rem;background:var(--washi-alt);box-shadow:var(--shadow-whisper);margin-bottom:1.5rem}
+      .post .frame img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;filter:saturate(.8) contrast(1.02)}
+      .post .date{font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-faded);margin-bottom:.5rem}
+      .post h3{font-size:1.25rem;margin-bottom:.8rem}
+      .post p{color:var(--ink-faded);font-size:.95rem;margin-bottom:1.25rem}
+      .post .read{margin-top:auto;font-family:var(--font-mincho);font-weight:500;font-size:.95rem;color:var(--indigo)}
+      .post .read:hover{color:var(--indigo)}
+
+      /* ============ FINAL CTA ============ */
+      .final{background:var(--indigo);color:var(--washi);position:relative;overflow:hidden}
+      .final::before{
+        content:"";position:absolute;inset:0;opacity:.10;pointer-events:none;
+        background:radial-gradient(42rem 24rem at 78% 30%, rgba(244,239,228,.28), transparent 70%),
+                   radial-gradient(30rem 18rem at 12% 80%, rgba(28,26,23,.5), transparent 70%);
+      }
+      .final-inner{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.9rem}
+      .final .enso-final{width:clamp(7rem,12vw,9.5rem);color:rgba(244,239,228,.9)}
+      .final h2{font-size:clamp(2rem,4.5vw,3.1rem);max-width:18ch;color:var(--washi)}
+      .final p{color:rgba(244,239,228,.72);max-width:46ch;font-size:1.05rem}
+      .final .row-btn{justify-content:center;margin-top:.5rem}
+      @media (max-width:639px){.final .row-btn{width:100%;max-width:22rem;margin-inline:auto}}
+      .final .note{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,239,228,.55)}
+
+      /* ============ FOOTER ============ */
+      .site-footer{border-top:1px solid var(--border-ink);background:var(--washi)}
+      /* Slim horizontal band ≥768px */
+      .foot-slim{display:none}
+      @media (min-width:768px){
+        .foot-slim{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.9rem 2rem;padding-block:1.25rem}
+        .foot-rich{display:none}
+      }
+      .foot-brand{display:inline-flex;align-items:center;gap:.8rem;font-family:var(--font-mincho);font-weight:600;color:var(--ink);text-decoration:none}
+      .foot-brand:hover{text-decoration:none}
+      .foot-brand .hanko{width:1.9rem;height:1.9rem;font-size:1rem}
+      .foot-brand .sub{font-family:var(--font-gothic);font-weight:400;font-size:.8rem;color:var(--ink-faded);letter-spacing:.05em}
+      .foot-links{display:flex;gap:1.75rem;flex-wrap:wrap}
+      .foot-links a{font-size:.9rem;color:var(--ink);text-decoration:none}
+      .foot-links a:hover{color:var(--indigo);text-decoration:underline;text-underline-offset:.35em}
+      .foot-right{display:flex;align-items:center;gap:1.5rem}
+      .foot-social{display:flex;gap:1rem}
+      .foot-social a{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:44px;height:44px;border:1px solid var(--border-ink);color:var(--ink);
+      }
+      .foot-social a:hover{background:var(--washi-alt);color:var(--indigo)}
+      .foot-social svg{width:1.05rem;height:1.05rem}
+      .foot-copy{font-size:.8rem;color:var(--ink-faded);white-space:nowrap}
+      /* Rich stacked footer <768px */
+      .foot-rich{padding:2.5rem 1.5rem 2rem;display:grid;gap:2.25rem}
+      .foot-rich .para{color:var(--ink-faded);font-size:.92rem;max-width:40ch}
+      .foot-rich .cols{display:grid;gap:1.75rem}
+      .foot-rich h3{font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-faded);font-weight:500;margin-bottom:.9rem}
+      .foot-rich ul{list-style:none;display:grid;gap:.55rem}
+      .foot-rich ul a{color:var(--ink);font-size:.95rem;text-decoration:none}
+      .foot-rich ul a:hover{color:var(--indigo);text-decoration:underline}
+      .field-row{display:flex;gap:.75rem;margin-top:.75rem}
+      .u-input{
+        flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--ink);
+        font-family:var(--font-gothic);font-size:1rem;color:var(--ink);padding:.6rem 0;min-height:48px;border-radius:0;
+      }
+      .u-input::placeholder{color:var(--ink-faded)}
+      .u-input:focus{outline:none;border-bottom:2px solid var(--indigo);color:var(--indigo)}
+      .u-label{font-size:.85rem;color:var(--ink);display:block;margin-bottom:.25rem}
+      .brush-rule{max-width:var(--maxw);margin:0 auto;width:100%;height:6px;color:rgba(28,26,23,.5);padding-inline:1.5rem}
+      .brush-rule svg{width:100%;height:100%;display:block}
+      .foot-mobile-copy{font-size:.8rem;color:var(--ink-faded)}
+
+      /* Motion-ish entrance for images and strokes only */
+      .post .frame,.feature,.plan,.quote{opacity:1;transform:none}
+      /* Reveal base (removed by reduced-motion) */
+      .reveal{opacity:0;transform:translateY(2px);transition:opacity .7s ease-out,transform .7s ease-out}
+      .reveal.in{opacity:1;transform:none}
+      .under-motion{opacity:1;transform:none}
+      @media (prefers-reduced-motion:reduce){
+        .reveal{opacity:1;transform:none;transition:none}
+      }
+
+      /* ============ SPEC OVERRIDES ============ */
+      /* FAQ — narrow measure, centered */
+      .faq-list{max-width:680px !important;margin-inline:auto !important}
+      /* Mobile menu CTA visible: indigo fill, ivory text */
+      .mobile-sheet .btn.btn-primary{background:var(--indigo) !important;color:var(--washi) !important;border-color:var(--indigo)}
+      /* Footer band (>=768px) — row 1: brand | one centered link row | socials,
+         row 2 below it: copyright only. Grid gets 2 explicit rows. */
+      @media (min-width:768px){
+        .foot-slim{
+          display:grid !important;
+          grid-template-columns:auto 1fr auto !important;
+          grid-template-rows:auto auto !important;
+          align-items:center;
+          justify-content:normal;gap:.9rem 2rem;
+        }
+        .foot-slim .foot-brand{grid-column:1;grid-row:1}
+        .foot-slim .foot-links{grid-column:2;grid-row:1;justify-self:center;justify-content:center;flex-wrap:nowrap}
+        .foot-slim .foot-right{grid-column:3;grid-row:1;justify-self:end}
+        .foot-slim .foot-copy{
+          grid-column:1 / -1 !important;grid-row:2;
+          margin-top:.35rem;padding-top:.95rem;
+          border-top:1px solid var(--border-ink);text-align:center;
+        }
+      }
+      /* Hero enso — keep the overhang clear of the CTA row when the hero stacks */
+      @media (max-width:1023px){
+        .hero .enso-abs{top:-2rem;right:-1.25rem}
+      }
+      /* Koan card — reserve room for the hanko seal under the copy on phones */
+      @media (max-width:767px){
+        .procl .sheet{padding-bottom:5rem}
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reusable SVG defs (brush + hanko icon shapes) — hidden, decorative -->
+    <svg
+      width="0"
+      height="0"
+      style="position: absolute"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <!-- tapered horizontal brushstroke -->
+        <g id="brush-h">
+          <path
+            d="M0,3 C18,1.2 36,1 60,1.6 C100,2.4 132,2.6 200,2.9 L200,3.3 C132,3.7 100,4 60,4.6 C36,5.2 18,5 0,3.6 Z"
+            fill="currentColor"
+          />
+          <path
+            d="M14,3 C40,2.2 90,2.1 186,2.7 C140,3.1 60,3.6 14,3.2 Z"
+            fill="currentColor"
+            opacity=".35"
+          />
+        </g>
+      </defs>
+    </svg>
+
+    <!-- ============ 3.1 HEADER ============ -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a
+          class="brand"
+          href="#top"
+          aria-label="Ma — tea house and ceramics studio, back to top"
+        >
+          <span class="hanko" aria-hidden="true">間</span>
+          <span>Ma</span>
+        </a>
+        <nav class="main-nav" aria-label="Primary">
+          <a href="#craft">The Craft</a>
+          <a href="#way">The Way</a>
+          <a href="#circle">Tea Circle</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">Questions</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="#reserve">Reserve a seat</a>
+        <button
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="mobile-sheet" id="mobileNav">
+        <nav aria-label="Mobile">
+          <a href="#craft">The Craft</a>
+          <a href="#way">The Way</a>
+          <a href="#circle">Tea Circle</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">Questions</a>
+          <a class="btn btn-primary" href="#reserve">Reserve a seat</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ 3.2 HERO — radical asymmetry ============ -->
+      <section class="hero" aria-labelledby="hero-h">
+        <div class="wrap hero-grid">
+          <div>
+            <div class="hero-rail-row">
+              <span class="rail" aria-hidden="true"
+                >間 · 静けさを一杯、まず間</span
+              >
+              <span class="overline"
+                >Yanaka, Tokyo · est. 1st of May, 2009</span
+              >
+            </div>
+            <h1 id="hero-h">
+              The space <span class="p">between</span> sips holds everything.
+            </h1>
+            <p class="lead">
+              A tea house and a working ceramics studio under one low roof. Sit
+              for one bowl, watch the kiln breathe, and leave the rush on the
+              doorstep.
+            </p>
+            <div class="row-btn">
+              <a class="btn btn-primary" href="#reserve">Reserve a seat</a>
+              <a class="btn btn-indigo-o" href="#circle">The tea circle</a>
+            </div>
+          </div>
+          <div class="hero-img-block">
+            <span
+              class="wash-orb"
+              style="width: 22rem; height: 22rem; left: -9rem; bottom: -6rem"
+              aria-hidden="true"
+            ></span>
+            <div
+              class="enso-abs enso"
+              role="img"
+              aria-label="Brush-drawn enso circle"
+            >
+              <svg viewBox="0 0 100 100" aria-hidden="true">
+                <g transform="rotate(-14 50 50)">
+                  <circle
+                    class="ring ring-main"
+                    cx="50"
+                    cy="50"
+                    r="42"
+                    pathLength="100"
+                  />
+                  <circle
+                    class="ring ring-ghost"
+                    cx="50.6"
+                    cy="49.4"
+                    r="41.4"
+                    pathLength="100"
+                  />
+                </g>
+              </svg>
+            </div>
+            <figure class="hero-img">
+              <img
+                src="https://images.unsplash.com/photo-1765035058192-edd7ee3e0df0?auto=format&fit=crop&w=1200&q=80"
+                alt="A woman in a kimono performing a traditional tea ceremony"
+                width="1200"
+                height="1500"
+                loading="eager"
+              />
+              <figcaption class="sr-only">
+                Guest whisking koicha at the evening seating, March 2026
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.3 STATS BAR ============ -->
+      <section class="stats" aria-label="The house in numbers">
+        <div class="wrap">
+          <div class="stats-track">
+            <span class="brush-div" aria-hidden="true">
+              <svg viewBox="0 0 200 8" preserveAspectRatio="none">
+                <path
+                  d="M0,4 C40,2.4 90,2.2 200,3.6 L200,4.4 C90,5.8 40,5.4 0,4 Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <div class="stat c1" style="padding-top: 1.4rem">
+              <span class="num">17</span>
+              <span class="lbl">Years at the Yanaka kiln</span>
+            </div>
+            <div class="stat c2" style="padding-top: 2.6rem">
+              <span class="num">4,800</span>
+              <span class="lbl">Bowls thrown by hand</span>
+            </div>
+            <div class="stat c3" style="padding-top: 3.8rem">
+              <span class="num">32</span>
+              <span class="lbl">Tea cultivars on the shelf</span>
+            </div>
+            <div class="stat c4" style="padding-top: 5rem">
+              <span class="num">112</span>
+              <span class="lbl">Guests each moon seating</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.4 PROCLAMATION — a koan on washi ============ -->
+      <section class="procl" aria-labelledby="procl-h">
+        <div class="wrap">
+          <div class="sheet sheet--snow">
+            <span class="enso-bg enso live" aria-hidden="true">
+              <svg viewBox="0 0 100 100">
+                <g transform="rotate(9 50 50)">
+                  <circle
+                    class="ring ring-main"
+                    cx="50"
+                    cy="50"
+                    r="42"
+                    pathLength="100"
+                  />
+                  <circle
+                    class="ring ring-ghost"
+                    cx="49.5"
+                    cy="50.5"
+                    r="41.6"
+                    pathLength="100"
+                  />
+                </g>
+              </svg>
+            </span>
+            <div class="procl-inner">
+              <span class="overline">A Koan</span>
+              <h2 id="procl-h">Empty the cup, and the room grows.</h2>
+              <p>
+                We built Ma because every good thing we know happens in the
+                pause, not the to-do. The studio fires twice a season; the tea
+                room seats eight and no more. Nothing here is a funnel, a queue,
+                or an upsell. Come for an hour, hold a warm bowl, and let the
+                street noise fade to the tick of the kettle. If the silence
+                feels strange for the first ten minutes, stay for twenty — it
+                stops being empty and starts being room.
+              </p>
+            </div>
+            <span class="hanko seal" aria-hidden="true">間</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.5 FEATURES — the craft ============ -->
+      <section id="craft" aria-labelledby="craft-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true"
+              >工房の心 · The heart of the studio</span
+            >
+            <div class="sec-head-meta">
+              <span class="overline">The Craft</span>
+              <h2 id="craft-h">Slow clay, single-fire, wood and ash.</h2>
+              <p>
+                Three working principles run through every bowl, every blend,
+                every seating at Ma. They are not slogans — they schedule our
+                year.
+              </p>
+            </div>
+          </div>
+          <div class="features-grid">
+            <article class="sheet feature">
+              <svg
+                class="icon"
+                viewBox="0 0 48 48"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+                style="color: var(--indigo)"
+              >
+                <ellipse cx="24" cy="30" rx="15" ry="7" />
+                <path d="M9,30 C9,18 39,18 39,30" />
+                <path d="M18,37 C21,39 27,39 30,37" />
+              </svg>
+              <h3>Thrown by two hands</h3>
+              <p>
+                Every bowl leaves the wheel of Aya or Senior apprentice Kenji —
+                90 pieces a season, never more. Blanks are dated under the foot,
+                so each cup tells you which Thursday it was born.
+              </p>
+              <span class="fg-num">01</span>
+            </article>
+            <article class="sheet feature">
+              <svg
+                class="icon"
+                viewBox="0 0 48 48"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+                style="color: var(--matcha)"
+              >
+                <path d="M14,10 C20,20 22,30 20,38" />
+                <path d="M18,10 C24,20 26,30 24,38" />
+                <path d="M22,10 C28,20 30,30 28,38" />
+                <path d="M12,10 L22,7 L32,8" />
+              </svg>
+              <h3>Whisked in front of you</h3>
+              <p>
+                No tea arrives hidden in paper. Usucha is whisked at the low
+                table and handed over while the foam still breathes. Thick
+                koicha is shared from one bowl, as the old rule asks.
+              </p>
+              <span class="fg-num">02</span>
+            </article>
+            <article class="sheet feature">
+              <svg
+                class="icon"
+                viewBox="0 0 48 48"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+                style="color: var(--persimmon)"
+              >
+                <circle cx="24" cy="20" r="10" />
+                <path
+                  d="M24,4 L24,8 M38,14 L35,17 M36,26 L33,26 M12,14 L15,17 M11,26 L15,26"
+                />
+                <path
+                  d="M16,36 C18,34 20,36 22,34 C24,32 26,36 28,34 C30,32 32,36 34,34"
+                />
+                <path d="M18,41 C20,39 22,41 24,39 C26,37 28,41 30,39" />
+              </svg>
+              <h3>Fired once, in wood</h3>
+              <p>
+                Our anagama kiln burns split red pine for 52 hours each March
+                and September. Ash settles where it likes — no two glaze runs
+                have ever matched, and we have stopped apologising for it.
+              </p>
+              <span class="fg-num">03</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.6 BENEFITS — what a quiet hour does ============ -->
+      <section class="benefits" aria-labelledby="ben-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true">安らい · What settles</span>
+            <div class="sec-head-meta">
+              <span class="overline">What Settles</span>
+              <h2 id="ben-h">Six things guests say they took home.</h2>
+            </div>
+          </div>
+          <div class="benefits-list">
+            <!-- Enso check rings -->
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>Slower mornings</h3>
+                <p>
+                  Guests keep the whisk timer card — 2 minutes of quiet before
+                  the first screen. 6 out of 10 tell us they still use it a year
+                  on.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>Hands that remember</h3>
+                <p>
+                  Wheel practice rewires patience. Your third bowl spins truer
+                  than your first, and the difference was never talent — it was
+                  breath.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>A table set for few</h3>
+                <p>
+                  Eight chairs. One schedule. No standing groups, no party noise
+                  — conversation arrives at the size a teapot serves.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>Tea that tastes of place</h3>
+                <p>
+                  Single-garden matcha from Uji, steamed in 20 kg lots. May and
+                  autumn picks sit side by side on the shelf, labelled by field,
+                  not by brand rank.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>Gifts that need no wrapping</h3>
+                <p>
+                  A kiln-fired bowl travels in a plain paulownia box with the
+                  maker's seal stamped on the lid — paper, ink, done.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <svg class="ensoidx" viewBox="0 0 32 32" aria-hidden="true">
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="13"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.4"
+                  stroke-linecap="round"
+                  stroke-dasharray="72 100"
+                  pathLength="100"
+                  transform="rotate(-40 16 16)"
+                />
+                <path
+                  d="M10.5,16.5 L14.5,20.5 L22,12.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <h3>Wabi as permission</h3>
+                <p>
+                  The uneven brim, the nicked glaze, the shadowed cup — the flaw
+                  is not tolerated here, it is requested.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.7 PROCESS — the way of one visit ============ -->
+      <section id="way" aria-labelledby="way-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true"
+              >作法の道 · The way of a visit</span
+            >
+            <div class="sec-head-meta">
+              <span class="overline">The Way</span>
+              <h2 id="way-h">One visit, in three unhurried acts.</h2>
+            </div>
+          </div>
+          <div class="process-lines">
+            <span class="brush-track" aria-hidden="true">
+              <svg
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+                style="width: 100%; height: 100%"
+              >
+                <path
+                  d="M0,4 C40,2.4 90,2.2 200,3.6 L200,4.4 C90,5.8 40,5.4 0,4 Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <div class="step">
+              <div class="badge">一</div>
+              <h3>Choose your clay</h3>
+              <p>
+                On arrival you pick the bowl you will drink from that day —
+                heavy or thin, dark or wood-ash, from the open shelves by the
+                hearth.
+              </p>
+              <span class="k">Minutes 0–10</span>
+            </div>
+            <div class="step">
+              <div class="badge n2">二</div>
+              <h3>Sit for the pour</h3>
+              <p>
+                The host matches tea to weather and season — a summer sencha, a
+                winter koicha — and pours with the sketch of a story about the
+                field.
+              </p>
+              <span class="k">Minutes 10–40</span>
+            </div>
+            <div class="step">
+              <div class="badge n3">三</div>
+              <h3>Keep the cup</h3>
+              <p>
+                Circle members have their bowl washed, dried, and set on the
+                personal shelf until next time. Some bowls have waited 11 years.
+              </p>
+              <span class="k">Minutes 40–60</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.8 PRICING — the tea circle ============ -->
+      <section id="circle" aria-labelledby="circ-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true">茶輪 · The tea circle</span>
+            <div class="sec-head-meta">
+              <span class="overline">The Tea Circle</span>
+              <h2 id="circ-h">Three ways to sit at Ma.</h2>
+            </div>
+          </div>
+          <div class="pricing-grid">
+            <article class="sheet plan">
+              <h3 class="tier">Drop-in</h3>
+              <p class="for">First-timers, visitors, the quietly curious.</p>
+              <p class="price">
+                <span class="cur">$</span>24<span class="per">/ seating</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >One 60-minute seating, any open slot
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Seasonal usucha + a fresh wagashi
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Kiln-companion bowl for your reading
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Studio viewing when the wheel is on
+                </li>
+              </ul>
+              <a class="btn btn-secondary" href="#reserve">Pick a date</a>
+            </article>
+
+            <article class="sheet plan tariff-band">
+              <span class="hanko seal-top" aria-hidden="true">推</span>
+              <h3 class="tier" style="color: var(--washi)">Resident</h3>
+              <p class="for">Regulars who want a shelf, not a ticket.</p>
+              <p class="price">
+                <span class="cur">$</span>58<span class="per">/ month</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >4 seatings a month, weekday evenings
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Your bowl kept on the personal shelf
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >10% off vans, bowls and loose tea
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >New-pick notice 48 hours early
+                </li>
+              </ul>
+              <a class="btn btn-washi" href="#reserve">Join the circle</a>
+            </article>
+
+            <article class="sheet plan">
+              <h3 class="tier">Patron</h3>
+              <p class="for">The back room, and first call on the kiln.</p>
+              <p class="price">
+                <span class="cur">$</span>140<span class="per">/ month</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Everything Resident, for two guests
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Monthly private koicha in the back room
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >First pick of each firing, 10 days early
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >One wheel workshop hour each quarter
+                </li>
+              </ul>
+              <a class="btn btn-secondary" href="#reserve">Become a patron</a>
+            </article>
+          </div>
+          <p class="plan-note">
+            Prices include tax. Cancel any month by the 20th; your bowl ships
+            home for the kiln's courier fee.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.9 TESTIMONIALS ============ -->
+      <section aria-labelledby="tsti-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true">声 · Three voices</span>
+            <div class="sec-head-meta">
+              <span class="overline">Voices</span>
+              <h2 id="tsti-h">What sits with people after they leave.</h2>
+            </div>
+          </div>
+          <div class="tsti-grid">
+            <article class="sheet quote">
+              <svg class="mark" viewBox="0 0 60 34" aria-hidden="true">
+                <path
+                  d="M28,6 C18,10 12,10 20,17 C22,19 24,21 24,24 C24,28 21,30 17,30 C13,30 10,18 12,12 C13,8 20,5 27,3 Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M52,6 C42,10 36,10 44,17 C46,19 48,21 48,24 C48,28 45,30 41,30 C37,30 34,18 36,12 C37,8 44,5 51,3 Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <blockquote>
+                I booked a drop-in to recover from a deadline and stayed 2
+                years. My bowl has a chip on the rim now; Aya says that is when
+                the cup started listening to me.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1759933164283-ab161f34bd02?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="500"
+                    alt="Portrait of a repeat guest, shown while hands whisk matcha in a rustic bowl"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Mira Sandoval</span><br />
+                  <span class="role"
+                    >Ceramicist, Portland — Resident, 2 yrs</span
+                  >
+                </span>
+              </div>
+            </article>
+            <article class="sheet quote">
+              <svg class="mark" viewBox="0 0 60 34" aria-hidden="true">
+                <path
+                  d="M28,6 C18,10 12,10 20,17 C22,19 24,21 24,24 C24,28 21,30 17,30 C13,30 10,18 12,12 C13,8 20,5 27,3 Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M52,6 C42,10 36,10 44,17 C46,19 48,21 48,24 C48,28 45,30 41,30 C37,30 34,18 36,12 C37,8 44,5 51,3 Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <blockquote>
+                As an architect I came to study the negative space and left
+                having studied myself. The back room holds the same silence as a
+                north-light studio, and it is free of it.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1723242017109-64ac2ad3babf?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="267"
+                    alt="Portrait stand-in: a quiet room with a large circular window and flowers in a basket"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Jonas Weiler</span><br />
+                  <span class="role">Architect, Copenhagen — Patron, 1 yr</span>
+                </span>
+              </div>
+            </article>
+            <article class="sheet quote">
+              <svg class="mark" viewBox="0 0 60 34" aria-hidden="true">
+                <path
+                  d="M28,6 C18,10 12,10 20,17 C22,19 24,21 24,24 C24,28 21,30 17,30 C13,30 10,18 12,12 C13,8 20,5 27,3 Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M52,6 C42,10 36,10 44,17 C46,19 48,21 48,24 C48,28 45,30 41,30 C37,30 34,18 36,12 C37,8 44,5 51,3 Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <blockquote>
+                The whisking card is taped above my desk. Two minutes, no phone,
+                no plan. My mornings in Meguro are unrecognisable from the ones
+                I had before Ma.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1624893464449-22a7e40de7c9?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="533"
+                    alt="Portrait stand-in: a person holding a warm yellow ceramic bowl"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Aiko Tanaka</span><br />
+                  <span class="role"
+                    >Tea student, Meguro — Resident, 3 yrs</span
+                  >
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.10 FAQ ============ -->
+      <section id="faq" aria-labelledby="faq-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true">問い · Questions</span>
+            <div class="sec-head-meta">
+              <span class="overline">Six Questions</span>
+              <h2 id="faq-h">Asked quietly, answered plainly.</h2>
+            </div>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa1"
+                id="fq1"
+              >
+                Do I need any tea experience to visit?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa1" role="region" aria-labelledby="fq1">
+                <p>
+                  None. The host walks each first-timer through the whisk, the
+                  bow, and the turn of the bowl in the first five minutes. The
+                  form is simple on purpose — the point is the sitting, not the
+                  exam.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa2"
+                id="fq2"
+              >
+                What happens in a seating, minute by minute?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa2" role="region" aria-labelledby="fq2">
+                <p>
+                  Minutes 0–10: choose your bowl from the open shelves. Minutes
+                  10–40: the pour, matched to the day's weather, with a short
+                  telling of where this pick grew. Minutes 40–60: quiet refills
+                  of hojicha, studio talk if you want it, silence if you do not.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa3"
+                id="fq3"
+              >
+                Can I buy the bowls and tea after sitting?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa3" role="region" aria-labelledby="fq3">
+                <p>
+                  Yes. Bowls from the last two firings hang by the entry, each
+                  tagged with its firing date, from $90 to $340. The shelf of
+                  loose teas changes with the May and autumn picks — current
+                  stock is 32 cultivars.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa4"
+                id="fq4"
+              >
+                How does the personal shelf work?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa4" role="region" aria-labelledby="fq4">
+                <p>
+                  Resident members pick a bowl, and we log its foot-mark in the
+                  shelf book. It waits, washed and wrapped, between your visits.
+                  The oldest shelf bowl has waited 11 years and is ours to
+                  guard, yours to claim.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa5"
+                id="fq5"
+              >
+                When is the kiln open, and can guests watch?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa5" role="region" aria-labelledby="fq5">
+                <p>
+                  The March and September firings run 52 hours each, unmanned
+                  only from 2 to 5 in the morning. Circle members may come for
+                  any daylight hour; drop-in guests can book one firing-watch
+                  slot per season from the journal page.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa6"
+                id="fq6"
+              >
+                What is the cancellation posture?
+                <svg
+                  class="toggle"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M8,2 L8,14 M2,8 L14,8" />
+                </svg>
+              </button>
+              <div class="faq-a" id="fa6" role="region" aria-labelledby="fq6">
+                <p>
+                  Seatings: free to move up to 24 hours before. Memberships:
+                  cancel any month by the 20th, no exit fee. That is the whole
+                  policy — we would rather spend the ink on tea.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.11 JOURNAL ============ -->
+      <section id="journal" aria-labelledby="jrn-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="rail" aria-hidden="true"
+              >日記 · The house journal</span
+            >
+            <div class="sec-head-meta">
+              <span class="overline">Journal</span>
+              <h2 id="jrn-h">Notes from the wheel and the kettle.</h2>
+            </div>
+          </div>
+          <div class="journal-grid">
+            <article class="post reveal">
+              <div class="frame">
+                <img
+                  src="https://images.unsplash.com/photo-1759933164283-ab161f34bd02?auto=format&fit=crop&w=1200&q=80"
+                  alt="Hands whisking green matcha tea in a rustic bowl"
+                  width="1200"
+                  height="1500"
+                  loading="lazy"
+                />
+              </div>
+              <span class="date">21 September 2026</span>
+              <h3>Koicha season begins: the autumn pick arrives from Uji</h3>
+              <p>
+                The September lot came darker than last year — 18 kg from the
+                shaded north rows. We opened it at the moon seating; the long
+                notes the first bowl gave back are in the tasting ledger.
+              </p>
+              <a class="read" href="#journal">Read the note</a>
+            </article>
+            <article class="post reveal">
+              <div class="frame">
+                <img
+                  src="https://images.unsplash.com/photo-1624893464449-22a7e40de7c9?auto=format&fit=crop&w=1200&q=80"
+                  alt="A warm yellow ceramic bowl held in both hands"
+                  width="1200"
+                  height="1600"
+                  loading="lazy"
+                />
+              </div>
+              <span class="date">3 September 2026</span>
+              <h3>
+                Firing wrap: 90 pieces out of the anagama, 9 kept as seconds
+              </h3>
+              <p>
+                Three days of red pine, one cracked shoulder, one glaze run we
+                will chase for years. The shelf is stacked; Residents pick
+                starting Friday at 10, ten days before the public listing.
+              </p>
+              <a class="read" href="#journal">Read the note</a>
+            </article>
+            <article class="post reveal">
+              <div class="frame">
+                <img
+                  src="https://images.unsplash.com/photo-1764112434647-bfd7d5ccb10d?auto=format&fit=crop&w=1200&q=80"
+                  alt="A raked zen garden with stone groupings"
+                  width="1200"
+                  height="1600"
+                  loading="lazy"
+                />
+              </div>
+              <span class="date">12 August 2026</span>
+              <h3>Why the garden path takes 40 seconds and no less</h3>
+              <p>
+                The raked sand before the gate is not decoration — it is a gear
+                change. We timed 60 guests walking it; the ones who slowed left
+                their city at the step. This note is about what we changed to
+                make that easier.
+              </p>
+              <a class="read" href="#journal">Read the note</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.12 FINAL CTA ============ -->
+      <section id="reserve" class="final" aria-labelledby="fin-h">
+        <div class="wrap final-inner">
+          <span class="enso-final enso live" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <g transform="rotate(-10 50 50)">
+                <circle
+                  class="ring ring-main"
+                  cx="50"
+                  cy="50"
+                  r="42"
+                  pathLength="100"
+                />
+                <circle
+                  class="ring ring-ghost"
+                  cx="50.5"
+                  cy="49.5"
+                  r="41.5"
+                  pathLength="100"
+                />
+              </g>
+            </svg>
+          </span>
+          <h2 id="fin-h">The kettle is on. One seat is yours.</h2>
+          <p>
+            Eight chairs, six seatings a week, and a 17-year kiln behind the
+            wall. Choose the hour; we will have the bowl warm.
+          </p>
+          <div class="row-btn">
+            <a class="btn btn-washi" href="#top">Reserve a seat</a>
+            <a class="btn btn-outline-washi" href="#circle"
+              >See tea circle plans</a
+            >
+          </div>
+          <span class="note">Yanaka · Tue–Sun · 10:00–18:00</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 3.13 FOOTER ============ -->
+    <footer class="site-footer">
+      <!-- Rich stacked footer — below 768px only -->
+      <div class="foot-rich">
+        <div>
+          <a class="foot-brand" href="#top">
+            <span class="hanko" aria-hidden="true">間</span>
+            <span>Ma</span>
+          </a>
+          <p class="para">
+            A tea house and ceramics studio in Yanaka, Tokyo. Bowls thrown by
+            two hands, tea whisked in front of you, and chairs enough for eight
+            — since 2009.
+          </p>
+        </div>
+        <div class="cols">
+          <div>
+            <h3>The House</h3>
+            <ul>
+              <li><a href="#craft">The Craft</a></li>
+              <li><a href="#way">The Way</a></li>
+              <li><a href="#journal">Journal</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Sitting</h3>
+            <ul>
+              <li><a href="#circle">Tea Circle</a></li>
+              <li><a href="#reserve">Reserve a seat</a></li>
+              <li><a href="#faq">Questions</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>The Kettle Letter</h3>
+            <p class="para" style="margin-top: 0">
+              One letter a month: what the kiln said, what the shelf holds.
+            </p>
+            <form class="field-row" action="#" method="post">
+              <label class="u-label sr-only" for="news-email">Email</label>
+              <input
+                class="u-input"
+                id="news-email"
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+        <span class="brush-rule" aria-hidden="true">
+          <svg viewBox="0 0 200 6" preserveAspectRatio="none">
+            <path
+              d="M0,3 C40,1.6 120,1.3 200,2.5 L200,2.9 C120,4 40,4.4 0,3.3 Z"
+              fill="currentColor"
+            />
+          </svg>
+        </span>
+        <p class="foot-mobile-copy">
+          © 2026 Ma Tea House &amp; Ceramics Studio · Yanaka, Tokyo
+        </p>
+      </div>
+
+      <!-- Slim horizontal band — at 768px and above -->
+      <div class="foot-slim wrap">
+        <a class="foot-brand" href="#top" aria-label="Ma — back to top">
+          <span class="hanko" aria-hidden="true">間</span>
+          <span>Ma<span class="sub"> · Yanaka, Tokyo</span></span>
+        </a>
+        <nav class="foot-links" aria-label="Footer">
+          <a href="#craft">The Craft</a>
+          <a href="#way">The Way</a>
+          <a href="#circle">Tea Circle</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">Questions</a>
+        </nav>
+        <div class="foot-right">
+          <div class="foot-social">
+            <a href="#top" aria-label="Ma on Instagram">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                  cx="17.2"
+                  cy="6.8"
+                  r="0.9"
+                  fill="currentColor"
+                  stroke="none"
+                />
+              </svg>
+            </a>
+            <a href="#top" aria-label="Write to Ma">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="M3,7 L12,13 L21,7" />
+              </svg>
+            </a>
+            <a href="#top" aria-label="Ma on the map">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12,21 C12,21 5,14.5 5,9.5 A7,7 0 0 1 19,9.5 C19,14.5 12,21 12,21 Z"
+                />
+                <circle cx="12" cy="9.5" r="2.5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <span class="foot-copy">© 2026 Ma</span>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        'use strict'
+        var reduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+
+        /* Mobile nav */
+        var toggle = document.querySelector('.nav-toggle')
+        var sheet = document.getElementById('mobileNav')
+        if (toggle && sheet) {
+          toggle.addEventListener('click', function () {
+            var open = toggle.getAttribute('aria-expanded') === 'true'
+            toggle.setAttribute('aria-expanded', String(!open))
+            toggle.setAttribute(
+              'aria-label',
+              !open ? 'Close menu' : 'Open menu',
+            )
+            sheet.classList.toggle('open', !open)
+          })
+          sheet.addEventListener('click', function (e) {
+            if (e.target.closest('a')) {
+              toggle.setAttribute('aria-expanded', 'false')
+              sheet.classList.remove('open')
+            }
+          })
+        }
+
+        /* FAQ accordion — one open at a time */
+        var items = Array.prototype.slice.call(
+          document.querySelectorAll('.faq-item'),
+        )
+        items.forEach(function (item) {
+          var btn = item.querySelector('.faq-q')
+          var panel = item.querySelector('.faq-a')
+          function close() {
+            item.classList.remove('open')
+            btn.setAttribute('aria-expanded', 'false')
+            panel.style.maxHeight = '0px'
+          }
+          function open() {
+            items.forEach(function (other) {
+              if (other !== item) {
+                var b = other.querySelector('.faq-q'),
+                  p = other.querySelector('.faq-a')
+                other.classList.remove('open')
+                b.setAttribute('aria-expanded', 'false')
+                p.style.maxHeight = '0px'
+              }
+            })
+            item.classList.add('open')
+            btn.setAttribute('aria-expanded', 'true')
+            panel.style.maxHeight = panel.scrollHeight + 'px'
+          }
+          btn.addEventListener('click', function () {
+            btn.getAttribute('aria-expanded') === 'true' ? close() : open()
+          })
+        })
+
+        /* Enso draw-in on first view */
+        var ensos = Array.prototype.slice.call(
+          document.querySelectorAll('.enso:not(.live)'),
+        )
+        if (!reduced && 'IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add('in')
+                  io.unobserve(en.target)
+                }
+              })
+            },
+            { threshold: 0.35 },
+          )
+          ensos.forEach(function (el) {
+            io.observe(el)
+          })
+        } else {
+          ensos.forEach(function (el) {
+            el.classList.add('in')
+          })
+        }
+
+        /* Gentle reveals for journal cards */
+        var revs = Array.prototype.slice.call(
+          document.querySelectorAll('.reveal'),
+        )
+        if (!reduced && 'IntersectionObserver' in window) {
+          var ro = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en, i) {
+                if (en.isIntersecting) {
+                  en.target.style.transitionDelay = i * 60 + 'ms'
+                  en.target.classList.add('in')
+                  ro.unobserve(en.target)
+                }
+              })
+            },
+            { threshold: 0.2 },
+          )
+          revs.forEach(function (el) {
+            ro.observe(el)
+          })
+        } else {
+          revs.forEach(function (el) {
+            el.classList.add('in')
+          })
+        }
+      })()
+    </script>
+    <style id="footer-unify">
+      /* one footer on every device: rich extras hidden at ALL widths, slim band visible at ALL widths */
+      .foot-rich {
+        display: none !important;
+      }
+      .foot-slim {
+        display: flex !important;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.55rem 1.4rem;
+      }
+      .foot-slim > * {
+        min-width: 0;
+      }
+      @media (min-width: 768px) {
+        .foot-slim {
+          flex-wrap: wrap !important;
+        }
+        .foot-slim .foot-links {
+          flex-wrap: nowrap !important;
+        }
+        .foot-slim .foot-copy {
+          flex-basis: 100% !important;
+          text-align: center !important;
+          border-top: 1px solid var(--border-ink);
+          margin-top: 0.35rem;
+          padding-top: 0.95rem;
+        }
+      }
+    </style>
+  </body>
+</html>

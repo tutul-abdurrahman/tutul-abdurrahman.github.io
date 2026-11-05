@@ -1,0 +1,2857 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nordbo — Nordic Home Goods · Made to be used, made to be kept</title>
+    <meta
+      name="description"
+      content="Nordbo makes birch, oak and wool goods for slow Nordic homes. Free shipping over $75, 60-day returns, and a 10-year repair promise."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ TOKENS ============ */
+      :root {
+        /* colors */
+        --snow: #faf8f4;
+        --birch-panel: #f1ece3;
+        --charcoal: #2e3438;
+        --slate: #757c80;
+        --fjord: #4a6b7c;
+        --pine: #3e5b49;
+        --blush: #d9a79a;
+        --birch-line: #ded8cc;
+        /* blur tints */
+        --fjord-tint: rgba(74, 107, 124, 0.1);
+        --pine-tint: rgba(62, 91, 73, 0.11);
+        --blush-tint: rgba(217, 167, 154, 0.18);
+        /* glow */
+        --candle: rgba(234, 208, 166, 0.14);
+        /* shadows (soft diffused only) */
+        --shadow-soft: 0 4px 16px rgba(46, 52, 56, 0.06);
+        --shadow-lift: 0 8px 24px rgba(46, 52, 56, 0.1);
+        /* type */
+        --font-head: 'Sora', 'Segoe UI', Arial, sans-serif;
+        --font-body: 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+        /* radii */
+        --r-sm: 12px;
+        --r-md: 16px;
+        --r-lg: 20px;
+        --maxw: 72rem;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.7;
+        color: var(--charcoal);
+        background: var(--snow);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-head);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin: 0;
+      }
+      a {
+        color: var(--fjord);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+        text-decoration-thickness: 1px;
+      }
+      :focus-visible {
+        outline: 2px solid var(--fjord);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .wrap {
+        max-width: var(--maxw);
+        margin-inline: auto;
+        padding-inline: 1.5rem;
+      }
+      section {
+        padding-block: clamp(4.5rem, 7vw, 6.5rem);
+      }
+
+      /* ============ SIGNATURE TEXTURES ============ */
+      /* Light wood-grain strip, ≤5% presence */
+      .wood {
+        background: repeating-linear-gradient(
+          92deg,
+          rgba(148, 110, 74, 0.1) 0 7px,
+          rgba(148, 110, 74, 0.032) 7px 15px,
+          rgba(148, 110, 74, 0.075) 15px 23px,
+          rgba(148, 110, 74, 0.03) 23px 30px
+        );
+      }
+      /* Wool knit — 3% */
+      .wool {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36'%3E%3Cpath d='M0 18 Q4.5 9 9 18 T18 18 T27 18 T36 18' fill='none' stroke='%232E3438' stroke-width='1' opacity='0.05'/%3E%3Cpath d='M0 9 Q4.5 0 9 9 T18 9 T27 9 T36 9' fill='none' stroke='%232E3438' stroke-width='1' opacity='0.04'/%3E%3Cpath d='M0 27 Q4.5 18 9 27 T18 27 T27 27 T36 27' fill='none' stroke='%232E3438' stroke-width='1' opacity='0.04'/%3E%3C/svg%3E");
+      }
+      /* Hygge warmth glow */
+      .glow {
+        position: absolute;
+        pointer-events: none;
+        inset: auto;
+        background: radial-gradient(
+          closest-side,
+          var(--candle),
+          rgba(234, 208, 166, 0) 70%
+        );
+      }
+      .glow-breath {
+        animation: breathe 6s ease-in-out infinite;
+      }
+      @keyframes breathe {
+        0%,
+        100% {
+          opacity: 0.75;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .glow-breath {
+          animation: none;
+        }
+      }
+
+      /* ============ OVERLINES ============ */
+      .overline {
+        font-family: var(--font-head);
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--slate);
+      }
+
+      /* ============ BUTTONS ============ */
+      .btn {
+        font-family: var(--font-head);
+        font-weight: 500;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 48px;
+        padding: 0.5rem 1.6rem;
+        white-space: nowrap;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        box-shadow: var(--shadow-soft);
+        cursor: pointer;
+        transition:
+          background-color 0.3s ease-out,
+          color 0.3s ease-out,
+          transform 0.3s ease-out,
+          border-color 0.3s ease-out,
+          box-shadow 0.3s ease-out;
+        text-align: center;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn:disabled,
+      .btn[aria-disabled='true'] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .btn-primary {
+        background: var(--fjord);
+        color: var(--snow);
+      }
+      .btn-primary:hover {
+        background: var(--pine);
+        color: var(--snow);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lift);
+      }
+      .btn-secondary {
+        background: var(--birch-panel);
+        color: var(--charcoal);
+        border-color: var(--birch-line);
+      }
+      .btn-secondary:hover {
+        background: var(--blush);
+        color: var(--charcoal);
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--fjord);
+        box-shadow: none;
+        border-color: transparent;
+        padding-inline: 0.2rem;
+        min-height: 44px;
+      }
+      .btn-ghost .u {
+        position: relative;
+      }
+      .btn-ghost .u::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        height: 1.5px;
+        width: 100%;
+        background: var(--birch-line);
+        border-radius: 2px;
+        transform-origin: left;
+        transition: transform 0.35s ease-out;
+      }
+      .btn-ghost:hover .u::after {
+        background: var(--fjord);
+        transform: scaleX(0.6);
+      }
+      .btn:focus-visible {
+        outline: 2px solid var(--fjord);
+        outline-offset: 3px;
+      }
+      /* Light-on-dark */
+      .btn-snow {
+        background: var(--snow);
+        color: var(--charcoal);
+      }
+      .btn-snow:hover {
+        background: var(--birch-panel);
+        color: var(--charcoal);
+        transform: translateY(-1px);
+      }
+      .btn-outline-snow {
+        background: transparent;
+        color: var(--snow);
+        border-color: rgba(250, 248, 244, 0.6);
+        box-shadow: none;
+      }
+      .btn-outline-snow:hover {
+        background: rgba(250, 248, 244, 0.12);
+        transform: translateY(-1px);
+      }
+      .row-btn {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      @media (min-width: 640px) {
+        .row-btn {
+          flex-direction: row;
+          align-items: stretch;
+        }
+        .row-btn > .btn {
+          width: auto;
+          min-width: 10.5rem;
+        }
+      }
+      @media (max-width: 639px) {
+        .row-btn > .btn {
+          width: 100%;
+        }
+      }
+
+      /* ============ CARDS ============ */
+      .card {
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        border-radius: var(--r-lg);
+        box-shadow: var(--shadow-soft);
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.35s ease-out,
+          box-shadow 0.35s ease-out;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lift);
+      }
+      .card--birch {
+        background: var(--birch-panel);
+      }
+      .card .strip {
+        height: 10px;
+        border-radius: var(--r-lg) var(--r-lg) 0 0;
+        background: var(--birch-panel);
+      }
+
+      /* ============ HEADER ============ */
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(250, 248, 244, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--birch-line);
+      }
+      .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 4.5rem;
+        max-width: var(--maxw);
+        margin-inline: auto;
+        padding-inline: 1.5rem;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-family: var(--font-head);
+        font-weight: 600;
+        font-size: 1.15rem;
+        color: var(--charcoal);
+        letter-spacing: -0.01em;
+      }
+      .brand:hover {
+        text-decoration: none;
+      }
+      .brand .bloom {
+        width: 2rem;
+        height: 2rem;
+        flex: none;
+        color: var(--fjord);
+      }
+      .main-nav {
+        display: none;
+        align-items: center;
+        gap: 2rem;
+      }
+      @media (min-width: 1024px) {
+        .main-nav {
+          display: flex;
+        }
+      }
+      .main-nav a {
+        font-size: 0.95rem;
+        color: var(--charcoal);
+        text-decoration: none;
+        padding: 0.5rem 0;
+      }
+      .main-nav a:hover {
+        color: var(--fjord);
+        text-decoration: underline;
+        text-underline-offset: 0.4em;
+        text-decoration-thickness: 1px;
+      }
+      .header-cta {
+        display: none;
+      }
+      @media (min-width: 1024px) {
+        .header-cta {
+          display: inline-flex;
+        }
+      }
+      .nav-toggle {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 48px;
+        height: 48px;
+        padding: 14px 13px;
+        background: transparent;
+        border: 1px solid var(--birch-line);
+        border-radius: 12px;
+        cursor: pointer;
+      }
+      @media (min-width: 1024px) {
+        .nav-toggle {
+          display: none;
+        }
+      }
+      .nav-toggle span {
+        display: block;
+        height: 1.5px;
+        width: 100%;
+        background: var(--charcoal);
+        border-radius: 2px;
+        transition:
+          transform 0.3s ease-out,
+          opacity 0.3s ease-out;
+      }
+      .nav-toggle[aria-expanded='true'] span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+      }
+      .nav-toggle[aria-expanded='true'] span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle[aria-expanded='true'] span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+      }
+      .mobile-sheet {
+        display: none;
+        background: var(--snow);
+        border-top: 1px solid var(--birch-line);
+        padding: 0.75rem 1.5rem 1.5rem;
+      }
+      .mobile-sheet.open {
+        display: block;
+      }
+      .mobile-sheet a {
+        display: block;
+        font-family: var(--font-head);
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid var(--birch-line);
+        color: var(--charcoal);
+      }
+      .mobile-sheet .btn {
+        width: 100%;
+        margin-top: 1.25rem;
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        padding-block: clamp(4rem, 7vw, 6.5rem) clamp(4.5rem, 8vw, 7rem);
+        background: var(--snow);
+        position: relative;
+        overflow: hidden;
+      }
+      .hero .glow {
+        width: 46rem;
+        height: 46rem;
+        right: -14rem;
+        top: -12rem;
+        border-radius: 50%;
+      }
+      .hero-grid {
+        display: grid;
+        gap: clamp(2.5rem, 5vw, 4rem);
+        align-items: center;
+        position: relative;
+      }
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: 6fr 5fr;
+        }
+      }
+      .hero h1 {
+        font-size: clamp(2.1rem, 5vw, 3.4rem);
+        letter-spacing: -0.02em;
+        margin: 1.1rem 0 1.25rem;
+        max-width: 16ch;
+      }
+      .hero h1 .fj {
+        color: var(--fjord);
+      }
+      .hero .lead {
+        font-size: 1.15rem;
+        color: var(--slate);
+        max-width: 44ch;
+        margin-bottom: 2rem;
+      }
+      .hero-img {
+        position: relative;
+      }
+      .hero-img .frame {
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        border: 1px solid var(--birch-line);
+        box-shadow: var(--shadow-lift);
+        transform: rotate(0deg);
+      }
+      .hero-img img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+      }
+      .hero-chip {
+        position: absolute;
+        left: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 2;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        border-radius: 999px;
+        padding: 0.55rem 1rem;
+        font-size: 0.85rem;
+        box-shadow: var(--shadow-soft);
+      }
+      .hero-chip svg {
+        width: 1rem;
+        height: 1rem;
+        color: var(--pine);
+      }
+      .trust-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.1rem 1.75rem;
+        margin-top: 2.25rem;
+        font-size: 0.88rem;
+        color: var(--slate);
+      }
+      .trust-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+      }
+      .trust-item svg {
+        width: 1rem;
+        height: 1rem;
+        color: var(--pine);
+        flex: none;
+      }
+
+      /* ============ STATS ============ */
+      .stats {
+        padding-block: clamp(3.5rem, 5vw, 5rem);
+      }
+      .stats-band {
+        background: var(--birch-panel);
+        border: 1px solid var(--birch-line);
+        border-radius: var(--r-lg);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        .stats-band {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .stat {
+        padding: 2rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        position: relative;
+      }
+      .stat + .stat::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 15%;
+        bottom: 15%;
+        width: 1px;
+        background: var(--birch-line);
+      }
+      @media (max-width: 767px) {
+        .stat:nth-child(even)::before {
+          display: none;
+        }
+        .stat:nth-child(n + 3) {
+          border-top: 1px solid var(--birch-line);
+        }
+      }
+      .stat .num {
+        font-family: var(--font-head);
+        font-weight: 600;
+        font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+      }
+      .stat.s1 .num {
+        color: var(--fjord);
+      }
+      .stat.s2 .num {
+        color: var(--pine);
+      }
+      .stat.s3 .num {
+        color: #c29082;
+      }
+      .stat.s4 .num {
+        color: var(--fjord);
+      }
+      .stat .lbl {
+        font-size: 0.88rem;
+        color: var(--slate);
+        line-height: 1.5;
+      }
+
+      /* ============ PROCLAMATION ============ */
+      .proc .panel {
+        background: var(--birch-panel);
+        border: 1px solid var(--birch-line);
+        border-radius: var(--r-lg);
+        box-shadow: var(--shadow-soft);
+        padding: clamp(2.75rem, 6vw, 4.25rem) clamp(1.5rem, 6vw, 4rem);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .proc .wool-tex {
+        position: absolute;
+        inset: 0;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .proc .glow {
+        width: 34rem;
+        height: 22rem;
+        left: 50%;
+        top: -6rem;
+        transform: translateX(-50%);
+        border-radius: 50%;
+      }
+      .proc-inner {
+        position: relative;
+        max-width: 44rem;
+        margin-inline: auto;
+      }
+      .proc h2 {
+        font-size: clamp(1.8rem, 4vw, 2.7rem);
+        margin: 1rem auto 1.35rem;
+        letter-spacing: -0.02em;
+      }
+      .proc p {
+        color: var(--charcoal);
+        text-align: left;
+      }
+      .proc p::first-letter {
+        font-family: var(--font-head);
+        font-weight: 700;
+        float: left;
+        font-size: 3.4rem;
+        line-height: 0.85;
+        padding: 0.25rem 0.85rem 0 0;
+        color: var(--fjord);
+      }
+
+      /* ============ SECTION HEAD ============ */
+      .sec-head {
+        margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+        max-width: 56rem;
+      }
+      .sec-head h2 {
+        font-size: clamp(1.75rem, 3.8vw, 2.5rem);
+        margin: 0.9rem 0 0.9rem;
+        letter-spacing: -0.02em;
+      }
+      .sec-head p {
+        color: var(--slate);
+        font-size: 1.05rem;
+        max-width: 56ch;
+      }
+
+      /* ============ FEATURES ============ */
+      .features-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .feature {
+        padding: 2.25rem;
+      }
+      .feature h3 {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.75rem;
+      }
+      .feature p {
+        color: var(--slate);
+        font-size: 0.97rem;
+      }
+      .icon-badge {
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .icon-badge svg {
+        width: 24px;
+        height: 24px;
+      }
+      .icon-badge.b-fjord {
+        background: var(--fjord-tint);
+        color: var(--fjord);
+      }
+      .icon-badge.b-pine {
+        background: var(--pine-tint);
+        color: var(--pine);
+      }
+      .icon-badge.b-blush {
+        background: var(--blush-tint);
+        color: #a06f5f;
+      }
+
+      /* ============ BENEFITS ============ */
+      .benefits-list {
+        display: grid;
+        gap: 0 3rem;
+      }
+      @media (min-width: 768px) {
+        .benefits-list {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .benefit {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        padding: 1.4rem 0;
+        border-bottom: 1px solid var(--birch-line);
+      }
+      .bullet {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        flex: none;
+        margin-top: 0.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bullet svg {
+        width: 0.8rem;
+        height: 0.8rem;
+      }
+      .bullet.b-pine {
+        background: var(--pine-tint);
+        color: var(--pine);
+      }
+      .benefit h3 {
+        font-family: var(--font-head);
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      .benefit p {
+        color: var(--slate);
+        font-size: 0.95rem;
+      }
+
+      /* ============ PROCESS ============ */
+      .process-grid {
+        display: grid;
+        gap: 2.5rem;
+        position: relative;
+      }
+      @media (min-width: 768px) {
+        .process-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
+        }
+      }
+      .grain-track {
+        position: absolute;
+        top: 2rem;
+        left: 8%;
+        right: 8%;
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .grain-track {
+          display: block;
+        }
+        .grain-track svg {
+          width: 100%;
+          height: 10px;
+          display: block;
+        }
+      }
+      .step {
+        position: relative;
+      }
+      .step .disc {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-head);
+        font-weight: 600;
+        font-size: 1.15rem;
+        box-shadow: var(--shadow-soft);
+        position: relative;
+        z-index: 2;
+      }
+      .disc.d-fjord {
+        color: var(--fjord);
+      }
+      .disc.d-pine {
+        color: var(--pine);
+        background: var(--birch-panel);
+      }
+      .disc.d-blush {
+        color: #a06f5f;
+      }
+      .step h3 {
+        font-size: 1.15rem;
+        margin: 1.25rem 0 0.5rem;
+      }
+      .step p {
+        color: var(--slate);
+        font-size: 0.96rem;
+        max-width: 32ch;
+      }
+
+      /* ============ PRICING ============ */
+      .pricing-grid {
+        display: grid;
+        gap: 1.5rem;
+        align-items: stretch;
+      }
+      @media (min-width: 768px) {
+        .pricing-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .pricing-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .plan {
+        padding: 2.25rem;
+        position: relative;
+      }
+      .plan .tier {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .plan .for {
+        font-size: 0.9rem;
+        color: var(--slate);
+        margin-bottom: 1.5rem;
+      }
+      .plan .price {
+        font-family: var(--font-head);
+        font-weight: 600;
+        font-size: clamp(2.1rem, 3.4vw, 2.6rem);
+        letter-spacing: -0.02em;
+        display: flex;
+        align-items: baseline;
+        gap: 0.35rem;
+      }
+      .plan .price .cur {
+        font-size: 0.5em;
+        color: var(--slate);
+        font-weight: 500;
+      }
+      .plan .per {
+        font-size: 0.88rem;
+        color: var(--slate);
+      }
+      .plan ul {
+        list-style: none;
+        margin: 1.75rem 0 0;
+        display: grid;
+        gap: 0.8rem;
+      }
+      .plan li {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        font-size: 0.95rem;
+        color: var(--charcoal);
+      }
+      .plan li svg {
+        flex: none;
+        width: 1rem;
+        height: 1rem;
+        margin-top: 0.3em;
+        color: var(--pine);
+      }
+      .plan .btn {
+        margin-top: auto;
+        width: 100%;
+      }
+      .plan.cta-gap .btn {
+        margin-top: 2rem;
+      }
+      .plan.featured {
+        border-color: var(--fjord);
+        box-shadow: 0 10px 30px rgba(74, 107, 124, 0.14);
+      }
+      .plan.featured::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+          24rem 14rem at 50% -6rem,
+          var(--candle),
+          transparent 70%
+        );
+      }
+      .plan .band {
+        display: inline-block;
+        background: var(--fjord);
+        color: var(--snow);
+        font-family: var(--font-head);
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        padding: 0.35rem 0.8rem;
+        margin-bottom: 0.9rem;
+      }
+      .plan-note {
+        text-align: center;
+        color: var(--slate);
+        font-size: 0.9rem;
+        margin-top: 2.25rem;
+      }
+
+      /* ============ TESTIMONIALS ============ */
+      .tsti-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 1024px) {
+        .tsti-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .quote {
+        padding: 2rem 2rem 1.75rem;
+      }
+      .quote .qmark {
+        font-family: var(--font-head);
+        font-weight: 700;
+        font-size: 2.6rem;
+        line-height: 1;
+        color: #c29082;
+        height: 2.6rem;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      .quote blockquote {
+        font-size: 1rem;
+        color: var(--charcoal);
+        margin-bottom: 1.5rem;
+      }
+      .quote .quote-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-top: auto;
+      }
+      .avatar {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        overflow: hidden;
+        flex: none;
+        border: 2px solid var(--birch-line);
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .quote .who {
+        font-family: var(--font-head);
+        font-weight: 600;
+        font-size: 0.92rem;
+        line-height: 1.35;
+      }
+      .quote .role {
+        font-size: 0.8rem;
+        color: var(--slate);
+      }
+
+      /* ============ FAQ ============ */
+      .faq-list {
+        max-width: 680px;
+        margin-inline: auto;
+        border-top: 1px solid var(--birch-line);
+      }
+      .faq-item {
+        border-bottom: 1px solid var(--birch-line);
+      }
+      .faq-q {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        font-family: var(--font-head);
+        font-weight: 500;
+        font-size: 1.02rem;
+        color: var(--charcoal);
+        padding: 1.35rem 0;
+        min-height: 44px;
+        border-radius: 0;
+      }
+      .faq-q .toggle {
+        flex: none;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: var(--fjord-tint);
+        color: var(--fjord);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease-out;
+      }
+      .faq-q .toggle svg {
+        width: 0.9rem;
+        height: 0.9rem;
+      }
+      .faq-q[aria-expanded='true'] .toggle {
+        transform: rotate(180deg);
+      }
+      .faq-a {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition:
+          max-height 0.4s ease-out,
+          opacity 0.4s ease-out;
+      }
+      .faq-item.open .faq-a {
+        opacity: 1;
+      }
+      .faq-a p {
+        color: var(--slate);
+        padding: 0 3.5rem 1.5rem 0;
+        max-width: 60ch;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .faq-a {
+          transition: opacity 0.2s ease-out;
+        }
+        .faq-q .toggle {
+          transition: none;
+        }
+      }
+
+      /* ============ JOURNAL ============ */
+      .journal-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .journal-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .journal-grid {
+          grid-template-columns: repeat(3, 1fr);
+          align-items: stretch;
+        }
+      }
+      .post {
+        overflow: hidden;
+      }
+      .post .ph {
+        position: relative;
+      }
+      .post .ph img {
+        width: 100%;
+        aspect-ratio: 3/2;
+        object-fit: cover;
+      }
+      .post .tag {
+        position: absolute;
+        top: 0.9rem;
+        left: 0.9rem;
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        border-radius: 999px;
+        font-family: var(--font-head);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.75rem;
+        color: var(--charcoal);
+      }
+      .post-body {
+        padding: 1.5rem 1.75rem 1.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex: 1;
+      }
+      .post .date {
+        font-size: 0.8rem;
+        color: var(--slate);
+      }
+      .post h3 {
+        font-size: 1.12rem;
+        line-height: 1.4;
+      }
+      .post p {
+        color: var(--slate);
+        font-size: 0.93rem;
+      }
+      .post .read {
+        margin-top: auto;
+        padding-top: 0.75rem;
+        font-family: var(--font-head);
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: var(--fjord);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .post .read svg {
+        width: 0.85rem;
+        height: 0.85rem;
+        transition: transform 0.3s ease-out;
+      }
+      .post .read:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* ============ FINAL CTA ============ */
+      .final {
+        background: var(--pine);
+        color: var(--snow);
+        position: relative;
+        overflow: hidden;
+      }
+      .final .wool-tex {
+        position: absolute;
+        inset: 0;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .final .glow {
+        width: 40rem;
+        height: 26rem;
+        left: 50%;
+        top: -10rem;
+        transform: translateX(-50%);
+        border-radius: 50%;
+      }
+      .final-inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+      }
+      .final h2 {
+        font-size: clamp(1.9rem, 4vw, 2.8rem);
+        color: var(--snow);
+        max-width: 20ch;
+        letter-spacing: -0.02em;
+      }
+      .final p {
+        color: rgba(250, 248, 244, 0.8);
+        max-width: 46ch;
+        font-size: 1.03rem;
+      }
+      .final .row-btn {
+        justify-content: center;
+      }
+      .final .mini-note {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.1rem 2rem;
+        font-size: 0.85rem;
+        color: rgba(250, 248, 244, 0.75);
+      }
+      .final .mini-note span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .final .mini-note svg {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      /* ============ FOOTER ============ */
+      .site-footer {
+        background: var(--birch-panel);
+        border-top: 1px solid var(--birch-line);
+        color: var(--charcoal);
+      }
+      .foot-slim {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .foot-slim {
+          display: grid;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem 2rem;
+          min-height: 5.5rem;
+          padding-block: 1.1rem;
+        }
+        .foot-slim > .foot-links {
+          justify-self: center;
+          justify-content: center;
+        }
+        .foot-slim > .foot-right {
+          justify-self: end;
+        }
+        .foot-slim > .foot-copy {
+          grid-column: 1 / -1;
+          justify-self: center;
+          margin-top: 0.35rem;
+        }
+        .foot-rich {
+          display: none;
+        }
+      }
+      .foot-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        font-family: var(--font-head);
+        font-weight: 600;
+        color: var(--charcoal);
+        text-decoration: none;
+      }
+      .foot-brand:hover {
+        text-decoration: none;
+      }
+      .foot-brand .bloom {
+        width: 1.8rem;
+        height: 1.8rem;
+        color: var(--pine);
+      }
+      .foot-brand .sub {
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: var(--slate);
+      }
+      .foot-links {
+        display: flex;
+        gap: 1.75rem;
+        flex-wrap: wrap;
+      }
+      .foot-links a {
+        font-size: 0.9rem;
+        color: var(--charcoal);
+        text-decoration: none;
+        padding: 0.25rem 0;
+      }
+      .foot-links a:hover {
+        color: var(--fjord);
+        text-decoration: underline;
+        text-underline-offset: 0.3em;
+      }
+      .foot-right {
+        display: flex;
+        align-items: center;
+        gap: 1.4rem;
+      }
+      .foot-social {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .foot-social a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        color: var(--charcoal);
+        transition:
+          color 0.3s ease-out,
+          background-color 0.3s ease-out;
+      }
+      .foot-social a:hover {
+        background: var(--snow);
+        color: var(--fjord);
+        text-decoration: none;
+        transform: none;
+      }
+      .foot-social svg {
+        width: 1.05rem;
+        height: 1.05rem;
+      }
+      .foot-copy {
+        font-size: 0.82rem;
+        color: var(--slate);
+        white-space: nowrap;
+      }
+      /* Rich footer <768px */
+      .foot-rich {
+        padding: 2.5rem 1.5rem 2.25rem;
+        display: grid;
+        gap: 2rem;
+      }
+      .foot-rich .para {
+        color: var(--slate);
+        font-size: 0.92rem;
+        max-width: 42ch;
+        margin-top: 0.75rem;
+      }
+      .foot-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      .foot-cols h3 {
+        font-family: var(--font-head);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--slate);
+        margin-bottom: 0.9rem;
+      }
+      .foot-cols ul {
+        list-style: none;
+        display: grid;
+        gap: 0.65rem;
+      }
+      .foot-cols ul a {
+        color: var(--charcoal);
+        font-size: 0.95rem;
+        text-decoration: none;
+      }
+      .foot-cols ul a:hover {
+        color: var(--fjord);
+        text-decoration: underline;
+      }
+      .newsletter {
+        grid-column: 1 / -1;
+      }
+      .newsletter p {
+        color: var(--slate);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .nl-row {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      @media (min-width: 480px) {
+        .nl-row {
+          flex-direction: row;
+        }
+      }
+      .nl-input {
+        flex: 1;
+        min-width: 0;
+        background: var(--snow);
+        border: 1px solid var(--birch-line);
+        border-radius: 12px;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: var(--charcoal);
+        padding: 0.65rem 1rem;
+        min-height: 48px;
+      }
+      .nl-input::placeholder {
+        color: var(--slate);
+      }
+      .nl-input:focus {
+        outline: none;
+        border-color: var(--fjord);
+        box-shadow: 0 0 0 3px var(--fjord-tint);
+      }
+      .foot-mobile-copy {
+        font-size: 0.8rem;
+        color: var(--slate);
+      }
+
+      /* reveal helper */
+      .reveal {
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+          opacity 0.5s ease-out,
+          transform 0.5s ease-out;
+      }
+      .reveal.in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+      }
+
+      /* ============ V2 SURGICAL FIX PASS ============ */
+      /* Mobile menu: fixed full-screen panel so opening never shifts the page.
+         The panel lives after </header> in the markup — the sticky header has
+         backdrop-filter, which would otherwise become its containing block. */
+      .mobile-sheet.open {
+        display: block;
+        position: fixed;
+        inset: 4.5rem 0 0;
+        z-index: 60;
+        background: var(--snow);
+        border-top: 1px solid var(--birch-line);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 0.75rem 1.5rem 1.5rem;
+      }
+
+      /* Footer band at 768px+: row 1 = brand / links / socials,
+         row 2 = copyright alone, full width */
+      @media (min-width: 768px) {
+        .foot-slim > .foot-copy {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          width: 100%;
+          justify-self: center;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ 3.1 HEADER ============ -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="#top" aria-label="Nordbo — back to top">
+          <svg class="bloom" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+              d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+              fill="currentColor"
+              opacity=".18"
+            />
+            <path
+              d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+            <path d="M16,10 L16,27" stroke="currentColor" stroke-width="1.4" />
+            <path
+              d="M16,16 L11,13 M16,19 L21,16"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Nordbo</span>
+        </a>
+        <nav class="main-nav" aria-label="Primary">
+          <a href="#craft">Materials</a>
+          <a href="#process">How It's Made</a>
+          <a href="#bundles">Bundles</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">Help</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="#shop-cta"
+          >Shop the collection</a
+        >
+        <button
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+          aria-label="Open menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile menu panel — kept outside <header> so its fixed positioning is
+         relative to the viewport (the sticky header has backdrop-filter) -->
+    <div class="mobile-sheet" id="mobileNav">
+      <nav aria-label="Mobile">
+        <a href="#craft">Materials</a>
+        <a href="#process">How It's Made</a>
+        <a href="#bundles">Bundles</a>
+        <a href="#journal">Journal</a>
+        <a href="#faq">Help</a>
+        <a class="btn btn-primary" href="#shop-cta">Shop the collection</a>
+      </nav>
+    </div>
+
+    <main id="top">
+      <!-- ============ 3.2 HERO ============ -->
+      <section class="hero" aria-labelledby="hero-h">
+        <span class="glow glow-breath" aria-hidden="true"></span>
+        <div class="wrap hero-grid">
+          <div>
+            <span class="overline">Nordic home goods · since 2014</span>
+            <h1 id="hero-h">
+              The home that <span class="fj">holds you</span>, quietly.
+            </h1>
+            <p class="lead">
+              Birch and oak in honest shapes. Wool and linen from small family
+              mills. Furniture and textiles designed in Aarhus, delivered flat,
+              kept for decades.
+            </p>
+            <div class="row-btn">
+              <a class="btn btn-primary" href="#shop-cta"
+                >Shop the collection</a
+              >
+              <a class="btn btn-secondary" href="#craft">Meet the materials</a>
+            </div>
+            <div class="trust-row">
+              <span class="trust-item"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                >Free shipping over $75</span
+              >
+              <span class="trust-item"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                >60-day home trial</span
+              >
+              <span class="trust-item"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                >10-year repair promise</span
+              >
+            </div>
+          </div>
+          <div class="hero-img">
+            <div class="frame">
+              <img
+                src="https://images.unsplash.com/photo-1759203111456-b63e81a03cec?auto=format&fit=crop&w=1200&q=80"
+                alt="A cozy living room with a sectional sofa and a wood stove"
+                width="1200"
+                height="800"
+                loading="eager"
+              />
+            </div>
+            <span class="hero-chip">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8,2 C10.5,4.5 13,7 13,10 A5,5 0 0 1 3,10 C3,7 5.5,4.5 8,2 Z"
+                />
+              </svg>
+              FSC-certified birch · every run</span
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.3 STATS BAR ============ -->
+      <section class="stats" aria-label="Nordbo in numbers">
+        <div class="wrap">
+          <div class="stats-band">
+            <div class="stat s1">
+              <span class="num">12</span>
+              <span class="lbl">Years making quiet furniture</span>
+            </div>
+            <div class="stat s2">
+              <span class="num">94%</span>
+              <span class="lbl">Materials from certified European forests</span>
+            </div>
+            <div class="stat s3">
+              <span class="num">28,400</span>
+              <span class="lbl">Homes furnished across 9 countries</span>
+            </div>
+            <div class="stat s4">
+              <span class="num">4.8/5</span>
+              <span class="lbl">Average rating across 3,120 reviews</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.4 PROCLAMATION ============ -->
+      <section class="proc" aria-labelledby="proc-h">
+        <div class="wrap">
+          <div class="panel wool">
+            <span class="wool-tex" aria-hidden="true"></span>
+            <span class="glow glow-breath" aria-hidden="true"></span>
+            <div class="proc-inner">
+              <span class="overline">Our way</span>
+              <h2 id="proc-h">Buy less wood. Buy the right wood.</h2>
+              <p>
+                Nordbo started in 2014 with one bench design and a stubborn
+                rule: if a piece cannot survive twenty Danish winters and two
+                moves, it does not leave the workshop. We build in birch and oak
+                we can trace to the stand of forest it grew in, finish with
+                plant-based oils, and cover every joint for ten years. Nothing
+                is lacquered to look finished — it is finished to be lived on.
+                Sofas get nap-marks; tables get pencil rings; that is the point,
+                and we design for it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.5 FEATURES — the craft ============ -->
+      <section id="craft" aria-labelledby="craft-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">The craft</span>
+            <h2 id="craft-h">Three materials, no shortcuts.</h2>
+            <p>
+              Every Nordbo piece is a small set of honest materials doing hard
+              work. These are the three we build our name on.
+            </p>
+          </div>
+          <div class="features-grid">
+            <article class="card feature">
+              <span class="strip wood" aria-hidden="true"></span>
+              <span class="icon-badge b-fjord" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path
+                    d="M12,3 C16,7 19,10 19,14 A7,7 0 0 1 5,14 C5,10 8,7 12,3 Z"
+                  />
+                  <path d="M12,9 L12,20" />
+                </svg>
+              </span>
+              <h3>Solid birch, traceable to the stand</h3>
+              <p>
+                Each tabletop carries the forest region on its underside label —
+                4 regions in Finland and Sweden, all FSC-certified. Birch is
+                air-dried 18 months before we cut it, so boards stay flat for
+                decades.
+              </p>
+            </article>
+            <article class="card feature">
+              <span class="strip wood" aria-hidden="true"></span>
+              <span class="icon-badge b-pine" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <path d="M6,4 L18,4 L16,9 A6,6 0 0 1 8,9 Z" />
+                  <path d="M12,9 L12,20 M8,20 L16,20" />
+                </svg>
+              </span>
+              <h3>Wool from six family farms</h3>
+              <p>
+                Blankets and upholstery come from six mills in Jutland and
+                Vestfold that card, spin and weave on site. Nothing is
+                chemical-softened; lambswool warms whether the radiator argues
+                with the rain or not.
+              </p>
+            </article>
+            <article class="card feature">
+              <span class="strip wood" aria-hidden="true"></span>
+              <span class="icon-badge b-blush" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                >
+                  <circle cx="19" cy="5" r="2.5" />
+                  <path
+                    d="M17,9 L19,7.5 L14.5,18 C14,19.2 12.5,19.5 11.2,18.8 C10,18.2 9.8,16.7 10.5,15.8 Z"
+                  />
+                  <path d="M4,20 C6,17 6,13 4,10" />
+                </svg>
+              </span>
+              <h3>Repairable by hand</h3>
+              <p>
+                Every joint is a dowel or a bolt — no glue-only corners.
+                Replacement legs, slats and covers ship from Randers within 2
+                days, and a folded wrench lives in the flat-pack's wood cert
+                note.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.6 BENEFITS ============ -->
+      <section aria-labelledby="ben-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">Why it lasts</span>
+            <h2 id="ben-h">Six things a Nordbo home does differently.</h2>
+          </div>
+          <div class="benefits-list">
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>Warmer evenings</h3>
+                <p>
+                  Lambswool throws and blush-toned lamps hold candlelight better
+                  — 74% of review surveys describe a room re-lit "softer" after
+                  switching textiles.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>Zero VOC mornings</h3>
+                <p>
+                  Plant-oil finishes, not lacquer. Rooms smell of wood, not
+                  chemistry — a common note in allergy-house orders.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>Flat-pack without the fight</h3>
+                <p>
+                  Fewer than 8 bolts per average piece; the largest build we
+                  ship needs one hex key and 25 minutes on tape, not 3 hours.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>Buys that hold value</h3>
+                <p>
+                  Nordbo pieces resell for ~62% of list after 3 years on the
+                  second-hand listings we track — the market knows Bolig for
+                  birch, and asks for it by name.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>Covers that outgrow stains</h3>
+                <p>
+                  Every sofa ships with a spare cover wash-cycled; wool
+                  self-cleans with air and brushing rather than a solvent bath.
+                </p>
+              </div>
+            </div>
+            <div class="benefit">
+              <span class="bullet b-pine" aria-hidden="true"
+                ><svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                >
+                  <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+              ></span>
+              <div>
+                <h3>A ten-year straight answer</h3>
+                <p>
+                  The repair promise is paper, not apps: one phone line, human
+                  pickup in Denmark, Germany, the Netherlands and the UK.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.7 PROCESS ============ -->
+      <section id="process" aria-labelledby="proc2-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">How it's made</span>
+            <h2 id="proc2-h">From forest stand to your hallway, in 3 moves.</h2>
+          </div>
+          <div class="process-grid">
+            <span class="grain-track" aria-hidden="true">
+              <svg viewBox="0 0 100 10" preserveAspectRatio="none">
+                <rect
+                  x="0"
+                  y="4"
+                  width="100"
+                  height="1.6"
+                  rx="0.8"
+                  fill="#DED8CC"
+                />
+                <rect
+                  x="0"
+                  y="3.6"
+                  width="60"
+                  height="2.4"
+                  rx="1.2"
+                  fill="#D8CFBE"
+                  opacity=".55"
+                />
+              </svg>
+            </span>
+            <div class="step">
+              <div class="disc d-fjord" aria-hidden="true">1</div>
+              <h3>Cut to the forest's schedule</h3>
+              <p>
+                Boards are sorted in Randers by season of felling; the winter
+                cut is denser and book-matched for tops, the softer summer cut
+                becomes legs and rails.
+              </p>
+            </div>
+            <div class="step">
+              <div class="disc d-pine" aria-hidden="true">2</div>
+              <h3>Assemble with what unscrews</h3>
+              <p>
+                Dowels and bolts only, jigs drilled to a 0.1 mm tolerance so a
+                replacement rail from 2031 still seats perfectly in today's seat
+                frame.
+              </p>
+            </div>
+            <div class="step">
+              <div class="disc d-blush" aria-hidden="true">3</div>
+              <h3>Oil, wrap, doorstep</h3>
+              <p>
+                Two coats of linseed-plus-beeswax, a wool interleaf wrap, and
+                carbon-counted delivery with a 2-hour window you can move from
+                the tracking page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.8 PRICING — BUN-BUNDLES ============ -->
+      <section id="bundles" aria-labelledby="bun-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">Bundles</span>
+            <h2 id="bun-h">Three rooms, three ways to start.</h2>
+            <p>
+              Bundled pieces are priced below their sum and delivered on one
+              day, in one truck, in one wrap.
+            </p>
+          </div>
+          <div class="pricing-grid">
+            <article class="card plan">
+              <h3 class="tier">The Corner</h3>
+              <p class="for">
+                One reading chair, one table, one light — a 9 m² reset for a
+                rented flat.
+              </p>
+              <p class="price">
+                <span class="cur">$</span>690<span class="per">/ bundle</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Voba armchair in natural birch
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Sken side table, 45 cm
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Lyse table lamp, pine base
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Single-throw, your pick of 4 mills
+                </li>
+              </ul>
+              <a class="btn btn-secondary" href="#shop-cta">Start the corner</a>
+            </article>
+
+            <article class="card plan featured">
+              <span class="band">Most chosen</span>
+              <h3 class="tier">The Long Room</h3>
+              <p class="for">
+                The living room, planned as one calm shape — sofa, table, two
+                lights, textiles.
+              </p>
+              <p class="price">
+                <span class="cur">$</span>1,420<span class="per">/ bundle</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Grafo 3-seat sofa, wool weave
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Udde coffee table, 110 cm
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Two Lyse arc lamps + 3 bulbs
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Two cushions + wool throw
+                </li>
+              </ul>
+              <a class="btn btn-primary" href="#shop-cta">Plan the long room</a>
+            </article>
+
+            <article class="card plan">
+              <h3 class="tier">The Whole Flat</h3>
+              <p class="for">
+                Living, dining and hallway for up to 42 m² — the full Nordbo
+                treatment.
+              </p>
+              <p class="price">
+                <span class="cur">$</span>3,150<span class="per">/ bundle</span>
+              </p>
+              <ul>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Everything in The Long Room
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Dybet dining table, 6 chairs
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >Halden hallway + coat rail
+                </li>
+                <li>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2.5,8.5 L6,12 L13.5,4" /></svg
+                  >1-hour planning call with a Nordbo adviser
+                </li>
+              </ul>
+              <a class="btn btn-secondary" href="#shop-cta">Furnish the flat</a>
+            </article>
+          </div>
+          <p class="plan-note">
+            Bundle prices include delivery, wraps, the listed extras and VAT.
+            Separate pieces are always available at their own prices.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.9 TESTIMONIALS ============ -->
+      <section aria-labelledby="tsti-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">What homes say</span>
+            <h2 id="tsti-h">Three rooms, three years in.</h2>
+          </div>
+          <div class="tsti-grid">
+            <article class="card quote">
+              <span class="qmark" aria-hidden="true">“</span>
+              <blockquote>
+                The sofa is 3 years old and has survived a toddler, a spaniel
+                and one unfortunate coffee. The wool has softened rather than
+                flattened — no one told us textiles could grow up, too.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1724582586529-62622e50c0b3?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="250"
+                    alt="Soft-lit modern living room with a large window, from Mette's apartment"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Mette Lauritsen</span><br />
+                  <span class="role">Aarhus · Long Room bundle, 2023</span>
+                </span>
+              </div>
+            </article>
+            <article class="card quote">
+              <span class="qmark" aria-hidden="true">“</span>
+              <blockquote>
+                We furnished a whole flat the same month we moved from Hamburg.
+                One truck, one afternoon, and the joiner trick with the hallway
+                bench took 20 minutes. It still smells faintly of birch when the
+                sun hits it.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="600"
+                    alt="Tall window view into a living room, from Jonas and Klara's flat"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Jonas Reimann</span><br />
+                  <span class="role">Cologne · Whole Flat bundle, 2024</span>
+                </span>
+              </div>
+            </article>
+            <article class="card quote">
+              <span class="qmark" aria-hidden="true">“</span>
+              <blockquote>
+                The repair line answered on a Tuesday, and the new leg arrived
+                Thursday — the same week I managed to crack the Sken table
+                moving a radiator. One bolt, five minutes, and the table is back
+                to flat.
+              </blockquote>
+              <div class="quote-meta">
+                <span class="avatar"
+                  ><img
+                    src="https://images.unsplash.com/photo-1772797583328-f83bc3f94f80?auto=format&fit=crop&w=400&q=80"
+                    width="400"
+                    height="500"
+                    alt="Wood-accented living room in natural light, from Sanna's reading corner"
+                    loading="lazy"
+                /></span>
+                <span>
+                  <span class="who">Sanna Virtanen</span><br />
+                  <span class="role">Tampere · Corner bundle, 2022</span>
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.10 FAQ ============ -->
+      <section id="faq" aria-labelledby="faq-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">Help</span>
+            <h2 id="faq-h">Asked often, answered plainly.</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa1"
+                id="fq1"
+              >
+                Do I need to build it myself?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa1" role="region" aria-labelledby="fq1">
+                <p>
+                  Building is optional. Every bundle includes assembly add-on at
+                  checkout (from $45/piece in our delivery regions); outside
+                  those, the packs average 25 minutes and need one hex key,
+                  which is taped inside the wood-identification note.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa2"
+                id="fq2"
+              >
+                What exactly does the 10-year repair promise cover?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa2" role="region" aria-labelledby="fq2">
+                <p>
+                  Structural joints, legs, rails, seat frames and slats — any
+                  part that holds weight or shape. Oil and cleaning are yours;
+                  replacement parts are ours. After 10 years we keep parts in
+                  print for another 5, usually at cost.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa3"
+                id="fq3"
+              >
+                How does the 60-day home trial work?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa3" role="region" aria-labelledby="fq3">
+                <p>
+                  Live with the piece for 60 days. If the room disagrees, we
+                  collect it from your floor, refund to card within 5 working
+                  days, and the return is re-oiled and re-sold as "Second Bloom"
+                  at a 20% discount — never landfilled.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa4"
+                id="fq4"
+              >
+                How do I care for oiled birch and oak?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa4" role="region" aria-labelledby="fq4">
+                <p>
+                  Dust with a dry cloth; re-oil once a year (a 100 ml bottle
+                  ships with every top, enough for 4 coats). Spills are fine if
+                  wiped the same day. Cochairs and desk tops 3, 4 and 7 inches
+                  deep ship pre-oiled from spring 2025.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa5"
+                id="fq5"
+              >
+                Where do you deliver, and when?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa5" role="region" aria-labelledby="fq5">
+                <p>
+                  Nine countries: Denmark, Germany, Netherlands, Belgium,
+                  France, Sweden, Norway, Finland and the UK. Stocked pieces
+                  leave Randers in 2–4 working days; made-to-order wool colours
+                  add 2 weeks. Delivery windows move in the tracking page, free.
+                </p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button
+                class="faq-q"
+                aria-expanded="false"
+                aria-controls="fa6"
+                id="fq6"
+              >
+                Can I see the pieces in person first?
+                <span class="toggle" aria-hidden="true"
+                  ><svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  >
+                    <path d="M2.5,5.5 L8,11 L13.5,5.5" /></svg
+                ></span>
+              </button>
+              <div class="faq-a" id="fa6" role="region" aria-labelledby="fq6">
+                <p>
+                  Yes — the Randers showroom keeps every bundle staged as one
+                  finished room, open Tue–Sat 10–18. Berlin and Amsterdam host
+                  rotating pop-ups about every 6 months; the Journal lists dates
+                  as they are confirmed.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.11 JOURNAL ============ -->
+      <section id="journal" aria-labelledby="jrn-h">
+        <div class="wrap">
+          <div class="sec-head">
+            <span class="overline">Journal</span>
+            <h2 id="jrn-h">Notes from the workshop floor.</h2>
+          </div>
+          <div class="journal-grid">
+            <article class="card post">
+              <div class="ph">
+                <img
+                  src="https://images.unsplash.com/photo-1603283297623-f44d1dde80e5?auto=format&fit=crop&w=1200&q=80"
+                  alt="A black-and-white sofa beside a brown woven basket in daylight"
+                  width="1200"
+                  height="900"
+                  loading="lazy"
+                />
+                <span class="tag">Materials</span>
+              </div>
+              <div class="post-body">
+                <span class="date">18 Sep 2026 · 6 min read</span>
+                <h3>
+                  Why our 2026 birch is lighter than 2024's (and that's good)
+                </h3>
+                <p>
+                  The Finnish forests sent a colder winter last year: rings
+                  tightened, boards brightened, tops got more weatherproof. What
+                  changed in the drying shed, what changed in color, and what
+                  this means for the desk tops arriving in November.
+                </p>
+                <a class="read" href="#journal"
+                  >Read the note
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2,8 L13,8 M9,4 L13,8 L9,12" /></svg
+                ></a>
+              </div>
+            </article>
+            <article class="card post">
+              <div class="ph">
+                <img
+                  src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=1200&q=80"
+                  alt="A calm living room with furniture and a large mirror"
+                  width="1200"
+                  height="879"
+                  loading="lazy"
+                />
+                <span class="tag">Room studies</span>
+              </div>
+              <div class="post-body">
+                <span class="date">2 Sep 2026 · 8 min read</span>
+                <h3>The mirror trick: one surface, double morning light</h3>
+                <p>
+                  A study of 14 customer rooms showed a simple rule — one large
+                  mirror opposite a window adds up to 40% more perceived
+                  daylight in small north-facing living rooms. Here's the math,
+                  three real placements, and the frame that does it without
+                  glare.
+                </p>
+                <a class="read" href="#journal"
+                  >Read the note
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2,8 L13,8 M9,4 L13,8 L9,12" /></svg
+                ></a>
+              </div>
+            </article>
+            <article class="card post">
+              <div class="ph">
+                <img
+                  src="https://images.unsplash.com/photo-1780672823877-6b1399bc7c1d?auto=format&fit=crop&w=1200&q=80"
+                  alt="A striped wool blanket with a woven blue label on a green textured surface"
+                  width="1200"
+                  height="1800"
+                  loading="lazy"
+                />
+                <span class="tag">Mills</span>
+              </div>
+              <div class="post-body">
+                <span class="date">12 Aug 2026 · 5 min read</span>
+                <h3>
+                  Meet the mill: Fjord Uld, two looms and a dog named Skip
+                </h3>
+                <p>
+                  The Jutland mill that weaves our stripe throws runs two looms
+                  at 14 metres per day and refuses any dye lot it wouldn't put
+                  on its own bed. A visit, a strip-edged loom trick, and why
+                  "Skip approves" is a real stamp on every card.
+                </p>
+                <a class="read" href="#journal"
+                  >Read the note
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M2,8 L13,8 M9,4 L13,8 L9,12" /></svg
+                ></a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.12 FINAL CTA ============ -->
+      <section id="shop-cta" class="final" aria-labelledby="fin-h">
+        <span class="wool-tex wool" aria-hidden="true"></span>
+        <span class="glow glow-breath" aria-hidden="true"></span>
+        <div class="wrap final-inner">
+          <h2 id="fin-h">Furnish once. Furnish well.</h2>
+          <p>
+            The 2026 collection is stocked and shipping now. Pick a room, or
+            write to a planner — replies within one working day.
+          </p>
+          <div class="row-btn">
+            <a class="btn btn-snow" href="#top">Shop the collection</a>
+            <a class="btn btn-outline-snow" href="#bundles">See the bundles</a>
+          </div>
+          <div class="mini-note">
+            <span
+              ><svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <rect x="2" y="4" width="12" height="9" rx="2" />
+                <path d="M2,6.5 L8,10 L14,6.5" /></svg
+              >shop@nordbo.example</span
+            >
+            <span
+              ><svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="8" r="6" />
+                <path d="M8,5 L8,8 L10.5,9.5" /></svg
+              >Mon–Fri · 9:00–17:00 CET</span
+            >
+            <span
+              ><svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8,14 C8,14 3,9 3,6.5 A5,5 0 0 1 13,6.5 C13,9 8,14 8,14 Z"
+                />
+                <circle cx="8" cy="6.5" r="1.6" /></svg
+              >Randers showroom · Tue–Sat</span
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 3.13 FOOTER ============ -->
+    <footer class="site-footer">
+      <!-- Rich stacked footer — below 768px only -->
+      <div class="foot-rich">
+        <div>
+          <a class="foot-brand" href="#top">
+            <svg
+              class="bloom"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+                fill="currentColor"
+                opacity=".18"
+              />
+              <path
+                d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="M16,10 L16,27"
+                stroke="currentColor"
+                stroke-width="1.4"
+              />
+              <path
+                d="M16,16 L11,13 M16,19 L21,16"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Nordbo</span>
+          </a>
+          <p class="para">
+            Birch, oak and wool goods for slow Nordic homes. Designed in Aarhus,
+            made in Randers, kept for decades.
+          </p>
+        </div>
+        <div class="foot-cols">
+          <div>
+            <h3>Shop</h3>
+            <ul>
+              <li><a href="#craft">Materials</a></li>
+              <li><a href="#bundles">Bundles</a></li>
+              <li><a href="#shop-cta">The collection</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>House</h3>
+            <ul>
+              <li><a href="#process">How it's made</a></li>
+              <li><a href="#journal">Journal</a></li>
+              <li><a href="#faq">Help &amp; FAQ</a></li>
+            </ul>
+          </div>
+          <div class="newsletter">
+            <h3>The Quiet Post</h3>
+            <p>
+              One letter a month on wood, wool and rooms. No offers we wouldn't
+              write by hand.
+            </p>
+            <form class="nl-row" action="#" method="post">
+              <label class="sr-only" for="nl-email">Email</label>
+              <input
+                class="nl-input"
+                id="nl-email"
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+              <button class="btn btn-primary" type="submit">Join</button>
+            </form>
+          </div>
+        </div>
+        <p class="foot-mobile-copy">© 2026 Nordbo ApS · Aarhus, Denmark</p>
+      </div>
+
+      <!-- Slim horizontal band — at 768px and above -->
+      <div class="foot-slim wrap">
+        <a class="foot-brand" href="#top" aria-label="Nordbo — back to top">
+          <svg class="bloom" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path
+              d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+              fill="currentColor"
+              opacity=".18"
+            />
+            <path
+              d="M16,3 C21,8 25,12 25,18 A9,9 0 0 1 7,18 C7,12 11,8 16,3 Z"
+              stroke="currentColor"
+              stroke-width="1.6"
+            />
+            <path d="M16,10 L16,27" stroke="currentColor" stroke-width="1.4" />
+            <path
+              d="M16,16 L11,13 M16,19 L21,16"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Nordbo<span class="sub"> · Aarhus, DK</span></span>
+        </a>
+        <nav class="foot-links" aria-label="Footer">
+          <a href="#craft">Materials</a>
+          <a href="#process">How It's Made</a>
+          <a href="#bundles">Bundles</a>
+          <a href="#journal">Journal</a>
+          <a href="#faq">Help</a>
+        </nav>
+        <div class="foot-right">
+          <div class="foot-social">
+            <a href="#top" aria-label="Nordbo on Instagram">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                  cx="17.2"
+                  cy="6.8"
+                  r="0.9"
+                  fill="currentColor"
+                  stroke="none"
+                />
+              </svg>
+            </a>
+            <a href="#top" aria-label="Write to Nordbo">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="3" />
+                <path d="M3,7 L12,13 L21,7" />
+              </svg>
+            </a>
+            <a href="#top" aria-label="Visit the Nordbo showroom">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12,21 C12,21 5,14.5 5,9.5 A7,7 0 0 1 19,9.5 C19,14.5 12,21 12,21 Z"
+                />
+                <circle cx="12" cy="9.5" r="2.5" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <span class="foot-copy">© 2026 Nordbo</span>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        'use strict'
+        var reduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+
+        /* Mobile nav */
+        var toggle = document.querySelector('.nav-toggle')
+        var sheet = document.getElementById('mobileNav')
+        if (toggle && sheet) {
+          toggle.addEventListener('click', function () {
+            var open = toggle.getAttribute('aria-expanded') === 'true'
+            toggle.setAttribute('aria-expanded', String(!open))
+            toggle.setAttribute(
+              'aria-label',
+              !open ? 'Close menu' : 'Open menu',
+            )
+            sheet.classList.toggle('open', !open)
+          })
+          sheet.addEventListener('click', function (e) {
+            if (e.target.closest('a')) {
+              toggle.setAttribute('aria-expanded', 'false')
+              sheet.classList.remove('open')
+            }
+          })
+        }
+
+        /* FAQ accordion — one open at a time */
+        var items = Array.prototype.slice.call(
+          document.querySelectorAll('.faq-item'),
+        )
+        items.forEach(function (item) {
+          var btn = item.querySelector('.faq-q')
+          var panel = item.querySelector('.faq-a')
+          function close() {
+            item.classList.remove('open')
+            btn.setAttribute('aria-expanded', 'false')
+            panel.style.maxHeight = '0px'
+          }
+          function open() {
+            items.forEach(function (other) {
+              if (other !== item) {
+                var b = other.querySelector('.faq-q'),
+                  p = other.querySelector('.faq-a')
+                other.classList.remove('open')
+                b.setAttribute('aria-expanded', 'false')
+                p.style.maxHeight = '0px'
+              }
+            })
+            item.classList.add('open')
+            btn.setAttribute('aria-expanded', 'true')
+            panel.style.maxHeight = panel.scrollHeight + 'px'
+          }
+          btn.addEventListener('click', function () {
+            btn.getAttribute('aria-expanded') === 'true' ? close() : open()
+          })
+        })
+
+        /* Gentle reveals */
+        var revs = Array.prototype.slice.call(
+          document.querySelectorAll('.card.feature, .card.post, .quote'),
+        )
+        if (!reduced && 'IntersectionObserver' in window) {
+          var ro = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en, i) {
+                if (en.isIntersecting) {
+                  en.target.style.transitionDelay = i * 60 + 'ms'
+                  en.target.classList.add('in')
+                  en.target.classList.add('reveal')
+                  ro.unobserve(en.target)
+                }
+              })
+            },
+            { threshold: 0.15 },
+          )
+          revs.forEach(function (el) {
+            ro.observe(el)
+          })
+        }
+      })()
+    </script>
+<style id="footer-unify">/* one footer on every device */
+@media (max-width:767px){.foot-rich{display:none!important}.foot-slim{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.55rem 1.4rem}.foot-slim > *{min-width:0}.foot-copy{flex-basis:100%!important;text-align:center!important}}
+</style>
+<style id="journal-fix">
+/* Journal images: bounded boxes, equal cards, never inflated by intrinsic height */
+#journal .post .ph img { height: auto !important; width: 100% !important; aspect-ratio: 4 / 3 !important; object-fit: cover !important; max-height: 420px !important; }
+#journal .post .ph{overflow:hidden}
+/* equal-height cards inside the journal grid */
+.journal-grid, #journal .grid.cards-3, #cahier .journal-grid, #dispatch .grid.cards-3 { align-items: stretch !important; }
+.journal-grid > *, #journal .grid.cards-3 > *, #cahier .journal-grid > *, #dispatch .grid.cards-3 > * { display: flex; flex-direction: column; }
+.journal-grid > * > :last-child, #journal .grid.cards-3 > * > :last-child { margin-top: auto; }
+</style>
+
+</body>
+</html>

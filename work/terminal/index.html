@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arif Rahman — Full-Stack Developer</title>
+    <meta
+      name="description"
+      content="Arif Rahman is a full-stack developer in Dhaka, Bangladesh with four years of shipping web products end to end — TypeScript, Node.js, Postgres, React and the edge."
+    />
+    <meta name="theme-color" content="#0D1117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Arif Rahman — Full-Stack Developer" />
+    <meta
+      property="og:description"
+      content="I build web products that survive real users. Four years of full-stack work from Dhaka, Bangladesh."
+    />
+    <meta property="og:url" content="https://example.com/" />
+    <meta
+      property="og:image"
+      content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&h=630&q=80"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Arif Rahman — Full-Stack Developer" />
+    <meta
+      name="twitter:description"
+      content="I build web products that survive real users."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='86'%3E%E2%8C%A8%EF%B8%8F%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d1117;
+        --panel: #161b22;
+        --line: #30363d;
+        --text: #e6edf3;
+        --muted: #8b949e;
+        --green: #3bcb6b;
+        --amber: #d29922;
+        --mono:
+          'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
+          'Liberation Mono', monospace;
+        --max: 1160px;
+        --pad: clamp(1rem, 4vw, 2rem);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 15px;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+      ::selection {
+        background: var(--green);
+        color: #06120a;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--line);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--muted);
+      }
+
+      img {
+        max-width: 100%;
+      }
+      a {
+        color: var(--text);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--green);
+      }
+      :focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: var(--max);
+        margin: 0 auto;
+        padding-left: var(--pad);
+        padding-right: var(--pad);
+      }
+      .green {
+        color: var(--green);
+      }
+      .amber {
+        color: var(--amber);
+      }
+      .muted {
+        color: var(--muted);
+      }
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        z-index: 60;
+        background: var(--green);
+        color: #06120a;
+        padding: 0.5rem 0.8rem;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .skip:focus {
+        position: fixed;
+        left: 0.5rem;
+        top: 0.5rem;
+      }
+
+      /* ---------- header ---------- */
+      .site-head {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: var(--bg);
+        border-bottom: 1px solid var(--line);
+      }
+      .head-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.4rem 1.25rem;
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.15rem;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        letter-spacing: -0.01em;
+      }
+      .brand:hover .pwd {
+        color: var(--green);
+      }
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.15rem 0.95rem;
+        font-size: 12px;
+      }
+      .nav a {
+        color: var(--muted);
+        padding-block: 0.15rem;
+        white-space: nowrap;
+      }
+      .nav a:hover,
+      .nav a:focus-visible {
+        color: var(--green);
+      }
+
+      /* ---------- shared terminal bits ---------- */
+      .ps1 {
+        color: var(--green);
+      }
+      .pwd {
+        color: var(--amber);
+      }
+      .sep {
+        color: var(--muted);
+      }
+      .typed {
+        color: var(--text);
+      }
+      .prompt {
+        white-space: nowrap;
+      }
+
+      .term,
+      .panel,
+      .json-panel {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 0;
+        min-width: 0;
+      }
+      .term-bar,
+      .panel-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.35rem 1rem;
+        padding: 0.5rem 0.75rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .term-bar .dots {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-right: 0.5rem;
+      }
+      .dots i {
+        display: block;
+        width: 8px;
+        height: 8px;
+        background: var(--line);
+      }
+      .dots i:first-child {
+        background: var(--green);
+      }
+      .term-bar .title {
+        color: var(--text);
+        font-size: 11.5px;
+      }
+      .term-bar .right,
+      .panel-note {
+        color: var(--muted);
+        font-size: 11px;
+        white-space: nowrap;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        padding-top: clamp(1.75rem, 5vw, 3.5rem);
+        padding-bottom: clamp(2rem, 5vw, 3rem);
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+      .term-body {
+        display: grid;
+        gap: clamp(0.7rem, 2vw, 1rem);
+        padding: clamp(0.9rem, 3vw, 1.6rem);
+      }
+      .line {
+        margin: 0;
+        font-size: 12.5px;
+        line-height: 1.8;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .line .typed {
+        color: var(--text);
+      }
+      .hero-id {
+        display: grid;
+        gap: 0.1rem;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(1.85rem, 7vw, 3.4rem);
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+      }
+      .role {
+        margin: 0;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .role b {
+        color: var(--green);
+        font-weight: 500;
+      }
+      .lead {
+        margin: 0;
+        max-width: 36ch;
+        font-size: clamp(1rem, 2.9vw, 1.28rem);
+        line-height: 1.6;
+        letter-spacing: -0.02em;
+      }
+      .lead em {
+        font-style: normal;
+        color: var(--green);
+      }
+      .bio {
+        margin: 0;
+        max-width: 54ch;
+        font-size: 13px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .meta {
+        list-style: none;
+        margin: 0.2rem 0 0;
+        padding: 0.7rem 0 0;
+        border-top: 1px solid var(--line);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 1.25rem;
+        font-size: 11.5px;
+        color: var(--muted);
+      }
+      .meta li {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        min-width: 0;
+      }
+      .meta .k {
+        color: var(--green);
+      }
+      .meta b {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .cmdline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .cursor {
+        display: inline-block;
+        width: 0.58em;
+        height: 1.02em;
+        background: var(--green);
+        vertical-align: -0.16em;
+        animation: blink 1s steps(1, end) infinite;
+      }
+      @keyframes blink {
+        0%,
+        49% {
+          opacity: 1;
+        }
+        50%,
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        align-items: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.8rem;
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.4;
+        text-decoration: none;
+        border-radius: 0;
+        cursor: pointer;
+      }
+      .btn:hover {
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .btn--primary {
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .btn--primary:hover {
+        background: var(--green);
+        color: #06120a;
+      }
+
+      /* json panel */
+      .json-panel {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .json {
+        margin: 0;
+        padding: clamp(0.9rem, 3vw, 1.35rem);
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.95;
+        color: var(--text);
+        white-space: pre;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-width: 100%;
+        tab-size: 2;
+      }
+      .json .jk {
+        color: var(--muted);
+      }
+      .json .js {
+        color: var(--green);
+      }
+      .json .jn {
+        color: var(--amber);
+      }
+
+      /* ---------- sections ---------- */
+      .sec {
+        padding-top: clamp(1.75rem, 4vw, 2.9rem);
+        padding-bottom: clamp(1.75rem, 4vw, 2.9rem);
+        border-top: 1px solid var(--line);
+        scroll-margin-top: 4.6rem;
+      }
+      .sec-line {
+        margin: 0;
+        font-size: clamp(0.95rem, 3.1vw, 1.15rem);
+        font-weight: 700;
+        line-height: 1.5;
+        letter-spacing: 0.005em;
+        overflow-wrap: anywhere;
+      }
+      .sec-line .b {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .sec-line .n {
+        color: var(--green);
+      }
+      .sec-line .d {
+        color: var(--amber);
+        font-weight: 400;
+      }
+      .sec-sub {
+        margin: 0.15rem 0 0.75rem;
+        font-size: 11.5px;
+        line-height: 1.7;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .ascii {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        color: var(--line);
+        font-size: 11px;
+        line-height: 1;
+        letter-spacing: 0.11em;
+        margin: 0.15rem 0 1.1rem;
+        user-select: none;
+      }
+      .panel-body {
+        padding: clamp(0.9rem, 3vw, 1.4rem);
+      }
+
+      /* stack */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.85rem;
+      }
+      .stack-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.25rem;
+        min-width: 0;
+      }
+      .stack-key {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .stack-key::before {
+        content: '[ ';
+        color: var(--line);
+      }
+      .stack-key::after {
+        content: ' ]';
+        color: var(--line);
+      }
+      .chips {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        margin: 0;
+        padding: 0;
+        min-width: 0;
+      }
+      .chips li {
+        border: 1px solid var(--line);
+        background: var(--bg);
+        color: var(--text);
+        padding: 0.02rem 0.42rem;
+        font-size: 11px;
+        line-height: 1.85;
+        white-space: nowrap;
+      }
+      .chips li.hot {
+        color: var(--green);
+        border-color: rgba(59, 203, 107, 0.45);
+      }
+      .stack-note {
+        margin: 0.9rem 0 0;
+        padding-top: 0.7rem;
+        border-top: 1px solid var(--line);
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .stack-note::before {
+        content: '// ';
+        color: var(--line);
+      }
+
+      /* projects */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(
+          auto-fit,
+          minmax(min(100%, 17.5rem), 1fr)
+        );
+        gap: 1rem;
+        min-width: 0;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        border: 1px solid var(--line);
+        background: var(--panel);
+      }
+      .card:hover {
+        border-color: #4a5460;
+      }
+      .card-media {
+        margin: 0;
+        border-bottom: 1px solid var(--line);
+        background: var(--bg);
+        min-width: 0;
+      }
+      .card-media img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        filter: grayscale(1) contrast(1.04);
+      }
+      .cap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.2rem 0.75rem;
+        border-top: 1px solid var(--line);
+        padding: 0.3rem 0.6rem;
+        font-size: 10.5px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .cap span {
+        overflow-wrap: anywhere;
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 0.9rem 1rem 1rem;
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+      .proj-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+      .proj-head h3 {
+        margin: 0;
+        font-size: 14.5px;
+        line-height: 1.5;
+        letter-spacing: -0.015em;
+      }
+      .proj-head .yr {
+        font-size: 11px;
+        color: var(--amber);
+        white-space: nowrap;
+      }
+      .proj-meta {
+        margin: 0;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .card p.desc {
+        margin: 0;
+        font-size: 12.5px;
+        line-height: 1.75;
+        color: var(--text);
+      }
+      .bullets {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.3rem;
+        font-size: 11.5px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+      .bullets li {
+        position: relative;
+        padding-left: 0.95rem;
+        overflow-wrap: anywhere;
+      }
+      .bullets li::before {
+        content: '+';
+        position: absolute;
+        left: 0;
+        color: var(--green);
+      }
+      .metrics {
+        margin: 0;
+        font-size: 10.5px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+      .metrics .tag {
+        border: 1px solid rgba(210, 153, 34, 0.5);
+        color: var(--amber);
+        padding: 0 0.3rem;
+        margin-right: 0.3rem;
+        white-space: nowrap;
+      }
+      .card-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem 0.9rem;
+        margin-top: auto;
+        padding-top: 0.6rem;
+        border-top: 1px solid var(--line);
+        font-size: 11.5px;
+      }
+      .card-links a {
+        color: var(--muted);
+        text-decoration: underline;
+        text-decoration-color: var(--line);
+        text-underline-offset: 3px;
+      }
+      .card-links a:hover {
+        color: var(--green);
+        text-decoration-color: var(--green);
+      }
+      .card-links a::before {
+        content: '[';
+        color: var(--line);
+        text-decoration: none;
+      }
+      .card-links a::after {
+        content: ']';
+        color: var(--line);
+        text-decoration: none;
+      }
+
+      /* experience */
+      .timeline {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-left: 1px solid var(--line);
+      }
+      .timeline > li {
+        position: relative;
+        padding: 0 0 1.5rem 1.15rem;
+        min-width: 0;
+      }
+      .timeline > li:last-child {
+        padding-bottom: 0;
+      }
+      .timeline > li::before {
+        content: '';
+        position: absolute;
+        left: -4px;
+        top: 0.62em;
+        width: 7px;
+        height: 7px;
+        background: var(--green);
+      }
+      .timeline > li.past::before {
+        background: var(--line);
+      }
+      .exp-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.1rem 0.9rem;
+      }
+      .exp-head h3 {
+        margin: 0;
+        font-size: 13.5px;
+        line-height: 1.6;
+      }
+      .exp-head h3 .co {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .exp-date {
+        font-size: 11px;
+        color: var(--amber);
+        white-space: nowrap;
+      }
+      .exp-where {
+        margin: 0.05rem 0 0.4rem;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .edu {
+        margin: 1.1rem 0 0;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--line);
+        font-size: 11.5px;
+        line-height: 1.8;
+        color: var(--muted);
+      }
+      .edu .k {
+        color: var(--green);
+      }
+
+      /* testimonials */
+      .quotes {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+        min-width: 0;
+      }
+      .quote {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        padding: 1rem 1.05rem 1.05rem;
+        min-width: 0;
+      }
+      .quote p {
+        margin: 0;
+        font-size: 12.5px;
+        line-height: 1.8;
+        color: var(--text);
+        overflow-wrap: anywhere;
+      }
+      .quote p::before {
+        content: '> ';
+        color: var(--green);
+      }
+      .quote footer {
+        display: grid;
+        gap: 0.1rem;
+        border-top: 1px solid var(--line);
+        padding-top: 0.6rem;
+        font-size: 11px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+      .quote .who {
+        color: var(--text);
+        font-size: 11.5px;
+      }
+      .quote .who::before {
+        content: '— ';
+        color: var(--line);
+      }
+
+      /* contact */
+      .contact-body {
+        display: grid;
+        gap: 1rem;
+      }
+      .contact-lines {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 0.45rem;
+        font-size: 12.5px;
+        line-height: 1.7;
+      }
+      .contact-lines li {
+        display: grid;
+        grid-template-columns: minmax(4.6rem, auto) minmax(0, 1fr);
+        gap: 0.4rem 0.9rem;
+        align-items: baseline;
+        min-width: 0;
+      }
+      .ck {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+      }
+      .ck::before {
+        content: '$ ';
+        color: var(--line);
+      }
+      .contact-lines a,
+      .contact-lines span {
+        overflow-wrap: anywhere;
+      }
+      .link {
+        color: var(--green);
+        text-decoration: underline;
+        text-decoration-color: rgba(59, 203, 107, 0.4);
+        text-underline-offset: 4px;
+      }
+      .link:hover {
+        text-decoration-color: var(--green);
+      }
+      .avail {
+        display: inline-flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem;
+        border: 1px solid rgba(59, 203, 107, 0.45);
+        color: var(--green);
+        padding: 0.15rem 0.5rem;
+        font-size: 11px;
+        line-height: 1.9;
+        width: fit-content;
+        max-width: 100%;
+      }
+      .avail::before {
+        content: '[ ]';
+        color: var(--line);
+        font-size: 10px;
+      }
+
+      /* ---------- footer ---------- */
+      .foot {
+        border-top: 1px solid var(--line);
+        padding-top: 1.5rem;
+        padding-bottom: 1.75rem;
+        background: var(--bg);
+      }
+      .foot-inner {
+        display: grid;
+        gap: 0.9rem;
+        min-width: 0;
+      }
+      .foot-brand {
+        font-size: 12.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        width: fit-content;
+      }
+      .foot-brand .pwd {
+        color: var(--amber);
+      }
+      .foot-links,
+      .foot-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem 1rem;
+        font-size: 11.5px;
+        min-width: 0;
+      }
+      .foot-links a,
+      .foot-social a {
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .foot-links a:hover,
+      .foot-social a:hover {
+        color: var(--green);
+      }
+      .foot-copy {
+        margin: 0;
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--line);
+        padding-top: 0.8rem;
+        font-size: 10.5px;
+        line-height: 1.8;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+
+      /* ---------- entrance: instant, class added by IntersectionObserver ---------- */
+      .js .reveal {
+        opacity: 0;
+      }
+      .js .reveal.in {
+        opacity: 1;
+      }
+
+      /* ---------- responsive ---------- */
+      @media (min-width: 768px) {
+        .stack-grid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 1rem;
+        }
+        .stack-row {
+          grid-template-columns: minmax(5.5rem, auto) minmax(0, 1fr);
+          gap: 0.75rem;
+          align-items: baseline;
+        }
+        .quotes {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .foot-inner {
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          align-items: center;
+          column-gap: 2rem;
+        }
+        .foot-links {
+          justify-content: center;
+        }
+        .foot-social {
+          justify-self: end;
+        }
+        .foot-copy {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .hero-grid {
+          grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+          gap: 1.25rem;
+        }
+        .hero {
+          padding-top: 3.75rem;
+          padding-bottom: 3.25rem;
+        }
+        .cards {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      /* ---------- motion preferences ---------- */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .cursor {
+          animation: none;
+          opacity: 1;
+        }
+        .js .reveal,
+        .js .reveal.in {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">skip to main content</a>
+
+    <header class="site-head">
+      <div class="wrap head-inner">
+        <a class="brand" href="#top" aria-label="Arif Rahman — back to top">
+          <span class="ps1">arif@dhaka</span><span class="sep">:</span
+          ><span class="pwd">~</span><span class="sep">$</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#stack">stack</a>
+          <a href="#projects">projects</a>
+          <a href="#experience">experience</a>
+          <a href="#contact">contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="wrap hero-grid">
+          <div class="term">
+            <div class="term-bar">
+              <span class="title"
+                ><span class="dots" aria-hidden="true"
+                  ><i></i><i></i><i></i></span
+                >arif@dhaka: ~/portfolio — zsh</span
+              >
+              <span class="right">80×24</span>
+            </div>
+            <div class="term-body">
+              <p class="line">
+                <span class="prompt"
+                  ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                  ><span class="pwd">~</span><span class="sep">$</span></span
+                >
+                <span class="typed" data-type data-speed="45">whoami</span>
+              </p>
+
+              <div class="hero-id">
+                <h1 id="hero-title">Arif Rahman</h1>
+                <p class="role">
+                  <b>Full-Stack Developer</b> · 4 years · Dhaka, BD
+                </p>
+              </div>
+
+              <p class="line">
+                <span class="prompt"
+                  ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                  ><span class="pwd">~</span><span class="sep">$</span></span
+                >
+                <span class="typed" data-type data-speed="34"
+                  >cat headline.txt</span
+                >
+              </p>
+              <p class="lead">
+                I build web products that <em>survive real users</em>.
+              </p>
+
+              <p class="bio">
+                I'm a full-stack developer in Dhaka with four years of shipping
+                products end to end — schema, API, interface, and the boring
+                parts that keep them alive. Most of my work is TypeScript and
+                Postgres, with React or SvelteKit on the front and Workers at
+                the edge. I test on slow connections, small screens, and the
+                worst phone in the room.
+              </p>
+
+              <ul class="meta">
+                <li><span class="k">base</span><b>Dhaka, Bangladesh</b></li>
+                <li><span class="k">tz</span><b>UTC+6</b></li>
+                <li>
+                  <span class="k">status</span><b>open to remote + contract</b>
+                </li>
+                <li>
+                  <span class="k">reply</span><b>within 1 business day</b>
+                </li>
+              </ul>
+
+              <p class="line cmdline">
+                <span class="prompt"
+                  ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                  ><span class="pwd">~</span><span class="sep">$</span></span
+                >
+                <span class="typed" data-type data-speed="40">./contact.sh</span
+                ><span class="cursor" aria-hidden="true"></span>
+              </p>
+
+              <div class="cta-row">
+                <a class="btn btn--primary" href="mailto:arif@example.com"
+                  >email me</a
+                >
+                <a class="btn" href="#projects">see projects</a>
+              </div>
+            </div>
+          </div>
+
+          <aside class="json-panel" aria-label="Profile as a JSON document">
+            <div class="panel-head">
+              <span>cat profile.json</span>
+              <span class="panel-note">utf-8 · 12 lines</span>
+            </div>
+            <pre class="json"><code>{
+  <span class="jk">"name"</span>: <span class="js">"Arif Rahman"</span>,
+  <span class="jk">"role"</span>: <span class="js">"Full-Stack Developer"</span>,
+  <span class="jk">"base"</span>: <span class="js">"Dhaka, BD (UTC+6)"</span>,
+  <span class="jk">"years"</span>: <span class="jn">4</span>,
+  <span class="jk">"stack"</span>: [
+    <span class="js">"TypeScript"</span>, <span class="js">"Go"</span>,
+    <span class="js">"React"</span>, <span class="js">"Postgres"</span>
+  ],
+  <span class="jk">"status"</span>: <span class="js">"open to remote"</span>,
+  <span class="jk">"reply"</span>: <span class="js">"&lt; 1 business day"</span>
+}</code></pre>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ============ 00 STACK ============ -->
+      <section class="sec" id="stack" aria-labelledby="stack-h">
+        <div class="wrap">
+          <h2 class="sec-line" id="stack-h">
+            <span class="b">[##</span> 00 <span class="b">//</span>
+            <span class="n">STACK</span> <span class="d">$</span
+            ><span class="b">]</span>
+          </h2>
+          <p class="sec-sub">
+            // the list I actually ship with — not a logo wall
+          </p>
+          <span class="ascii" aria-hidden="true"
+            >────────────────────────────────────────────────────────────────────────────────────────────────────────</span
+          >
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <span
+                ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                ><span class="pwd">~</span><span class="sep">$</span> cat
+                stack.txt</span
+              >
+              <span class="panel-note">4 groups · 17 entries</span>
+            </div>
+            <div class="panel-body">
+              <div class="stack-grid">
+                <div class="stack-row">
+                  <span class="stack-key">lang</span>
+                  <ul class="chips">
+                    <li class="hot">TypeScript</li>
+                    <li class="hot">JavaScript</li>
+                    <li>Go</li>
+                    <li>SQL</li>
+                    <li>Bash</li>
+                  </ul>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-key">frontend</span>
+                  <ul class="chips">
+                    <li class="hot">React</li>
+                    <li>Next.js</li>
+                    <li>SvelteKit</li>
+                    <li>Tailwind CSS</li>
+                    <li>Vite</li>
+                  </ul>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-key">backend</span>
+                  <ul class="chips">
+                    <li class="hot">Node.js</li>
+                    <li>Hono</li>
+                    <li>Postgres</li>
+                    <li>Redis</li>
+                    <li>REST · webhooks</li>
+                  </ul>
+                </div>
+                <div class="stack-row">
+                  <span class="stack-key">platform</span>
+                  <ul class="chips">
+                    <li>Cloudflare Workers</li>
+                    <li>D1</li>
+                    <li>Docker</li>
+                    <li>GitHub Actions</li>
+                    <li>Linux</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="stack-note">
+                I pick boring tools on purpose. The interesting part should be
+                the product.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 01 PROJECTS ============ -->
+      <section class="sec" id="projects" aria-labelledby="projects-h">
+        <div class="wrap">
+          <h2 class="sec-line" id="projects-h">
+            <span class="b">[##</span> 01 <span class="b">//</span>
+            <span class="n">PROJECTS</span> <span class="d">$</span
+            ><span class="b">]</span>
+          </h2>
+          <p class="sec-sub">
+            // three featured builds, newest first · preview panels are
+            placeholders
+          </p>
+          <span class="ascii" aria-hidden="true"
+            >────────────────────────────────────────────────────────────────────────────────────────────────────────</span
+          >
+
+          <div class="cards">
+            <article class="card reveal">
+              <figure class="card-media">
+                <!-- REPLACE: Dokan Ledger dashboard preview | Replace with the real photo -->
+                <img
+                  src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&h=1000&q=80"
+                  width="1600"
+                  height="1000"
+                  alt="Dokan Ledger dashboard showing open dues, daily receipts and a shop list"
+                  data-replace="Dokan Ledger dashboard preview"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="cap">
+                  <span>img/dev-proj-1.png · 1600×1000</span>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <div class="proj-head">
+                  <h3>Dokan Ledger</h3>
+                  <span class="yr">2025</span>
+                </div>
+                <p class="proj-meta">solo build · multi-tenant SaaS · Dhaka</p>
+                <p class="desc">
+                  A shop ledger for small retailers: inventory, customer dues
+                  and daily receipts in one Bangla-first dashboard. It runs on
+                  cheap Android phones over patchy mobile data, which shaped
+                  almost every technical decision.
+                </p>
+                <ul class="bullets">
+                  <li>
+                    Multi-tenant Postgres schema with one row-level policy per
+                    shop
+                  </li>
+                  <li>
+                    Offline receipt queue in IndexedDB, conflicts resolved on
+                    the server
+                  </li>
+                  <li>
+                    bKash and Nagad statement import matched against open dues
+                  </li>
+                </ul>
+                <ul class="chips">
+                  <li>TypeScript</li>
+                  <li>React</li>
+                  <li>Node.js</li>
+                  <li>Postgres</li>
+                  <li>Redis</li>
+                </ul>
+                <p class="metrics">
+                  <span class="tag">SAMPLE</span>240 shops · 18k receipts /
+                  month · p95 under 900ms
+                </p>
+                <div class="card-links">
+                  <a href="#" aria-label="Dokan Ledger live site (demo link)"
+                    >live</a
+                  >
+                  <a href="#" aria-label="Dokan Ledger source code (demo link)"
+                    >source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="card reveal">
+              <figure class="card-media">
+                <!-- REPLACE: pipeline-lite CI board preview | Replace with the real photo -->
+                <img
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&h=1000&q=80"
+                  width="1600"
+                  height="1000"
+                  alt="pipeline-lite board listing CI runs, pass rates and the slowest jobs"
+                  data-replace="pipeline-lite CI board preview"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="cap">
+                  <span>img/dev-proj-2.png · 1600×1000</span>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <div class="proj-head">
+                  <h3>pipeline-lite</h3>
+                  <span class="yr">2024</span>
+                </div>
+                <p class="proj-meta">
+                  team of two · internal tool · self-hosted
+                </p>
+                <p class="desc">
+                  One board that turns GitHub Actions runs into readable
+                  history: pass rate, flaky tests, slowest jobs. Built for a
+                  five-person team that was losing an hour a day to tab-hunting
+                  across pull requests.
+                </p>
+                <ul class="bullets">
+                  <li>Webhook ingest, idempotent by run id, safe to replay</li>
+                  <li>
+                    90-day rollups in Postgres and flaky-test detection from
+                    pass history
+                  </li>
+                  <li>
+                    Whole stack in one docker compose file, one command to
+                    deploy
+                  </li>
+                </ul>
+                <ul class="chips">
+                  <li>Go</li>
+                  <li>Next.js</li>
+                  <li>Postgres</li>
+                  <li>Docker</li>
+                </ul>
+                <p class="metrics">
+                  <span class="tag">SAMPLE</span>5 repos · 1.4k runs tracked ·
+                  review wait down by half
+                </p>
+                <div class="card-links">
+                  <a href="#" aria-label="pipeline-lite live site (demo link)"
+                    >live</a
+                  >
+                  <a href="#" aria-label="pipeline-lite source code (demo link)"
+                    >source</a
+                  >
+                </div>
+              </div>
+            </article>
+
+            <article class="card reveal">
+              <figure class="card-media">
+                <!-- REPLACE: Shohoj Notify operator console preview | Replace with the real photo -->
+                <img
+                  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1600&h=1000&q=80"
+                  width="1600"
+                  height="1000"
+                  alt="Shohoj Notify console showing a message queue, delivery logs and branch cost counters"
+                  data-replace="Shohoj Notify operator console preview"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="cap">
+                  <span>img/dev-proj-3.png · 1600×1000</span>
+                </figcaption>
+              </figure>
+              <div class="card-body">
+                <div class="proj-head">
+                  <h3>Shohoj Notify</h3>
+                  <span class="yr">2023</span>
+                </div>
+                <p class="proj-meta">
+                  client build · notification service + console
+                </p>
+                <p class="desc">
+                  A queue-backed SMS and notification service with an operator
+                  console for a logistics client. Bangla templates, retry
+                  policy, per-branch delivery logs — one screen answers “did the
+                  customer get it?”
+                </p>
+                <ul class="bullets">
+                  <li>
+                    Retry queue with exponential backoff and a dead-letter
+                    screen
+                  </li>
+                  <li>
+                    Per-branch cost ceiling with monthly alerts before overspend
+                  </li>
+                  <li>
+                    Template preview in Bangla before an operator sends anything
+                  </li>
+                </ul>
+                <ul class="chips">
+                  <li>TypeScript</li>
+                  <li>Hono</li>
+                  <li>Postgres</li>
+                  <li>Redis</li>
+                  <li>Workers</li>
+                </ul>
+                <p class="metrics">
+                  <span class="tag">SAMPLE</span>1.2M messages processed · 99.4%
+                  delivered on first try
+                </p>
+                <div class="card-links">
+                  <a href="#" aria-label="Shohoj Notify case study (demo link)"
+                    >live</a
+                  >
+                  <a href="#" aria-label="Shohoj Notify source code (demo link)"
+                    >source</a
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 EXPERIENCE ============ -->
+      <section class="sec" id="experience" aria-labelledby="experience-h">
+        <div class="wrap">
+          <h2 class="sec-line" id="experience-h">
+            <span class="b">[##</span> 02 <span class="b">//</span>
+            <span class="n">EXPERIENCE</span> <span class="d">$</span
+            ><span class="b">]</span>
+          </h2>
+          <p class="sec-sub">// four years, three teams, all in Dhaka</p>
+          <span class="ascii" aria-hidden="true"
+            >────────────────────────────────────────────────────────────────────────────────────────────────────────</span
+          >
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <span
+                ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                ><span class="pwd">~</span><span class="sep">$</span> git log
+                --oneline --career</span
+              >
+              <span class="panel-note">3 entries</span>
+            </div>
+            <div class="panel-body">
+              <ol class="timeline">
+                <li>
+                  <div class="exp-head">
+                    <h3>
+                      Full-Stack Developer <span class="co">· Nokshi Labs</span>
+                    </h3>
+                    <span class="exp-date">2025 — present</span>
+                  </div>
+                  <p class="exp-where">
+                    Dhaka · product studio, three-person engineering team
+                  </p>
+                  <ul class="bullets">
+                    <li>
+                      Lead the build of Dokan Ledger from empty repo to paying
+                      tenants
+                    </li>
+                    <li>
+                      Own the schema, API and release pipeline; review every
+                      pull request
+                    </li>
+                    <li>
+                      Rewrote the dashboard queries and added caching to kill
+                      the loading spinner
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="exp-head">
+                    <h3>
+                      Full-Stack Developer
+                      <span class="co">· Bhorosha Software</span>
+                    </h3>
+                    <span class="exp-date">2023 — 2025</span>
+                  </div>
+                  <p class="exp-where">
+                    Dhaka · internal tools for a logistics operator
+                  </p>
+                  <ul class="bullets">
+                    <li>
+                      Built the dispatch console and branch reporting used every
+                      morning
+                    </li>
+                    <li>
+                      Replaced spreadsheet reporting with a typed API and a
+                      shared client
+                    </li>
+                    <li>Wrote handover docs the operations team still opens</li>
+                  </ul>
+                </li>
+                <li class="past">
+                  <div class="exp-head">
+                    <h3>
+                      Junior Developer <span class="co">· Kagoj Digital</span>
+                    </h3>
+                    <span class="exp-date">2022 — 2023</span>
+                  </div>
+                  <p class="exp-where">
+                    Dhaka · agency work, marketing sites and small dashboards
+                  </p>
+                  <ul class="bullets">
+                    <li>
+                      Shipped client sites on deadline, often against a fixed
+                      launch date
+                    </li>
+                    <li>
+                      Learned to test on a throttled 3G connection before
+                      calling anything done
+                    </li>
+                  </ul>
+                </li>
+              </ol>
+              <p class="edu">
+                <span class="k">$ cat education.txt</span><br />BSc in Computer
+                Science · [University name] · 2022
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 03 TESTIMONIALS ============ -->
+      <section class="sec" id="testimonials" aria-labelledby="testimonials-h">
+        <div class="wrap">
+          <h2 class="sec-line" id="testimonials-h">
+            <span class="b">[##</span> 03 <span class="b">//</span>
+            <span class="n">TESTIMONIALS</span> <span class="d">$</span
+            ><span class="b">]</span>
+          </h2>
+          <p class="sec-sub">
+            // two people who reviewed the work, quoted as received
+          </p>
+          <span class="ascii" aria-hidden="true"
+            >────────────────────────────────────────────────────────────────────────────────────────────────────────</span
+          >
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <span
+                ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                ><span class="pwd">~</span><span class="sep">$</span> less
+                ./references.log</span
+              >
+              <span class="panel-note">2 records</span>
+            </div>
+            <div class="panel-body">
+              <div class="quotes">
+                <blockquote class="quote">
+                  <p>
+                    “Arif is the developer I hand the vague brief to. He comes
+                    back with a working screen, the API it needs, and a list of
+                    the edge cases we forgot.”
+                  </p>
+                  <footer>
+                    <span class="who">Farhana Akter</span>
+                    <span>Product Manager · Nokshi Labs</span>
+                  </footer>
+                </blockquote>
+                <blockquote class="quote">
+                  <p>
+                    “He rewrote our reporting flow in three weeks without
+                    breaking a single branch workflow. The handover doc was
+                    better than most specs we pay for.”
+                  </p>
+                  <footer>
+                    <span class="who">Tanvir Hasan</span>
+                    <span>CTO · Bhorosha Software</span>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 04 CONTACT ============ -->
+      <section class="sec" id="contact" aria-labelledby="contact-h">
+        <div class="wrap">
+          <h2 class="sec-line" id="contact-h">
+            <span class="b">[##</span> 04 <span class="b">//</span>
+            <span class="n">CONTACT</span> <span class="d">$</span
+            ><span class="b">]</span>
+          </h2>
+          <p class="sec-sub">
+            // email is best · I reply within one business day, Dhaka time
+          </p>
+          <span class="ascii" aria-hidden="true"
+            >────────────────────────────────────────────────────────────────────────────────────────────────────────</span
+          >
+
+          <div class="panel reveal">
+            <div class="panel-head">
+              <span
+                ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                ><span class="pwd">~</span><span class="sep">$</span> mail --to
+                arif@example.com</span
+              >
+              <span class="panel-note">ready</span>
+            </div>
+            <div class="panel-body contact-body">
+              <ul class="contact-lines">
+                <li>
+                  <span class="ck">email</span
+                  ><a class="link" href="mailto:arif@example.com"
+                    >arif@example.com</a
+                  >
+                </li>
+                <li>
+                  <span class="ck">github</span
+                  ><a
+                    class="link"
+                    href="#"
+                    aria-label="GitHub profile (demo link)"
+                    >github.com/arifrahman</a
+                  >
+                </li>
+                <li>
+                  <span class="ck">linkedin</span
+                  ><a
+                    class="link"
+                    href="#"
+                    aria-label="LinkedIn profile (demo link)"
+                    >linkedin.com/in/arifrahman</a
+                  >
+                </li>
+                <li>
+                  <span class="ck">location</span
+                  ><span>Dhaka, Bangladesh · UTC+6</span>
+                </li>
+              </ul>
+              <p class="line">
+                <span class="prompt"
+                  ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+                  ><span class="pwd">~</span><span class="sep">$</span></span
+                >
+                echo $STATUS
+              </p>
+              <p class="avail">open to remote work and contract builds</p>
+              <div class="cta-row">
+                <a class="btn btn--primary" href="mailto:arif@example.com"
+                  >send an email</a
+                >
+                <a class="btn" href="#" aria-label="GitHub profile (demo link)"
+                  >open github</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <a class="foot-brand" href="#top"
+          ><span class="ps1">arif@dhaka</span><span class="sep">:</span
+          ><span class="pwd">~</span><span class="sep">$</span></a
+        >
+        <nav class="foot-links" aria-label="Footer navigation">
+          <a href="#stack">stack</a>
+          <a href="#projects">projects</a>
+          <a href="#experience">experience</a>
+          <a href="#contact">contact</a>
+        </nav>
+        <div class="foot-social">
+          <a href="#" aria-label="GitHub profile (demo link)">GitHub</a>
+          <a href="#" aria-label="LinkedIn profile (demo link)">LinkedIn</a>
+          <a href="mailto:arif@example.com">Email</a>
+        </div>
+        <p class="foot-copy">
+          © 2026 Arif Rahman · one HTML file, no frameworks, no build step ·
+          Dhaka, Bangladesh
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        'use strict'
+
+        var root = document.documentElement
+        root.classList.add('js')
+
+        var reduced = window.matchMedia
+          ? window.matchMedia('(prefers-reduced-motion: reduce)')
+          : null
+        var reduceNow = !!(reduced && reduced.matches)
+
+        /* Entrance: IntersectionObserver only ADDS a class. Base state stays visible without JS. */
+        var reveals = Array.prototype.slice.call(
+          document.querySelectorAll('.reveal'),
+        )
+
+        function showAll() {
+          reveals.forEach(function (el) {
+            el.classList.add('in')
+          })
+        }
+
+        if (reduceNow || !('IntersectionObserver' in window)) {
+          showAll()
+        } else {
+          try {
+            var io = new IntersectionObserver(
+              function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    entry.target.classList.add('in')
+                    io.unobserve(entry.target)
+                  }
+                })
+              },
+              { rootMargin: '0px 0px -6% 0px', threshold: 0.06 },
+            )
+
+            reveals.forEach(function (el) {
+              io.observe(el)
+            })
+          } catch (err) {
+            showAll()
+          }
+        }
+
+        /* Typewriter: hero lines ONLY. Without JS the full text is already in the DOM.
+     prefers-reduced-motion keeps the static, fully visible text. */
+        var nodes = Array.prototype.slice.call(
+          document.querySelectorAll('[data-type]'),
+        )
+        if (!nodes.length) return
+
+        var full = nodes.map(function (el) {
+          return el.textContent
+        })
+        var timers = []
+        var stopped = false
+
+        function clearTimers() {
+          timers.forEach(function (t) {
+            clearTimeout(t)
+          })
+          timers = []
+        }
+
+        function restore() {
+          stopped = true
+          clearTimers()
+          nodes.forEach(function (el, i) {
+            el.textContent = full[i]
+          })
+        }
+
+        if (reduceNow) return
+
+        nodes.forEach(function (el) {
+          el.textContent = ''
+        })
+
+        var index = 0
+
+        function typeNode() {
+          if (stopped || index >= nodes.length) return
+
+          var el = nodes[index]
+          var text = full[index]
+          var speed = parseInt(el.getAttribute('data-speed'), 10) || 34
+          var pos = 0
+
+          function tick() {
+            if (stopped) return
+            el.textContent = text.slice(0, pos)
+            pos += 1
+            if (pos <= text.length) {
+              timers.push(setTimeout(tick, speed))
+            } else {
+              index += 1
+              timers.push(setTimeout(typeNode, 260))
+            }
+          }
+
+          tick()
+        }
+
+        timers.push(setTimeout(typeNode, 240))
+
+        if (reduced) {
+          var onChange = function (event) {
+            if (event.matches) restore()
+          }
+          if (reduced.addEventListener) {
+            reduced.addEventListener('change', onChange)
+          } else if (reduced.addListener) {
+            reduced.addListener(onChange)
+          }
+        }
+      })()
+    </script>
+  </body>
+</html>

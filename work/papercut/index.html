@@ -1,0 +1,3049 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snip &amp; Fold — The Craft Box for Small Hands</title>
+    <meta
+      name="description"
+      content="Snip & Fold is a monthly kids' craft subscription box. Pre-cut paper pieces, safe scissors, illustrated step cards — a finished paper scene on the fridge every month."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ============ TOKENS ============ */
+      :root {
+        --background: #fbf3e4;
+        --background-alt: #f3e6ce;
+        --foreground: #2e2a26;
+        --muted-foreground: #7a6f60;
+        --accent: #e4572e;
+        --accent-light: #f2a65a;
+        --accent-secondary: #5b9a6f;
+        --accent-tertiary: #5aa9c9;
+        --border: #d9c9a8;
+        --font-display: 'Fredoka', sans-serif;
+        --font-body: 'Nunito Sans', sans-serif;
+        --radius-sheet: 1.5rem;
+        --radius-large: 2.5rem;
+        --shadow-layer: 0 4px 10px rgba(46, 42, 38, 0.14);
+        --shadow-lift: 0 8px 18px rgba(46, 42, 38, 0.18);
+      }
+      /* ============ RESET / BASE ============ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: var(--accent);
+      }
+      p a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-weight: 600;
+      }
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+      ::selection {
+        background: var(--accent-light);
+        color: var(--foreground);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        line-height: 1.12;
+      }
+      .wrap {
+        max-width: 66rem;
+        margin-inline: auto;
+        padding-inline: 1.25rem;
+      }
+      .read {
+        max-width: 42rem;
+      }
+      .section {
+        padding-block: 5rem;
+      }
+      .section-title {
+        font-size: clamp(1.9rem, 4vw, 2.6rem);
+        margin: 0.6rem 0 1rem;
+      }
+      .section-head {
+        max-width: 44rem;
+      }
+      .section-sub {
+        color: var(--muted-foreground);
+      }
+      /* paper grain */
+      .grain {
+        position: relative;
+      }
+      .grain::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        opacity: 0.4;
+        background-image:
+          repeating-linear-gradient(
+            35deg,
+            rgba(46, 42, 38, 0.05) 0 1px,
+            transparent 1px 3px
+          ),
+          repeating-linear-gradient(
+            -55deg,
+            rgba(46, 42, 38, 0.03) 0 1px,
+            transparent 1px 4px
+          );
+      }
+      /* layer chips */
+      .layer-chip {
+        display: inline-flex;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        background: var(--background-alt);
+        color: var(--muted-foreground);
+        border-radius: 9999px;
+        padding: 0.2rem 0.7rem;
+      }
+      /* cut-flag micro label — notched bottom */
+      .cut-flag {
+        position: relative;
+        display: inline-block;
+        background: var(--accent);
+        color: #fff8ec;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.9rem 0.85rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+        box-shadow: var(--shadow-layer);
+      }
+      .cut-flag.leaf {
+        background: var(--accent-secondary);
+        clip-path: polygon(0 0, 100% 0, 100% 82%, 50% 100%, 0 82%);
+        padding: 0.35rem 0.9rem 1rem;
+        border-radius: 0.4rem;
+      }
+      /* scallop dividers between sections */
+      .scallop,
+      .wave {
+        display: block;
+        width: 100%;
+        height: 36px;
+        overflow: hidden;
+      }
+      .scallop svg,
+      .wave svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      /* soft sheets */
+      .sheet {
+        background: var(--background);
+        border-radius: var(--radius-sheet);
+        box-shadow: var(--shadow-layer);
+        position: relative;
+      }
+      .sheet-kraft {
+        background: var(--background-alt);
+      }
+      .folded-corner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 44px;
+        height: 44px;
+        background: var(--background);
+        border-radius: 0 0 0 1.25rem;
+        box-shadow: -3px 3px 6px rgba(46, 42, 38, 0.12);
+        clip-path: polygon(0 0, 100% 100%, 0 100%);
+        transform: rotate(180deg);
+      }
+      /* offset sheet stack pseudo layers */
+      .stack {
+        position: relative;
+      }
+      .stack::before,
+      .stack::after {
+        content: '';
+        position: absolute;
+        border-radius: inherit;
+        background: var(--background-alt);
+        z-index: -1;
+      }
+      .stack::before {
+        inset: 0;
+        transform: translate(6px, 7px);
+      }
+      .stack::after {
+        inset: 0;
+        transform: translate(12px, 14px);
+        background: var(--border);
+      }
+      /* buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 48px;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 9999px;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+        white-space: nowrap;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow:
+          inset 2px 2px 0 rgba(255, 255, 255, 0.55),
+          var(--shadow-layer);
+        transition:
+          transform 280ms ease-out,
+          box-shadow 280ms ease-out;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff8ec;
+      }
+      .btn-secondary {
+        background: var(--accent-tertiary);
+        color: #fff8ec;
+      }
+      .btn-cream {
+        background: var(--background);
+        color: var(--foreground);
+      }
+      .btn:hover {
+        transform: translateY(-2px) rotate(-1deg);
+        box-shadow:
+          inset 2px 2px 0 rgba(255, 255, 255, 0.55),
+          var(--shadow-lift);
+      }
+      .btn:active {
+        transform: none;
+        box-shadow:
+          inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+          var(--shadow-layer);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        box-shadow: var(--shadow-layer);
+      }
+      .btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: stretch;
+      }
+      .btn-row > * {
+        flex: 1 1 100%;
+      }
+      @media (min-width: 640px) {
+        .btn-row > * {
+          flex: 0 1 auto;
+        }
+      }
+      /* link with wave underline */
+      .wave-link {
+        color: var(--accent);
+        font-weight: 700;
+        text-decoration: none;
+        position: relative;
+        padding-bottom: 2px;
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+      }
+      .wave-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 4px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='4'%3E%3Cpath d='M0 2 Q3 0 6 2 T12 2' fill='none' stroke='%23E4572E' stroke-width='1.4'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        background-size: 12px 4px;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 280ms ease-out;
+      }
+      .wave-link:hover::after {
+        transform: scaleX(1);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .wave-link::after {
+          transition: none;
+        }
+      }
+      /* entrances — sheets laid down */
+      .lay-down {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: laydown 400ms ease-out forwards;
+      }
+      @keyframes laydown {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .staggered > * {
+        opacity: 0;
+        transform: translateY(12px);
+        animation: laydown 400ms ease-out forwards;
+      }
+      .staggered > *:nth-child(1) {
+        animation-delay: 0ms;
+      }
+      .staggered > *:nth-child(2) {
+        animation-delay: 80ms;
+      }
+      .staggered > *:nth-child(3) {
+        animation-delay: 160ms;
+      }
+      .staggered > *:nth-child(4) {
+        animation-delay: 240ms;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .lay-down,
+        .staggered > * {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+        * {
+          transition: none !important;
+        }
+        .btn:hover,
+        .stack-card:hover {
+          transform: none;
+        }
+      }
+      /* ============ 3.1 HEADER ============ */
+      .topbar {
+        position: relative;
+        z-index: 5;
+        background: var(--background);
+      }
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 0;
+      }
+      .wordmark {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-decoration: none;
+        color: var(--foreground);
+      }
+      .wordmark svg {
+        flex: none;
+      }
+      .wordmark strong {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+      .wordmark strong .amp {
+        color: var(--accent);
+      }
+      .main-nav {
+        display: none;
+        align-items: center;
+        gap: 1.6rem;
+      }
+      .main-nav a {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--foreground);
+        text-decoration: none;
+        position: relative;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .main-nav a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 6px;
+        width: 100%;
+        height: 3px;
+        border-radius: 99px;
+        background: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 240ms ease-out;
+      }
+      .main-nav a:hover {
+        color: var(--accent);
+      }
+      .main-nav a:hover::after {
+        transform: scaleX(1);
+      }
+      @media (min-width: 1024px) {
+        .main-nav {
+          display: inline-flex;
+        }
+      }
+      .menu-btn {
+        background: var(--background);
+        border: none;
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--foreground);
+        border-radius: 9999px;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 1rem;
+        box-shadow: var(--shadow-layer);
+      }
+      @media (min-width: 1024px) {
+        .menu-btn {
+          display: none;
+        }
+      }
+      .mobile-nav {
+        display: none;
+        padding: 0 0 1rem;
+      }
+      .mobile-nav.open {
+        display: block;
+      }
+      .mobile-nav ul {
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .mobile-nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 0 1.1rem;
+        border-radius: 1rem;
+        background: var(--background-alt);
+        color: var(--foreground);
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: var(--shadow-layer);
+      }
+      .topbar .top-cta {
+        display: none;
+      }
+      @media (min-width: 640px) {
+        .topbar .top-cta {
+          display: inline-flex;
+        }
+      }
+      /* scalloped bottom edge of header strip */
+      .scallop-edge {
+        height: 14px;
+        width: 100%;
+        background: radial-gradient(
+            circle at 8px -5px,
+            transparent 12px,
+            var(--background) 13px
+          )
+          repeat-x;
+        background-size: 16px 14px;
+        margin-top: -14px;
+        position: relative;
+        z-index: 4;
+      }
+      /* ============ 3.2 HERO — 4 STRATA ============ */
+      .hero {
+        position: relative;
+        padding-top: 1.5rem;
+        overflow: hidden;
+        padding-bottom: 0;
+      }
+      .scene {
+        position: relative;
+        max-width: 66rem;
+        margin-inline: auto;
+        min-height: 560px;
+      }
+      @media (min-width: 1024px) {
+        .scene {
+          min-height: 600px;
+        }
+      }
+      /* L1 sky */
+      .sky {
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius-large);
+        background: var(--accent-tertiary);
+        box-shadow: var(--shadow-layer);
+        overflow: hidden;
+        transform: translateY(calc(var(--plx, 0) * 0.2));
+      }
+      .sun {
+        position: absolute;
+        top: 6%;
+        left: 8%;
+        width: 120px;
+        height: 120px;
+        border-radius: 9999px;
+        background: var(--accent);
+        box-shadow:
+          inset 3px 3px 0 rgba(255, 255, 255, 0.35),
+          var(--shadow-layer);
+      }
+      .sun::before {
+        /* paper-strip rays — hidden on small */
+        content: '';
+        position: absolute;
+        inset: -26px;
+        background-image: repeating-conic-gradient(
+          var(--accent-light) 0deg 8deg,
+          transparent 8deg 30deg
+        );
+        border-radius: 9999px;
+        opacity: 0.6;
+        z-index: -1;
+      }
+      @media (max-width: 639px) {
+        .sun {
+          width: 84px;
+          height: 84px;
+        }
+      }
+      .cloud {
+        position: absolute;
+        border-radius: 9999px;
+        background: var(--background);
+        box-shadow: inset 2px 2px 0 rgba(46, 42, 38, 0.06);
+      }
+      .cloud::before {
+        content: '';
+        position: absolute;
+        top: -40%;
+        left: 22%;
+        width: 60%;
+        height: 90%;
+        background: inherit;
+        border-radius: 9999px;
+      }
+      .cloud-1 {
+        top: 14%;
+        right: 12%;
+        width: 150px;
+        height: 44px;
+      }
+      .cloud-2 {
+        top: 26%;
+        right: 34%;
+        width: 100px;
+        height: 32px;
+        opacity: 0.85;
+      }
+      /* L2 hills */
+      .hills {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 190px;
+        height: 210px;
+        pointer-events: none;
+        transform: translateY(calc(var(--plx, 0) * -0.1));
+      }
+      .hill {
+        position: absolute;
+        bottom: 0;
+        border-radius: 9999px 9999px 0 0;
+      }
+      .hill-a {
+        left: -10%;
+        width: 75%;
+        height: 180px;
+        background: var(--accent-secondary);
+      }
+      .hill-b {
+        right: -12%;
+        width: 70%;
+        height: 210px;
+        background: var(--accent-light);
+      }
+      .hill-a::before,
+      .hill-b::before {
+        content: '';
+        position: absolute;
+        left: 18%;
+        top: 34%;
+        width: 26px;
+        height: 40px;
+        border-radius: 9999px;
+        background: var(--accent-secondary);
+      }
+      .hill-a::before {
+        opacity: 0.45;
+      }
+      .hill-b::before {
+        background: var(--accent);
+        opacity: 0.5;
+        top: 26%;
+        left: 30%;
+      }
+      @media (max-width: 639px) {
+        .hills {
+          bottom: 230px;
+          height: 180px;
+        }
+        .hill-a {
+          height: 150px;
+        }
+        .hill-b {
+          height: 170px;
+        }
+      }
+      /* L3 headline sheet */
+      .headline-sheet {
+        position: relative;
+        margin: 0 auto;
+        max-width: 34rem;
+        z-index: 2;
+        background: var(--background);
+        border-radius: var(--radius-large);
+        box-shadow: var(--shadow-lift);
+        padding: 2.4rem 2rem 2.2rem;
+        text-align: center;
+        transform: translateY(calc(var(--plx, 0) * -0.22));
+      }
+      .headline-sheet::before {
+        /* scalloped top edge */
+        content: '';
+        position: absolute;
+        top: -13px;
+        left: 20px;
+        right: 20px;
+        height: 14px;
+        background: radial-gradient(
+            circle at 8px 14px,
+            transparent 12px,
+            var(--background) 13px
+          )
+          repeat-x;
+        background-size: 16px 14px;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--background-alt);
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 0.4rem 1rem;
+        box-shadow: var(--shadow-layer);
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 700;
+        margin: 1.1rem 0 0.9rem;
+      }
+      .hero h1 .accent {
+        color: var(--accent);
+      }
+      .hero-lead {
+        color: var(--muted-foreground);
+        font-size: 1.06rem;
+        margin-bottom: 1.6rem;
+      }
+      .headline-sheet .btn-row {
+        justify-content: center;
+      }
+      .hero-note {
+        display: block;
+        margin-top: 1rem;
+        font-size: 0.82rem;
+        color: var(--muted-foreground);
+        font-weight: 600;
+      }
+      /* L4 foreground cut-outs */
+      .foreground {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 230px;
+        pointer-events: none;
+        z-index: 3;
+        transform: translateY(calc(var(--plx, 0) * -0.28));
+      }
+      @media (max-width: 639px) {
+        .foreground {
+          height: 200px;
+        }
+      }
+      .bird {
+        position: absolute;
+        background: var(--foreground);
+        border-radius: 2px 20px 2px 20px;
+        width: 34px;
+        height: 12px;
+        opacity: 0.8;
+      }
+      .bird::before,
+      .bird::after {
+        content: '';
+        position: absolute;
+        top: -9px;
+        width: 16px;
+        height: 12px;
+        background: inherit;
+        border-radius: 20px 20px 0 0;
+      }
+      .bird::before {
+        right: 2px;
+        transform: rotate(-24deg);
+      }
+      .bird::after {
+        left: 2px;
+        transform: rotate(24deg);
+      }
+      .bird-1 {
+        top: 26px;
+        left: 14%;
+      }
+      .bird-2 {
+        top: 52px;
+        left: 24%;
+        transform: scale(0.7);
+      }
+      .bird-3 {
+        top: 40px;
+        right: 18%;
+        transform: scale(0.85);
+      }
+      .ground {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        background: var(--accent-light);
+        border-radius: 100% 100% 0 0/70px 70px 0 0;
+        box-shadow: inset 0 10px 0 rgba(255, 255, 255, 0.3);
+      }
+      @media (max-width: 639px) {
+        .ground {
+          height: 100px;
+        }
+      }
+      .leaf-cut {
+        position: absolute;
+        bottom: 78px;
+        width: 46px;
+        height: 46px;
+        background: var(--accent-secondary);
+        border-radius: 0 9999px 0 9999px;
+      }
+      .leaf-1 {
+        left: 8%;
+        transform: rotate(-14deg);
+      }
+      .leaf-2 {
+        right: 9%;
+        transform: rotate(24deg) scale(0.8);
+        background: var(--accent);
+      }
+      /* layer chips row (signature move 1) */
+      .strata-keys {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 1.4rem auto 0;
+        max-width: 40rem;
+        position: relative;
+        z-index: 4;
+      }
+      /* ============ 3.3 STATS — BUNTING PENNANTS ============ */
+      .stats-band {
+        padding-block: 4.5rem 3.5rem;
+      }
+      .bunting {
+        position: relative;
+        padding-top: 34px;
+      }
+      .bunting-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 34px;
+      }
+      .pennants {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.2rem 1.5rem;
+        max-width: 52rem;
+        margin-inline: auto;
+      }
+      @media (min-width: 1024px) {
+        .pennants {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .pennant {
+        position: relative;
+        text-align: center;
+        padding: 1.6rem 0.75rem 2.6rem;
+        background: var(--sheet-color, var(--accent));
+        clip-path: polygon(
+          0 0,
+          100% 0,
+          100% 100%,
+          50% calc(100% - 22px),
+          0 100%
+        );
+        border-radius: 0.6rem 0.6rem 0 0;
+        box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+      }
+      .pennant .value {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2.4rem;
+        color: #fff8ec;
+        line-height: 1;
+      }
+      .pennant .label {
+        display: block;
+        margin-top: 0.5rem;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #fff8ec;
+        opacity: 0.92;
+      }
+      .pennant-dot {
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        transform: translate(-50%, -9px) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        background: var(--foreground);
+        border-radius: 2px;
+        opacity: 0.75;
+      }
+      /* ============ 3.4 STORY PANEL ============ */
+      .story {
+        padding-block: 1rem 5rem;
+      }
+      .story-panel {
+        position: relative;
+        max-width: 56rem;
+        margin-inline: auto;
+        background: var(--background-alt);
+        border-radius: var(--radius-large);
+        box-shadow: var(--shadow-layer);
+        padding: 2.6rem 1.75rem 2.4rem;
+      }
+      @media (min-width: 768px) {
+        .story-panel {
+          padding: 3.2rem 3rem;
+        }
+      }
+      .folded-corner::before {
+        z-index: 1;
+      }
+      .story-grid {
+        display: grid;
+        gap: 1.8rem;
+        align-items: center;
+      }
+      @media (min-width: 768px) {
+        .story-grid {
+          grid-template-columns: 1fr 200px;
+        }
+      }
+      .story-panel h2 {
+        font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+        margin-bottom: 1rem;
+      }
+      .dropcap::first-letter {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 3.6rem;
+        line-height: 0.85;
+        float: left;
+        margin: 0.15rem 0.7rem 0 0;
+        color: var(--accent);
+      }
+      .story-panel p {
+        color: var(--muted-foreground);
+      }
+      .story-panel p + p {
+        margin-top: 0.8rem;
+      }
+      .story-art {
+        margin: 0;
+      }
+      .story-art svg {
+        width: 100%;
+        height: auto;
+      }
+      /* ============ SHEETS (features/benefits/process/pricing/journal) ============ */
+      .sheet-card {
+        background: var(--background);
+        border-radius: var(--radius-sheet);
+        box-shadow: var(--shadow-layer);
+        padding: 1.8rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        position: relative;
+        transition:
+          transform 300ms ease-out,
+          box-shadow 300ms ease-out;
+      }
+      .stack-card {
+        position: relative;
+        z-index: 1;
+      }
+      .stack-card::before,
+      .stack-card::after {
+        content: '';
+        position: absolute;
+        border-radius: var(--radius-sheet);
+        background: var(--background-alt);
+        z-index: -1;
+        transition: transform 300ms ease-out;
+      }
+      .stack-card::before {
+        inset: 0;
+        transform: translate(5px, 6px);
+      }
+      .stack-card::after {
+        inset: 0;
+        transform: translate(10px, 12px);
+        background: var(--border);
+      }
+      @media (hover: hover) {
+        .stack-card:hover {
+          transform: translateY(-2px) rotate(-1deg);
+          box-shadow: var(--shadow-lift);
+        }
+        .stack-card:hover::before {
+          transform: translate(7px, 8px);
+        }
+        .stack-card:hover::after {
+          transform: translate(12px, 15px);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .stack-card:hover {
+          transform: none;
+          box-shadow: var(--shadow-lift);
+        }
+      }
+      .icon-scene {
+        width: 96px;
+        height: 72px;
+        border-radius: 0.9rem;
+        overflow: visible;
+      }
+      .sheet-card h3 {
+        font-size: 1.35rem;
+      }
+      .sheet-card p {
+        color: var(--muted-foreground);
+        font-size: 0.94rem;
+      }
+      /* ============ 3.5 FEATURES — SHEET 1 ============ */
+      .features-grid {
+        display: grid;
+        gap: 2.2rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        .features-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .chip-row {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-top: auto;
+        padding-top: 0.5rem;
+      }
+      /* ============ 3.6 BENEFITS — SHEET 2 ============ */
+      .benefits {
+        padding-block: 5rem;
+      }
+      .sky-tinted {
+        background: var(--accent-tertiary);
+        border-radius: var(--radius-large);
+        box-shadow: var(--shadow-layer);
+        padding: 2.4rem 1.6rem;
+        position: relative;
+        overflow: hidden;
+      }
+      @media (min-width: 768px) {
+        .sky-tinted {
+          padding: 2.8rem 2.6rem;
+        }
+      }
+      .sky-tinted::before,
+      .sky-tinted::after {
+        content: '';
+        position: absolute;
+        height: 14px;
+        left: 20px;
+        right: 20px;
+        background: radial-gradient(
+            circle at 8px -5px,
+            transparent 12px,
+            rgba(251, 243, 228, 0.25) 13px
+          )
+          repeat-x;
+        background-size: 16px 14px;
+      }
+      .sky-tinted::before {
+        top: 0;
+      }
+      .sky-tinted::after {
+        bottom: 0;
+        transform: rotate(180deg);
+      }
+      .check-list {
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.6rem;
+      }
+      .check-list li {
+        display: flex;
+        gap: 0.8rem;
+        align-items: flex-start;
+        color: #fff8ec;
+        font-weight: 600;
+      }
+      .check-list li strong {
+        font-weight: 800;
+      }
+      .check-list li span.check-desc {
+        font-weight: 400;
+        opacity: 0.92;
+        display: block;
+        font-size: 0.9rem;
+      }
+      .paper-check {
+        flex: none;
+        width: 34px;
+        height: 34px;
+        margin-top: 2px;
+        border-radius: 0.7rem;
+        background: var(--accent-secondary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow:
+          inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+          var(--shadow-layer);
+      }
+      .benefits-grid {
+        display: grid;
+        gap: 2.5rem;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .benefits-grid {
+          grid-template-columns: 1.3fr 1fr;
+        }
+      }
+      .stat-blob {
+        position: relative;
+        border-radius: 38% 62% 55% 45%/48% 40% 60% 52%;
+        background: var(--accent-light);
+        text-align: center;
+        padding: 3.4rem 2rem;
+        box-shadow: var(--shadow-layer);
+      }
+      .stat-blob .big {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 3.4rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-blob .lbl {
+        display: block;
+        margin-top: 0.6rem;
+        font-weight: 800;
+        font-size: 0.85rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--foreground);
+      }
+      .stat-blob small {
+        display: block;
+        margin-top: 0.5rem;
+        color: var(--muted-foreground);
+        font-weight: 600;
+        font-size: 0.82rem;
+      }
+      /* ============ 3.7 PROCESS — SHEET 3 ============ */
+      .fan {
+        display: grid;
+        gap: 2.2rem;
+        margin-top: 2.5rem;
+        max-width: 46rem;
+        margin-inline: auto;
+      }
+      .step-sheet {
+        display: flex;
+        gap: 1.6rem;
+        align-items: center;
+        background: var(--sheet-bg, var(--background));
+        border-radius: var(--radius-sheet);
+        box-shadow: var(--shadow-layer);
+        padding: 1.6rem 1.4rem;
+        position: relative;
+      }
+      @media (min-width: 640px) {
+        .fan {
+          max-width: none;
+        }
+        .fan-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2.2rem;
+        }
+        .step-sheet {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.9rem;
+        }
+      }
+      .step-badge {
+        flex: none;
+        width: 76px;
+        height: 76px;
+        border-radius: 9999px;
+        background: var(--badge-color, var(--accent));
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2.3rem;
+        color: #fff8ec;
+        box-shadow:
+          inset 3px 3px 0 rgba(255, 255, 255, 0.3),
+          var(--shadow-layer);
+      }
+      .step-sheet h3 {
+        font-size: 1.5rem;
+      }
+      .step-sheet .verb {
+        font-weight: 800;
+        font-size: 0.74rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+      }
+      .step-sheet p {
+        color: var(--muted-foreground);
+        font-size: 0.94rem;
+      }
+      .fold-line {
+        display: none;
+        margin-top: -1.2rem;
+        margin-bottom: 1.2rem;
+        border-top: 2px dashed var(--border);
+        width: min(60%, 180px);
+        margin-inline: auto;
+      }
+      @media (min-width: 640px) {
+        .fold-line {
+          display: none;
+        }
+      }
+      @media (max-width: 639px) {
+        .fold-line {
+          display: block;
+        }
+      }
+      /* ============ 3.8 PRICING — SHEET 4 ============ */
+      .tents {
+        display: grid;
+        gap: 2.4rem;
+        margin-top: 3rem;
+        align-items: stretch;
+      }
+      @media (min-width: 1024px) {
+        .tents {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .tent {
+        position: relative;
+        background: var(--background);
+        border-radius: var(--radius-sheet);
+        box-shadow: var(--shadow-layer);
+        padding: 3rem 1.6rem 1.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        transition:
+          transform 300ms ease-out,
+          box-shadow 300ms ease-out;
+      }
+      .tent::before {
+        /* tri fold top */
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 26px;
+        background: var(--background-alt);
+        border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 20%, 0 100%);
+        box-shadow: 0 3px 6px rgba(46, 42, 38, 0.12);
+      }
+      .tent h3 {
+        font-size: 1.4rem;
+        margin-top: 0.6rem;
+      }
+      .tent .price {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2.3rem;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .tent .price small {
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.78rem;
+        color: var(--muted-foreground);
+        display: block;
+        margin-top: 0.35rem;
+        letter-spacing: 0.1em;
+      }
+      .tent ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        margin: 0.4rem 0 1.2rem;
+      }
+      .tent li {
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+        font-size: 0.93rem;
+        color: var(--muted-foreground);
+      }
+      .leaf-tick {
+        flex: none;
+        margin-top: 3px;
+        width: 20px;
+        height: 20px;
+        border-radius: 0.45rem;
+        background: var(--accent-secondary);
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5 L9 14 L15 6.5' fill='none' stroke='%23FBF3E4' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-size: 16px 16px;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .tent .btn {
+        margin-top: auto;
+        width: 100%;
+      }
+      .ribbon {
+        position: absolute;
+        top: -14px;
+        right: 18px;
+        z-index: 2;
+        background: var(--accent-light);
+        color: var(--foreground);
+        font-weight: 800;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 0.5rem 1rem 1.1rem;
+        clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+        border-radius: 0.5rem;
+        box-shadow: var(--shadow-layer);
+      }
+      .tent.featured {
+        box-shadow: var(--shadow-lift);
+      }
+      /* ============ 3.9 TESTIMONIALS — SHEET 5 ============ */
+      .bubbles {
+        display: grid;
+        gap: 2.6rem;
+        margin-top: 2.8rem;
+      }
+      @media (min-width: 768px) {
+        .bubbles {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .bubble {
+        position: relative;
+        background: var(--background);
+        border-radius: 1.6rem;
+        box-shadow: var(--shadow-layer);
+        padding: 2.4rem 1.5rem 1.6rem;
+      }
+      .bubble::before {
+        /* scalloped top */
+        content: '';
+        position: absolute;
+        top: -12px;
+        left: 22px;
+        right: 22px;
+        height: 13px;
+        background: radial-gradient(
+            circle at 8px 13px,
+            transparent 11px,
+            var(--background) 12px
+          )
+          repeat-x;
+        background-size: 16px 13px;
+      }
+      .bubble::after {
+        /* tail */
+        content: '';
+        position: absolute;
+        bottom: -13px;
+        left: 38px;
+        width: 26px;
+        height: 22px;
+        background: var(--background);
+        clip-path: polygon(0 0, 100% 40%, 14% 100%);
+      }
+      .bubble blockquote {
+        color: var(--foreground);
+        font-style: italic;
+        font-size: 0.98rem;
+      }
+      .author {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-top: 1.3rem;
+      }
+      .avatar {
+        flex: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 9999px;
+        border: 2px solid var(--background);
+        box-shadow:
+          0 0 0 2px var(--border),
+          var(--shadow-layer);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: #fff8ec;
+        font-size: 1rem;
+      }
+      .author .who {
+        font-weight: 800;
+        font-size: 0.9rem;
+      }
+      .author .meta {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--muted-foreground);
+        font-weight: 600;
+      }
+      /* ============ 3.10 FAQ — SHEET 6 ============ */
+      .faq-wrap {
+        max-width: 52rem;
+        margin-inline: auto;
+      }
+      .faq-item {
+        margin-bottom: 1.1rem;
+      }
+      .faq-q {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        text-align: left;
+        background: var(--background-alt);
+        border: none;
+        cursor: pointer;
+        border-radius: 1.1rem;
+        min-height: 44px;
+        padding: 1.05rem 1.2rem;
+        font-family: var(--font-body);
+        font-weight: 800;
+        font-size: 1rem;
+        color: var(--foreground);
+        box-shadow: var(--shadow-layer);
+        transition:
+          transform 240ms ease-out,
+          box-shadow 240ms ease-out;
+      }
+      .faq-q:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-lift);
+      }
+      .faq-tab {
+        flex: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        background: var(--accent);
+        color: #fff8ec;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        font-weight: 700;
+        box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.3);
+        line-height: 1;
+        transition:
+          transform 240ms ease-out,
+          background 240ms ease-out;
+      }
+      .faq-item.open .faq-tab {
+        transform: rotate(45deg);
+        background: var(--accent-secondary);
+      }
+      .faq-a {
+        display: none;
+        margin: 0.6rem 1.2rem 0;
+        padding: 1rem 1.2rem 1.1rem;
+        background: var(--background);
+        border-radius: 1rem;
+        color: var(--muted-foreground);
+        box-shadow: var(--shadow-layer);
+        font-size: 0.95rem;
+      }
+      .faq-item.open .faq-a {
+        display: block;
+      }
+      /* ============ 3.11 JOURNAL — SHEET 7 ============ */
+      .journal-grid {
+        display: grid;
+        gap: 2.2rem;
+        margin-top: 2.5rem;
+      }
+      @media (min-width: 640px) {
+        .journal-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .journal-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .photo-window {
+        border-radius: 1.4rem;
+        overflow: hidden;
+        position: relative;
+        box-shadow: var(--shadow-layer);
+      }
+      .photo-window svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .caption-flag {
+        display: inline-block;
+        margin-top: -14px;
+        position: relative;
+        z-index: 1;
+        background: var(--background);
+        border-radius: 0.6rem 0.6rem 0.6rem 0;
+        font-weight: 800;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+        padding: 0.35rem 0.8rem;
+        box-shadow: var(--shadow-layer);
+      }
+      .journal-card h3 {
+        font-size: 1.25rem;
+        margin: 0.8rem 0 0.4rem;
+      }
+      .journal-card p {
+        color: var(--muted-foreground);
+        font-size: 0.93rem;
+        margin-bottom: 1rem;
+      }
+      /* ============ 3.12 FINAL CTA — SUNSET BAND ============ */
+      .sunset {
+        position: relative;
+        padding-block: 6rem 5rem;
+        margin-top: 2rem;
+        overflow: hidden;
+      }
+      .sunset-hills {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 100%;
+        z-index: 0;
+      }
+      .sunset-hills svg {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .sunset .wrap {
+        position: relative;
+        z-index: 1;
+      }
+      .cta-sheet {
+        max-width: 38rem;
+        margin-inline: auto;
+        text-align: center;
+        background: var(--background);
+        border-radius: var(--radius-large);
+        box-shadow: var(--shadow-lift);
+        padding: 3rem 1.8rem;
+        position: relative;
+      }
+      .cta-sheet::before {
+        content: '';
+        position: absolute;
+        top: -13px;
+        left: 24px;
+        right: 24px;
+        height: 14px;
+        background: radial-gradient(
+            circle at 8px 14px,
+            transparent 12px,
+            var(--background) 13px
+          )
+          repeat-x;
+        background-size: 16px 14px;
+      }
+      .ray-strip {
+        position: absolute;
+        top: -22px;
+        width: 8px;
+        border-radius: 99px;
+        background: var(--accent-light);
+      }
+      .ray-1 {
+        height: 52px;
+        left: 16%;
+      }
+      .ray-2 {
+        height: 38px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .ray-3 {
+        height: 52px;
+        right: 16%;
+      }
+      .cta-sheet h2 {
+        font-size: clamp(2rem, 4.4vw, 2.8rem);
+        margin-bottom: 0.9rem;
+      }
+      .cta-sheet p {
+        color: var(--muted-foreground);
+        margin-bottom: 1.7rem;
+      }
+      .cta-sheet .btn-row {
+        justify-content: center;
+      }
+      /* ============ 3.13 FOOTER ============ */
+      .footer {
+        background: var(--background-alt);
+        position: relative;
+        padding: 3rem 0 2rem;
+        margin-top: 0;
+      }
+      .footer::before {
+        content: '';
+        position: absolute;
+        top: -13px;
+        left: 0;
+        width: 100%;
+        height: 14px;
+        background: radial-gradient(
+            circle at 8px -5px,
+            transparent 12px,
+            var(--background-alt) 13px
+          )
+          repeat-x;
+        background-size: 18px 14px;
+      }
+      .flutes {
+        background-image: repeating-linear-gradient(
+          90deg,
+          rgba(46, 42, 38, 0.04) 0 2px,
+          transparent 2px 9px
+        );
+      }
+      .footer-top {
+        display: grid;
+        gap: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+      }
+      @media (min-width: 768px) {
+        .footer-top {
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: 2.5rem;
+        }
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      @media (min-width: 768px) {
+        .footer-links {
+          flex-direction: row;
+          gap: 0;
+          justify-content: center;
+        }
+      }
+      .footer-links a {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--foreground);
+        text-decoration: none;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 0.9rem;
+        border-radius: 9999px;
+      }
+      .footer-links a:hover {
+        background: var(--background);
+        color: var(--accent);
+        box-shadow: var(--shadow-layer);
+      }
+      .footer-meta-right {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+      @media (min-width: 768px) {
+        .footer-meta-right {
+          align-items: flex-end;
+        }
+      }
+      .social-row {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .social-row a {
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        background: var(--background);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--foreground);
+        box-shadow: var(--shadow-layer);
+      }
+      .social-row a:hover {
+        background: var(--accent);
+        color: #fff8ec;
+        transform: rotate(-4deg);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .social-row a:hover {
+          transform: none;
+        }
+      }
+      .social-row svg {
+        width: 18px;
+        height: 18px;
+      }
+      .copyright-flag {
+        font-size: 0.78rem;
+        color: var(--muted-foreground);
+        font-weight: 700;
+      }
+      .slim-only {
+        display: none;
+      }
+      @media (min-width: 768px) {
+        .slim-only {
+          display: block;
+        }
+      }
+      .stack-only {
+        display: grid;
+        gap: 0.5rem;
+      }
+      @media (min-width: 768px) {
+        .stack-only {
+          display: none;
+        }
+      }
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--accent);
+        color: #fff8ec;
+        font-weight: 700;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0 0 0.8rem 0;
+        z-index: 99;
+      }
+      .skip-link:focus {
+        left: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- ============ 3.1 HEADER — CREAM SHEET STRIP ============ -->
+    <header class="topbar">
+      <div class="wrap topbar-inner">
+        <a class="wordmark" href="#top" aria-label="Snip & Fold — home">
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 34 34"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M17 3 C24 9 30 8 30 15 C30 24 23 31 17 31 C11 31 4 24 4 15 C4 8 10 9 17 3 Z"
+              fill="#5B9A6F"
+            />
+            <path
+              d="M17 10 C20 14 24 15 23 20 C22 24 19 27 17 27 C15 27 12 24 11 20 C10 15 14 14 17 10 Z"
+              fill="#FBF3E4"
+            />
+          </svg>
+          <strong>Snip <span class="amp">&amp;</span> Fold</strong>
+        </a>
+        <nav class="main-nav" aria-label="Primary">
+          <a href="#story">Our Story</a>
+          <a href="#features">Inside</a>
+          <a href="#process">How It Works</a>
+          <a href="#pricing">Boxes</a>
+          <a href="#faq">Questions</a>
+          <a href="#journal">Paper Post</a>
+        </nav>
+        <div style="display: flex; align-items: center; gap: 0.75rem">
+          <a class="btn btn-primary top-cta" href="#pricing">Get a Box</a>
+          <button
+            class="menu-btn"
+            id="menuBtn"
+            aria-expanded="false"
+            aria-controls="mobileNav"
+            aria-label="Open menu"
+          >
+            Menu
+          </button>
+        </div>
+      </div>
+      <nav class="wrap mobile-nav" id="mobileNav" aria-label="Mobile">
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#features">Inside the Box</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#pricing">Boxes &amp; Prices</a></li>
+          <li><a href="#faq">Questions</a></li>
+          <li><a href="#journal">Paper Post</a></li>
+        </ul>
+      </nav>
+      <div class="scallop-edge" aria-hidden="true"></div>
+    </header>
+
+    <main id="main">
+      <!-- ============ 3.2 HERO — LAYERED SCENE ============ -->
+      <section class="hero" id="top">
+        <div class="wrap">
+          <div class="scene">
+            <div class="sky grain" data-plx="1" aria-hidden="true">
+              <span class="sun"></span>
+              <span class="cloud cloud-1"></span>
+              <span class="cloud cloud-2"></span>
+            </div>
+            <div class="hills" data-plx="2" aria-hidden="true">
+              <span class="hill hill-a"></span>
+              <span class="hill hill-b"></span>
+            </div>
+            <div class="headline-sheet grain lay-down" data-plx="3">
+              <span class="badge">Monthly craft boxes · Ages 4–10</span>
+              <h1>
+                A paper world <span class="accent">cut out</span> just for them.
+              </h1>
+              <p class="hero-lead">
+                Every Snip &amp; Fold box arrives with pre-cut paper pieces,
+                safe scissors, glue dots and an illustrated step card. No prep
+                for you — a finished paper scene on the fridge in about 40
+                minutes.
+              </p>
+              <div class="btn-row">
+                <a class="btn btn-primary" href="#pricing"
+                  >Start a Subscription</a
+                >
+                <a class="btn btn-cream" href="#features">Peek Inside</a>
+              </div>
+              <small class="hero-note"
+                >From $24 per box · Skip or pause any month · Free shipping in
+                the US</small
+              >
+              <div style="margin-top: 1rem">
+                <span class="layer-chip">[L3] headline sheet</span>
+              </div>
+            </div>
+            <div class="foreground" data-plx="4" aria-hidden="true">
+              <span class="bird bird-1"></span>
+              <span class="bird bird-2"></span>
+              <span class="bird bird-3"></span>
+              <span class="ground"></span>
+              <span class="leaf-cut leaf-1"></span>
+              <span class="leaf-cut leaf-2"></span>
+            </div>
+          </div>
+          <div class="strata-keys" aria-label="Scene layers">
+            <span class="layer-chip">[L1] sky</span>
+            <span class="layer-chip">[L2] hills</span>
+            <span class="layer-chip">[L3] content sheet</span>
+            <span class="layer-chip">[L4] foreground</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.3 STATS — BUNTING PENNANTS ============ -->
+      <section class="stats-band" aria-label="Snip &amp; Fold in numbers">
+        <div class="wrap">
+          <div class="bunting">
+            <svg
+              class="bunting-line"
+              viewBox="0 0 600 34"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M0 4 Q300 22 600 4"
+                fill="none"
+                stroke="#2E2A26"
+                stroke-width="2"
+                stroke-dasharray="1 6"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div class="pennants staggered">
+              <div class="pennant" style="--sheet-color: #e4572e">
+                <span class="pennant-dot" aria-hidden="true"></span>
+                <span class="value">37,000</span>
+                <span class="label">Boxes Folded</span>
+              </div>
+              <div class="pennant" style="--sheet-color: #5b9a6f">
+                <span class="pennant-dot" aria-hidden="true"></span>
+                <span class="value">4.8/5</span>
+                <span class="label">Parent Rating</span>
+              </div>
+              <div class="pennant" style="--sheet-color: #f2a65a">
+                <span class="pennant-dot" aria-hidden="true"></span>
+                <span class="value">96%</span>
+                <span class="label">Finished by Kids</span>
+              </div>
+              <div class="pennant" style="--sheet-color: #5aa9c9">
+                <span class="pennant-dot" aria-hidden="true"></span>
+                <span class="value">40 Min</span>
+                <span class="label">Per Project</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.4 STORY PANEL — FOLDED PAGE ============ -->
+      <section class="story" id="story">
+        <div class="wrap">
+          <div class="story-panel sheet-kraft grain folded-corner stack">
+            <div class="story-grid">
+              <div>
+                <span class="cut-flag leaf" style="margin-bottom: 1.4rem"
+                  >Our Story</span
+                >
+                <h2>
+                  It started with a kitchen table and a very brave pair of
+                  safety scissors.
+                </h2>
+                <p class="dropcap">
+                  In 2023, Marisol and Dev — a paper artist and a primary-school
+                  teacher — grew tired of craft kits that were all plastic
+                  stick-ons and none craft. So every month they designed one
+                  paper world, pre-cut every fiddly piece on their kitchen
+                  table, and put it in a kraft box for the twelve kids on their
+                  street.
+                </p>
+                <p>
+                  Three years on, the kitchen table is a studio in Asheville,
+                  but the promise is identical:
+                  <strong
+                    >100% paper, every piece either pre-cut or cuttable with
+                    safety scissors, and steps drawn so clearly that a
+                    4-year-old can lead and a grown-up just holds the
+                    glue.</strong
+                  >
+                </p>
+              </div>
+              <figure
+                class="story-art"
+                aria-label="Cut-paper silhouette of a scissors, a folded crane and a glue stick"
+              >
+                <svg viewBox="0 0 200 220" fill="none" aria-hidden="true">
+                  <g transform="rotate(-8 100 60)">
+                    <ellipse
+                      cx="78"
+                      cy="46"
+                      rx="17"
+                      ry="13"
+                      stroke="#E4572E"
+                      stroke-width="7"
+                    />
+                    <ellipse
+                      cx="122"
+                      cy="46"
+                      rx="17"
+                      ry="13"
+                      stroke="#E4572E"
+                      stroke-width="7"
+                    />
+                    <path
+                      d="M88 56 L118 130 M112 56 L82 130"
+                      stroke="#2E2A26"
+                      stroke-width="7"
+                      stroke-linecap="round"
+                    />
+                  </g>
+                  <path
+                    d="M100 96 L134 150 L100 138 L66 150 Z"
+                    fill="#F2A65A"
+                  />
+                  <path d="M100 96 V138" stroke="#E4572E" stroke-width="3" />
+                  <rect
+                    x="84"
+                    y="168"
+                    width="32"
+                    height="40"
+                    rx="6"
+                    fill="#5AA9C9"
+                  />
+                  <rect
+                    x="94"
+                    y="158"
+                    width="12"
+                    height="12"
+                    rx="3"
+                    fill="#2E2A26"
+                  />
+                  <path
+                    d="M92 176 h16 M92 186 h16"
+                    stroke="#FBF3E4"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.5 FEATURES — SHEET 1 ============ -->
+      <section class="section" id="features" style="padding-top: 1rem">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="cut-flag">Sheet 1 — Inside</span>
+            <h2 class="section-title">What is actually in the box</h2>
+            <p class="section-sub">
+              Four things, always. No Tony-bag-of-fillers, no loose glitter that
+              lives in your carpet until 2036. Just paper, tools, glue and a
+              card.
+            </p>
+          </div>
+          <div class="features-grid staggered">
+            <article class="sheet-card stack-card">
+              <svg
+                class="icon-scene"
+                viewBox="0 0 96 72"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="8"
+                  y="18"
+                  width="52"
+                  height="38"
+                  rx="6"
+                  fill="#E4572E"
+                  transform="rotate(-4 34 37)"
+                />
+                <rect
+                  x="22"
+                  y="12"
+                  width="52"
+                  height="38"
+                  rx="6"
+                  fill="#F2A65A"
+                />
+                <circle cx="42" cy="8" r="6" fill="#5B9A6F" />
+                <path
+                  d="M30 26 h34 M30 34 h34 M30 42 h22"
+                  stroke="#FBF3E4"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M64 44 l20 -20"
+                  stroke="#2E2A26"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M62 50 l8 8"
+                  stroke="#2E2A26"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h3>Pre-Cut Paper Pieces</h3>
+              <p>
+                Between 22 and 40 pieces, die-cut from 160gsm FSC paper in up to
+                12 colors per scene. Circles, scallops, tabs and fold lines are
+                all done — small hands just pop and fold.
+              </p>
+              <div class="chip-row">
+                <span class="layer-chip">[L1] pieces</span>
+              </div>
+            </article>
+            <article class="sheet-card stack-card">
+              <svg
+                class="icon-scene"
+                viewBox="0 0 96 72"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle cx="52" cy="36" r="22" fill="#5AA9C9" />
+                <circle cx="52" cy="36" r="10" fill="#FBF3E4" />
+                <circle cx="14" cy="20" r="7" fill="#5B9A6F" />
+                <circle cx="16" cy="50" r="5" fill="#E4572E" />
+                <path
+                  d="M76 16 L88 28 M80 28 L88 20"
+                  stroke="#2E2A26"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                  stroke-dasharray="4 5"
+                />
+              </svg>
+              <h3>Right-Sized Safety Tools</h3>
+              <p>
+                Blunt-nose scissors with a real spring assist for ages 4–6,
+                Proper snips for 7+, two glue-dot sheets, and a paper-safe bone
+                folder shaped like a fat crayon. Zero extra purchases.
+              </p>
+              <div class="chip-row">
+                <span class="layer-chip">[L2] tools</span>
+              </div>
+            </article>
+            <article class="sheet-card stack-card">
+              <svg
+                class="icon-scene"
+                viewBox="0 0 96 72"
+                fill="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="18"
+                  y="8"
+                  width="60"
+                  height="56"
+                  rx="5"
+                  fill="#F3E6CE"
+                />
+                <rect
+                  x="26"
+                  y="20"
+                  width="18"
+                  height="14"
+                  rx="4"
+                  fill="#5AA9C9"
+                />
+                <rect
+                  x="52"
+                  y="20"
+                  width="18"
+                  height="14"
+                  rx="4"
+                  fill="#F2A65A"
+                />
+                <path
+                  d="M26 44 h44 M26 52 h30"
+                  stroke="#2E2A26"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+                <circle cx="62" cy="50" r="6" fill="#5B9A6F" />
+              </svg>
+              <h3>Illustrated Step Cards</h3>
+              <p>
+                One laminated card per scene: 6 numbered steps, one drawing
+                each, no more than 12 words per step. Both parents and
+                4-year-olds rate it clearly enough to do unaided.
+              </p>
+              <div class="chip-row">
+                <span class="layer-chip">[L3] steps</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.6 BENEFITS — SHEET 2 ============ -->
+      <section class="benefits" style="padding-top: 1rem">
+        <div class="wrap">
+          <div class="benefits-grid">
+            <div class="sky-tinted grain">
+              <span class="cut-flag" style="margin-bottom: 1.2rem"
+                >Sheet 2 — Why Parents Stay</span
+              >
+              <h2
+                class="section-title"
+                style="color: #fff8ec; margin-bottom: 0"
+              >
+                Six things they tell us three boxes in
+              </h2>
+              <ul class="check-list">
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Zero setup.</strong
+                    ><span class="check-desc"
+                      >Box opens to a tray, not a hardware-store list. Table
+                      stays clean.</span
+                    ></span
+                  >
+                </li>
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Kid-led, really.</strong
+                    ><span class="check-desc"
+                      >Steps are drawn for non-readers, so the grown-up assists
+                      instead of managing.</span
+                    ></span
+                  >
+                </li>
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Screen-worthy finish.</strong
+                    ><span class="check-desc"
+                      >Each scene is designed to display — stand-up cards,
+                      garlands, and magnet frames included.</span
+                    ></span
+                  >
+                </li>
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Ages 4–10 in one tray.</strong
+                    ><span class="check-desc"
+                      >Two interleaved difficulty tracks in every scene, so
+                      siblings work side by side.</span
+                    ></span
+                  >
+                </li>
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Plastic-free, top to bottom</strong
+                    ><span class="check-desc"
+                      >Even the tape is paper. 94% of our box is compostable —
+                      the pencil is the exception.</span
+                    ></span
+                  >
+                </li>
+                <li>
+                  <span class="paper-check" aria-hidden="true"></span
+                  ><span
+                    ><strong>Cancel in two taps.</strong
+                    ><span class="check-desc"
+                      >Skip, pause or cancel from the account page any time
+                      before the 20th of the month.</span
+                    ></span
+                  >
+                </li>
+              </ul>
+            </div>
+            <aside class="stat-blob lay-down">
+              <span class="big">86%</span>
+              <span class="lbl">of subscribers finish every box</span>
+              <small
+                >Measured across 12,400 subscriptions, Jan–Jun 2026. The
+                industry average for kids' craft kits is 41%.</small
+              >
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.7 PROCESS — SHEET 3 ============ -->
+      <section class="section" id="process" style="padding-top: 2rem">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="cut-flag">Sheet 3 — How It Works</span>
+            <h2 class="section-title">Cut. Fold. Paste. Repeat next month.</h2>
+            <p class="section-sub">
+              The kit changed in three years; the ritual hasn't. Most families
+              run it end to end on a rainy Saturday.
+            </p>
+          </div>
+          <div class="fan">
+            <div class="fan-grid staggered">
+              <article class="step-sheet" style="--sheet-bg: #fbf3e4">
+                <span
+                  class="step-badge"
+                  style="--badge-color: #e4572e"
+                  aria-hidden="true"
+                  >1</span
+                >
+                <div>
+                  <span class="verb">Step 1 — CUT</span>
+                  <h3>Pop the pieces out</h3>
+                  <p>
+                    The tray is ordered by step, not by part number. Each piece
+                    lifts clean from its sheet; the fold lines are pre-scored so
+                    nothing splits.
+                  </p>
+                </div>
+              </article>
+              <article class="step-sheet" style="--sheet-bg: #f3e6ce">
+                <span
+                  class="step-badge"
+                  style="--badge-color: #5b9a6f"
+                  aria-hidden="true"
+                  >2</span
+                >
+                <div>
+                  <span class="verb">Step 2 — FOLD</span>
+                  <h3>Follow the big arrows</h3>
+                  <p>
+                    Mountain folds to the front, valley folds to the back, drawn
+                    exactly as they'll look when finished. The bone-folder
+                    crayon creases edges sharp without tearing.
+                  </p>
+                </div>
+              </article>
+              <article class="step-sheet" style="--sheet-bg: #fbf3e4">
+                <span
+                  class="step-badge"
+                  style="--badge-color: #5aa9c9"
+                  aria-hidden="true"
+                  >3</span
+                >
+                <div>
+                  <span class="verb">Step 3 — PASTE</span>
+                  <h3>Glue dots, no mess</h3>
+                  <p>
+                    One glue-dot sheet per scene, sized per joint. By the last
+                    step the scene stands, hangs or frames itself — and it's
+                    ready to mail to Grandma.
+                  </p>
+                </div>
+              </article>
+            </div>
+            <span class="fold-line" aria-hidden="true"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.8 PRICING — SHEET 4 ============ -->
+      <section class="section" id="pricing" style="padding-top: 2rem">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="cut-flag">Sheet 4 — Boxes</span>
+            <h2 class="section-title">Pick your paper plan</h2>
+            <p class="section-sub">
+              Every plan gets the full box — the difference is people and
+              months. Switch tiers from the account page, effective next month.
+            </p>
+          </div>
+          <div class="tents staggered">
+            <article class="tent">
+              <h3>Single Maker</h3>
+              <p class="price">$24<small>PER BOX</small></p>
+              <ul>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>1 full scene
+                  per month
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>1
+                  safety-tool set, first box
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Free
+                  shipping, US
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Skip or
+                  pause any month
+                </li>
+              </ul>
+              <a class="btn btn-cream" href="#contact">Choose Single</a>
+            </article>
+            <article class="tent featured">
+              <span class="ribbon" aria-label="Most popular plan"
+                >Most Picked</span
+              >
+              <h3>Sibling Pair</h3>
+              <p class="price">$38<small>PER BOX</small></p>
+              <ul>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>1 scene +
+                  whole 2nd track
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>2 tool sets,
+                  first box
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Birthday
+                  bonus scene, yearly
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Free
+                  shipping, US
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Skip or
+                  pause any month
+                </li>
+              </ul>
+              <a class="btn btn-primary" href="#contact">Choose Pair</a>
+            </article>
+            <article class="tent">
+              <h3>Classroom Crate</h3>
+              <p class="price">$96<small>PER BOX · 12 TRAYS</small></p>
+              <ul>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>12 matching
+                  scene trays
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Teacher's
+                  pacing guide
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Bulk tool
+                  kit, first box
+                </li>
+                <li>
+                  <span class="leaf-tick" aria-hidden="true"></span>Invoiced —
+                  POs welcome
+                </li>
+              </ul>
+              <a class="btn btn-cream" href="#contact">Choose Crate</a>
+            </article>
+          </div>
+          <p class="section-sub" style="text-align: center; margin-top: 2.2rem">
+            Prefer to try once first? <a href="#contact">Single boxes</a> — no
+            subscription, ships in 2 days.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ 3.9 TESTIMONIALS — SHEET 5 ============ -->
+      <section class="section" id="families" style="padding-top: 2rem">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="cut-flag">Sheet 5 — Families</span>
+            <h2 class="section-title">What kitchen tables are saying</h2>
+            <p class="section-sub">
+              Real words from review cards that came back in the (paper) mail.
+              Spelling left as delivered.
+            </p>
+          </div>
+          <div class="bubbles staggered">
+            <article class="bubble">
+              <blockquote>
+                "my daughter did the whole lighthouse scene on her own and i
+                only glued the roof. first saturday in 2 yrs i drank a full hot
+                coffee."
+              </blockquote>
+              <div class="author">
+                <span
+                  class="avatar"
+                  style="background: #e4572e"
+                  aria-hidden="true"
+                  >PN</span
+                >
+                <span
+                  ><span class="who">Priya N., Atlanta</span
+                  ><span class="meta">Sibling Pair · 14 months in</span></span
+                >
+              </div>
+            </article>
+            <article class="bubble">
+              <blockquote>
+                "the step cards are genuinely the best i've seen. my
+                just-turned-4 reads the pictures and teaches US the folds. we
+                hang every scene on the window."
+              </blockquote>
+              <div class="author">
+                <span
+                  class="avatar"
+                  style="background: #5b9a6f"
+                  aria-hidden="true"
+                  >MG</span
+                >
+                <span
+                  ><span class="who">Marcus G., Portland</span
+                  ><span class="meta">Single Maker · 7 months in</span></span
+                >
+              </div>
+            </article>
+            <article class="bubble">
+              <blockquote>
+                "I run a year-2 class of 28. The Classroom Crate pacing guide
+                means craft hour plans itself. The paper quality survives the
+                gluestick apocalypse."
+              </blockquote>
+              <div class="author">
+                <span
+                  class="avatar"
+                  style="background: #5aa9c9"
+                  aria-hidden="true"
+                  >ET</span
+                >
+                <span
+                  ><span class="who">Ellie T., Austin</span
+                  ><span class="meta">Classroom Crate · 3 terms in</span></span
+                >
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.10 FAQ — SHEET 6 ============ -->
+      <section class="section" id="faq" style="padding-top: 2rem">
+        <div class="wrap">
+          <div class="faq-wrap">
+            <div
+              class="section-head"
+              style="text-align: center; margin-inline: auto"
+            >
+              <span class="cut-flag">Sheet 6 — Questions</span>
+              <h2 class="section-title">Fold-outs from parents</h2>
+              <p class="section-sub">
+                The five questions our inbox answers most. Anything else:
+                hello@snipandfold.com is a real human named Casey, replies
+                within 1 business day.
+              </p>
+            </div>
+            <div id="faqList" style="margin-top: 2.2rem">
+              <div class="faq-item open">
+                <button
+                  class="faq-q"
+                  aria-expanded="true"
+                  aria-controls="faq-a-1"
+                  id="faq-q-1"
+                >
+                  <span class="faq-tab" aria-hidden="true">+</span>
+                  What age is the right age to start?
+                </button>
+                <div
+                  class="faq-a"
+                  id="faq-a-1"
+                  role="region"
+                  aria-labelledby="faq-q-1"
+                  style="display: block"
+                >
+                  4 is the sweet spot with an adult nearby; 6+ typically
+                  finishes solo. Every scene has a gentle track (fewer pieces,
+                  bigger tabs) and a confident track, so a 4- and a 10-year-old
+                  can share one box without anyone "helping" too much.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button
+                  class="faq-q"
+                  aria-expanded="false"
+                  aria-controls="faq-a-2"
+                  id="faq-q-2"
+                >
+                  <span class="faq-tab" aria-hidden="true">+</span>
+                  Do we need to buy anything else — scissors, glue, anything?
+                </button>
+                <div
+                  class="faq-a"
+                  id="faq-a-2"
+                  role="region"
+                  aria-labelledby="faq-q-2"
+                >
+                  No. The first box includes the full tool set: spring-assist
+                  safety scissors, bone-folder crayon, and a lifetime glue-dot
+                  sampler. Every later box just tops the glue dots up. Genuinely
+                  the only thing you supply is the table.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button
+                  class="faq-q"
+                  aria-expanded="false"
+                  aria-controls="faq-a-3"
+                  id="faq-q-3"
+                >
+                  <span class="faq-tab" aria-hidden="true">+</span>
+                  Can I skip a month or cancel easily?
+                </button>
+                <div
+                  class="faq-a"
+                  id="faq-a-3"
+                  role="region"
+                  aria-labelledby="faq-q-3"
+                >
+                  Yes — skip, pause or cancel any time before the 20th for that
+                  month's box, right on the account page, no email required. If
+                  you forget until after, that box goes to a family on our
+                  donation list and your subscription resumes clean next month.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button
+                  class="faq-q"
+                  aria-expanded="false"
+                  aria-controls="faq-a-4"
+                  id="faq-q-4"
+                >
+                  <span class="faq-tab" aria-hidden="true">+</span>
+                  What if pieces tear or a scene goes wrong?
+                </button>
+                <div
+                  class="faq-a"
+                  id="faq-a-4"
+                  role="region"
+                  aria-labelledby="faq-q-4"
+                >
+                  Every box holds a blank patch sheet of the same 12 colors —
+                  most mishaps fix themselves with scissors. If a whole tray
+                  goes bad (dog, toddler, juice), one photo to support gets a
+                  replacement scene out free, as many times as life demands.
+                </div>
+              </div>
+              <div class="faq-item">
+                <button
+                  class="faq-q"
+                  aria-expanded="false"
+                  aria-controls="faq-a-5"
+                  id="faq-q-5"
+                >
+                  <span class="faq-tab" aria-hidden="true">+</span>
+                  Where do you ship, and when each month?
+                </button>
+                <div
+                  class="faq-a"
+                  id="faq-a-5"
+                  role="region"
+                  aria-labelledby="faq-q-5"
+                >
+                  Free shipping across the US and flat rate $6 to Canada; boxes
+                  leave the Asheville studio on the 1st of the month and land
+                  within 2–5 business days. UK and EU ship via a local print
+                  partner from June 2026 — the scenes are identical, printed
+                  nearer to you.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.11 JOURNAL — SHEET 7 ============ -->
+      <section class="section" id="journal" style="padding-top: 1rem">
+        <div class="wrap">
+          <div class="section-head">
+            <span class="cut-flag">Sheet 7 — Paper Post</span>
+            <h2 class="section-title">From the studio notebook</h2>
+            <p class="section-sub">
+              How scenes get designed, tested, and occasionally rescued with
+              tape that we then swear at.
+            </p>
+          </div>
+          <div class="journal-grid staggered">
+            <article class="journal-card">
+              <div class="photo-window" aria-hidden="true">
+                <svg viewBox="0 0 320 200">
+                  <rect width="320" height="200" fill="#5AA9C9" />
+                  <circle cx="252" cy="52" r="30" fill="#F2A65A" />
+                  <path
+                    d="M0 140 Q80 96 160 140 T320 140 V200 H0 Z"
+                    fill="#5B9A6F"
+                  />
+                  <path d="M132 88 L160 46 L188 88 Z" fill="#E4572E" />
+                  <rect x="148" y="88" width="24" height="30" fill="#F3E6CE" />
+                  <path d="M160 46 V22" stroke="#2E2A26" stroke-width="3" />
+                  <circle cx="160" cy="18" r="5" fill="#2E2A26" />
+                </svg>
+                <span class="caption-flag">Scene Design</span>
+              </div>
+              <h3>Designing the lighthouse that 9,000 kids folded</h3>
+              <p>
+                Eleven rounds of prototypes, one disaster with a 6 mm tab, and
+                the glue-dot sizing chart our whole studio now argues over.
+              </p>
+              <a class="wave-link" href="#journal">Read the post</a>
+            </article>
+            <article class="journal-card">
+              <div class="photo-window" aria-hidden="true">
+                <svg viewBox="0 0 320 200">
+                  <rect width="320" height="200" fill="#F3E6CE" />
+                  <g transform="rotate(-6 160 100)">
+                    <rect
+                      x="76"
+                      y="52"
+                      width="168"
+                      height="98"
+                      rx="8"
+                      fill="#FBF3E4"
+                      opacity="0.7"
+                    />
+                    <rect
+                      x="92"
+                      y="66"
+                      width="168"
+                      height="98"
+                      rx="8"
+                      fill="#FBF3E4"
+                    />
+                    <rect
+                      x="108"
+                      y="82"
+                      width="80"
+                      height="14"
+                      rx="4"
+                      fill="#5AA9C9"
+                    />
+                    <rect
+                      x="108"
+                      y="106"
+                      width="120"
+                      height="10"
+                      rx="4"
+                      fill="#D9C9A8"
+                    />
+                    <rect
+                      x="108"
+                      y="124"
+                      width="96"
+                      height="10"
+                      rx="4"
+                      fill="#D9C9A8"
+                    />
+                    <path
+                      d="M244 96 l18 18 M262 96 l-18 18"
+                      stroke="#E4572E"
+                      stroke-width="4"
+                      stroke-linecap="round"
+                    />
+                  </g>
+                </svg>
+                <span class="caption-flag">Studio Notes</span>
+              </div>
+              <h3>Why our step cards max out at 12 words</h3>
+              <p>
+                Marisol tested a card with a paragraph on her 5-year-old nephew.
+                The word that mattered was "next". Everything else was
+                decoration.
+              </p>
+              <a class="wave-link" href="#journal">Read the post</a>
+            </article>
+            <article class="journal-card">
+              <div class="photo-window" aria-hidden="true">
+                <svg viewBox="0 0 320 200">
+                  <rect width="320" height="200" fill="#5B9A6F" />
+                  <circle cx="60" cy="54" r="22" fill="#F2A65A" />
+                  <path
+                    d="M0 150 Q90 108 180 150 T320 148 V200 H0 Z"
+                    fill="#F2A65A"
+                  />
+                  <path
+                    d="M150 120 Q150 70 200 70 Q166 92 172 122 Z"
+                    fill="#E4572E"
+                  />
+                  <path
+                    d="M120 130 Q140 92 96 84"
+                    stroke="#E4572E"
+                    stroke-width="5"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M126 128 Q124 100 92 96"
+                    stroke="#5B9A6F"
+                    stroke-width="4"
+                    fill="none"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="88" cy="95" r="7" fill="#FBF3E4" />
+                </svg>
+                <span class="caption-flag">Materials</span>
+              </div>
+              <h3>Chasing compostable down to the tape roll</h3>
+              <p>
+                The 94% story, the paper tape that almost wasn't, and the one
+                plastic part (a pencil) we still can't replace — yet.
+              </p>
+              <a class="wave-link" href="#journal">Read the post</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3.12 FINAL CTA — SUNSET SCENE ============ -->
+      <section class="sunset" id="contact">
+        <div class="sunset-hills" aria-hidden="true">
+          <svg viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
+            <rect width="1440" height="420" fill="#F2A65A" />
+            <path
+              d="M0 240 Q240 140 480 220 Q720 300 960 210 Q1200 120 1440 230 V420 H0 Z"
+              fill="#E4572E"
+            />
+            <path
+              d="M0 330 Q360 250 720 320 Q1080 390 1440 300 V420 H0 Z"
+              fill="#5B9A6F"
+            />
+            <circle cx="1150" cy="110" r="64" fill="#F2A65A" opacity="0.9" />
+            <g fill="#F2A65A" opacity="0.55">
+              <rect x="1144" y="0" width="10" height="34" rx="5" />
+              <rect
+                x="1080"
+                y="30"
+                width="10"
+                height="34"
+                rx="5"
+                transform="rotate(-30 1085 47)"
+              />
+              <rect
+                x="1210"
+                y="30"
+                width="10"
+                height="34"
+                rx="5"
+                transform="rotate(30 1215 47)"
+              />
+            </g>
+            <path
+              d="M180 120 q40 -34 80 0 q-40 -12 -80 0 Z"
+              fill="#FBF3E4"
+              opacity="0.5"
+            />
+            <path
+              d="M420 80 q34 -28 68 0 q-34 -10 -68 0 Z"
+              fill="#FBF3E4"
+              opacity="0.4"
+            />
+          </svg>
+        </div>
+        <div class="wrap">
+          <div class="cta-sheet grain lay-down">
+            <span class="ray-strip ray-1" aria-hidden="true"></span>
+            <span class="ray-strip ray-2" aria-hidden="true"></span>
+            <span class="ray-strip ray-3" aria-hidden="true"></span>
+            <span class="cut-flag leaf" style="margin-bottom: 1rem"
+              >Start the Ritual</span
+            >
+            <h2>The next paper world ships on the 1st.</h2>
+            <p>
+              Order by the 20th and your first box is in that print run. Cancel
+              before the 20th and you'll never be charged for a box you didn't
+              want. That's the whole promise — paper cut, fold, done.
+            </p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="#pricing"
+                >Start a Subscription</a
+              >
+              <a class="btn btn-cream" href="#faq">Ask a Question</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ 3.13 FOOTER — CORRUGATED KRAFT STRIP ============ -->
+    <footer class="footer flutes">
+      <div class="wrap">
+        <div class="footer-top">
+          <a
+            class="wordmark"
+            href="#top"
+            aria-label="Snip &amp; Fold — back to top"
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 34 34"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M17 3 C24 9 30 8 30 15 C30 24 23 31 17 31 C11 31 4 24 4 15 C4 8 10 9 17 3 Z"
+                fill="#5B9A6F"
+              />
+              <path
+                d="M17 10 C20 14 24 15 23 20 C22 24 19 27 17 27 C15 27 12 24 11 20 C10 15 14 14 17 10 Z"
+                fill="#FBF3E4"
+              />
+            </svg>
+            <strong>Snip <span class="amp">&amp;</span> Fold</strong>
+          </a>
+          <nav class="footer-links" aria-label="Footer">
+            <a href="#features">Inside the Box</a>
+            <a href="#pricing">Boxes</a>
+            <a href="#faq">Questions</a>
+            <a href="#journal">Paper Post</a>
+            <a href="#contact">Start</a>
+          </nav>
+          <div class="footer-meta-right">
+            <div class="social-row">
+              <a href="#top" aria-label="Instagram">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M17 7v.01" />
+                </svg>
+              </a>
+              <a href="#top" aria-label="Pinterest">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path
+                    d="M9 21l3-9M9.5 10.5c0-2 1.5-3 3-3s3 1 3 3-1.5 4-3 4-3-.5-3-4Z"
+                  />
+                </svg>
+              </a>
+              <a href="#top" aria-label="YouTube">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <rect x="3" y="6" width="18" height="12" rx="4" />
+                  <path d="M10 9.5l5 2.5-5 2.5Z" />
+                </svg>
+              </a>
+            </div>
+            <span class="copyright-flag slim-only"
+              >© 2026 Snip &amp; Fold Paper Goods Ltd. Folded with care in
+              Asheville, NC.</span
+            >
+          </div>
+        </div>
+        <!-- richer stacked footer, below 768px only -->
+        <div class="stack-only" style="padding-top: 1.6rem">
+          <span class="cut-flag leaf" style="max-width: 9rem">Paper Post</span>
+          <p
+            style="
+              color: var(--muted-foreground);
+              font-weight: 600;
+              font-size: 0.92rem;
+            "
+          >
+            One paper world in the mail every month, for small hands and their
+            grown-ups. From $24 per box.
+          </p>
+          <p
+            style="
+              color: var(--muted-foreground);
+              font-weight: 700;
+              font-size: 0.85rem;
+            "
+          >
+            hello@snipandfold.com
+          </p>
+          <span
+            style="
+              color: var(--muted-foreground);
+              font-weight: 700;
+              font-size: 0.8rem;
+              padding-top: 0.6rem;
+            "
+            >© 2026 Snip &amp; Fold Paper Goods Ltd. Folded with care in
+            Asheville, NC.</span
+          >
+        </div>
+        <span
+          class="copyright-flag"
+          style="display: block; text-align: center; margin-top: 1.2rem"
+          >100% paper · Compostable 94% · Ages 4–10</span
+        >
+      </div>
+    </footer>
+
+    <script>
+      ;(function () {
+        var btn = document.getElementById('menuBtn')
+        var nav = document.getElementById('mobileNav')
+        if (btn && nav) {
+          btn.addEventListener('click', function () {
+            var open = nav.classList.toggle('open')
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false')
+            btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu')
+          })
+        }
+        document
+          .querySelectorAll('#faqList .faq-item')
+          .forEach(function (item) {
+            var q = item.querySelector('.faq-q')
+            var a = item.querySelector('.faq-a')
+            if (!q) return
+            q.addEventListener('click', function () {
+              var isOpen = item.classList.contains('open')
+              document
+                .querySelectorAll('#faqList .faq-item.open')
+                .forEach(function (o) {
+                  o.classList.remove('open')
+                  var oq = o.querySelector('.faq-q')
+                  if (oq) oq.setAttribute('aria-expanded', 'false')
+                  var oa = o.querySelector('.faq-a')
+                  if (oa) oa.style.display = 'none'
+                })
+              if (!isOpen) {
+                item.classList.add('open')
+                q.setAttribute('aria-expanded', 'true')
+                if (a) a.style.display = 'block'
+              }
+            })
+          })
+        /* parallax strata: L4 fastest, L1 slowest, ≤24px travel */
+        var reduced = window.matchMedia(
+          '(prefers-reduced-motion: reduce)',
+        ).matches
+        var layers = [].slice.call(document.querySelectorAll('[data-plx]'))
+        if (!reduced && layers.length && 'IntersectionObserver' in window) {
+          var latestY = -1,
+            ticking = false
+          function apply() {
+            ticking = false
+            var y = latestY
+            layers.forEach(function (el) {
+              var r = el.getBoundingClientRect()
+              var vh = window.innerHeight
+              if (r.bottom < 0 || r.top > vh) return
+              var rate =
+                { 1: 0.04, 2: 0.09, 3: 0.14, 4: 0.24 }[
+                  el.getAttribute('data-plx')
+                ] || 0.1
+              var off = Math.max(-24, Math.min(24, (y - vh / 2) * rate * -1))
+              el.style.setProperty('--plx', off.toFixed(2) + 'px')
+            })
+          }
+          window.addEventListener(
+            'scroll',
+            function () {
+              latestY =
+                window.scrollY || document.documentElement.scrollTop || 0
+              if (!ticking) {
+                ticking = true
+                window.requestAnimationFrame(apply)
+              }
+            },
+            { passive: true },
+          )
+        }
+      })()
+    </script>
+    <style>
+      /* UI-fix overrides (final) */
+      .faq-wrap {
+        max-width: 680px !important;
+        margin-inline: auto !important;
+      }
+    </style>
+  </body>
+</html>
