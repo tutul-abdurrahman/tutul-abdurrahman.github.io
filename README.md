@@ -1,38 +1,54 @@
-# tutul.dev — design + build portfolio
+# tutul — product design portfolio
 
-A hand-written portfolio for Abdur Rahman Tutul. One page for the pitch, one page
-for the full catalogue, and 18 working demo pages you can click through.
+Hand-written portfolio for Abdur Rahman Tutul. Three pages, no build step, no
+framework, no package manager.
 
-## What's inside
+## Pages
 
 ```
-index.html          Landing page: positioning, 5 featured builds, services, process, about, contact
-work.html           All 18 builds in two groups
-assets/site.css     The whole design system — type, grid, colour, responsive rules
-assets/shots/       1440×900 screenshots of each demo (webp)
-work/<slug>/        The actual demo pages, self-contained HTML
+index.html      Home: positioning, client strip, 6 client cards, 3 product tiles,
+                demo band, services, process, about, contact
+work.html       All 12 client projects — 7 live sites + 5 products/platforms
+demos.html      18 self-initiated landing pages and portfolio layouts
+assets/site.css The whole design system — type, grid, colour, responsive rules
+assets/clients/ Screenshots of client sites (1440×900 webp)
+assets/shots/   Screenshots of the self-initiated demos (1440×900 webp)
+work/<slug>/    The actual demo pages, self-contained HTML
+assets/og.png   1200×630 social share card
 ```
 
-## The demos
+Everything under `work/` is a single self-contained HTML file. Google Fonts is
+the only external dependency.
 
-Twelve landing pages (Art Nouveau, Japanese Zen, Moroccan Zellige, Memphis,
-Risograph, Scandinavian, Blueprint, Voyage, Paper Cut, Pixel Arcade, Gothic,
-Bento) and six portfolio layouts (Swiss, Terminal, Neo-brutalism, Gallery Dark,
-Editorial Serif, Monochrome).
+## Client projects in the site
 
-Every demo is a single self-contained HTML file. Google Fonts is the only
-external dependency. No build step, no framework, no package manager.
+| # | Project | Client | Type | Link |
+|---|---------|--------|------|------|
+| 01 | Zephyr Events | Zephyr Events | Marketing site | live |
+| 02 | Zephyr Catalogue | Zephyr Events | 78-product catalogue | live |
+| 03 | Centrum Hecht Opleidingen | Rebelslab | Course platform + CMS | live |
+| 04 | ZappContact | Zephyr | Lead-scanning PWA | live |
+| 05 | Tim Juffermans | Rebelslab | Illustrator portfolio (Lindo AI) | live |
+| 06 | The Musical Connection | Rebelslab | Charity site + Tally forms | live |
+| 07 | Jilster | Rebelslab | Home page + app features | live |
+| 08 | Zephyr Dashboard | Zephyr | Integration dashboard | login |
+| 09 | Uniloop | Zephyr | Uni event dashboard (ACU, UOW, Sydney) | login |
+| 10 | Your Invite By Us | — | Event management + guest pages | offline |
+| 11 | De Echte Kieswijzer | Rebelslab | Dutch election guide | seasonal |
+| 12 | Ze-Scan | Rebelslab | App + website | offline |
 
 ## Editing
 
 - Prices and copy: `index.html`, `#services` section.
+- Add a client card: drop a screenshot in `assets/clients/`, copy a
+  `<a class="card">` block, point `href` at the live site.
 - Add a demo: drop `work/<slug>/index.html`, add a screenshot to
-  `assets/shots/<slug>.webp`, then copy an `<a class="card">` block.
+  `assets/shots/<slug>.webp`, copy a card in `demos.html`.
 - Colours and type: the `:root` block at the top of `assets/site.css`.
 
 ## Deploy
 
-Static. Push to `main` on GitHub and Pages serves the repo root.
+Static, served from the repo root by GitHub Pages.
 
 ```bash
 git add -A
@@ -42,5 +58,9 @@ git push
 
 ## Notes
 
-The six portfolio demo pages use placeholder names and copy. They exist to show
-layout range. Replace them with real client work as it comes in.
+- The six portfolio demo pages use placeholder names and copy. They exist to
+  show layout range. Replace them with real work as it comes in.
+- Client screenshots are of public pages only. Nothing behind a login is
+  screenshotted.
+- If a client site goes down, the card keeps the description and the chip
+  changes to "Offline now". Don't delete the work — it still happened.
