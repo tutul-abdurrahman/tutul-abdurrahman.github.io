@@ -6,8 +6,9 @@ framework, no package manager.
 ## Pages
 
 ```
-index.html      Home: positioning, client strip, 6 client cards, 3 product tiles,
-                demo band, services, process, about, contact
+index.html      Home: hero board (4 client shots), client marquee, grouped client
+                cards (Rebelslab then Zephyr), 3 product tiles, demo band,
+                services, process, about, contact
 work.html       All 12 client projects — 7 live sites + 5 products/platforms
 demos.html      18 self-initiated landing pages and portfolio layouts
 assets/site.css The whole design system — type, grid, colour, responsive rules
@@ -39,11 +40,15 @@ the only external dependency.
 
 ## Editing
 
-- Prices and copy: `index.html`, `#services` section.
+- Prices and service scope: `index.html`, `#services` section (three
+  `.svc-card` blocks plus the `.svc-custom` row).
 - Add a client card: drop a screenshot in `assets/clients/`, copy a
-  `<a class="card">` block, point `href` at the live site.
+  `<a class="card">` block, point `href` at the live site. The home page groups
+  cards by client (`#work`, `.client-group`); `work.html` lists all twelve.
 - Add a demo: drop `work/<slug>/index.html`, add a screenshot to
   `assets/shots/<slug>.webp`, copy a card in `demos.html`.
+- The client marquee in `#clients` needs the item list duplicated so the loop is
+  seamless (second half is `aria-hidden`).
 - Colours and type: the `:root` block at the top of `assets/site.css`.
 
 ## Deploy
