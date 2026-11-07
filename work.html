@@ -41,8 +41,33 @@
   <section class="page-head">
     <div class="wrap">
       <a class="back" href="index.html">← Back to home</a>
-      <h1 class="display">Twelve projects.<br><em>Mostly still running.</em></h1>
-      <p class="lede">Client sites, course platforms, event dashboards and the integration screens behind them. Rebelslab is the longest relationship, from 2023 to now. Where a link exists, it opens the real product.</p>
+      <div class="page-head-grid">
+        <div>
+          <h1 class="display">Twelve projects.<br><em>Built to keep running.</em></h1>
+          <p class="lede">Course platforms, event systems, dashboards and the marketing sites around them. Six with Rebelslab, six through Zephyr, all delivered by 2026. Where a link exists, it opens the real product.</p>
+          <div class="page-head-meta">
+            <span>12 client projects</span>
+            <span>4 studios</span>
+            <span>2022 to 2026</span>
+            <span>6 live products</span>
+          </div>
+        </div>
+
+        <aside class="ledger" aria-label="Engagement index">
+          <div class="ledger-head"><span>Engagement index</span><span>2022–2026</span></div>
+          <ul>
+            <li><b>Rebelslab</b><span>6 projects</span><i>Netherlands · 2023–2026</i></li>
+            <li><b>Zephyr</b><span>6 projects</span><i>Spain · 2024–2026</i></li>
+            <li><b>Uniloop</b><span>with Zephyr</span><i>Australia · 2024–2026</i></li>
+            <li><b>SR Web Studio</b><span>studio work</span><i>Bangladesh · 2022–2026</i></li>
+          </ul>
+          <div class="ledger-foot">
+            <span class="ledger-avatar">AT</span>
+            <div><b>Abdur Rahman Tutul</b><span>Product designer · Dhaka</span></div>
+            <div class="ledger-count"><span>12 projects</span><span>delivered by 2026</span></div>
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
 
@@ -50,7 +75,7 @@
     <div class="wrap">
       <div class="group-head">
         <h2>Rebelslab</h2>
-        <p class="label">First collaboration · 6 projects · 2023 to now</p>
+        <p class="label">First collaboration · 6 projects · 2023–2026</p>
       </div>
 
       <div class="grid">
@@ -113,20 +138,20 @@
       </div>
 
       <div class="more-row">
-        <p>Six projects with Rebelslab across three years, four of them still live.</p>
-        <a class="btn btn-ghost" href="#platforms">Products &amp; platforms →</a>
+        <p>Six projects with Rebelslab since 2023, four of them still live.</p>
+        <a class="btn btn-ghost" href="#zephyr">Next: Zephyr →</a>
       </div>
     </div>
   </section>
 
-  <section class="group">
+  <section class="group" id="zephyr">
     <div class="wrap">
       <div class="group-head">
         <h2>Zephyr</h2>
-        <p class="label">Event tech · product and integrations · 2024 to now</p>
+        <p class="label">Event tech · 6 projects · 2024–2026</p>
       </div>
 
-      <div class="grid">
+      <div class="grid three">
         <a class="card reveal" href="https://zappcontact.com/" target="_blank" rel="noopener">
           <div class="shot"><img src="assets/clients/zappcontact.webp" alt="ZappContact lead scanning product" loading="lazy"></div>
           <div class="meta">
@@ -150,6 +175,16 @@
           </div>
           <span class="chip login">Behind a login</span>
         </article>
+
+        <article class="card card-text reveal">
+          <div class="card-text-body">
+            <p class="client">Zephyr · Australia</p>
+            <h3>Uniloop</h3>
+            <p class="role">White-label event platform for Australian universities. Multi-tenant dashboard for ACU, UOW and Sydney, plus the event pages and themes their students land on.</p>
+            <ul class="mini-facts"><li>Multi-tenant UX</li><li>Event themes</li><li>Client support</li></ul>
+          </div>
+          <span class="chip login">Behind a login</span>
+        </article>
       </div>
 
       <div class="work-list">
@@ -158,45 +193,27 @@
           <p>Marketing site for the event agency, kept current through the CMS. A normal day at the studio, not the headline.</p>
           <span class="chip live">Live</span>
         </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="group" id="platforms">
-    <div class="wrap">
-      <div class="group-head">
-        <h2>Products &amp; platforms</h2>
-        <p class="label">Behind logins, or offline</p>
-      </div>
-
-      <article class="platform-row">
-        <div>
-          <h3>Uniloop</h3>
-          <p>White-label event dashboard for Australian universities, including ACU, UOW and Sydney, plus the event pages and themes their students land on.</p>
-        </div>
-        <ul class="facts"><li>Multi-tenant UX</li><li>Event themes</li><li>Client support</li></ul>
-        <span class="chip login">Client platform</span>
-      </article>
-
-      <article class="platform-row">
-        <div>
+        <article>
           <h3>Your Invite By Us</h3>
           <p>Client-side event management and the public event pages guests use to register and attend.</p>
-        </div>
-        <ul class="facts"><li>Event management UI</li><li>Guest pages</li><li>Design handoff</li></ul>
-        <span class="chip off">Offline now</span>
-      </article>
-
-      <article class="platform-row">
-        <div>
+          <span class="chip off">Offline now</span>
+        </article>
+        <article>
           <h3>Zephyr integration layer</h3>
           <p>The connectors under the dashboard: CRM sync, membership lookups, ticketing and webhooks, each mapped field by field and tested against the live API.</p>
-        </div>
-        <ul class="facts"><li>Field mapping</li><li>Webhooks and retries</li><li>API testing</li></ul>
-        <span class="chip login">Client platform</span>
-      </article>
+          <span class="chip login">Client platform</span>
+        </article>
+      </div>
 
-      <p class="sm" style="margin-top:26px;max-width:70ch;">None of these have a public link. Two sit behind client logins, one is offline while it gets rebuilt. I am happy to walk through them screen by screen on a call.</p>
+      <p class="group-note">
+        Uniloop is Zephyr's white-label platform in Australia. Your Invite By Us
+        and the integration layer were delivered through the same engagement.
+      </p>
+
+      <div class="more-row">
+        <p>Six projects delivered through Zephyr, five still live or in use. The platform work sits behind client logins or is offline, so I walk through it screen by screen on a call.</p>
+        <a class="btn btn-ghost" href="#integrations">Integration work →</a>
+      </div>
     </div>
   </section>
 
@@ -257,11 +274,15 @@
         </div>
         <div>
           <p class="label">CRM &amp; marketing</p>
-          <ul><li>Salesforce</li><li>HubSpot</li><li>ActiveCampaign</li><li>Mailchimp</li><li>Zapier</li></ul>
+          <ul><li>Salesforce</li><li>HubSpot</li><li>ActiveCampaign</li><li>Mailchimp</li></ul>
         </div>
         <div>
-          <p class="label">Membership &amp; back office</p>
-          <ul><li>iMIS</li><li>Aptify</li><li>YourMembership</li><li>WildApricot</li><li>Workday</li><li>Stripe</li><li>Xero</li></ul>
+          <p class="label">Membership</p>
+          <ul><li>iMIS</li><li>Aptify</li><li>YourMembership</li><li>WildApricot</li></ul>
+        </div>
+        <div>
+          <p class="label">Finance &amp; operations</p>
+          <ul><li>Workday</li><li>Stripe</li><li>Xero</li><li>Zapier</li></ul>
         </div>
       </div>
 
@@ -298,6 +319,12 @@
             <li>You approve it, and the first screen lands inside a week.</li>
           </ul>
         </div>
+      </div>
+
+      <div class="contact-meta">
+        <span>Dhaka, Bangladesh · UTC+6</span>
+        <span>Replies within one business day</span>
+        <span>Working EU and AU hours</span>
       </div>
     </div>
   </section>
