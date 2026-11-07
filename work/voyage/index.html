@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meridian Atlas — Small-Group Expeditions, Run Like Clockwork</title>
+    <title>Meridian Atlas, Small-Group Expeditions, Run Like Clockwork</title>
     <meta
       name="description"
       content="Meridian Atlas runs 44 small-group expeditions across 31 countries with rail-and-sail logistics, fixed departure boards and real route maps. Reserve a seat on the 2026 schedule."
@@ -1306,7 +1306,7 @@
               "
             >
               <div class="mono" style="color: var(--muted-foreground)">
-                SVC. NOTE — 09:15 · DISRUPTION DESK
+                SVC. NOTE, 09:15 · DISRUPTION DESK
               </div>
               <span class="chip"
                 ><span
@@ -1437,7 +1437,7 @@
               <h3 style="font-size: 1.2rem">Real route maps</h3>
               <p class="mono" style="color: var(--muted-foreground)">STOP 02</p>
               <p style="color: var(--muted-foreground); flex: 1">
-                Each booking ships with a printed expedition map — the same
+                Each booking ships with a printed expedition map, the same
                 hand-checked route our expedition leader walks, marked with
                 every stop and leg.
               </p>
@@ -2392,7 +2392,7 @@
                     class="mono"
                     style="color: var(--muted-foreground); margin-top: 2px"
                   >
-                    PASSENGER — SEAT 14B · ANDALUSIA LINE, 17 MARCH 2026
+                    PASSENGER, SEAT 14B · ANDALUSIA LINE, 17 MARCH 2026
                   </div>
                 </figcaption>
               </div>
@@ -2444,7 +2444,7 @@
                     class="mono"
                     style="color: var(--muted-foreground); margin-top: 2px"
                   >
-                    PASSENGER — SEAT 03C · SAHARA LINE, 04 NOVEMBER 2025
+                    PASSENGER, SEAT 03C · SAHARA LINE, 04 NOVEMBER 2025
                   </div>
                 </figcaption>
               </div>
@@ -2495,7 +2495,7 @@
                     class="mono"
                     style="color: var(--muted-foreground); margin-top: 2px"
                   >
-                    PASSENGER — SEAT 06A · LAPLAND LINE + SAHARA LINE, 2026
+                    PASSENGER, SEAT 06A · LAPLAND LINE + SAHARA LINE, 2026
                   </div>
                 </figcaption>
               </div>
@@ -2565,7 +2565,7 @@
               <div
                 style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
               >
-                Every route lists a grade on the departure board — simple as
+                Every route lists a grade on the departure board, simple as
                 that. Grades 1 and 2 need comfortable walking and a daypack;
                 grade 3 routes (Lapland winter, High Atlas) need stamina for 6–8
                 hour days. We can move you between grades up to 30 days out at
@@ -2663,7 +2663,7 @@
               <div
                 style="padding: 0 4px 20px 56px; color: var(--muted-foreground)"
               >
-                Most of our passengers do — 62% booked solo in 2025. Standard
+                Most of our passengers do, 62% booked solo in 2025. Standard
                 fare means a shared twin room with a matched solo traveler of
                 the same gender; the single supplement is £210 if you prefer
                 your own room.
@@ -2876,7 +2876,7 @@
                   "
                 >
                   The Sahara Line's November departure crosses the Erg Chegaga
-                  corridor the slow way — with a tea stop our support guide
+                  corridor the slow way, with a tea stop our support guide
                   swears by, and a night camp that books out in 3 hours.
                 </p>
                 <a
@@ -3485,7 +3485,7 @@
         }
       }
       @media (min-width: 768px) {
-        /* SLIM FOOTER per brief: two-row band — row 1 brand / links / socials */
+        /* SLIM FOOTER per brief: two-row band, row 1 brand / links / socials */
         .foot-stack-div {
           padding: 0;
         }
@@ -3521,7 +3521,7 @@
         .foot-stack-div.is-stack > p {
           display: none;
         }
-        /* row 2 — copyright alone, never beside row-1 items */
+        /* row 2, copyright alone, never beside row-1 items */
         .foot-stack-div.is-stack > .foot-copyright-inline {
           grid-column: 1 / -1;
           display: inline;
@@ -3541,20 +3541,31 @@
         }
       }
       @media (max-width: 767px) {
-        .foot-stack-div > nav ul {
-          display: grid;
-          gap: 4px;
+        .foot-stack-div.is-stack > nav ul {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.1rem 1.35rem;
+        }
+        .foot-stack-div.is-stack > nav ul a {
+          padding: 5px 0;
+        }
+        .foot-stack-div.is-stack > .foot-right-block {
+          margin-top: 0.4rem;
+        }
+        .foot-stack-div.is-stack > p {
+          text-align: center;
+          margin: 0.9rem 0 0;
         }
       }
 
       /* ============ V2 SURGICAL FIX PASS ============ */
-      /* FAQ list cap — 680px centred, matched to the other v2 pages
+      /* FAQ list cap, 680px centred, matched to the other v2 pages
          (previously the width came only from an inline style on the wrapper) */
       .faq-wrap .faq-row {
         max-width: 680px !important;
         margin-inline: auto !important;
       }
-      /* Mobile menu: fixed panel directly under the sticky header — opening
+      /* Mobile menu: fixed panel directly under the sticky header, opening
          must not push the page down */
       #nav-mobile:not([hidden]) {
         position: fixed;

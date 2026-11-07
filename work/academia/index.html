@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Lyceum, a college of letters and ideas</title>
+<meta name="description" content="The Lyceum is a small liberal arts college for literature, history and philosophy. Close reading, small seminars and a faculty that knows your name.">
+<meta property="og:title" content="The Lyceum, a college of letters and ideas">
+<meta property="og:description" content="Close reading, small seminars and a faculty that knows your name.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231a1512'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='18' fill='%23c9a962' text-anchor='middle'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1512;
+    --bg-2: #221c17;
+    --panel: #2a231d;
+    --ink: #ece2d4;
+    --ink-soft: #c9bcaa;
+    --muted: #9d8d7a;
+    --line: #40352c;
+    --brass: #c9a962;
+    --brass-2: #dfc07f;
+    --brass-dark: #a8873f;
+    --crimson: #8b2635;
+    --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --sans: "Inter Tight", -apple-system, "Segoe UI", sans-serif;
+    --pad: clamp(20px, 4vw, 64px);
+    --max: 1240px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.65;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(900px 500px at 15% -10%, rgba(201, 169, 98, 0.08), transparent 70%),
+      radial-gradient(700px 500px at 95% 5%, rgba(139, 38, 53, 0.07), transparent 70%);
+  }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; }
+  h1, h2, h3, h4, p, figure, blockquote { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .wrap { width: min(100% - var(--pad) * 2, var(--max)); margin-inline: auto; position: relative; z-index: 1; }
+  .serif { font-family: var(--serif); }
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--brass);
+  }
+  .lede { color: var(--ink-soft); font-size: 1.03rem; line-height: 1.7; }
+  .sm { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+
+  /* header */
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(26, 21, 18, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .head-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 78px;
+  }
+  .crest { display: flex; align-items: center; gap: 13px; }
+  .crest svg { color: var(--brass); flex: 0 0 auto; }
+  .crest b {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+  }
+  .crest i {
+    display: block;
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .nav { display: flex; align-items: center; gap: 30px; }
+  .nav a {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 10px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .nav a:hover { color: var(--brass); border-color: var(--brass); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 1px solid var(--brass);
+    color: var(--brass);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .btn:hover { background: var(--brass); color: #1a1512; }
+  .btn-solid {
+    background: linear-gradient(180deg, var(--brass-2), var(--brass) 55%, var(--brass-dark));
+    color: #1a1512;
+    border-color: transparent;
+  }
+  .btn-solid:hover { filter: brightness(1.08); background: linear-gradient(180deg, var(--brass-2), var(--brass) 55%, var(--brass-dark)); color: #1a1512; }
+  .mnav { display: none; position: relative; }
+  .mnav summary {
+    list-style: none;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .mnav summary::-webkit-details-marker { display: none; }
+  .mnav div {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    min-width: 210px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 8px;
+    display: grid;
+  }
+  .mnav a { padding: 11px 12px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); }
+  .mnav a:hover { color: var(--brass); }
+
+  /* hero */
+  .hero { padding: clamp(46px, 7vw, 92px) 0 clamp(38px, 5vw, 64px); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: clamp(30px, 5vw, 72px);
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(3rem, 6.6vw, 5.3rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 18px 0 22px;
+  }
+  .hero h1 em { font-style: italic; color: var(--brass); }
+  .hero .lede { max-width: 50ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: clamp(34px, 4vw, 52px);
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .hero-stats div { background: var(--bg); padding: 16px 16px 15px; }
+  .hero-stats b {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .hero-stats span {
+    display: block;
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-art { position: relative; }
+  .arch {
+    position: relative;
+    border-radius: 48% 48% 4px 4px / 32% 32% 4px 4px;
+    overflow: hidden;
+    border: 1px solid rgba(201, 169, 98, 0.5);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+    aspect-ratio: 4 / 4.6;
+    background: var(--panel);
+  }
+  .arch img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.28) saturate(0.85) contrast(1.02); }
+  .hero-note {
+    position: absolute;
+    left: -18px;
+    bottom: 22px;
+    width: min(280px, 82%);
+    background: #f2e7d6;
+    color: #33281f;
+    padding: 20px 22px;
+    border: 1px solid #d8c6ab;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+  }
+  .hero-note p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.08rem;
+    line-height: 1.45;
+  }
+  .hero-note span {
+    display: block;
+    margin-top: 10px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #8a6f4d;
+  }
+  .flourish { display: block; color: var(--brass); opacity: 0.85; margin: 18px 0 0; }
+
+  /* sections */
+  .section { padding: clamp(54px, 7vw, 96px) 0; border-top: 1px solid var(--line); }
+  .sec-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px 50px;
+    flex-wrap: wrap;
+    margin-bottom: clamp(26px, 3.5vw, 44px);
+  }
+  .sec-head h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.1rem, 4vw, 3.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 22ch;
+    margin-top: 10px;
+  }
+  .sec-head h2 em { font-style: italic; color: var(--brass); }
+  .sec-head .sm { max-width: 38ch; }
+
+  /* programmes */
+  .program-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }  .program {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+  .program:hover { border-color: rgba(201, 169, 98, 0.55); transform: translateY(-3px); }
+  .program .media { aspect-ratio: 16 / 10; overflow: hidden; background: var(--panel); }
+  .program .media img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.32) saturate(0.82); transition: filter 0.5s ease; }
+  .program:hover .media img { filter: sepia(0.05) saturate(1); }
+  .program .body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+  .program h3 { font-family: var(--serif); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.01em; }
+  .program p { margin-top: 9px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .program .facts {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    font-size: 9.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .program .link {
+    margin-top: auto;
+    padding-top: 18px;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  /* values */
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .value { background: var(--bg); padding: clamp(22px, 2.6vw, 32px); }
+  .value svg { color: var(--brass); }
+  .value h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin-top: 16px; }
+  .value p { margin-top: 8px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* faculty */
+  .faculty-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  .person .media {
+    aspect-ratio: 4 / 4.6;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .person .media img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.3) saturate(0.75); transition: filter 0.5s ease; }
+  .person:hover .media img { filter: sepia(0.04) saturate(1); }
+  .person h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin-top: 15px; }
+  .person span {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+  .person p { margin-top: 10px; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+  /* campus split */
+  .split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+  }
+  .split-art { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .split-art figure { overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+  .split-art figure:first-child { grid-row: span 2; aspect-ratio: 3 / 4.4; }
+  .split-art figure:not(:first-child) { aspect-ratio: 4 / 3; }
+  .split-art img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.25) saturate(0.85); }
+  .split h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(2rem, 3.6vw, 2.9rem); line-height: 1.04; letter-spacing: -0.02em; margin: 12px 0 16px; }
+  .split h2 em { font-style: italic; color: var(--brass); }
+  .split p { color: var(--ink-soft); font-size: 0.97rem; line-height: 1.7; margin-bottom: 12px; }
+  .list-check { display: grid; gap: 9px; margin-top: 18px; }
+  .list-check li { position: relative; padding-left: 20px; font-size: 0.9rem; color: var(--ink-soft); }
+  .list-check li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 1px;
+    background: var(--brass);
+  }
+
+  /* admissions */
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .step {
+    position: relative;
+    padding: 26px 24px 28px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+  }
+  .step::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    top: 0;
+    width: 44px;
+    height: 2px;
+    background: var(--brass);
+  }
+  .step h3 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; margin-top: 10px; }
+  .step p { margin-top: 9px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .step span {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  /* fees */
+  .fees { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .fee {
+    padding: clamp(24px, 3vw, 36px);
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+  }
+  .fee.featured { border-color: rgba(201, 169, 98, 0.55); background: linear-gradient(180deg, rgba(201, 169, 98, 0.08), transparent 60%), var(--bg-2); }
+  .fee h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 600; }
+  .fee .amount { font-family: var(--serif); font-size: 2.6rem; color: var(--brass); line-height: 1; margin-top: 12px; }
+  .fee .amount small { font-family: var(--sans); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .fee p { margin-top: 12px; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+  .fee ul { margin-top: 16px; display: grid; gap: 8px; }
+  .fee li { position: relative; padding-left: 18px; font-size: 0.88rem; color: var(--ink-soft); }
+  .fee li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 1px; background: var(--brass); }
+
+  /* quote */
+  .quote-band {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: #16110e;
+    padding: clamp(44px, 6vw, 76px) 0;
+    text-align: center;
+  }
+  .quote-band blockquote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.5rem, 3.1vw, 2.35rem);
+    line-height: 1.32;
+    max-width: 26ch;
+    margin: 18px auto 0;
+    color: var(--ink);
+  }
+  .quote-band cite {
+    display: block;
+    margin-top: 20px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* faq */
+  .faq { display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 0;
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+";
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: var(--brass);
+    transition: transform 0.25s ease;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq p { padding: 0 0 22px; max-width: 78ch; color: var(--muted); font-size: 0.93rem; line-height: 1.7; }
+
+  /* cta */
+  .cta {
+    text-align: center;
+    padding: clamp(56px, 8vw, 104px) 0;
+    background:
+      radial-gradient(600px 300px at 50% 0%, rgba(201, 169, 98, 0.12), transparent 70%),
+      #16110e;
+    border-top: 1px solid var(--line);
+  }
+  .cta h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.8vw, 3.7rem);
+    line-height: 1.03;
+    letter-spacing: -0.02em;
+    margin: 16px auto 0;
+    max-width: 20ch;
+  }
+  .cta h2 em { font-style: italic; color: var(--brass); }
+  .cta p { max-width: 54ch; margin: 18px auto 0; color: var(--ink-soft); font-size: 0.98rem; }
+  .cta .cta-row { justify-content: center; }
+
+  /* footer */
+  .foot { border-top: 1px solid var(--line); padding: clamp(40px, 5vw, 64px) 0 26px; background: #16110e; }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 0.7fr));
+    gap: 28px 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--line);
+  }
+  .foot-brand p { margin-top: 14px; max-width: 34ch; color: var(--muted); font-size: 0.88rem; line-height: 1.65; }
+  .foot h4 { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brass); margin-bottom: 14px; }
+  .foot-col a { display: block; padding: 5px 0; color: var(--muted); font-size: 0.88rem; }
+  .foot-col a:hover { color: var(--ink); }
+  .foot-bottom { padding-top: 22px; text-align: center; }
+  .foot-bottom p { font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
+  .foot-bottom nav { display: flex; justify-content: center; gap: 22px; margin-bottom: 12px; }
+  .foot-bottom nav a { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .foot-bottom nav a:hover { color: var(--brass); }
+
+  /* responsive */
+  @media (max-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-art { max-width: 560px; }
+    .value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .program-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .faculty-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; }
+    .split-art { max-width: 620px; }
+    .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 860px) {
+    .nav { display: none; }
+    .mnav { display: block; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .program-grid, .faculty-grid, .fees { grid-template-columns: 1fr; }
+    .program-grid > :last-child, .faculty-grid > :last-child { grid-column: auto; max-width: none; }
+    .value-grid { grid-template-columns: 1fr; }
+    .step::before { left: 20px; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .hero-note { left: 0; bottom: 12px; width: min(260px, 90%); }
+    .split-art { grid-template-columns: 1fr 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="wrap head-in">
+    <a class="crest" href="#top" aria-label="The Lyceum home">
+      <svg width="34" height="38" viewBox="0 0 34 38" fill="none" aria-hidden="true">
+        <path d="M17 2 L31 8 V19 C31 28 25 34 17 36 C9 34 3 28 3 19 V8 Z" stroke="currentColor" stroke-width="1.4"/>
+        <path d="M17 8 V30 M11 14 H23 M11 20 H23 M11 26 H23" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      <span><b>The Lyceum</b><i>Letters &amp; ideas, since 1891</i></span>
+    </a>
+
+    <nav class="nav" aria-label="Main">
+      <a href="#programmes">Programmes</a>
+      <a href="#faculty">Faculty</a>
+      <a href="#campus">Campus</a>
+      <a href="#admissions">Admissions</a>
+      <a href="#fees">Fees</a>
+    </nav>
+
+    <a class="btn btn-solid" href="#admissions">Apply for 2027</a>
+
+    <details class="mnav">
+      <summary>Menu</summary>
+      <div>
+        <a href="#programmes">Programmes</a>
+        <a href="#faculty">Faculty</a>
+        <a href="#campus">Campus</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#fees">Fees</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="label">A college of letters and ideas</p>
+        <h1>Read the world <em>closely.</em></h1>
+        <p class="lede">The Lyceum is a small liberal arts college in the Hudson Valley. Seminars of twelve, a faculty that knows your name, and three years spent learning to argue well and write clearly.</p>
+        <div class="cta-row">
+          <a class="btn btn-solid" href="#admissions">Begin an application</a>
+          <a class="btn" href="#programmes">Explore programmes</a>
+        </div>
+
+        <div class="hero-stats">
+          <div><b>6:1</b><span>Student to faculty</span></div>
+          <div><b>12</b><span>Students per seminar</span></div>
+          <div><b>41</b><span>Countries represented</span></div>
+          <div><b>1891</b><span>Year founded</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="arch">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1100&q=80" alt="Warm library stacks lit by reading lamps" width="1100" height="1400" loading="eager">
+        </div>
+        <div class="hero-note">
+          <p>“We do not teach answers. We teach the patience to sit with a question.”</p>
+          <span>Dr. Miriam Hale, Dean of Studies</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="programmes">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">Programmes</p>
+          <h2>Three disciplines, <em>one habit of mind.</em></h2>
+        </div>
+        <p class="sm">Every student takes a core in close reading and argument, then chooses a major. No lecture halls of four hundred. No multiple-choice finals.</p>
+      </div>
+
+      <div class="program-grid">
+        <article class="program">
+          <div class="media"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80" alt="Open books on a reading desk" width="800" height="500" loading="lazy"></div>
+          <div class="body">
+            <h3>Literature &amp; Letters</h3>
+            <p>Poetry, the novel, and the essay across four centuries, read slowly and argued over in seminar. Students leave with a thesis, not a reading list.</p>
+            <div class="facts"><span>BA honours</span><span>3 years</span><span>Thesis required</span></div>
+            <span class="link">Programme outline →</span>
+          </div>
+        </article>
+
+        <article class="program">
+          <div class="media"><img src="https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=800&q=80" alt="Historic university courtyard" width="800" height="500" loading="lazy"></div>
+          <div class="body">
+            <h3>History of Ideas</h3>
+            <p>From the ancient world to the present, taught through primary texts and the arguments they started. Archive work begins in the second year.</p>
+            <div class="facts"><span>BA honours</span><span>3 years</span><span>Archive placement</span></div>
+            <span class="link">Programme outline →</span>
+          </div>
+        </article>
+
+        <article class="program">
+          <div class="media"><img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80" alt="Curved library shelves" width="800" height="500" loading="lazy"></div>
+          <div class="body">
+            <h3>Philosophy &amp; Ethics</h3>
+            <p>Logic, moral philosophy and the questions that survive every generation. Weekly written work, one-to-one tutorials, and a public defence in the final year.</p>
+            <div class="facts"><span>BA honours</span><span>3 years</span><span>Public defence</span></div>
+            <span class="link">Programme outline →</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">Why the Lyceum</p>
+          <h2>Small by design, <em>not by accident.</em></h2>
+        </div>
+      </div>
+      <div class="value-grid">
+        <div class="value">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 5h7v14H4zM13 5h7v14h-7z"/><path d="M6.5 9h2M15.5 9h2M6.5 13h2M15.5 13h2"/></svg>
+          <h3>Twelve in a room</h3>
+          <p>Seminars cap at twelve. Everyone speaks, everyone is read, and nobody hides at the back.</p>
+        </div>
+        <div class="value">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5"/><circle cx="12" cy="14" r="3"/></svg>
+          <h3>Primary texts first</h3>
+          <p>You read the book, the letter, the judgment. Commentaries come after you have formed a view.</p>
+        </div>
+        <div class="value">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/></svg>
+          <h3>One tutor, every week</h3>
+          <p>Each student meets a tutor for a written tutorial. It is the oldest part of the college and the part alumni miss most.</p>
+        </div>
+        <div class="value">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 20h18M6 20V9l6-5 6 5v11"/><path d="M10 20v-5h4v5"/></svg>
+          <h3>A house, not a campus</h3>
+          <p>Two residence halls, a dining room and a library in one square. You will know the cooks by name.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faculty">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">The faculty</p>
+          <h2>People who <em>read for a living.</em></h2>
+        </div>
+        <p class="sm">Twenty-two full-time faculty, no adjuncts. Every tutor teaches first-year seminars, whatever their seniority.</p>
+      </div>
+
+      <div class="faculty-grid">
+        <article class="person">
+          <div class="media"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=700&q=80" alt="Dr. Miriam Hale" width="700" height="800" loading="lazy"></div>
+          <h3>Dr. Miriam Hale</h3>
+          <span>Dean of Studies · Literature</span>
+          <p>Victorian poetry and the essay form. Twenty years at the college, and still teaching the first-year close reading seminar.</p>
+        </article>
+
+        <article class="person">
+          <div class="media"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80" alt="Prof. Daniel Osei" width="700" height="800" loading="lazy"></div>
+          <h3>Prof. Daniel Osei</h3>
+          <span>History of Ideas</span>
+          <p>Intellectual history of the Atlantic world. Runs the second-year archive placement at the state library.</p>
+        </article>
+
+        <article class="person">
+          <div class="media"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&q=80" alt="Dr. Sofia Marchetti" width="700" height="800" loading="lazy"></div>
+          <h3>Dr. Sofia Marchetti</h3>
+          <span>Philosophy &amp; Ethics</span>
+          <p>Moral philosophy and the ethics of memory. Her tutorial on forgiveness is the most oversubscribed hour in the college.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="campus">
+    <div class="wrap split">
+      <div class="split-art">
+        <figure><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80" alt="The Lyceum's brick main hall and lawn" width="800" height="1100" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=700&q=80" alt="Reading room shelves" width="700" height="500" loading="lazy"></figure>
+        <figure><img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=700&q=80" alt="Students on the campus lawn" width="700" height="500" loading="lazy"></figure>
+      </div>
+
+      <div>
+        <p class="label">Campus &amp; community</p>
+        <h2>A quiet place to <em>think out loud.</em></h2>
+        <p>The college sits on eleven acres above the river: a library, two houses, a dining room and a walled garden. There is no stadium, no fraternity row and no lecture theatre with a screen bigger than the blackboard.</p>
+        <p>What there is: a debating society that meets on Thursdays, a student journal, a choir, and a kitchen that serves dinner at seven sharp. Most students live on site for all three years.</p>
+        <ul class="list-check">
+          <li>All rooms single, all bills included</li>
+          <li>Dinner with faculty three nights a week</li>
+          <li>Library open until midnight, every night</li>
+          <li>Sixty minutes by train to the city</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="admissions">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">Admissions</p>
+          <h2>Three conversations, <em>no entrance exam.</em></h2>
+        </div>
+        <p class="sm">We read every application ourselves. There is no fee to apply and no test to sit. Decisions go out within six weeks of the deadline.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <h3>Write to us</h3>
+          <p>A short letter about what you want to read and why, plus one piece of written work you are proud of. Two pages is plenty.</p>
+          <span>Opens September</span>
+        </article>
+        <article class="step">
+          <h3>Come for a day</h3>
+          <p>Sit in on a seminar, have lunch with students and meet the tutor for your subject. Travel costs are covered for anyone who needs it.</p>
+          <span>October to February</span>
+        </article>
+        <article class="step">
+          <h3>Talk it through</h3>
+          <p>A forty-minute conversation about the letter you sent and a text you have read recently. We are looking for curiosity, not polish.</p>
+          <span>Decisions in March</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="fees">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">Fees &amp; funding</p>
+          <h2>One fee, <em>honestly stated.</em></h2>
+        </div>
+        <p class="sm">Tuition covers teaching, tutorials, library access and all meals. Accommodation is included for students who live on site.</p>
+      </div>
+
+      <div class="fees">
+        <article class="fee">
+          <h3>Home students</h3>
+          <div class="amount">$9,400 <small>per year</small></div>
+          <p>Three years, fixed for the duration of your course. No annual increase, no hidden studio or lab charges.</p>
+          <ul>
+            <li>All seminars and tutorials</li>
+            <li>Meals and library access</li>
+            <li>Bursaries for household income under $60,000</li>
+          </ul>
+        </article>
+
+        <article class="fee featured">
+          <h3>International students</h3>
+          <div class="amount">$14,800 <small>per year</small></div>
+          <p>The same course, the same rooms, with visa support and a guaranteed place in college housing for the first year.</p>
+          <ul>
+            <li>Visa and arrival support</li>
+            <li>First-year housing guaranteed</li>
+            <li>Two travel grants each year</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote-band">
+    <div class="wrap">
+      <p class="label">From the common room</p>
+      <blockquote>“I came for the books. I stayed because someone finally asked me what I thought.”</blockquote>
+      <cite>Nadia Rahman, class of 2024</cite>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="label">Questions</p>
+          <h2>Before you <em>write to us.</em></h2>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Do I need to know what I want to study?</summary>
+          <p>No. The first year is shared across all three disciplines, and you choose a major at the end of it. About a third of students change their mind after the first term.</p>
+        </details>
+        <details>
+          <summary>Is there an entrance exam?</summary>
+          <p>No. We ask for a written sample and a short letter, then a conversation. We are looking for how you think, not how well you have been coached.</p>
+        </details>
+        <details>
+          <summary>Can I study part time?</summary>
+          <p>The college is full time and residential, because the seminars and the common room are the course. We do run a two-week summer school for people who want a taste of it first.</p>
+        </details>
+        <details>
+          <summary>What support is available for disabled students?</summary>
+          <p>Every building has step-free access, the library has a dedicated quiet room, and the college funds note-taking and assistive software where needed. Talk to us early and we will plan it with you.</p>
+        </details>
+        <details>
+          <summary>Is the college religious?</summary>
+          <p>No. The Lyceum was founded by a reading society and has no religious affiliation. Students and staff come from many traditions, and none.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <p class="label">Applications for 2027 are open</p>
+      <h2>Come and read <em>something difficult.</em></h2>
+      <p>Send us two pages and a sentence about why. We reply to every letter within a week, even the ones we cannot offer a place.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="mailto:admissions@thelyceum.example">Write to admissions</a>
+        <a class="btn" href="#programmes">Read the programme outlines</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="crest" href="#top">
+          <svg width="30" height="34" viewBox="0 0 34 38" fill="none" aria-hidden="true">
+            <path d="M17 2 L31 8 V19 C31 28 25 34 17 36 C9 34 3 28 3 19 V8 Z" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M17 8 V30 M11 14 H23 M11 20 H23 M11 26 H23" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          <span><b>The Lyceum</b><i>Letters &amp; ideas, since 1891</i></span>
+        </a>
+        <p>Eleven acres above the Hudson. A library, two houses, and a habit of reading closely.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Study</h4>
+        <a href="#programmes">Literature</a>
+        <a href="#programmes">History of Ideas</a>
+        <a href="#programmes">Philosophy</a>
+        <a href="#fees">Fees and funding</a>
+      </div>
+      <div class="foot-col">
+        <h4>The college</h4>
+        <a href="#campus">Campus</a>
+        <a href="#faculty">Faculty</a>
+        <a href="#admissions">Admissions</a>
+        <a href="#top">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Visit</h4>
+        <a href="#admissions">Open days</a>
+        <a href="#campus">Getting here</a>
+        <a href="#fees">Access and support</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <nav aria-label="Social">
+        <a href="#top">Journal</a>
+        <a href="#top">Instagram</a>
+        <a href="#top">LinkedIn</a>
+      </nav>
+      <p>© 2026 The Lyceum. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
