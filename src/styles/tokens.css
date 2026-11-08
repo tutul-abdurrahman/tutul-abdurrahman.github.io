@@ -1,0 +1,51 @@
+/* Design tokens for the dark bento system. Values live here only. */
+:root {
+  color-scheme: dark;
+
+  --ink: #eaf1ea;
+  --ink-soft: #c6d2c9;
+  --muted: #8c9c92;
+  --faint: #5f7168;
+
+  --bg: #05080a;
+  --bg-2: #070b0d;
+  --panel: #0b1112;
+
+  --lime: #c9ff57;
+  --lime-deep: #a6e22e;
+  --mint: #7cf5d5;
+  --amber: #ffbe6b;
+  --rose: #ff9a8f;
+
+  --line: rgba(255, 255, 255, 0.075);
+  --line-mid: rgba(255, 255, 255, 0.105);
+  --line-strong: rgba(255, 255, 255, 0.16);
+
+  --glass-bg: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.062),
+    rgba(255, 255, 255, 0.018) 45%,
+    rgba(255, 255, 255, 0.035)
+  );
+  --glass-blur: blur(22px) saturate(125%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 30px 60px -34px rgba(0, 0, 0, 0.95);
+
+  --radius: 26px;
+  --radius-sm: 16px;
+  --radius-xs: 11px;
+
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas,
+    monospace;
+  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  --shell: 1240px;
+  --gutter: clamp(18px, 4vw, 48px);
+
+  --ease: cubic-bezier(0.22, 0.72, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --head-h: 74px;
+}
