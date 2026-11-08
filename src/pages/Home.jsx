@@ -120,10 +120,10 @@ export default function Home() {
               <Reveal className="hero-portrait glass" delay={90}>
                 <div className="portrait-media">
                   <img
-                    src="/assets/tutul.png"
+                    src="/assets/portrait-dot.png"
                     alt="Abdur Rahman Tutul"
-                    width="512"
-                    height="512"
+                    width="1024"
+                    height="1024"
                   />
                 </div>
                 <span className="portrait-tag">Dhaka · 2026</span>
