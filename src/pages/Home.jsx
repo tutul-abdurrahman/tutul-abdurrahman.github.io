@@ -41,7 +41,7 @@ function FeatureCard({ item }) {
           <p className="big">
             12 projects.
             <br />
-            <em>Four studios.</em>
+            <em>One ground.</em>
           </p>
         </div>
         <span className="arrow-link">
@@ -95,10 +95,11 @@ export default function Home() {
                   I design the product. <em>Then I build it.</em>
                 </h1>
                 <p className="lede">
-                  Four years of UX, design systems and CMS work for studios in the
-                  Netherlands, an event platform in Spain and university clients in
-                  Australia. From the first flow to the admin screen someone uses
-                  every day.
+                  Four years of UX, design systems and CMS work. It started at
+                  SR Web Studio in Dhaka, then grew into work with teams in the
+                  Netherlands and Spain, and university clients in Australia.
+                  From the first flow to the admin screen someone uses every
+                  day.
                 </p>
                 <div className="cta-row">
                   <a className="btn btn-lime" href="#work">
@@ -120,10 +121,10 @@ export default function Home() {
               <Reveal className="hero-portrait glass" delay={90}>
                 <div className="portrait-media">
                   <img
-                    src="/assets/portrait-dot.png"
+                    src="/assets/casual-dot-nobg.png"
                     alt="Abdur Rahman Tutul"
-                    width="1024"
-                    height="1024"
+                    width="373"
+                    height="669"
                   />
                 </div>
                 <span className="portrait-tag">Dhaka · 2026</span>
@@ -151,30 +152,35 @@ export default function Home() {
           <div className="shell">
             <div className="collab-panel glass">
               <div className="collab-head">
-                <p className="label">Selected collaborations</p>
+                <p className="label">The team behind the work</p>
                 <p>
-                  Four long-running relationships, the same people on the other
-                  end of the call. Every engagement closed in 2026. The products
-                  are still live.
+                  One studio in Dhaka, then two engagements that came through
+                  it. Three working relationships, all closed in 2026. The
+                  products are still live.
                 </p>
               </div>
               <ul className="collab-rail">
                 {studios.map((studio) => (
-                  <li className="collab-item" key={studio.name}>
-                    <span className="collab-logo">
-                      <img src={studio.logo} alt={studio.name} loading="lazy" />
-                    </span>
+                  <li
+                    className={`collab-item${studio.ground ? " is-ground" : ""}`}
+                    key={studio.name}
+                  >
+                    <div className="collab-top">
+                      <span className="collab-logo">
+                        <img src={studio.logo} alt={studio.name} loading="lazy" />
+                      </span>
+                      {studio.ground ? (
+                        <span className="collab-flag">The ground</span>
+                      ) : null}
+                    </div>
                     <span className="collab-meta">
                       <b>{studio.name}</b>
-                      <i>
-                        {studio.place} · {studio.since} to {studio.end}
-                      </i>
+                      <i>{studio.role}</i>
                     </span>
-                    {studio.flag ? (
-                      <span className="collab-flag">{studio.flag}</span>
-                    ) : (
-                      <span className="collab-sub">{studio.note}</span>
-                    )}
+                    <span className="collab-period">
+                      {studio.place} · {studio.period}
+                    </span>
+                    <span className="collab-sub">{studio.note}</span>
                   </li>
                 ))}
               </ul>
@@ -314,13 +320,12 @@ export default function Home() {
                 Designer, builder, and <em>the person on the call.</em>
               </h2>
               <p>
-                I am Abdur Rahman Tutul, a product designer in Dhaka. Since 2022 I
-                have worked with <strong>Rebelslab</strong> in the Netherlands,{" "}
-                <strong>Zephyr</strong> in Spain, including the{" "}
-                <strong>Uniloop</strong> platform they run for Australian
-                universities, and with <strong>SR Web Studio</strong> closer to
-                home, designing course platforms, election guides, event
-                dashboards and the marketing sites around them.
+                I am Abdur Rahman Tutul, a product designer in Dhaka. I started
+                at <strong>SR Web Studio</strong> in 2022, and that team is still
+                the ground under everything. The <strong>Rebelslab</strong> work
+                in the Netherlands and the <strong>Zephyr Events</strong> work in
+                Spain both came through SR, including <strong>Uniloop</strong>,
+                the platform Zephyr runs for Australian universities.
               </p>
               <p>
                 A lot of that work is unglamorous on purpose: the admin screen

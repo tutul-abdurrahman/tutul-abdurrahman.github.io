@@ -7,6 +7,7 @@ import IntegrationPanel from "../components/IntegrationPanel";
 import ProductCards from "../components/ProductCards";
 import Reveal from "../components/Reveal";
 import { rebelslab, zephyr } from "../data/work";
+import { studios } from "../data/site";
 
 function Card({ item }) {
   if (item.img) {
@@ -99,13 +100,13 @@ export default function Work() {
                 </h1>
                 <p className="lede">
                   Course platforms, event systems, dashboards and the marketing
-                  sites around them. Six with Rebelslab, six through Zephyr, all
-                  delivered by 2026. Where a link exists, it opens the real
-                  product.
+                  sites around them. All of it started at SR Web Studio in Dhaka,
+                  then moved out to teams in the Netherlands and Spain. Where a
+                  link exists, it opens the real product.
                 </p>
                 <div className="work-chips">
-                  <span className="chip">12 client projects</span>
-                  <span className="chip">4 studios</span>
+                  <span className="chip">12 projects</span>
+                  <span className="chip">3 studio teams</span>
                   <span className="chip">6 live products</span>
                   <span className="chip chip-live">All closed in 2026</span>
                 </div>
@@ -117,38 +118,25 @@ export default function Work() {
                   <span>2022 to 2026</span>
                 </div>
                 <ul className="ledger-list">
-                  <li>
-                    <div>
-                      <b>Rebelslab</b>
-                      <span>6 projects · Netherlands</span>
-                    </div>
-                    <i>2023 to 2026</i>
-                  </li>
-                  <li>
-                    <div>
-                      <b>Zephyr</b>
-                      <span>6 projects · Spain</span>
-                    </div>
-                    <i>2024 to 2026</i>
-                  </li>
-                  <li>
-                    <div>
-                      <b>Uniloop</b>
-                      <span>Within Zephyr's six · Australia</span>
-                    </div>
-                    <i>2024 to 2026</i>
-                  </li>
-                  <li>
-                    <div>
-                      <b>SR Web Studio</b>
-                      <span>Studio work · Bangladesh</span>
-                    </div>
-                    <i>2022 to 2026</i>
-                  </li>
+                  {studios.map((studio) => (
+                    <li
+                      key={studio.name}
+                      className={studio.ground ? "is-ground" : ""}
+                    >
+                      <div className="ledger-top">
+                        <b>{studio.name}</b>
+                        <i>{studio.period}</i>
+                      </div>
+                      <span>{studio.role}</span>
+                      <span className="ledger-count">
+                        {studio.place} · {studio.count}
+                      </span>
+                    </li>
+                  ))}
                 </ul>
                 <div className="ledger-foot">
                   <span className="ledger-avatar">
-                    <img src="/assets/tutul.png" alt="" />
+                    <img src="/assets/tutul.png" alt="Abdur Rahman Tutul" />
                   </span>
                   <span className="ledger-who">
                     <b>Abdur Rahman Tutul</b>
@@ -165,15 +153,44 @@ export default function Work() {
           </div>
         </section>
 
+        <section className="ground-block" id="sr">
+          <div className="shell">
+            <div className="ground-card">
+              <div className="ground-head">
+                <span className="ground-logo">
+                  <img src={studios[0].logo} alt="SR Web Studio" loading="lazy" />
+                </span>
+                <span className="ground-flag">The ground</span>
+              </div>
+              <div className="ground-body">
+                <p className="label">SR Web Studio · Dhaka</p>
+                <h2>Where the work started.</h2>
+                <p>
+                  Web Designer and UI/UX Designer from January 2022 to September
+                  2026. Responsive builds, usability testing and Tailwind, plus
+                  the V1 and V2 dashboards. The onboarding redesign cut setup
+                  time by 30%. Rebelslab and Zephyr both came through this team.
+                </p>
+              </div>
+              <ul className="ground-facts">
+                <li>Jan 2022 to Sep 2026</li>
+                <li>Web Designer &amp; UI/UX Designer</li>
+                <li>Dashboards V1 and V2</li>
+                <li>Onboarding cut by 30%</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
         <section className="group-block" id="rebelslab">
           <div className="shell">
             <div className="group-head">
               <div>
-                <p className="label">First collaboration · 6 projects</p>
+                <p className="label">Through SR Web Studio · 6 projects</p>
                 <h2>Rebelslab</h2>
               </div>
               <p className="group-tag">
-                Netherlands · <b>2023 to 2026</b>
+                Netherlands · <b>Nov 2022 to Mar 2026</b>
               </p>
             </div>
 
@@ -189,11 +206,11 @@ export default function Work() {
 
             <div className="band">
               <p>
-                Six projects with Rebelslab since 2023, four of them still live.
-                This was the first studio to put real product work in my hands.
+                Six projects with Rebelslab from 2022 to 2026, four of them still
+                live. The work was introduced through SR Web Studio.
               </p>
               <a className="arrow-link" href="#zephyr">
-                Next: Zephyr
+                Next: Zephyr Events
                 <Arrow />
               </a>
             </div>
@@ -204,11 +221,11 @@ export default function Work() {
           <div className="shell">
             <div className="group-head">
               <div>
-                <p className="label">Event technology · 6 projects</p>
-                <h2>Zephyr</h2>
+                <p className="label">Through SR Web Studio · 6 projects</p>
+                <h2>Zephyr Events</h2>
               </div>
               <p className="group-tag">
-                Spain · <b>2024 to 2026</b>
+                Spain · <b>Dec 2023 to May 2026</b>
               </p>
             </div>
 
@@ -228,9 +245,9 @@ export default function Work() {
 
             <div className="band">
               <p>
-                Six projects delivered through Zephyr, five still live or in use.
-                The platform work sits behind client logins, so I walk through it
-                screen by screen on a call.
+                Six projects, all delivered by May 2026, five still live or in
+                use. The platform work sits behind client logins, so I walk
+                through it screen by screen on a call.
               </p>
               <a className="arrow-link" href="#integrations">
                 Integration work

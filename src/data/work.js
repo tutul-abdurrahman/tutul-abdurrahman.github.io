@@ -1,11 +1,10 @@
 export const rebelslab = {
   name: "Rebelslab",
   place: "Netherlands",
-  since: "2023",
-  end: "2026",
+  role: "Web Designer, remote",
+  period: "Nov 2022 to Mar 2026",
   count: "6 projects",
-  lede: "The first studio to put real product work in my hands. Course platforms, publishing tools and portfolios for Dutch clients, four of them still live.",
-  first: "First collaboration",
+  lede: "Introduced through SR Web Studio. Course platforms, publishing tools and portfolios for Dutch clients, four of them still live.",
   cards: [
     {
       name: "Centrum Hecht Opleidingen",
@@ -55,12 +54,12 @@ export const rebelslab = {
 };
 
 export const zephyr = {
-  name: "Zephyr",
+  name: "Zephyr Events",
   place: "Spain",
-  since: "2024",
-  end: "2026",
+  role: "Web Designer & Interface Specialist, remote",
+  period: "Dec 2023 to May 2026",
   count: "6 projects",
-  lede: "An event technology company. Lead capture, a client dashboard and the integration layer underneath, plus Uniloop, their white-label platform for Australian universities.",
+  lede: "Event platforms and the integration layer underneath, plus Uniloop, their white-label product for Australian universities. The engagement came through SR Web Studio.",
   cards: [
     {
       name: "ZappContact",
@@ -89,7 +88,7 @@ export const zephyr = {
   rows: [
     {
       name: "Zephyr Events site",
-      role: "Marketing site for the event agency, kept current through the CMS. A normal day at the studio, not the headline.",
+      role: "Marketing site kept current through the CMS. A normal day on the engagement, not the headline.",
       state: "Live",
       live: true,
     },
@@ -104,7 +103,7 @@ export const zephyr = {
       state: "Client platform",
     },
   ],
-  note: "Their white-label platform for Australia. Your Invite By Us and the integration layer came through the same engagement.",
+  note: "The white-label platform Zephyr runs for Australian universities. Your Invite By Us and the integration layer came through the same engagement.",
 };
 
 export const ownProducts = [
@@ -168,7 +167,7 @@ export const featured = [
     flow: ["Swoogo", "Dashboard", "CRM"],
   },
   {
-    name: "12 projects. Four studios.",
+    name: "12 projects. One ground.",
     client: "The full ledger",
     size: "all",
   },

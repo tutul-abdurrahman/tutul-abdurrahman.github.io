@@ -11,46 +11,41 @@ export const nav = [
 
 export const stats = [
   { value: "100+", label: "Client projects" },
-  { value: "4", label: "Studio partners" },
+  { value: "3", label: "Studio teams" },
   { value: "2", label: "Own products" },
   { value: "4+", label: "Years in product" },
 ];
 
-/* Every engagement closed in 2026. Month is filled in once confirmed. */
+/* Three engagements that ran side by side and all closed in 2026.
+   SR Web Studio is the ground. Rebelslab and Zephyr both came through it. */
 export const studios = [
   {
     name: "SR Web Studio",
     logo: "/assets/logos/srwebstudio.svg",
     place: "Bangladesh",
-    since: "2022",
-    end: "2026",
-    note: "Studio work close to home",
+    role: "Web Designer & UI/UX Designer",
+    period: "Jan 2022 to Sep 2026",
+    count: "The ground",
+    note: "My first team. Where I learned the work, and where the other two engagements started.",
+    ground: true,
   },
   {
     name: "Rebelslab",
     logo: "/assets/logos/rebelslab.svg",
     place: "Netherlands",
-    since: "2023",
-    end: "2026",
-    note: "First collaboration",
-    flag: "First collaboration",
+    role: "Web Designer, remote",
+    period: "Nov 2022 to Mar 2026",
+    count: "6 projects",
+    note: "Client websites and product UI, introduced through SR Web Studio.",
   },
   {
-    name: "Zephyr",
+    name: "Zephyr Events",
     logo: "/assets/logos/zephyr.svg",
     place: "Spain",
-    since: "2024",
-    end: "2026",
-    note: "Event platform and integrations",
-  },
-  {
-    name: "Uniloop",
-    logo: "/assets/logos/uniloop.svg",
-    place: "Australia",
-    since: "2024",
-    end: "2026",
-    note: "White-label platform, delivered through Zephyr",
-    flag: "Zephyr work",
+    role: "Web Designer & Interface Specialist, remote",
+    period: "Dec 2023 to May 2026",
+    count: "6 projects",
+    note: "Event platforms and integrations, through SR Web Studio. Includes Uniloop.",
   },
 ];
 
