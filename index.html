@@ -11,13 +11,25 @@
     <meta property="og:title" content="Abdur Rahman Tutul, product designer and builder" />
     <meta
       property="og:description"
-      content="Twelve client projects. Four studios. Two products of my own. Designed and built end to end."
+      content="Twelve client projects. Three studio teams. Two products of my own. Designed and built end to end."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://tutul-abdurrahman.github.io/" />
     <meta property="og:image" content="https://tutul-abdurrahman.github.io/assets/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#06090a" />
+    <script>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("theme");
+          var saved = localStorage.getItem("tutul-theme");
+          var theme = q === "light" || q === "dark" ? q : saved === "light" ? "light" : "dark";
+          document.documentElement.dataset.theme = theme;
+          var m = document.querySelector('meta[name="theme-color"]');
+          if (m && theme === "light") m.setAttribute("content", "#f1f2e8");
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2306090a'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='14' font-weight='700' fill='%23c9ff57' text-anchor='middle'%3EAT%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

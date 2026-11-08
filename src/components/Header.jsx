@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { MAIL_PROJECT, nav } from "../data/site";
 import Arrow from "./Arrow";
+import ThemeToggle from "./ThemeToggle";
 
 function Mark() {
   return (
@@ -59,6 +60,7 @@ export default function Header({ current = "home" }) {
         </nav>
 
         <div className="head-actions">
+          <ThemeToggle />
           <a className="btn btn-lime btn-sm" href={MAIL_PROJECT}>
             Start a project
             <Arrow />
