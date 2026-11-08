@@ -1,18 +1,25 @@
-import Atmosphere from "../components/Atmosphere";
-import Arrow from "../components/Arrow";
-import Clock from "../components/Clock";
-import ContactPanel from "../components/ContactPanel";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import IntegrationPanel from "../components/IntegrationPanel";
-import ProductCards from "../components/ProductCards";
-import Reveal from "../components/Reveal";
-import SectionHead from "../components/SectionHead";
-import { featured } from "../data/work";
-import { MAIL_PROJECT, services, stats, steps, studios, tools } from "../data/site";
+import Atmosphere from '../components/Atmosphere'
+import Arrow from '../components/Arrow'
+import Clock from '../components/Clock'
+import ContactPanel from '../components/ContactPanel'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
+import IntegrationPanel from '../components/IntegrationPanel'
+import ProductCards from '../components/ProductCards'
+import Reveal from '../components/Reveal'
+import SectionHead from '../components/SectionHead'
+import { featured } from '../data/work'
+import {
+  MAIL_PROJECT,
+  services,
+  stats,
+  steps,
+  studios,
+  tools,
+} from '../data/site'
 
 function FeatureCard({ item }) {
-  if (item.size === "text") {
+  if (item.size === 'text') {
     return (
       <Reveal className="wcard wcard-text glass">
         <div className="body">
@@ -20,20 +27,25 @@ function FeatureCard({ item }) {
           <h3>{item.name}</h3>
           <p>{item.role}</p>
         </div>
-        <div className="flow" aria-label="Integration flow: Swoogo to dashboard to CRM">
+        <div
+          className="flow"
+          aria-label="Integration flow: Swoogo to dashboard to CRM"
+        >
           {item.flow.map((step, index) => (
             <span key={step}>
               {step}
-              {index < item.flow.length - 1 ? <i aria-hidden="true"> →</i> : null}
+              {index < item.flow.length - 1 ? (
+                <i aria-hidden="true"> →</i>
+              ) : null}
             </span>
           ))}
         </div>
         <span className="chip chip-mute">Behind a login</span>
       </Reveal>
-    );
+    )
   }
 
-  if (item.size === "all") {
+  if (item.size === 'all') {
     return (
       <Reveal as="a" className="wcard wcard-all glass" href="work.html">
         <div className="body">
@@ -49,14 +61,14 @@ function FeatureCard({ item }) {
           <Arrow />
         </span>
       </Reveal>
-    );
+    )
   }
 
   return (
     <Reveal
       as="a"
-      className={`wcard glass${item.size === "wide" ? " wcard-wide" : ""}${
-        item.size === "half" ? " wcard-half" : ""
+      className={`wcard glass${item.size === 'wide' ? ' wcard-wide' : ''}${
+        item.size === 'half' ? ' wcard-half' : ''
       }`}
       href={item.href}
       target="_blank"
@@ -76,7 +88,7 @@ function FeatureCard({ item }) {
         <p>{item.role}</p>
       </div>
     </Reveal>
-  );
+  )
 }
 
 export default function Home() {
@@ -104,18 +116,18 @@ export default function Home() {
                 <div className="cta-row">
                   <a className="btn btn-lime" href="#work">
                     See client work
-                    <Arrow />
+                    {/* <Arrow /> */}
                   </a>
                   <a className="btn btn-ghost" href={MAIL_PROJECT}>
                     Start a project
-                    <Arrow />
+                    {/* <Arrow /> */}
                   </a>
                 </div>
-                <div className="hero-meta">
+                {/* <div className="hero-meta">
                   <span className="chip chip-live">Open for new work</span>
                   <span className="chip">Figma to code</span>
                   <span className="chip">Dhaka · EU and AU hours</span>
-                </div>
+                </div> */}
               </Reveal>
 
               <Reveal className="hero-portrait glass" delay={90}>
@@ -162,12 +174,16 @@ export default function Home() {
               <ul className="collab-rail">
                 {studios.map((studio) => (
                   <li
-                    className={`collab-item${studio.ground ? " is-ground" : ""}`}
+                    className={`collab-item${studio.ground ? ' is-ground' : ''}`}
                     key={studio.name}
                   >
                     <div className="collab-top">
                       <span className="collab-logo">
-                        <img src={studio.logo} alt={studio.name} loading="lazy" />
+                        <img
+                          src={studio.logo}
+                          alt={studio.name}
+                          loading="lazy"
+                        />
                       </span>
                       {studio.ground ? (
                         <span className="collab-flag">The ground</span>
@@ -180,7 +196,7 @@ export default function Home() {
                     <span className="collab-period">
                       {studio.place} · {studio.period}
                     </span>
-                    <span className="collab-sub">{studio.note}</span>
+                    {/* <span className="collab-sub">{studio.note}</span> */}
                   </li>
                 ))}
               </ul>
@@ -321,29 +337,31 @@ export default function Home() {
               </h2>
               <p>
                 I am Abdur Rahman Tutul, a product designer in Dhaka. I started
-                at <strong>SR Web Studio</strong> in 2022, and that team is still
-                the ground under everything. The <strong>Rebelslab</strong> work
-                in the Netherlands and the <strong>Zephyr Events</strong> work in
-                Spain both came through SR, including <strong>Uniloop</strong>,
-                the platform Zephyr runs for Australian universities.
+                at <strong>SR Web Studio</strong> in 2022, and that team is
+                still the ground under everything. The{' '}
+                <strong>Rebelslab</strong> work in the Netherlands and the{' '}
+                <strong>Zephyr Events</strong> work in Spain both came through
+                SR, including <strong>Uniloop</strong>, the platform Zephyr runs
+                for Australian universities.
               </p>
               <p>
                 A lot of that work is unglamorous on purpose: the admin screen
-                where a client uploads a course, the integration bridge that keeps
-                Swoogo and a CRM in sync, the CMS a non-technical team has to use
-                without calling me. That is usually where a product succeeds or
-                fails.
+                where a client uploads a course, the integration bridge that
+                keeps Swoogo and a CRM in sync, the CMS a non-technical team has
+                to use without calling me. That is usually where a product
+                succeeds or fails.
               </p>
               <p>
-                I design in Figma and Miro, build in HTML, CSS, Tailwind and React,
-                and hand off with enough detail that a developer does not have to
-                guess. When a project needs an integration, I do not just draw the
-                screen. I wire it up and test it against the real API.
+                I design in Figma and Miro, build in HTML, CSS, Tailwind and
+                React, and hand off with enough detail that a developer does not
+                have to guess. When a project needs an integration, I do not
+                just draw the screen. I wire it up and test it against the real
+                API.
               </p>
               <p>
                 You work with me directly. The person on the first call is the
-                person who designs the screens and tests the integration. That is
-                the whole team.
+                person who designs the screens and tests the integration. That
+                is the whole team.
               </p>
               <p className="signature">Abdur</p>
             </div>
@@ -383,5 +401,5 @@ export default function Home() {
 
       <Footer />
     </>
-  );
+  )
 }
