@@ -1,6 +1,6 @@
 const KEY = "tutul-theme";
-const LIGHT_BG = "#f1f2e8";
-const DARK_BG = "#06090a";
+const LIGHT_BG = "#f6f3ea";
+const DARK_BG = "#0b0908";
 
 function apply(theme) {
   const next = theme === "light" ? "light" : "dark";
@@ -13,8 +13,8 @@ function apply(theme) {
 }
 
 export function getTheme() {
-  if (typeof document === "undefined") return "dark";
-  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
 export function setTheme(theme, { persist = true } = {}) {
@@ -35,9 +35,9 @@ export function toggleTheme() {
   return setTheme(getTheme() === "light" ? "dark" : "light");
 }
 
-/* Runs on load: ?theme=light|dark wins, then the saved choice, then dark. */
+/* Runs on load: ?theme=light|dark wins, then the saved choice, then light. */
 export function initTheme() {
-  let theme = "dark";
+  let theme = "light";
 
   try {
     const fromUrl = new URLSearchParams(window.location.search).get("theme");

@@ -1,4 +1,4 @@
-import { EMAIL, MAIL_PROJECT } from "../data/site";
+import { EMAIL, GITHUB, LINKEDIN, MAIL_PROJECT, SR_STUDIO } from "../data/site";
 import Arrow from "./Arrow";
 
 export default function Footer() {
@@ -6,9 +6,9 @@ export default function Footer() {
     <footer className="site-foot">
       <div className="shell foot-top">
         <div className="foot-id">
-          <a className="brand" href="index.html">
+          <a className="brand" href="/">
             <span className="brand-mark" aria-hidden="true">
-              AT
+              ART
             </span>
             <span className="brand-text">
               <b>Abdur Rahman Tutul</b>
@@ -25,16 +25,16 @@ export default function Footer() {
           <h4>Pages</h4>
           <ul>
             <li>
-              <a href="work.html">Client work</a>
+              <a href="/work/">Client work</a>
             </li>
             <li>
-              <a href="demos.html">Demo library</a>
+              <a href="/prompt-kit/">Prompt kits</a>
             </li>
             <li>
-              <a href="index.html#services">Services and rates</a>
+              <a href="/#services">Services and rates</a>
             </li>
             <li>
-              <a href="index.html#about">About</a>
+              <a href="/#about">About</a>
             </li>
           </ul>
         </div>
@@ -44,21 +44,22 @@ export default function Footer() {
           <ul>
             <li>
               <a className="foot-mail" href={MAIL_PROJECT}>
-                {EMAIL}
+                Email
               </a>
             </li>
             <li>
-              <a href="https://www.srwebstudio.com/" target="_blank" rel="noopener">
-                SR Web Studio
+              <a href={LINKEDIN} target="_blank" rel="noopener">
+                LinkedIn
               </a>
             </li>
             <li>
-              <a
-                href="https://github.com/tutul-abdurrahman"
-                target="_blank"
-                rel="noopener"
-              >
+              <a href={GITHUB} target="_blank" rel="noopener">
                 GitHub
+              </a>
+            </li>
+            <li>
+              <a href={SR_STUDIO} target="_blank" rel="noopener">
+                SR Web Studio
               </a>
             </li>
           </ul>
@@ -69,7 +70,7 @@ export default function Footer() {
         <p>© 2026 Abdur Rahman Tutul. All rights reserved.</p>
         <p>
           Hand-built in React and CSS.{" "}
-          <a href={MAIL_PROJECT} className="accent">
+          <a href={`mailto:${EMAIL}`} className="accent">
             Available for work <Arrow diag />
           </a>
         </p>

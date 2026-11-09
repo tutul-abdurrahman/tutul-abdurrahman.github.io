@@ -74,7 +74,12 @@ export const zephyr = {
       client: "Zephyr · client platform",
       role: "The bridge between Swoogo and everything else. Integration setup, client onboarding and the screens the delivery team runs live events from.",
       state: "Behind a login",
-      flow: ["Swoogo", "Dashboard", "CRM"],
+      flow: [
+        ["Swoogo", "Dashboard", "CRM"],
+        ["CRM", "Dashboard", "Swoogo"],
+      ],
+      flowNote:
+        "Both directions, and a record can make several passes before it settles.",
       facts: ["Integration flows", "Prototypes and demos", "Developer handoff"],
     },
     {
@@ -114,22 +119,36 @@ export const ownProducts = [
     body: "Meter readings split electricity and water across five rooms, previous dues carry forward, loan instalments sit beside rent, and every bill prints as an A4 slip with a receipt to match. React 19, TypeScript, Supabase.",
     facts: ["React 19", "TypeScript", "Supabase"],
     images: {
-      hero: "/assets/clients/rentflow-summary.webp",
-      thumbs: [
-        "/assets/clients/rentflow-bill.webp",
-        "/assets/clients/rentflow-tenants.webp",
+      alt: "RentFlow",
+      slides: [
+        {
+          src: "/assets/clients/rentflow-summary.webp",
+          label: "Monthly summary",
+        },
+        { src: "/assets/clients/rentflow-bill.webp", label: "Bill and receipt" },
+        { src: "/assets/clients/rentflow-tenants.webp", label: "Tenants" },
       ],
     },
   },
   {
-    name: "Landing Page Prompts",
+    name: "Prompt kits",
+    href: "/prompt-kit/",
     tags: ["On sale", "Own product"],
-    lede: "30 copy-paste prompts, one per visual style, each one shipping a full design system instead of a mood board.",
-    body: "Swiss, Luxury, Bauhaus, NeoBrutalism, Editorial Serif and 25 more. Type, colour, spacing, components and motion are set before a single section gets written.",
-    facts: ["30 prompts", "30 style systems", "Instant download"],
+    lede: "Two prompt kits on Gumroad: 30+ landing page prompts at $49, and 13 one-page portfolio prompts at $19. Paste one prompt, get a finished page instead of a mood board.",
+    body: "Swiss, Luxury, Bauhaus, NeoBrutalism, Editorial Serif and 25 more on the landing side. BentoBox, TerminalCLI, GalleryDark and 10 more for portfolios. Type, colour, spacing, components and motion are set before a single section gets written.",
+    facts: ["30+ landing prompts", "13 portfolio prompts", "Instant download"],
     images: {
-      hero: "/assets/products/landing-page-prompts.png",
-      thumbs: [],
+      alt: "Prompt kit covers",
+      slides: [
+        {
+          src: "/assets/products/landing-prompts-cover.png",
+          label: "Landing page kit, $49",
+        },
+        {
+          src: "/assets/products/portfolio-prompts-cover.png",
+          label: "Portfolio kit, $19",
+        },
+      ],
     },
   },
 ];
@@ -157,14 +176,20 @@ export const featured = [
     role: "Publishing platform home and in-app features for group magazines.",
     img: "/assets/clients/jilster.webp",
     href: "https://jilster.app/",
-    size: "",
+    size: "even",
   },
   {
     name: "Zephyr Dashboard",
     client: "Zephyr · client platform",
-    role: "Integration setup and onboarding behind the event platform.",
+    role: "The bridge between Swoogo and everything else. Integration setup, client onboarding and the screens the delivery team runs live events from.",
     size: "text",
-    flow: ["Swoogo", "Dashboard", "CRM"],
+    flow: [
+      ["Swoogo", "Dashboard", "CRM"],
+      ["CRM", "Dashboard", "Swoogo"],
+    ],
+    flowNote:
+      "Both directions, and a record can make several passes before it settles.",
+    facts: ["Integration flows", "Prototypes and demos", "Developer handoff"],
   },
   {
     name: "12 projects. One ground.",

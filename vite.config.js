@@ -10,8 +10,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: `${here}index.html`,
-        work: `${here}work.html`,
-        demos: `${here}demos.html`,
+        work: `${here}work/index.html`,
+        promptKit: `${here}prompt-kit/index.html`,
+        demos: `${here}demos/index.html`,
       },
     },
   },

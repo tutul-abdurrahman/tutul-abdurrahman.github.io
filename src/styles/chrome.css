@@ -36,8 +36,8 @@
 .site-head.is-stuck {
   background: rgba(5, 8, 10, 0.96);
   border-bottom-color: var(--line);
-  backdrop-filter: blur(22px) saturate(130%);
   -webkit-backdrop-filter: blur(22px) saturate(130%);
+  backdrop-filter: blur(22px) saturate(130%);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
@@ -63,15 +63,15 @@
   height: 38px;
   flex: none;
   border-radius: 12px;
-  border: 1px solid rgba(201, 255, 87, 0.35);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   background:
-    radial-gradient(120% 120% at 20% 0%, rgba(201, 255, 87, 0.22), transparent 60%),
+    radial-gradient(120% 120% at 20% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
     rgba(255, 255, 255, 0.03);
   font-family: var(--font-display);
-  font-size: 0.86rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--lime);
+  letter-spacing: 0.05em;
+  color: var(--accent-ink);
 }
 
 .brand-text {
@@ -121,8 +121,8 @@
 }
 
 .nav-desk a[aria-current="page"] {
-  color: var(--lime);
-  background: rgba(201, 255, 87, 0.08);
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 .head-actions {
@@ -275,7 +275,7 @@
   margin-top: clamp(50px, 7vw, 96px);
   border-top: 1px solid var(--line);
   background:
-    radial-gradient(70% 120% at 12% 0%, rgba(201, 255, 87, 0.06), transparent 60%),
+    radial-gradient(70% 120% at 12% 0%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 60%),
     rgba(4, 7, 8, 0.7);
 }
 
@@ -323,7 +323,7 @@
 }
 
 .foot-col a:hover {
-  color: var(--lime);
+  color: var(--accent-ink);
 }
 
 .foot-mail {

@@ -11,11 +11,21 @@ export default function IntegrationPanel() {
             The wiring under <em>the product.</em>
           </h2>
         </div>
-        <p>
-          Most of my build work happens between two systems that should already
-          agree. I map the fields, write the connector, handle the retries and the
-          failed lookups, then test it against the live API before calling it done.
-        </p>
+        <div className="int-note">
+          <p>
+            Most of my build work happens between two systems that should already
+            agree. I map the fields, write the connector, handle the retries and
+            the failed lookups, then test it against the live API before calling
+            it done.
+          </p>
+          <p className="int-cred">
+            <b>Swoogo Pro service-provider core developer team</b>
+            <span>
+              The SR Web Studio team. These connectors were built against the
+              platform itself, not a wrapper around it.
+            </span>
+          </p>
+        </div>
       </div>
 
       <div className="int-grid">

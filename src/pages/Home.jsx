@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Atmosphere from '../components/Atmosphere'
 import Arrow from '../components/Arrow'
 import Clock from '../components/Clock'
@@ -8,10 +9,12 @@ import IntegrationPanel from '../components/IntegrationPanel'
 import ProductCards from '../components/ProductCards'
 import Reveal from '../components/Reveal'
 import SectionHead from '../components/SectionHead'
+import Flow from '../components/Flow'
 import { featured } from '../data/work'
 import {
   MAIL_PROJECT,
   services,
+  SR_STUDIO,
   stats,
   steps,
   studios,
@@ -27,19 +30,18 @@ function FeatureCard({ item }) {
           <h3>{item.name}</h3>
           <p>{item.role}</p>
         </div>
-        <div
-          className="flow"
-          aria-label="Integration flow: Swoogo to dashboard to CRM"
-        >
-          {item.flow.map((step, index) => (
-            <span key={step}>
-              {step}
-              {index < item.flow.length - 1 ? (
-                <i aria-hidden="true"> →</i>
-              ) : null}
-            </span>
-          ))}
-        </div>
+        <Flow
+          rows={item.flow}
+          label="Two-way sync between Swoogo and the CRM, through the dashboard"
+        />
+        {item.flowNote ? <p className="flow-note">{item.flowNote}</p> : null}
+        {item.facts ? (
+          <ul className="mini-facts">
+            {item.facts.map((fact) => (
+              <li key={fact}>{fact}</li>
+            ))}
+          </ul>
+        ) : null}
         <span className="chip chip-mute">Behind a login</span>
       </Reveal>
     )
@@ -47,7 +49,7 @@ function FeatureCard({ item }) {
 
   if (item.size === 'all') {
     return (
-      <Reveal as="a" className="wcard wcard-all glass" href="work.html">
+      <Reveal as="a" className="wcard wcard-all glass" href="/work/">
         <div className="body">
           <p className="label">{item.client}</p>
           <p className="big">
@@ -64,12 +66,19 @@ function FeatureCard({ item }) {
     )
   }
 
+  const sizeClass =
+    item.size === 'wide'
+      ? ' wcard-wide'
+      : item.size === 'half'
+        ? ' wcard-half'
+        : item.size === 'even'
+          ? ' wcard-even'
+          : ''
+
   return (
     <Reveal
       as="a"
-      className={`wcard glass${item.size === 'wide' ? ' wcard-wide' : ''}${
-        item.size === 'half' ? ' wcard-half' : ''
-      }`}
+      className={`wcard glass${sizeClass}`}
       href={item.href}
       target="_blank"
       rel="noopener"
@@ -92,6 +101,28 @@ function FeatureCard({ item }) {
 }
 
 export default function Home() {
+  /* Arriving from another page with /#services or /#about: the target is
+     rendered after mount, so the browser's own jump misses it. */
+  useEffect(() => {
+    const id = window.location.hash.slice(1)
+    if (!id) return
+
+    let tries = 0
+    let frame = requestAnimationFrame(function find() {
+      const node = document.getElementById(id)
+      if (node) {
+        node.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        return
+      }
+      if (tries < 30) {
+        tries += 1
+        frame = requestAnimationFrame(find)
+      }
+    })
+
+    return () => cancelAnimationFrame(frame)
+  }, [])
+
   return (
     <>
       <Atmosphere />
@@ -114,20 +145,13 @@ export default function Home() {
                   day.
                 </p>
                 <div className="cta-row">
-                  <a className="btn btn-lime" href="#work">
+                  <a className="btn btn-primary" href="#work">
                     See client work
-                    {/* <Arrow /> */}
                   </a>
                   <a className="btn btn-ghost" href={MAIL_PROJECT}>
                     Start a project
-                    {/* <Arrow /> */}
                   </a>
                 </div>
-                {/* <div className="hero-meta">
-                  <span className="chip chip-live">Open for new work</span>
-                  <span className="chip">Figma to code</span>
-                  <span className="chip">Dhaka · EU and AU hours</span>
-                </div> */}
               </Reveal>
 
               <Reveal className="hero-portrait glass" delay={90}>
@@ -163,40 +187,36 @@ export default function Home() {
         <section className="collab" aria-label="Studios and collaborators">
           <div className="shell">
             <div className="collab-panel glass">
-              <div className="collab-head">
-                <p className="label">The team behind the work</p>
-                <p>
-                  One studio in Dhaka, then two engagements that came through
-                  it. Three working relationships, all closed in 2026. The
-                  products are still live.
+              <div className="section-head">
+                <div className="stack-sm">
+                  <p className="label">Long-term collaborations</p>
+                  <h2>
+                    Where the work <em>came from.</em>
+                  </h2>
+                </div>
+                <p className="sm">
+                  One studio in Dhaka where it started and where I still work,
+                  plus two engagements that came through it. The products built
+                  with them are still live.
                 </p>
               </div>
               <ul className="collab-rail">
                 {studios.map((studio) => (
                   <li
-                    className={`collab-item${studio.ground ? ' is-ground' : ''}`}
+                    className={`collab-item${studio.current ? ' is-current' : ''}`}
                     key={studio.name}
                   >
-                    <div className="collab-top">
-                      <span className="collab-logo">
-                        <img
-                          src={studio.logo}
-                          alt={studio.name}
-                          loading="lazy"
-                        />
-                      </span>
-                      {studio.ground ? (
-                        <span className="collab-flag">The ground</span>
-                      ) : null}
-                    </div>
-                    <span className="collab-meta">
+                    <span className="collab-logo">
+                      <img src={studio.logo} alt={studio.name} loading="lazy" />
+                    </span>
+                    <div className="collab-meta">
                       <b>{studio.name}</b>
                       <i>{studio.role}</i>
-                    </span>
-                    <span className="collab-period">
-                      {studio.place} · {studio.period}
-                    </span>
-                    {/* <span className="collab-sub">{studio.note}</span> */}
+                    </div>
+                    <div className="collab-facts">
+                      <span>{studio.place}</span>
+                      <span>{studio.period}</span>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -239,20 +259,6 @@ export default function Home() {
             <ProductCards />
           </div>
         </section>
-
-        <div className="shell">
-          <div className="band">
-            <p>
-              <strong>Want range instead of clients?</strong> There are 18
-              self-initiated landing pages and portfolio layouts, all hand-coded
-              and live.
-            </p>
-            <a className="btn btn-ghost" href="demos.html">
-              See the demo library
-              <Arrow />
-            </a>
-          </div>
-        </div>
 
         <section className="section" id="services">
           <div className="shell">
@@ -363,7 +369,9 @@ export default function Home() {
                 person who designs the screens and tests the integration. That
                 is the whole team.
               </p>
-              <p className="signature">Abdur</p>
+              <p className="signature">
+                Abdur Rahman <em>Tutul</em>
+              </p>
             </div>
 
             <div className="tools-panel glass">
@@ -381,7 +389,7 @@ export default function Home() {
               <a
                 className="arrow-link"
                 style={{ marginTop: 18 }}
-                href="https://www.srwebstudio.com/"
+                href={SR_STUDIO}
                 target="_blank"
                 rel="noopener"
               >

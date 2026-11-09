@@ -1,11 +1,11 @@
 import Atmosphere from "../components/Atmosphere";
-import Arrow from "../components/Arrow";
 import ContactPanel from "../components/ContactPanel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import IntegrationPanel from "../components/IntegrationPanel";
 import ProductCards from "../components/ProductCards";
 import Reveal from "../components/Reveal";
+import Flow from "../components/Flow";
 import { rebelslab, zephyr } from "../data/work";
 import { studios } from "../data/site";
 
@@ -40,14 +40,10 @@ function Card({ item }) {
         <p>{item.role}</p>
       </div>
       {item.flow ? (
-        <div className="flow" aria-label="Integration flow: Swoogo to dashboard to CRM">
-          {item.flow.map((step, index) => (
-            <span key={step}>
-              {step}
-              {index < item.flow.length - 1 ? <i aria-hidden="true"> →</i> : null}
-            </span>
-          ))}
-        </div>
+        <Flow
+          rows={item.flow}
+          label="Two-way sync between Swoogo and the CRM, through the dashboard"
+        />
       ) : null}
       <div className="body">
         {item.facts ? (
@@ -88,13 +84,13 @@ export default function Work() {
       <main>
         <section className="page-hero">
           <div className="shell">
-            <a className="back" href="index.html">
+            <a className="back" href="/">
               ← Back to home
             </a>
 
             <div className="work-hero-grid">
               <div className="work-title">
-                <p className="eyebrow">Client work · 2022 to 2026</p>
+                <p className="eyebrow">Client work · 2022 to now</p>
                 <h1 className="display">
                   Twelve projects. <em>Built to keep running.</em>
                 </h1>
@@ -108,29 +104,27 @@ export default function Work() {
                   <span className="chip">12 projects</span>
                   <span className="chip">3 studio teams</span>
                   <span className="chip">6 live products</span>
-                  <span className="chip chip-live">All closed in 2026</span>
+                  <span className="chip chip-live">Two closed in 2026</span>
                 </div>
               </div>
 
               <aside className="ledger glass" aria-label="Engagement index">
                 <div className="ledger-head">
                   <span>Engagement index</span>
-                  <span>2022 to 2026</span>
+                  <span>2022 to now</span>
                 </div>
                 <ul className="ledger-list">
                   {studios.map((studio) => (
                     <li
                       key={studio.name}
-                      className={studio.ground ? "is-ground" : ""}
+                      className={studio.current ? "is-ground" : ""}
                     >
                       <div className="ledger-top">
                         <b>{studio.name}</b>
                         <i>{studio.period}</i>
                       </div>
                       <span>{studio.role}</span>
-                      <span className="ledger-count">
-                        {studio.place} · {studio.count}
-                      </span>
+                      <span className="ledger-count">{studio.place}</span>
                     </li>
                   ))}
                 </ul>
@@ -160,20 +154,21 @@ export default function Work() {
                 <span className="ground-logo">
                   <img src={studios[0].logo} alt="SR Web Studio" loading="lazy" />
                 </span>
-                <span className="ground-flag">The ground</span>
+                <span className="ground-flag">Current team</span>
               </div>
               <div className="ground-body">
                 <p className="label">SR Web Studio · Dhaka</p>
                 <h2>Where the work started.</h2>
                 <p>
-                  Web Designer and UI/UX Designer from January 2022 to September
-                  2026. Responsive builds, usability testing and Tailwind, plus
-                  the V1 and V2 dashboards. The onboarding redesign cut setup
-                  time by 30%. Rebelslab and Zephyr both came through this team.
+                  Web Designer and UI/UX Designer since January 2022, and still
+                  on the team. Responsive builds, usability testing and Tailwind,
+                  plus the V1 and V2 dashboards. The onboarding redesign cut
+                  setup time by 30%. Rebelslab and Zephyr both came through this
+                  team.
                 </p>
               </div>
               <ul className="ground-facts">
-                <li>Jan 2022 to Sep 2026</li>
+                <li>Jan 2022 to now</li>
                 <li>Web Designer &amp; UI/UX Designer</li>
                 <li>Dashboards V1 and V2</li>
                 <li>Onboarding cut by 30%</li>
@@ -203,17 +198,6 @@ export default function Work() {
             </div>
 
             <Rows rows={rebelslab.rows} />
-
-            <div className="band">
-              <p>
-                Six projects with Rebelslab from 2022 to 2026, four of them still
-                live. The work was introduced through SR Web Studio.
-              </p>
-              <a className="arrow-link" href="#zephyr">
-                Next: Zephyr Events
-                <Arrow />
-              </a>
-            </div>
           </div>
         </section>
 
@@ -242,18 +226,6 @@ export default function Work() {
             <p className="group-note">
               <strong>Uniloop is Zephyr work.</strong> {zephyr.note}
             </p>
-
-            <div className="band">
-              <p>
-                Six projects, all delivered by May 2026, five still live or in
-                use. The platform work sits behind client logins, so I walk
-                through it screen by screen on a call.
-              </p>
-              <a className="arrow-link" href="#integrations">
-                Integration work
-                <Arrow />
-              </a>
-            </div>
           </div>
         </section>
 
@@ -276,20 +248,6 @@ export default function Work() {
             <IntegrationPanel />
           </div>
         </section>
-
-        <div className="shell">
-          <div className="band">
-            <p>
-              <strong>Want range instead of clients?</strong> There are 18
-              self-initiated landing pages and portfolio layouts, all hand-coded
-              and live.
-            </p>
-            <a className="btn btn-ghost" href="demos.html">
-              See the demo library
-              <Arrow />
-            </a>
-          </div>
-        </div>
 
         <section className="contact">
           <div className="shell">

@@ -37,7 +37,7 @@ body::before {
   background:
     radial-gradient(
       62% 44% at 14% -6%,
-      rgba(201, 255, 87, 0.11),
+      color-mix(in srgb, var(--accent) 11%, transparent),
       transparent 62%
     ),
     radial-gradient(
@@ -95,12 +95,12 @@ figure {
 }
 
 ::selection {
-  background: var(--lime);
-  color: #0a1108;
+  background: var(--accent);
+  color: var(--accent-on);
 }
 
 :focus-visible {
-  outline: 2px solid var(--lime);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -121,6 +121,11 @@ figure {
 
 .section + .section {
   padding-top: clamp(20px, 3vw, 36px);
+}
+
+/* anchor targets clear the sticky header */
+[id] {
+  scroll-margin-top: calc(var(--head-h) + 18px);
 }
 
 .section-head {
@@ -153,8 +158,11 @@ figure {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
+  /* the italics sit on the same cap height as the grotesque, so the em box
+     stays almost untouched; anything larger reads as a size jump */
+  font-size: 1.02em;
   letter-spacing: -0.02em;
-  color: var(--lime);
+  color: var(--accent-ink);
 }
 
 h2 {
@@ -179,7 +187,8 @@ h3 em {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  color: var(--lime);
+  font-size: 1.02em;
+  color: var(--accent-ink);
 }
 
 .label,
@@ -204,8 +213,8 @@ h3 em {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 0 4px rgba(201, 255, 87, 0.14);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .lede {
@@ -229,7 +238,7 @@ h3 em {
 }
 
 .accent {
-  color: var(--lime);
+  color: var(--accent-ink);
 }
 
 /* ---------- glass surface ---------- */
@@ -237,14 +246,14 @@ h3 em {
 .glass {
   position: relative;
   background: var(--glass-bg);
-  border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--glass-shadow);
-  backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
 }
 
-/* top light edge, the "liquid" part */
+/* top light edge, the "liquid" part. No drawn border: only a reflection
+   that fades out before it reaches the bottom of the card. */
 .glass::before {
   content: "";
   position: absolute;
@@ -252,11 +261,10 @@ h3 em {
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
-    150deg,
-    rgba(255, 255, 255, 0.22),
-    rgba(255, 255, 255, 0.02) 34%,
-    transparent 62%,
-    rgba(201, 255, 87, 0.12)
+    152deg,
+    var(--glass-rim) 0%,
+    rgba(255, 255, 255, 0.1) 26%,
+    transparent 58%
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -266,14 +274,20 @@ h3 em {
 
 /* ---------- controls ---------- */
 
+/* Square-cornered glass buttons: hairline edge, liquid fill, no pill. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 46px;
-  padding: 0 22px;
-  border-radius: 999px;
+  padding: 0 20px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--line-strong);
+  background: var(--btn-bg);
+  box-shadow: var(--btn-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-weight: 600;
@@ -283,32 +297,33 @@ h3 em {
     transform 0.25s var(--ease),
     background 0.25s var(--ease),
     border-color 0.25s var(--ease),
-    color 0.25s var(--ease);
+    color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .btn:hover {
   transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
-.btn-lime {
-  background: var(--lime);
-  color: #0a1108;
-  box-shadow: 0 12px 34px -14px rgba(201, 255, 87, 0.7);
+.btn-primary {
+  border-color: var(--btn-primary-border);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: var(--btn-primary-shadow);
 }
 
-.btn-lime:hover {
-  background: #d7ff86;
+.btn-primary:hover {
+  border-color: var(--accent);
+  background: var(--btn-primary-bg-hover);
 }
 
 .btn-ghost {
-  border: 1px solid var(--line-strong);
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.025);
 }
 
 .btn-ghost:hover {
-  border-color: rgba(201, 255, 87, 0.5);
-  background: rgba(201, 255, 87, 0.08);
+  background: var(--btn-bg-hover);
 }
 
 .btn-sm {
@@ -345,8 +360,8 @@ h3 em {
 }
 
 .arrow-link:hover {
-  color: var(--lime);
-  border-color: var(--lime);
+  color: var(--accent-ink);
+  border-color: var(--accent);
 }
 
 .chip {
@@ -366,9 +381,9 @@ h3 em {
 }
 
 .chip-live {
-  border-color: rgba(201, 255, 87, 0.32);
-  background: rgba(201, 255, 87, 0.1);
-  color: #ddff9e;
+  border-color: color-mix(in srgb, var(--accent) 32%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent-ink);
 }
 
 .chip-live::before {
@@ -376,8 +391,8 @@ h3 em {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--lime);
-  box-shadow: 0 0 0 3px rgba(201, 255, 87, 0.2);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .chip-mute {

@@ -1,3 +1,5 @@
+import Arrow from "./Arrow";
+import ProductCarousel from "./ProductCarousel";
 import Reveal from "./Reveal";
 import { ownProducts } from "../data/work";
 
@@ -7,30 +9,17 @@ export default function ProductCards() {
       {ownProducts.map((product, index) => (
         <Reveal
           as="article"
-          className={`product glass${index === 1 ? " product--split" : ""}`}
+          className={`product glass${index % 2 === 1 ? " product--alt" : ""}`}
           key={product.name}
         >
           <div className="product-media">
-            <div className="product-hero">
-              <img
-                src={product.images.hero}
-                alt={`${product.name} preview`}
-                loading="lazy"
-              />
-            </div>
-            {product.images.thumbs.length ? (
-              <div className="product-thumbs">
-                {product.images.thumbs.map((src) => (
-                  <img
-                    key={src}
-                    src={src}
-                    alt={`${product.name} screen`}
-                    loading="lazy"
-                  />
-                ))}
-              </div>
-            ) : null}
+            <ProductCarousel
+              name={product.name}
+              alt={product.images.alt}
+              slides={product.images.slides}
+            />
           </div>
+
           <div className="product-body">
             <div className="product-top">
               {product.tags.map((tag, tagIndex) => (
@@ -50,7 +39,21 @@ export default function ProductCards() {
                 <li key={fact}>{fact}</li>
               ))}
             </ul>
+            {product.href ? (
+              <span className="arrow-link product-cta">
+                See both kits
+                <Arrow />
+              </span>
+            ) : null}
           </div>
+
+          {product.href ? (
+            <a
+              className="product-hit"
+              href={product.href}
+              aria-label={`${product.name}: see both kits`}
+            />
+          ) : null}
         </Reveal>
       ))}
     </>

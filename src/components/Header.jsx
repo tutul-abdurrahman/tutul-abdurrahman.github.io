@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 function Mark() {
   return (
     <span className="brand-mark" aria-hidden="true">
-      AT
+      ART
     </span>
   );
 }
@@ -34,10 +34,29 @@ export default function Header({ current = "home" }) {
   const isActive = (key) =>
     (current === "home" && key === "home") || current === key;
 
+  /* On the home page the section is already rendered, so scroll to it here.
+     On any other page we let the link travel to /#id and Home picks it up. */
+  const onSectionLink = (event, href) => {
+    const [path, hash] = href.split("#");
+    if (!hash || path !== "/") return;
+    const onHome =
+      window.location.pathname === "/" ||
+      window.location.pathname === "/index.html";
+    if (!onHome) return;
+
+    const node = document.getElementById(hash);
+    if (!node) return;
+
+    event.preventDefault();
+    node.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `/#${hash}`);
+    setOpen(false);
+  };
+
   return (
     <header className={`site-head${stuck ? " is-stuck" : ""}`}>
       <div className="shell head-inner">
-        <a className="brand" href="index.html" aria-label="Abdur Rahman Tutul, home">
+        <a className="brand" href="/" aria-label="Abdur Rahman Tutul, home">
           <Mark />
           <span className="brand-text">
             <b>Abdur Rahman Tutul</b>
@@ -46,24 +65,33 @@ export default function Header({ current = "home" }) {
         </a>
 
         <nav className="nav-desk" aria-label="Primary">
-          <a href="index.html" aria-current={isActive("home") ? "page" : undefined}>
+          <a href="/" aria-current={isActive("home") ? "page" : undefined}>
             Home
           </a>
-          <a href="work.html" aria-current={isActive("work") ? "page" : undefined}>
+          <a href="/work/" aria-current={isActive("work") ? "page" : undefined}>
             Work
           </a>
-          <a href="demos.html" aria-current={isActive("demos") ? "page" : undefined}>
-            Demos
+          <a
+            href="/prompt-kit/"
+            aria-current={isActive("prompt-kit") ? "page" : undefined}
+          >
+            Prompt kits
           </a>
-          <a href="index.html#services">Services</a>
-          <a href="index.html#about">About</a>
+          <a
+            href="/#services"
+            onClick={(event) => onSectionLink(event, "/#services")}
+          >
+            Services
+          </a>
+          <a href="/#about" onClick={(event) => onSectionLink(event, "/#about")}>
+            About
+          </a>
         </nav>
 
         <div className="head-actions">
           <ThemeToggle />
-          <a className="btn btn-lime btn-sm" href={MAIL_PROJECT}>
+          <a className="btn btn-primary btn-sm" href={MAIL_PROJECT}>
             Start a project
-            <Arrow />
           </a>
           <button
             className="menu-btn"
@@ -81,14 +109,20 @@ export default function Header({ current = "home" }) {
       <div id="mobile-menu" className={`menu-panel${open ? " is-open" : ""}`}>
         <div className="shell menu-inner">
           {nav.map((item) => (
-            <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={(event) => {
+                onSectionLink(event, item.href);
+                setOpen(false);
+              }}
+            >
               {item.label}
               <Arrow />
             </a>
           ))}
-          <a className="btn btn-lime" href={MAIL_PROJECT} onClick={() => setOpen(false)}>
+          <a className="btn btn-primary" href={MAIL_PROJECT} onClick={() => setOpen(false)}>
             Start a project
-            <Arrow />
           </a>
         </div>
       </div>

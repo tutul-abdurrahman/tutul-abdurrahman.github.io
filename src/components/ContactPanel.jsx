@@ -1,5 +1,5 @@
 import Arrow from "./Arrow";
-import { EMAIL, MAIL_PROJECT } from "../data/site";
+import { EMAIL, MAIL_PROJECT, SR_STUDIO } from "../data/site";
 
 export default function ContactPanel() {
   return (
@@ -20,13 +20,13 @@ export default function ContactPanel() {
             </a>
           </div>
           <div className="cta-row">
-            <a className="btn btn-lime" href={MAIL_PROJECT}>
+            <a className="btn btn-primary" href={MAIL_PROJECT}>
               Start a project
               <Arrow />
             </a>
             <a
               className="btn btn-ghost"
-              href="https://www.srwebstudio.com/"
+              href={SR_STUDIO}
               target="_blank"
               rel="noopener"
             >
