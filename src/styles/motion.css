@@ -1,0 +1,72 @@
+/* ---------- motion ---------- */
+
+/* Everything that behaves like a card lifts off the page on hover and
+   spreads its shadow. The reveal-on-scroll lives in base.css. */
+
+.wcard,
+.pcard,
+.demo-card,
+.product,
+.collab-item,
+.ledger,
+.contact-panel,
+.int-panel,
+.tools-panel,
+.rate,
+.step {
+  transition:
+    transform 0.5s var(--ease-out),
+    box-shadow 0.5s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wcard:hover,
+  .pcard:hover,
+  .demo-card:hover,
+  .product:hover,
+  .collab-item:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--glass-shadow), var(--lift-shadow);
+  }
+
+  .wcard:hover .wcard-shot img,
+  .pcard:hover .pcard-shot img,
+  .demo-card:hover .demo-shot img {
+    transform: scale(1.05);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* the media inside a project card is a little slower and softer than the card */
+.wcard-shot img,
+.pcard-shot img,
+.demo-shot img {
+  transition: transform 0.8s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wcard,
+  .pcard,
+  .demo-card,
+  .product,
+  .collab-item,
+  .ledger,
+  .contact-panel,
+  .int-panel,
+  .tools-panel,
+  .rate,
+  .step {
+    transition: none;
+  }
+
+  .wcard:hover,
+  .pcard:hover,
+  .demo-card:hover,
+  .product:hover,
+  .collab-item:hover {
+    transform: none;
+  }
+}

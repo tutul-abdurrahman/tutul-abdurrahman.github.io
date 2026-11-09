@@ -246,19 +246,19 @@
   gap: 12px;
 }
 
+/* the studio's own mark, in its own colours, no plate behind it.
+   It fills the left column instead of floating small in the middle of it. */
 .ground-logo {
-  display: inline-flex;
-  align-items: center;
-  padding: 13px 17px;
-  border-radius: 10px;
-  background: color-mix(in srgb, #000 82%, var(--accent));
+  display: block;
+  width: 100%;
+  max-width: 272px;
 }
 
 .ground-head img {
-  height: 46px;
-  width: auto;
-  max-width: 210px;
-  filter: brightness(0) invert(1);
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
 }
 
 .ground-flag {
@@ -327,12 +327,7 @@
   }
 
   .ground-logo {
-    padding: 10px 13px;
-  }
-
-  .ground-head img {
-    height: 34px;
-    max-width: 165px;
+    max-width: 236px;
   }
 
   .ground-facts {

@@ -9,7 +9,9 @@ import Flow from "../components/Flow";
 import { rebelslab, zephyr } from "../data/work";
 import { studios } from "../data/site";
 
-function Card({ item }) {
+function Card({ item, index = 0 }) {
+  const delay = Math.min(index * 80, 240);
+
   if (item.img) {
     return (
       <Reveal
@@ -18,6 +20,7 @@ function Card({ item }) {
         href={item.href}
         target="_blank"
         rel="noopener"
+        delay={delay}
       >
         <div className="pcard-shot">
           <img src={item.img} alt={item.name} loading="lazy" />
@@ -33,7 +36,7 @@ function Card({ item }) {
   }
 
   return (
-    <Reveal as="article" className="pcard pcard-plain glass">
+    <Reveal as="article" className="pcard pcard-plain glass" delay={delay}>
       <div className="body">
         <span className="label">{item.client}</span>
         <h3>{item.name}</h3>
@@ -62,16 +65,28 @@ function Card({ item }) {
 function Rows({ rows }) {
   return (
     <div className="row-list">
-      {rows.map((row) => (
-        <article key={row.name}>
+      {rows.map((row, rowIndex) => (
+        <Reveal as="article" key={row.name} delay={Math.min(rowIndex * 60, 240)}>
           <h3>{row.name}</h3>
           <p>{row.role}</p>
           <span className={`chip ${row.live ? "chip-live" : "chip-mute"}`}>
             {row.state}
           </span>
-        </article>
+        </Reveal>
       ))}
     </div>
+  );
+}
+
+function GroupHead({ label, title, tag }) {
+  return (
+    <Reveal className="group-head">
+      <div>
+        <p className="label">{label}</p>
+        <h2>{title}</h2>
+      </div>
+      <p className="group-tag">{tag}</p>
+    </Reveal>
   );
 }
 
@@ -108,7 +123,7 @@ export default function Work() {
                 </div>
               </div>
 
-              <aside className="ledger glass" aria-label="Engagement index">
+              <Reveal as="aside" className="ledger glass" aria-label="Engagement index" delay={120}>
                 <div className="ledger-head">
                   <span>Engagement index</span>
                   <span>2022 to now</span>
@@ -142,14 +157,14 @@ export default function Work() {
                     delivered by 2026
                   </span>
                 </div>
-              </aside>
+              </Reveal>
             </div>
           </div>
         </section>
 
         <section className="ground-block" id="sr">
           <div className="shell">
-            <div className="ground-card">
+            <Reveal className="ground-card">
               <div className="ground-head">
                 <span className="ground-logo">
                   <img src={studios[0].logo} alt="SR Web Studio" loading="lazy" />
@@ -173,27 +188,29 @@ export default function Work() {
                 <li>Dashboards V1 and V2</li>
                 <li>Onboarding cut by 30%</li>
               </ul>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         <section className="group-block" id="rebelslab">
           <div className="shell">
-            <div className="group-head">
-              <div>
-                <p className="label">Through SR Web Studio · 6 projects</p>
-                <h2>Rebelslab</h2>
-              </div>
-              <p className="group-tag">
-                Netherlands · <b>Nov 2022 to Mar 2026</b>
-              </p>
-            </div>
+            <GroupHead
+              label="Through SR Web Studio · 6 projects"
+              title="Rebelslab"
+              tag={
+                <>
+                  Netherlands · <b>Nov 2022 to Mar 2026</b>
+                </>
+              }
+            />
 
-            <p className="group-lede">{rebelslab.lede}</p>
+            <Reveal as="p" className="group-lede" delay={80}>
+              {rebelslab.lede}
+            </Reveal>
 
             <div className="pgrid two">
-              {rebelslab.cards.map((item) => (
-                <Card item={item} key={item.name} />
+              {rebelslab.cards.map((item, itemIndex) => (
+                <Card item={item} key={item.name} index={itemIndex} />
               ))}
             </div>
 
@@ -203,41 +220,41 @@ export default function Work() {
 
         <section className="group-block" id="zephyr">
           <div className="shell">
-            <div className="group-head">
-              <div>
-                <p className="label">Through SR Web Studio · 6 projects</p>
-                <h2>Zephyr Events</h2>
-              </div>
-              <p className="group-tag">
-                Spain · <b>Dec 2023 to May 2026</b>
-              </p>
-            </div>
+            <GroupHead
+              label="Through SR Web Studio · 6 projects"
+              title="Zephyr Events"
+              tag={
+                <>
+                  Spain · <b>Dec 2023 to May 2026</b>
+                </>
+              }
+            />
 
-            <p className="group-lede">{zephyr.lede}</p>
+            <Reveal as="p" className="group-lede" delay={80}>
+              {zephyr.lede}
+            </Reveal>
 
             <div className="pgrid">
-              {zephyr.cards.map((item) => (
-                <Card item={item} key={item.name} />
+              {zephyr.cards.map((item, itemIndex) => (
+                <Card item={item} key={item.name} index={itemIndex} />
               ))}
             </div>
 
             <Rows rows={zephyr.rows} />
 
-            <p className="group-note">
+            <Reveal as="p" className="group-note">
               <strong>Uniloop is Zephyr work.</strong> {zephyr.note}
-            </p>
+            </Reveal>
           </div>
         </section>
 
         <section className="group-block" id="own">
           <div className="shell">
-            <div className="group-head">
-              <div>
-                <p className="label">Products of my own</p>
-                <h2>Built by me</h2>
-              </div>
-              <p className="group-tag">Two products</p>
-            </div>
+            <GroupHead
+              label="Products of my own"
+              title="Built by me"
+              tag="Two products"
+            />
 
             <ProductCards />
           </div>

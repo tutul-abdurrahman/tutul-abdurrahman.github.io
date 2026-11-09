@@ -1,9 +1,10 @@
 import Arrow from "./Arrow";
+import Reveal from "./Reveal";
 import { MAIL_INTEGRATION, integrations } from "../data/site";
 
 export default function IntegrationPanel() {
   return (
-    <div className="int-panel glass">
+    <Reveal className="int-panel glass">
       <div className="int-lead">
         <div className="stack-sm">
           <p className="label">Integrations</p>
@@ -48,6 +49,6 @@ export default function IntegrationPanel() {
           <Arrow />
         </a>
       </div>
-    </div>
+    </Reveal>
   );
 }

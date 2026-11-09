@@ -11,6 +11,7 @@ export default function ProductCards() {
           as="article"
           className={`product glass${index % 2 === 1 ? " product--alt" : ""}`}
           key={product.name}
+          delay={index * 110}
         >
           <div className="product-media">
             <ProductCarousel

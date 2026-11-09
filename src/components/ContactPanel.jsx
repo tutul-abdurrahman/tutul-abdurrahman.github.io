@@ -1,9 +1,10 @@
 import Arrow from "./Arrow";
+import Reveal from "./Reveal";
 import { EMAIL, MAIL_PROJECT, SR_STUDIO } from "../data/site";
 
 export default function ContactPanel() {
   return (
-    <div className="contact-panel glass">
+    <Reveal className="contact-panel glass">
       <div className="contact-grid">
         <div className="contact-main">
           <p className="label">Next project</p>
@@ -45,6 +46,6 @@ export default function ContactPanel() {
           </ul>
         </div>
       </div>
-    </div>
+    </Reveal>
   );
 }

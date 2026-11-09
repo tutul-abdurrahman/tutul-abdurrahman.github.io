@@ -12,7 +12,7 @@ const kitLinks = {
   portfolio: KIT_PORTFOLIO_URL,
 };
 
-function DemoCard({ item }) {
+function DemoCard({ item, index = 0 }) {
   return (
     <Reveal
       as="a"
@@ -20,6 +20,7 @@ function DemoCard({ item }) {
       href={`/work/${item.slug}/`}
       target="_blank"
       rel="noopener"
+      delay={Math.min(index * 60, 300)}
     >
       <div className="demo-shot">
         <img
@@ -44,7 +45,7 @@ function DemoCard({ item }) {
 function Group({ label, title, note, items, href }) {
   return (
     <section className="demo-group">
-      <div className="demo-group-head">
+      <Reveal className="demo-group-head">
         <div className="stack-sm">
           <p className="label">{label}</p>
           <h2>{title}</h2>
@@ -63,10 +64,10 @@ function Group({ label, title, note, items, href }) {
             </a>
           ) : null}
         </div>
-      </div>
+      </Reveal>
       <div className="demo-grid">
-        {items.map((item) => (
-          <DemoCard item={item} key={item.slug} />
+        {items.map((item, itemIndex) => (
+          <DemoCard item={item} key={item.slug} index={itemIndex} />
         ))}
       </div>
     </section>

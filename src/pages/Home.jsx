@@ -21,10 +21,12 @@ import {
   tools,
 } from '../data/site'
 
-function FeatureCard({ item }) {
+function FeatureCard({ item, index = 0 }) {
+  const delay = Math.min(index * 80, 320);
+
   if (item.size === 'text') {
     return (
-      <Reveal className="wcard wcard-text glass">
+      <Reveal className="wcard wcard-text glass" delay={delay}>
         <div className="body">
           <p className="label">{item.client}</p>
           <h3>{item.name}</h3>
@@ -49,7 +51,7 @@ function FeatureCard({ item }) {
 
   if (item.size === 'all') {
     return (
-      <Reveal as="a" className="wcard wcard-all glass" href="/work/">
+      <Reveal as="a" className="wcard wcard-all glass" href="/work/" delay={delay}>
         <div className="body">
           <p className="label">{item.client}</p>
           <p className="big">
@@ -82,6 +84,7 @@ function FeatureCard({ item }) {
       href={item.href}
       target="_blank"
       rel="noopener"
+      delay={delay}
     >
       <div className="wcard-shot">
         <img src={item.img} alt={item.name} loading="lazy" />
@@ -201,10 +204,12 @@ export default function Home() {
                 </p>
               </div>
               <ul className="collab-rail">
-                {studios.map((studio) => (
-                  <li
+                {studios.map((studio, studioIndex) => (
+                  <Reveal
+                    as="li"
                     className={`collab-item${studio.current ? ' is-current' : ''}`}
                     key={studio.name}
+                    delay={studioIndex * 90}
                   >
                     <span className="collab-logo">
                       <img src={studio.logo} alt={studio.name} loading="lazy" />
@@ -217,7 +222,7 @@ export default function Home() {
                       <span>{studio.place}</span>
                       <span>{studio.period}</span>
                     </div>
-                  </li>
+                  </Reveal>
                 ))}
               </ul>
             </div>
@@ -272,7 +277,7 @@ export default function Home() {
               note="Prices in USD. 50% to start, 50% at delivery. Bigger, stranger or ongoing, say so and I will quote it properly."
             />
 
-            <div className="rate glass">
+            <Reveal className="rate glass">
               {services.map((service) => (
                 <div className="rate-row" key={service.name}>
                   <div className="rate-name">
@@ -300,7 +305,7 @@ export default function Home() {
                   <Arrow />
                 </a>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
@@ -323,8 +328,12 @@ export default function Home() {
             />
 
             <div className="steps">
-              {steps.map((step) => (
-                <Reveal className="step" key={step.title}>
+              {steps.map((step, stepIndex) => (
+                <Reveal
+                  className="step"
+                  key={step.title}
+                  delay={stepIndex * 110}
+                >
                   <span className="n">{step.when}</span>
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
@@ -336,7 +345,7 @@ export default function Home() {
 
         <section className="section" id="about">
           <div className="shell about-grid">
-            <div className="about-copy">
+            <Reveal className="about-copy">
               <p className="label">About</p>
               <h2>
                 Designer, builder, and <em>the person on the call.</em>
@@ -372,9 +381,9 @@ export default function Home() {
               <p className="signature">
                 Abdur Rahman <em>Tutul</em>
               </p>
-            </div>
+            </Reveal>
 
-            <div className="tools-panel glass">
+            <Reveal className="tools-panel glass" delay={120}>
               <p className="label" style={{ marginBottom: 12 }}>
                 Tools and range
               </p>
@@ -396,7 +405,7 @@ export default function Home() {
                 SR Web Studio
                 <Arrow diag />
               </a>
-            </div>
+            </Reveal>
           </div>
         </section>
 

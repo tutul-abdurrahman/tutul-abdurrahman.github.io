@@ -290,10 +290,6 @@
     0 8px 18px -14px rgba(74, 44, 26, 0.22);
 }
 
-[data-theme="light"] .ground-logo {
-  background: color-mix(in srgb, #1f1207 88%, var(--accent));
-}
-
 /* ---------- footer ---------- */
 
 [data-theme="light"] .site-foot {
